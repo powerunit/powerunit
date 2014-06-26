@@ -6,6 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Powerunit - Java Testing framework for JDK 1.8</name>
 	<description>This is a test framework for the JDK 1.8.</description>
+	<packaging>jar</packaging>
 
 	<licenses>
 		<license>
@@ -14,6 +15,19 @@
 		</license>
 	</licenses>
 
+	<developers>
+		<developer>
+			<id>boretti</id>
+			<email>mathieu.boretti@gmail.com</email>
+			<name>Mathieu Boretti</name>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git@github.com:powerunit/powerunit.git</connection>
+		<url>scm:git:git@github.com:powerunit/powerunit.git</url>
+		<developerConnection>scm:git:git@github.com:powerunit/powerunit.git</developerConnection>
+	</scm>
 	<properties>
 		<java.source.version>1.8</java.source.version>
 		<java.target.version>1.8</java.target.version>
@@ -34,6 +48,11 @@
 		</extensions>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.5</version>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
