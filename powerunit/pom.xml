@@ -24,25 +24,6 @@
 		<mockito.version>1.9.5</mockito.version>
 	</properties>
 
-	<scm>
-		<developerConnection>scm:git:ssh://git@git.cloudbees.com/mathieu-boretti/powerunit.git</developerConnection>
-		<connection>scm:git:ssh://git@git.cloudbees.com/mathieu-boretti/powerunit.git</connection>
-		<url>git:ssh://git@git.cloudbees.com/mathieu-boretti/powerunit.git</url>
-	</scm>
-
-	<distributionManagement>
-		<repository>
-			<id>mathieu-boretti-cloudbees-release</id>
-			<name>mathieu-boretti-cloudbees-release</name>
-			<url>dav:https://repository-mathieu-boretti.forge.cloudbees.com/release/</url>
-		</repository>
-		<snapshotRepository>
-			<id>mathieu-boretti-cloudbees-snapshot</id>
-			<name>mathieu-boretti-cloudbees-snapshot</name>
-			<url>dav:https://repository-mathieu-boretti.forge.cloudbees.com/snapshot/</url>
-		</snapshotRepository>
-	</distributionManagement>
-
 	<build>
 		<extensions>
 			<extension>
