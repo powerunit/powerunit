@@ -1,0 +1,325 @@
+<html>
+<head>
+<title>Powerunit</title>
+</head>
+<body>
+	This is the PowerUnit Framework : A test framework for Java 8+.
+	<p />
+
+	<h3>Concepts</h3>
+
+	This framework provides a test framework for Java, based on the JDK
+	1.8. The idea are similar to the idea of the others test framework.
+	First of all here are two simple examples.
+
+	<h4>Examples</h4>
+
+	<h5>The Hello world test example</h5>
+
+	<pre>
+import org.powerunit.Test;
+import org.powerunit.TestSuite;
+
+public class HelloWorldTest implements TestSuite {
+  &#64;Test()
+  public void testHelloWorld1() {
+    assertThat("Hello world").is(containsString(" "));
+  }
+ 
+}</pre>
+	Several elements are interesting here :
+	<ul>
+		<li>The class implements the {@link org.powerunit.TestSuite}.
+			This is not strictly required by the framework but it is the best way
+			to integrate nicely with the framework. This implementation provides
+			the DSL of the framework (assertions, matchers, etc). As the
+			interface name says it, a test class is considered as a test suite
+			(has it should contains a set of test, that share a common fixture).</li>
+		<li>The test method are annotated with the {@link
+			org.powerunit.Test} annotation.</li>
+		<li>The {@link org.powerunit.TestSuite assertThat} used here is
+			one of the several way to do assertion. Here, only assertion based on
+			DSL syntax and hamcrest matcher are provided. There is no AssertTrue
+			for instance.</li>
+	</ul>
+
+	<h5>The Hello world with parameter test example</h5>
+
+	<pre>
+package org.powerunit.examples;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+import org.powerunit.Parameter;
+import org.powerunit.Parameters;
+import org.powerunit.Test;
+import org.powerunit.TestSuite;
+
+public class HelloWorldParameterTest implements TestSuite {
+  &#64;Parameters("Input string is {0}, subString idx is {1}, expected result is {2}")
+  public static Stream&lt;Object[]&gt; getDatas() {
+    return Arrays.stream(new Object[][] { { "ab", 0, "ab" }, { "ab", 1, "b" } });
+  }
+
+  &#64;Parameter(0)
+  public String inputString;
+
+  &#64;Parameter(1)
+  public int inputIndex;
+
+  &#64;Parameter(2)
+  public String expectedString;
+
+  &#64;Test
+  public void testSubString() {
+    assertThat(inputString.substring(inputIndex)).is(expectedString);
+  }
+}</pre>
+	The interesting elements here are :
+	<ul>
+		<li>The concept of providing test parameter is similar to the one
+			of JUnit, but there is no need to use an alternate test runner (in
+			fact the concept of test runner doesn't exist in PowerUnit).</li>
+		<li>Expected data provider type is <code>{@link
+				java.util.stream.Stream Stream&lt;Object[]&gt;}</code>. As it is a stream,
+			all new features of Java 8 (map, collect, etc) are available and can
+			be defined prior returning the result.
+		</li>
+	</ul>
+
+	<h4>Tests action sequences order</h4>
+
+	Each test class is executed in isolation. The first action to be done
+	is the instantiation of the class itself. Then the test execution can
+	be :
+	<ol>
+		<li>If the test use the &#64;Parameters approach, the annotated
+			method will be used to produce a list of input data. Each line of
+			data will trigger the next step (injection at each run of the data
+			into the field annotated &#64;Parameter); If the &#64;Parameters
+			approach is not used, only one execution of the tests will be done.</li>
+		<li>For each method annotated &#64;Test, an execution will be
+			done. This execution will be based on the passed &#64;Rule, from the
+			upper class to the lower class.</li>
+	</ol>
+	To demonstrate this sequence of action, here is an example of all
+	theses concepts. Let's assume we have the two following classes :
+	<pre>
+import org.powerunit.Rule;
+import org.powerunit.TestRule;
+import org.powerunit.TestSuite;
+import org.powerunit.rules.TestContextRule;
+
+public abstract class ParentTest implements TestSuite {
+  protected final TestContextRule context = new TestContextRule&lt;&gt;();
+
+  &#64;Rule
+  public final TestRule level1 = context.around(before(this::prepare1).around(after(this::clean1)));
+
+  public final void prepare1() {
+    System.out.println(context.getTestContext().getFullTestName() + ":prepare1");
+  }
+
+  public final void clean1() {
+    System.out.println(context.getTestContext().getFullTestName() + ":clean1");
+  }
+}</pre>
+	<p />
+	<pre>
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+import org.powerunit.Parameter;
+import org.powerunit.Parameters;
+import org.powerunit.Rule;
+import org.powerunit.Test;
+import org.powerunit.TestRule;
+
+public class ChildrenTest extends ParentTest {
+
+  &#64;Parameters
+  public static Stream&lt;Object[]&gt; getDatas() {
+    return Arrays.stream(new Object[][] { { "A" }, { "B" } });
+  }
+
+  &#64;Parameter(0)
+  public String p1;
+
+  &#64;Rule
+  public final TestRule level2 = before(this::prepare2).around(after(this::clean2));
+
+  public final void prepare2() {
+    System.out.println(context.getTestContext().getFullTestName() + ":prepare2");
+  }
+
+  public final void clean2() {
+    System.out.println(context.getTestContext().getFullTestName() + ":clean2");
+  }
+
+  &#64;Test
+  public void test1() {
+    System.out.println("test1 " + p1);
+  }
+
+  &#64;Test
+  public void test2() {
+    System.out.println("test2 " + p1);
+  }
+}
+</pre>
+	The first class
+	<code>ParentTest</code>
+	defines a first level of rules, that will provide information on the
+	test execution, one method to be executed before each test, and one
+	method to be executed after each test. Then the second class
+	<code>ChildenTest</code>
+	extends the previous one and defines a second level of rules, with all
+	to before and after method. In addition, each test will be executed
+	twice, once with
+	<code>p1=A</code>
+	, once with
+	<code>p1=B</code>
+	. The output of the execution will be :
+	<pre>
+org.powerunit.examples.ChildrenTest:test2[0]:prepare1
+org.powerunit.examples.ChildrenTest:test2[0]:prepare2
+test2 A
+org.powerunit.examples.ChildrenTest:test2[0]:clean2
+org.powerunit.examples.ChildrenTest:test2[0]:clean1
+org.powerunit.examples.ChildrenTest:test1[0]:prepare1
+org.powerunit.examples.ChildrenTest:test1[0]:prepare2
+test1 A
+org.powerunit.examples.ChildrenTest:test1[0]:clean2
+org.powerunit.examples.ChildrenTest:test1[0]:clean1
+org.powerunit.examples.ChildrenTest:test2[1]:prepare1
+org.powerunit.examples.ChildrenTest:test2[1]:prepare2
+test2 B
+org.powerunit.examples.ChildrenTest:test2[1]:clean2
+org.powerunit.examples.ChildrenTest:test2[1]:clean1
+org.powerunit.examples.ChildrenTest:test1[1]:prepare1
+org.powerunit.examples.ChildrenTest:test1[1]:prepare2
+test1 B
+org.powerunit.examples.ChildrenTest:test1[1]:clean2
+org.powerunit.examples.ChildrenTest:test1[1]:clean1
+</pre>
+	It is possible to say that the before of the parent class are executed
+	before the once of the children class. The after are executed in the
+	reverse order. Also, as the before/after action use the result of the
+	<code>TestContextRule</code>
+	, it also show that this rule is execute before all others. As
+	parameters were used, the trace indicate that the sequence of rule
+	action are used for each parameter set, and for each test.
+	<p />
+	In some specific case, it is possible that one rule required, to be
+	builded, that another one is already executed. To do so, the
+	<code>around</code>
+	method also support receiving a
+	<code>Supplier</code>
+	parameter, that will be used, at the very last moment, to build the
+	rule.
+
+	<h4>Assertion and Assumption usage</h4>
+
+	Assertion and assumption are provided by the interface {@link
+	org.powerunit.TestSuite TestSuite} that may be implemented by the test
+	class. Assertion and assumption use the same DSL language and
+	capabilities, but they are started by a different methods :
+	<ul>
+		<li>The assertion are started by the methods named <code>assertXXX</code>.
+			If the assertion fail, the test is marked as failed.
+		</li>
+		<li>The assumption are started by the methods named <code>assumeXXX</code>.
+			If the assumption fail, the test is marked as skipped.
+		</li>
+		<li>The method named <code>fail</code> fail the tests.
+	</ul>
+	Several type of assertion/assumption are available :
+	<ul>
+		<li><b><code>assertThat</code>/<code>assumeThat</code></b><br />This
+			is the much simple usage. The goal is here to validate the passed
+			value against a specific check. The base syntax is (for the
+			assertion): <pre>assertThat(myObject)...</pre> This method will
+			return an instance of {@link org.powerunit.AssertThatObject
+			AssertThatObject}, which provides several method to validate the
+			passed object (equality, nullability or application of a hamcrest
+			matcher).
+			<p /></li>
+		<li><b><code>assertThatIterable</code>/<code>assumeThatIterable</code></b><br />This
+			is an extension of the previous usage. The goal is here to validate
+			the passed iterable value against a specific check. The base syntax
+			is (for the assertion): <pre>assertThatIterable(myIterable)...</pre>
+			This method will return an instance of {@link
+			org.powerunit.AssertThatIterable AssertThatIterable} (which is an
+			extension of {@link org.powerunit.AssertThatObject
+			AssertThatObject}), providing the same features as before and several
+			additional method to validate the iterable (size, contains).
+			<p /></li>
+		<li><b><code>assertThatFunction</code>/<code>assumeThatFunction</code></b><br />This
+			is a much complicated assertion/assumption usage. Here the goal is to
+			check the application of a <i>lambda</i> <i>function</i> on an input
+			data. The base syntax is (for the assertion) :<pre>assertThatFunction((p)-&gt;p,myObject)...</pre>
+			This method will return an instance of {@link
+			org.powerunit.AssertThatObject AssertThatObject}, which will be used
+			to validate the result of the function application.
+			<p /></li>
+		<li><b><code>assertWhen</code>/<code>assumeWhen</code></b><br />This
+			is the approach to validate that some piece of code is throwing an
+			expected exception. This assertion/assumption will fail in case the
+			code doesn't thrown an exception or the thrown exception is not
+			accepted by the provided matcher. The base syntax is (for the
+			assertion) :<pre>assertWhen((p)-&gt;{/*...*/})...</pre> This method
+			will return an instance of {@link org.powerunit.AssertThatException},
+			which will provide a way to specify the matcher to be used to check
+			the thrown exception.
+			<p /></li>
+	</ul>
+	The provides matcher also support the new {@link java.util.Optional
+	Optional} concept of Java 8.
+
+	<h3>Annotations processor</h3>
+	PowerUnit provides an integration out of the box with the annotation
+	processor of the java compiler. This is provided by the {@link
+	org.power.processor.PowerUnitProcessor PowerUnitProcessor}. The goal of
+	this annotation processor is double :
+	<ul>
+		<li>First of all, this processor do some check on the code, to
+			ensure that the annotation provided by PowerUnit are correctly used.
+			Some check can only be done at runtime, but here it provides a way to
+			do some check at compile time. All non correct usage detected at this
+			stage are reported by the compiler as warning. For instance, the
+			usage of the annotation <code>Test</code> on a non public method will
+			be reported as <pre>[WARNING] Method testPrivateMethod() of org.powerunit.test.base.RuntimeTestValidatorTests.TestClass5
+    is prefixed with @Test and is not public 
+    A test method must be public</pre>
+		</li>
+		<li>A main class (<code>org.powerunit.suite.Suites</code>) is
+			generated to provide a way to manually run the test. This an be use
+			for instance in context where no integration is available.
+		</li>
+	</ul>
+
+	<h3>Surefire integration</h3>
+	This test system can integrated out of the box with Surefire. This is
+	done by adding this package as a dependencies of the surefire plugin :
+	<pre>
+&lt;plugin&gt;
+  &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+  &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.powerunit&lt;/groupId&gt;
+      &lt;artifactId&gt;powerunit&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/plugin&gt;</pre>
+
+	<h3>About Hamcrest integration</h3>
+	Hamcrest is integrated with this framework, as a maven dependency. Here
+	the {@link org.powerunit.TestSuite TestSuite} interface provides the
+	standard hamcrest DSL features, with some additional matcher (for
+	exception and the new {@link java.util.Optional Optional} class for
+	instance).
+</body>
+
+</html>

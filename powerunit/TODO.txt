@@ -1,0 +1,34 @@
+-Remplacer la gestion du test par une pure s�quence de statement
+
+-Ajouter des listeners � plus d'endroit
+-SetStart = class
+-SetEnd = class
+-TestStart = @Test with rule, etc
+-TestEnd(skipped,Failure,Error,Success)
+-TestMethodStart = only @Test
+-TestMethodEnd(skipped,Failure,Error,Success)
+-BeforeMethodStart = only @Before
+-BeforeMethodEnd(skipped,Failure,Error,Success)
+-AfterMethodStart = only @After
+-AfterMethodEnd(skipped,Failure,Error,Success)
+-RetrieveParametersStart
+-RetrieveParametersEnd(Error,Success)
+-OneParameterSetStart
+-OneParameterSetEnd(Failure,Error,Success)
+
+-Revoir la javadoc, y.c. @see
+
+-Revoir les messages d'erreurs
+
+-Mettre en place overview
+
+-Refonte des tests :
+--boostrap par class
+
+-Intégration qualité de code
+
+-Correction gestion @Parameter ->risque de duplication
+
+-Ajouter assertThatStream(Stream<T>).
+
+-Ajouter matcher sur les object java 8
