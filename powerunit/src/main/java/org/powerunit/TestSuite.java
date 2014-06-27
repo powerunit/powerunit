@@ -74,6 +74,14 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * <p>
 	 * The passed runnable will be used before each test. The exact location of
 	 * the execution is depending on where this used on the testRule chain.
+	 * <p>
+	 * In the much simple case (just one method to be executed before each
+	 * test), the syntax is :
+	 * 
+	 * <pre>
+	 * &#064;Rule
+	 * public TestRule rule = before(this::beforeMethodName);
+	 * </pre>
 	 * 
 	 * @param befores
 	 *            the befores
@@ -90,6 +98,14 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * <p>
 	 * The passed runnable will be used after each test. The exact location of
 	 * the execution is depending on where this used on the testRule chain.
+	 * <p>
+	 * In the much simple case (just one method to be executed after each test),
+	 * the syntax is :
+	 * 
+	 * <pre>
+	 * &#064;Rule
+	 * public TestRule rule = after(this::afterMethodName);
+	 * </pre>
 	 * 
 	 * @param afters
 	 *            the afters
@@ -115,6 +131,23 @@ public interface TestSuite extends Assert, Assume, Matchers {
 
 	/**
 	 * Produces a new rule for the temporary folder.
+	 * <p>
+	 * As the {@link TemporaryFolder} rule provides several methods that are
+	 * required for the test, except in the case when only this rule is
+	 * required, a direct usage in the rule DSL is not adapted.
+	 * 
+	 * For instance, assuming that it is required to mix a before and the
+	 * {@link TemporaryFolder} rule, the code will look like :
+	 * 
+	 * <pre>
+	 * private TemporaryFolder temporary = temporaryFolder();
+	 * 
+	 * @#64;
+	 * public TestRule rule = before(this::beforeMethodName).around(temporary);
+	 * </pre>
+	 * 
+	 * This is required to ensure that the method of the {@link TemporaryFolder}
+	 * object can be used (using the field named <code>temporary</code>).
 	 * 
 	 * @return the temporary folder rule.
 	 * @see Rule
