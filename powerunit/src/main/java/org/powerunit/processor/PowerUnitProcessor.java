@@ -165,7 +165,7 @@ public class PowerUnitProcessor extends AbstractProcessor implements
 			w.println("  public void notifySetStart(String setName, String parameters) {");
 			w.println("    System.out.println(\"Start of \"+setName);");
 			w.println("    result.put(setName, new org.powerunit.report.Testsuite());");
-			w.println("    result.get(setName).setName(setName);");
+			w.println("    result.get(setName).setName(setName.replace('$','.'));");
 			w.println("    result.get(setName).setDisabled(0);");
 			w.println("    result.get(setName).setErrors(0);");
 			w.println("    result.get(setName).setFailures(0);");
@@ -195,7 +195,7 @@ public class PowerUnitProcessor extends AbstractProcessor implements
 			w.println("    result.get(context.getSetName()).setTests(result.get(context.getSetName()).getTests()+1);");
 			w.println("    result.get(context.getSetName()).getTestcase().add(new org.powerunit.report.Testcase());");
 			w.println("    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).setName(context.getLocalTestName()+(context.getParameterName()==null?\"\":(\"[\"+context.getParameterName()+\"]\")));");
-			w.println("    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).setStatus(context.getTestSuiteObject().getClass().getCanonicalName());");
+			w.println("    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).setClassname(context.getTestSuiteObject().getClass().getCanonicalName());");
 			w.println("  }");
 			w.println();
 			w.println("  @Override");
