@@ -39,7 +39,7 @@ import org.mockito.MockitoAnnotations;
  * &lt;code&gt;TestRule&lt;/code&gt;. Once you have the outer test rule, it is possible to
  * chain them by using the {@link #around(TestRule)} or
  * {@link #around(Supplier)} methods. One single TestRule (which can be used as
- * a start of the chain, or later), can be builded be :
+ * a start of the chain, or later), can be builded by :
  * &lt;ul&gt;
  * &lt;li&gt;Simply using the constructor (or other way) provided by the rule itself
  * (for instance see the {@link org.powerunit.rules.TestContextRule
@@ -86,7 +86,7 @@ import org.mockito.MockitoAnnotations;
  * &lt;/pre&gt;
  * 
  * In this case, the defined chain, will first apply the rule provided by
- * &lt;code&gt;mockitoRule&lt;/code&gt;, and the apply the rule included inside the
+ * &lt;code&gt;mockitoRule&lt;/code&gt;, and then apply the rule included inside the
  * &lt;code&gt;around&lt;/code&gt;. The &lt;code&gt;before&lt;/code&gt; method usage inside the
  * &lt;code&gt;around&lt;/code&gt; will ensure the method &lt;code&gt;prepare&lt;/code&gt; is executed
  * before each test.
@@ -166,13 +166,17 @@ public interface TestRule {
 
 	/**
 	 * Add an inner rule.
+	 * &lt;p&gt;
+	 * This inner rule is created just before usage, thanks to the
+	 * {@link Supplier} object. This can be used for the case when one rule
+	 * depend on the outcome of a previous one.
 	 * 
 	 * @param inner
 	 *            the supplier of the inner rule
 	 * @return the rule chain.
 	 */
 	default TestRule around(Supplier&lt;TestRule&gt; inner) {
-<span class="fc" id="L175">		return (i) -&gt; computeStatement((p) -&gt; inner.get().computeStatement(i)</span>
+<span class="fc" id="L179">		return (i) -&gt; computeStatement((p) -&gt; inner.get().computeStatement(i)</span>
 				.run(p));
 	}
 
@@ -182,7 +186,7 @@ public interface TestRule {
 	 * @return the mockitor rule
 	 */
 	static TestRule mockitoRule() {
-<span class="fc" id="L185">		return (i) -&gt; Statement.around(i, (p) -&gt; {</span>
+<span class="fc" id="L189">		return (i) -&gt; Statement.around(i, (p) -&gt; {</span>
 			MockitoAnnotations.initMocks(p.getTestSuiteObject());
 		}, (p) -&gt; {
 		});

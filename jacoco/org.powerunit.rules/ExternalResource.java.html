@@ -24,7 +24,19 @@ import org.powerunit.TestContext;
 /**
  * Default Rule to do some stuff before the test, and after (always).
  * &lt;p&gt;
- * This interface is provided here as a facility for rule provider.
+ * This interface is provided here as a facility for rule provider, which will
+ * implement the {@link #before()} and {@link #after()} methods. The idea is to
+ * support use case that access some external system which need preparation and
+ * cleanup between each test.
+ * &lt;p&gt;
+ * To use this interface, implementer should :
+ * &lt;ul&gt;
+ * &lt;li&gt;Implement the method {@link #before()} with the code that prepare the
+ * external resource (creation of folder, start of server, etc).&lt;/li&gt;
+ * &lt;li&gt;Implement the method {@link #after()} with the code that cleanup the
+ * external resource (destruction of folder, shutdown of server, etc). This
+ * method is used even in case the test is in failure or error.&lt;/li&gt;
+ * &lt;/ul&gt;
  * 
  * @author borettim
  */
@@ -32,24 +44,24 @@ public interface ExternalResource extends TestListenerRule {
 
 	@Override
 	default void onStart(TestContext&lt;Object&gt; context) {
-<span class="fc" id="L35">		before();</span>
-<span class="fc" id="L36">	}</span>
+<span class="fc" id="L47">		before();</span>
+<span class="fc" id="L48">	}</span>
 
 	@Override
 	default void onEnd(TestContext&lt;Object&gt; context) {
-<span class="fc" id="L40">		after();</span>
-<span class="fc" id="L41">	}</span>
+<span class="fc" id="L52">		after();</span>
+<span class="fc" id="L53">	}</span>
 
 	/**
 	 * Code to be done before
 	 */
 	default void before() {
-<span class="fc" id="L47">	}</span>
+<span class="fc" id="L59">	}</span>
 
 	/**
 	 * Code to be done after.
 	 */
 	default void after() {
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L65">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -47,7 +47,7 @@
 <span class="sourceLineNo">039</span> * &lt;code&gt;TestRule&lt;/code&gt;. Once you have the outer test rule, it is possible to<a name="line.39"></a>
 <span class="sourceLineNo">040</span> * chain them by using the {@link #around(TestRule)} or<a name="line.40"></a>
 <span class="sourceLineNo">041</span> * {@link #around(Supplier)} methods. One single TestRule (which can be used as<a name="line.41"></a>
-<span class="sourceLineNo">042</span> * a start of the chain, or later), can be builded be :<a name="line.42"></a>
+<span class="sourceLineNo">042</span> * a start of the chain, or later), can be builded by :<a name="line.42"></a>
 <span class="sourceLineNo">043</span> * &lt;ul&gt;<a name="line.43"></a>
 <span class="sourceLineNo">044</span> * &lt;li&gt;Simply using the constructor (or other way) provided by the rule itself<a name="line.44"></a>
 <span class="sourceLineNo">045</span> * (for instance see the {@link org.powerunit.rules.TestContextRule<a name="line.45"></a>
@@ -94,7 +94,7 @@
 <span class="sourceLineNo">086</span> * &lt;/pre&gt;<a name="line.86"></a>
 <span class="sourceLineNo">087</span> * <a name="line.87"></a>
 <span class="sourceLineNo">088</span> * In this case, the defined chain, will first apply the rule provided by<a name="line.88"></a>
-<span class="sourceLineNo">089</span> * &lt;code&gt;mockitoRule&lt;/code&gt;, and the apply the rule included inside the<a name="line.89"></a>
+<span class="sourceLineNo">089</span> * &lt;code&gt;mockitoRule&lt;/code&gt;, and then apply the rule included inside the<a name="line.89"></a>
 <span class="sourceLineNo">090</span> * &lt;code&gt;around&lt;/code&gt;. The &lt;code&gt;before&lt;/code&gt; method usage inside the<a name="line.90"></a>
 <span class="sourceLineNo">091</span> * &lt;code&gt;around&lt;/code&gt; will ensure the method &lt;code&gt;prepare&lt;/code&gt; is executed<a name="line.91"></a>
 <span class="sourceLineNo">092</span> * before each test.<a name="line.92"></a>
@@ -174,28 +174,32 @@
 <span class="sourceLineNo">166</span><a name="line.166"></a>
 <span class="sourceLineNo">167</span>        /**<a name="line.167"></a>
 <span class="sourceLineNo">168</span>         * Add an inner rule.<a name="line.168"></a>
-<span class="sourceLineNo">169</span>         * <a name="line.169"></a>
-<span class="sourceLineNo">170</span>         * @param inner<a name="line.170"></a>
-<span class="sourceLineNo">171</span>         *            the supplier of the inner rule<a name="line.171"></a>
-<span class="sourceLineNo">172</span>         * @return the rule chain.<a name="line.172"></a>
-<span class="sourceLineNo">173</span>         */<a name="line.173"></a>
-<span class="sourceLineNo">174</span>        default TestRule around(Supplier&lt;TestRule&gt; inner) {<a name="line.174"></a>
-<span class="sourceLineNo">175</span>                return (i) -&gt; computeStatement((p) -&gt; inner.get().computeStatement(i)<a name="line.175"></a>
-<span class="sourceLineNo">176</span>                                .run(p));<a name="line.176"></a>
-<span class="sourceLineNo">177</span>        }<a name="line.177"></a>
-<span class="sourceLineNo">178</span><a name="line.178"></a>
-<span class="sourceLineNo">179</span>        /**<a name="line.179"></a>
-<span class="sourceLineNo">180</span>         * Create a rule to support mockito.<a name="line.180"></a>
-<span class="sourceLineNo">181</span>         * <a name="line.181"></a>
-<span class="sourceLineNo">182</span>         * @return the mockitor rule<a name="line.182"></a>
-<span class="sourceLineNo">183</span>         */<a name="line.183"></a>
-<span class="sourceLineNo">184</span>        static TestRule mockitoRule() {<a name="line.184"></a>
-<span class="sourceLineNo">185</span>                return (i) -&gt; Statement.around(i, (p) -&gt; {<a name="line.185"></a>
-<span class="sourceLineNo">186</span>                        MockitoAnnotations.initMocks(p.getTestSuiteObject());<a name="line.186"></a>
-<span class="sourceLineNo">187</span>                }, (p) -&gt; {<a name="line.187"></a>
-<span class="sourceLineNo">188</span>                });<a name="line.188"></a>
-<span class="sourceLineNo">189</span>        }<a name="line.189"></a>
-<span class="sourceLineNo">190</span>}<a name="line.190"></a>
+<span class="sourceLineNo">169</span>         * &lt;p&gt;<a name="line.169"></a>
+<span class="sourceLineNo">170</span>         * This inner rule is created just before usage, thanks to the<a name="line.170"></a>
+<span class="sourceLineNo">171</span>         * {@link Supplier} object. This can be used for the case when one rule<a name="line.171"></a>
+<span class="sourceLineNo">172</span>         * depend on the outcome of a previous one.<a name="line.172"></a>
+<span class="sourceLineNo">173</span>         * <a name="line.173"></a>
+<span class="sourceLineNo">174</span>         * @param inner<a name="line.174"></a>
+<span class="sourceLineNo">175</span>         *            the supplier of the inner rule<a name="line.175"></a>
+<span class="sourceLineNo">176</span>         * @return the rule chain.<a name="line.176"></a>
+<span class="sourceLineNo">177</span>         */<a name="line.177"></a>
+<span class="sourceLineNo">178</span>        default TestRule around(Supplier&lt;TestRule&gt; inner) {<a name="line.178"></a>
+<span class="sourceLineNo">179</span>                return (i) -&gt; computeStatement((p) -&gt; inner.get().computeStatement(i)<a name="line.179"></a>
+<span class="sourceLineNo">180</span>                                .run(p));<a name="line.180"></a>
+<span class="sourceLineNo">181</span>        }<a name="line.181"></a>
+<span class="sourceLineNo">182</span><a name="line.182"></a>
+<span class="sourceLineNo">183</span>        /**<a name="line.183"></a>
+<span class="sourceLineNo">184</span>         * Create a rule to support mockito.<a name="line.184"></a>
+<span class="sourceLineNo">185</span>         * <a name="line.185"></a>
+<span class="sourceLineNo">186</span>         * @return the mockitor rule<a name="line.186"></a>
+<span class="sourceLineNo">187</span>         */<a name="line.187"></a>
+<span class="sourceLineNo">188</span>        static TestRule mockitoRule() {<a name="line.188"></a>
+<span class="sourceLineNo">189</span>                return (i) -&gt; Statement.around(i, (p) -&gt; {<a name="line.189"></a>
+<span class="sourceLineNo">190</span>                        MockitoAnnotations.initMocks(p.getTestSuiteObject());<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                }, (p) -&gt; {<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                });<a name="line.192"></a>
+<span class="sourceLineNo">193</span>        }<a name="line.193"></a>
+<span class="sourceLineNo">194</span>}<a name="line.194"></a>
 
 
 

@@ -29,8 +29,30 @@ import org.powerunit.exception.AssumptionError;
  * &lt;p&gt;
  * The purpose is here to provide an interface that can be implemented by rule
  * implementor to do action, before, after and on some condition.
+ * &lt;p&gt;
+ * Rule implementer should implements this interface and then implement the
+ * required methods (which are do-nothing method by default).
+ * 
+ * The order of execution is the following :
+ * &lt;ul&gt;
+ * &lt;li&gt;Before the test, the method {@link #onStart(TestContext)} is executed.&lt;/li&gt;
+ * &lt;li&gt;Then the test is executed.&lt;/li&gt;
+ * &lt;li&gt;In case of error/failure, one (and only one) of the next methods is
+ * executed
+ * &lt;ol&gt;
+ * &lt;li&gt;{@link #onFailure(TestContext, AssertionError)} in case of test failure.&lt;/li&gt;
+ * &lt;li&gt;{@link #onError(TestContext, Throwable)} in case of test error.&lt;/li&gt;
+ * &lt;/ol&gt;
+ * &lt;/li&gt;
+ * &lt;li&gt;In all case, after the test, and after the previous method in case of
+ * error/failure, the method {@link #onEnd(TestContext)} is executed.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * 
+ * The {@link ExternalResource} rule implements this interface to provide simple
+ * use case (action before and always after test).
  * 
  * @author borettim
+ * @see ExternalResource
  */
 public interface TestListenerRule extends TestRule {
 
@@ -42,7 +64,7 @@ public interface TestListenerRule extends TestRule {
 	 */
 	default void onStart(TestContext&lt;Object&gt; context) {
 
-<span class="nc" id="L45">	}</span>
+<span class="nc" id="L67">	}</span>
 
 	/**
 	 * Method used when a failure happened.
@@ -54,7 +76,7 @@ public interface TestListenerRule extends TestRule {
 	 */
 	default void onFailure(TestContext&lt;Object&gt; context, AssertionError af) {
 
-<span class="nc" id="L57">	}</span>
+<span class="nc" id="L79">	}</span>
 
 	/**
 	 * Method used when an error happened.
@@ -66,7 +88,7 @@ public interface TestListenerRule extends TestRule {
 	 */
 	default void onError(TestContext&lt;Object&gt; context, Throwable error) {
 
-<span class="nc" id="L69">	}</span>
+<span class="nc" id="L91">	}</span>
 
 	/**
 	 * Method used when an assumption error happened.
@@ -79,7 +101,7 @@ public interface TestListenerRule extends TestRule {
 	default void onAssumptionSkip(TestContext&lt;Object&gt; context,
 			AssumptionError error) {
 
-<span class="nc" id="L82">	}</span>
+<span class="nc" id="L104">	}</span>
 
 	/**
 	 * Method used at the end of the test.
@@ -89,12 +111,12 @@ public interface TestListenerRule extends TestRule {
 	 */
 	default void onEnd(TestContext&lt;Object&gt; context) {
 
-<span class="nc" id="L92">	}</span>
+<span class="nc" id="L114">	}</span>
 
 	@Override
 	default Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; computeStatement(
 			Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; inner) {
-<span class="fc" id="L97">		return (p) -&gt; {</span>
+<span class="fc" id="L119">		return (p) -&gt; {</span>
 			try {
 				onStart(p);
 				inner.run(p);

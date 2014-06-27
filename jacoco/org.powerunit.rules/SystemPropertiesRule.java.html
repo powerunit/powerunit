@@ -27,6 +27,13 @@ import org.powerunit.TestRule;
 
 /**
  * Rule that restore system properties after test.
+ * &lt;p&gt;
+ * This class is exposed by the
+ * {@link org.powerunit.TestSuite#systemPropertiesRule(String...)
+ * systemPropertiesRule()} method of the {@link org.powerunit.TestSuite
+ * TestSuite} interface. Direct instantiation of this class should be avoided.
+ * Other methods are also available in the TestSuite interface to set one
+ * property.
  * 
  * @author borettim
  *
@@ -45,33 +52,33 @@ public final class SystemPropertiesRule implements ExternalResource {
 	 * @see org.powerunit.TestSuite#systemPropertiesRule(String...) Alternate
 	 *      method to have the new construction in favor of a more DSL language.
 	 */
-<span class="fc" id="L48">	public SystemPropertiesRule(String... propertiesName) {</span>
-<span class="fc" id="L49">		this.propertiesName = propertiesName;</span>
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L55">	public SystemPropertiesRule(String... propertiesName) {</span>
+<span class="fc" id="L56">		this.propertiesName = propertiesName;</span>
+<span class="fc" id="L57">	}</span>
 
 	@Override
 	public void before() {
-<span class="fc" id="L54">		values = new HashMap&lt;&gt;();</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">		for (String n : propertiesName) {</span>
-<span class="fc" id="L56">			String old = System.getProperty(n);</span>
-<span class="fc" id="L57">			values.put(n, old);</span>
+<span class="fc" id="L61">		values = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (String n : propertiesName) {</span>
+<span class="fc" id="L63">			String old = System.getProperty(n);</span>
+<span class="fc" id="L64">			values.put(n, old);</span>
 		}
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L66">	}</span>
 
 	@Override
 	public void after() {
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		for (String n : propertiesName) {</span>
-<span class="fc" id="L64">			String old = values.get(n);</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (old == null) {</span>
-<span class="fc" id="L66">				System.clearProperty(n);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		for (String n : propertiesName) {</span>
+<span class="fc" id="L71">			String old = values.get(n);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			if (old == null) {</span>
+<span class="fc" id="L73">				System.clearProperty(n);</span>
 			} else {
-<span class="fc" id="L68">				System.setProperty(n, old);</span>
+<span class="fc" id="L75">				System.setProperty(n, old);</span>
 			}
 		}
-<span class="fc" id="L71">	}</span>
+<span class="fc" id="L78">	}</span>
 
 	/**
-	 * Set a system property before a test and ensure the correct restore
+	 * Set a system property before a test and ensure the correct restore.
 	 * 
 	 * @param propertyName
 	 *            the property name
@@ -81,13 +88,13 @@ public final class SystemPropertiesRule implements ExternalResource {
 	 */
 	public static TestRule setSystemPropertyBeforeTestAndRestoreAfter(
 			String propertyName, Supplier&lt;String&gt; propertyValue) {
-<span class="fc" id="L84">		return new SystemPropertiesRule(propertyName).around(TestRule</span>
-<span class="fc" id="L85">				.before(() -&gt; System.setProperty(propertyName,</span>
+<span class="fc" id="L91">		return new SystemPropertiesRule(propertyName).around(TestRule</span>
+<span class="fc" id="L92">				.before(() -&gt; System.setProperty(propertyName,</span>
 						propertyValue.get())));
 	}
 
 	/**
-	 * Set a system property before a test and ensure the correct restore
+	 * Set a system property before a test and ensure the correct restore.
 	 * 
 	 * @param propertyName
 	 *            the property name
@@ -97,7 +104,7 @@ public final class SystemPropertiesRule implements ExternalResource {
 	 */
 	public static TestRule setSystemPropertyBeforeTestAndRestoreAfter(
 			String propertyName, String propertyValue) {
-<span class="fc" id="L100">		return setSystemPropertyBeforeTestAndRestoreAfter(propertyName,</span>
+<span class="fc" id="L107">		return setSystemPropertyBeforeTestAndRestoreAfter(propertyName,</span>
 				() -&gt; propertyValue);
 	}
 
