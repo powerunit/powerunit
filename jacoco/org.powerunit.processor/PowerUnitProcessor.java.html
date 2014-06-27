@@ -111,114 +111,167 @@ import org.powerunit.impl.validator.TestProcessorValidator;
 <span class="nc" id="L111">			w.println(&quot;@javax.annotation.Generated(\&quot;Test suites for powerunit\&quot;)&quot;);</span>
 <span class="nc" id="L112">			w.println(&quot;public final class Suites implements org.powerunit.TestResultListener {&quot;);</span>
 <span class="nc" id="L113">			w.println();</span>
-<span class="nc" id="L114">			w.println(&quot;  private Suites() {}&quot;);</span>
-<span class="nc" id="L115">			w.println();</span>
-<span class="nc" id="L116">			w.println(&quot;  private static final java.util.Map&lt;String,Class&lt;?&gt;[]&gt; suites;&quot;);</span>
-<span class="nc" id="L117">			w.println();</span>
-<span class="nc" id="L118">			w.println(&quot;  static {&quot;);</span>
-<span class="nc" id="L119">			w.println(&quot;    java.util.Map&lt;String,Class&lt;?&gt;[]&gt; tmp = new java.util.HashMap&lt;&gt;();&quot;);</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">			for (Map.Entry&lt;String, List&lt;TypeMirror&gt;&gt; cat : categories</span>
-<span class="nc" id="L121">					.entrySet()) {</span>
-<span class="nc" id="L122">				w.println(&quot;    tmp.put(\&quot;&quot; + cat.getKey()</span>
+<span class="nc" id="L114">			w.println(&quot;  private Suites(String targetFolder) {&quot;);</span>
+<span class="nc" id="L115">			w.println(&quot;    this.targetFolder=new java.io.File(targetFolder);&quot;);</span>
+<span class="nc" id="L116">			w.println(&quot;    this.targetFolder.mkdirs();&quot;);</span>
+<span class="nc" id="L117">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L118">			w.println();</span>
+<span class="nc" id="L119">			w.println(&quot;  private final static javax.xml.bind.JAXBContext context;&quot;);</span>
+<span class="nc" id="L120">			w.println();</span>
+<span class="nc" id="L121">			w.println(&quot;  static {&quot;);</span>
+<span class="nc" id="L122">			w.println(&quot;    try {&quot;);</span>
+<span class="nc" id="L123">			w.println(&quot;      context = javax.xml.bind.JAXBContext.newInstance(org.powerunit.report.Testsuites.class);&quot;);</span>
+<span class="nc" id="L124">			w.println(&quot;    } catch (javax.xml.bind.JAXBException e) {&quot;);</span>
+<span class="nc" id="L125">			w.println(&quot;      throw new java.lang.IllegalArgumentException(\&quot;Unable to setup jaxb \&quot;+ e.getMessage(), e);&quot;);</span>
+<span class="nc" id="L126">			w.println(&quot;    }&quot;);</span>
+<span class="nc" id="L127">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L128">			w.println();</span>
+<span class="nc" id="L129">			w.println(&quot;  private static final java.util.Map&lt;String,Class&lt;?&gt;[]&gt; suites;&quot;);</span>
+<span class="nc" id="L130">			w.println();</span>
+<span class="nc" id="L131">			w.println(&quot;  static {&quot;);</span>
+<span class="nc" id="L132">			w.println(&quot;    java.util.Map&lt;String,Class&lt;?&gt;[]&gt; tmp = new java.util.HashMap&lt;&gt;();&quot;);</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">			for (Map.Entry&lt;String, List&lt;TypeMirror&gt;&gt; cat : categories</span>
+<span class="nc" id="L134">					.entrySet()) {</span>
+<span class="nc" id="L135">				w.println(&quot;    tmp.put(\&quot;&quot; + cat.getKey()</span>
 						+ &quot;\&quot;,new Class&lt;?&gt;[]{&quot;);
-<span class="nc" id="L124">				int counter = 0;</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">				for (TypeMirror tm : cat.getValue()) {</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">					if (counter &gt; 0) {</span>
-<span class="nc" id="L127">						w.println(&quot;,&quot;);</span>
+<span class="nc" id="L137">				int counter = 0;</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">				for (TypeMirror tm : cat.getValue()) {</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">					if (counter &gt; 0) {</span>
+<span class="nc" id="L140">						w.println(&quot;,&quot;);</span>
 					}
-<span class="nc" id="L129">					w.print(&quot;      &quot; + tm.toString() + &quot;.class&quot;);</span>
-<span class="nc" id="L130">					counter++;</span>
-<span class="nc" id="L131">				}</span>
-<span class="nc" id="L132">				w.println();</span>
-<span class="nc" id="L133">				w.println(&quot;    });&quot;);</span>
-<span class="nc" id="L134">			}</span>
-<span class="nc" id="L135">			w.println(&quot;    suites=java.util.Collections.unmodifiableMap(tmp);&quot;);</span>
-<span class="nc" id="L136">			w.println(&quot;  }&quot;);</span>
-<span class="nc" id="L137">			w.println();</span>
-<span class="nc" id="L138">			w.println(&quot;  public static java.util.Map&lt;String,Class&lt;?&gt;[]&gt; getSuites() {&quot;);</span>
-<span class="nc" id="L139">			w.println(&quot;    return suites;&quot;);</span>
-<span class="nc" id="L140">			w.println(&quot;  }&quot;);</span>
-<span class="nc" id="L141">			w.println();</span>
-<span class="nc" id="L142">			w.println(&quot;  private boolean error=false;&quot;);</span>
-<span class="nc" id="L143">			w.println();</span>
-<span class="nc" id="L144">			w.println(&quot;  @Override&quot;);</span>
-<span class="nc" id="L145">			w.println(&quot;  public void notifySetStart(String setName, String parameters) {&quot;);</span>
-<span class="nc" id="L146">			w.println(&quot;    System.out.println(\&quot;Start of \&quot;+setName);&quot;);</span>
-<span class="nc" id="L147">			w.println(&quot;  }&quot;);</span>
-<span class="nc" id="L148">			w.println();</span>
-<span class="nc" id="L149">			w.println(&quot;  @Override&quot;);</span>
-<span class="nc" id="L150">			w.println(&quot;  public void notifySetEnd(String setName, String parameters) {&quot;);</span>
-<span class="nc" id="L151">			w.println(&quot;    System.out.println(\&quot;End of \&quot;+setName);&quot;);</span>
-<span class="nc" id="L152">			w.println(&quot;  }&quot;);</span>
-<span class="nc" id="L153">			w.println();</span>
-<span class="nc" id="L154">			w.println(&quot;  @Override&quot;);</span>
-<span class="nc" id="L155">			w.println(&quot;  public void notifyStart(org.powerunit.TestContext context) {&quot;);</span>
-<span class="nc" id="L156">			w.println(&quot;    System.out.println(\&quot;Start of \&quot;+context.getFullTestName());&quot;);</span>
-<span class="nc" id="L157">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L142">					w.print(&quot;      &quot; + tm.toString() + &quot;.class&quot;);</span>
+<span class="nc" id="L143">					counter++;</span>
+<span class="nc" id="L144">				}</span>
+<span class="nc" id="L145">				w.println();</span>
+<span class="nc" id="L146">				w.println(&quot;    });&quot;);</span>
+<span class="nc" id="L147">			}</span>
+<span class="nc" id="L148">			w.println(&quot;    suites=java.util.Collections.unmodifiableMap(tmp);&quot;);</span>
+<span class="nc" id="L149">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L150">			w.println();</span>
+<span class="nc" id="L151">			w.println(&quot;  public static java.util.Map&lt;String,Class&lt;?&gt;[]&gt; getSuites() {&quot;);</span>
+<span class="nc" id="L152">			w.println(&quot;    return suites;&quot;);</span>
+<span class="nc" id="L153">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L154">			w.println();</span>
+<span class="nc" id="L155">			w.println(&quot;  private boolean error=false;&quot;);</span>
+<span class="nc" id="L156">			w.println();</span>
+<span class="nc" id="L157">			w.println(&quot;  private java.util.Map&lt;String,org.powerunit.report.Testsuite&gt; result = new java.util.HashMap&lt;&gt;();&quot;);</span>
 <span class="nc" id="L158">			w.println();</span>
-<span class="nc" id="L159">			w.println(&quot;  @Override&quot;);</span>
-<span class="nc" id="L160">			w.println(&quot;  public void notifySuccess(org.powerunit.TestContext context) {&quot;);</span>
-<span class="nc" id="L161">			w.println(&quot;    System.out.println(\&quot;End of \&quot;+context.getFullTestName());&quot;);</span>
-<span class="nc" id="L162">			w.println(&quot;  }&quot;);</span>
-<span class="nc" id="L163">			w.println();</span>
-<span class="nc" id="L164">			w.println(&quot;  @Override&quot;);</span>
-<span class="nc" id="L165">			w.println(&quot;  public void notifyFailure(org.powerunit.TestContext context, Throwable cause) {&quot;);</span>
-<span class="nc" id="L166">			w.println(&quot;    System.out.println(\&quot;Failure of \&quot;+context.getFullTestName()+\&quot; because of \&quot;+cause.getMessage());&quot;);</span>
-<span class="nc" id="L167">			w.println(&quot;    cause.printStackTrace();&quot;);</span>
-<span class="nc" id="L168">			w.println(&quot;    error=true;&quot;);</span>
-<span class="nc" id="L169">			w.println(&quot;  }&quot;);</span>
-<span class="nc" id="L170">			w.println();</span>
-<span class="nc" id="L171">			w.println(&quot;  @Override&quot;);</span>
-<span class="nc" id="L172">			w.println(&quot;  public void notifySkipped(org.powerunit.TestContext context) {&quot;);</span>
-<span class="nc" id="L173">			w.println(&quot;    System.out.println(\&quot;Skip of \&quot;+context.getFullTestName());&quot;);</span>
-<span class="nc" id="L174">			w.println(&quot;  }&quot;);</span>
-<span class="nc" id="L175">			w.println();</span>
-<span class="nc" id="L176">			w.println(&quot;  @Override&quot;);</span>
-<span class="nc" id="L177">			w.println(&quot;  public void notifyError(org.powerunit.TestContext context, Throwable cause) {&quot;);</span>
-<span class="nc" id="L178">			w.println(&quot;    System.out.println(\&quot;Error of \&quot;+context.getFullTestName()+\&quot; because of \&quot;+cause.getMessage());&quot;);</span>
-<span class="nc" id="L179">			w.println(&quot;    cause.printStackTrace();&quot;);</span>
-<span class="nc" id="L180">			w.println(&quot;    error=true;&quot;);</span>
-<span class="nc" id="L181">			w.println(&quot;  }&quot;);</span>
-<span class="nc" id="L182">			w.println();</span>
-<span class="nc" id="L183">			w.println(&quot;  public static void main(String argv[]) {&quot;);</span>
-<span class="nc" id="L184">			w.println(&quot;    if (argv.length==0) {&quot;);</span>
-<span class="nc" id="L185">			w.println(&quot;       suites.keySet().stream().forEach((c)-&gt;{main(new String[]{c});});&quot;);</span>
-<span class="nc" id="L186">			w.println(&quot;    return;&quot;);</span>
-<span class="nc" id="L187">			w.println(&quot;    }&quot;);</span>
-<span class="nc" id="L188">			w.println(&quot;    String name = argv[0];&quot;);</span>
-<span class="nc" id="L189">			w.println(&quot;    boolean success=true;&quot;);</span>
-<span class="nc" id="L190">			w.println(&quot;    for(Class&lt;?&gt; c:getSuites().get(name)) {&quot;);</span>
-<span class="nc" id="L191">			w.println(&quot;      Suites p = new Suites();&quot;);</span>
-<span class="nc" id="L192">			w.println(&quot;      org.powerunit.PowerUnitRunner r = new org.powerunit.impl.DefaultPowerUnitRunnerImpl(c);&quot;);</span>
-<span class="nc" id="L193">			w.println(&quot;      r.addListener(p);&quot;);</span>
-<span class="nc" id="L194">			w.println(&quot;      r.run();&quot;);</span>
-<span class="nc" id="L195">			w.println(&quot;      success=success&amp;&amp;!p.error;&quot;);</span>
-<span class="nc" id="L196">			w.println(&quot;    }&quot;);</span>
-<span class="nc" id="L197">			w.println(&quot;    if(!success) {&quot;);</span>
-<span class="nc" id="L198">			w.println(&quot;      System.out.println(\&quot;Tests in error.\&quot;);&quot;);</span>
-<span class="nc" id="L199">			w.println(&quot;      System.exit(-1);&quot;);</span>
-<span class="nc" id="L200">			w.println(&quot;    }&quot;);</span>
-<span class="nc" id="L201">			w.println(&quot;  }&quot;);</span>
-<span class="nc" id="L202">			w.println();</span>
-<span class="nc" id="L203">			w.println(&quot;}&quot;);</span>
-<span class="nc bnc" id="L204" title="All 8 branches missed.">		}</span>
-<span class="nc" id="L205">	}</span>
+<span class="nc" id="L159">			w.println(&quot;  private java.io.File targetFolder ;&quot;);</span>
+<span class="nc" id="L160">			w.println();</span>
+<span class="nc" id="L161">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L162">			w.println(&quot;  public void notifySetStart(String setName, String parameters) {&quot;);</span>
+<span class="nc" id="L163">			w.println(&quot;    System.out.println(\&quot;Start of \&quot;+setName);&quot;);</span>
+<span class="nc" id="L164">			w.println(&quot;    result.put(setName, new org.powerunit.report.Testsuite());&quot;);</span>
+<span class="nc" id="L165">			w.println(&quot;    result.get(setName).setName(setName);&quot;);</span>
+<span class="nc" id="L166">			w.println(&quot;    result.get(setName).setDisabled(0);&quot;);</span>
+<span class="nc" id="L167">			w.println(&quot;    result.get(setName).setErrors(0);&quot;);</span>
+<span class="nc" id="L168">			w.println(&quot;    result.get(setName).setFailures(0);&quot;);</span>
+<span class="nc" id="L169">			w.println(&quot;    result.get(setName).setTests(0);&quot;);</span>
+<span class="nc" id="L170">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L171">			w.println();</span>
+<span class="nc" id="L172">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L173">			w.println(&quot;  public void notifySetEnd(String setName, String parameters) {&quot;);</span>
+<span class="nc" id="L174">			w.println(&quot;    System.out.println(\&quot;End of \&quot;+setName);&quot;);</span>
+<span class="nc" id="L175">			w.println(&quot;    try {&quot;);</span>
+<span class="nc" id="L176">			w.println(&quot;      java.io.File target = new java.io.File(targetFolder,setName+\&quot;.xml\&quot;);&quot;);</span>
+<span class="nc" id="L177">			w.println(&quot;      context.createMarshaller().marshal(result.get(setName), target);&quot;);</span>
+<span class="nc" id="L178">			w.println(&quot;    } catch (javax.xml.bind.JAXBException e) {&quot;);</span>
+<span class="nc" id="L179">			w.println(&quot;      e.printStackTrace();&quot;);</span>
+<span class="nc" id="L180">			w.println(&quot;      System.exit(1);&quot;);</span>
+<span class="nc" id="L181">			w.println(&quot;    }&quot;);</span>
+<span class="nc" id="L182">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L183">			w.println();</span>
+<span class="nc" id="L184">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L185">			w.println(&quot;  public void notifyStart(org.powerunit.TestContext context) {&quot;);</span>
+<span class="nc" id="L186">			w.println(&quot;    System.out.println(\&quot;Start of \&quot;+context.getFullTestName());&quot;);</span>
+<span class="nc" id="L187">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L188">			w.println();</span>
+<span class="nc" id="L189">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L190">			w.println(&quot;  public void notifySuccess(org.powerunit.TestContext context) {&quot;);</span>
+<span class="nc" id="L191">			w.println(&quot;    System.out.println(\&quot;End of \&quot;+context.getFullTestName());&quot;);</span>
+<span class="nc" id="L192">			w.println(&quot;    result.get(context.getSetName()).setTests(result.get(context.getSetName()).getTests()+1);&quot;);</span>
+<span class="nc" id="L193">			w.println(&quot;    result.get(context.getSetName()).getTestcase().add(new org.powerunit.report.Testcase());&quot;);</span>
+<span class="nc" id="L194">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).setName(context.getLocalTestName()+(context.getParameterName()==null?\&quot;\&quot;:(\&quot;[\&quot;+context.getParameterName()+\&quot;]\&quot;)));&quot;);</span>
+<span class="nc" id="L195">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).setStatus(context.getTestSuiteObject().getClass().getCanonicalName());&quot;);</span>
+<span class="nc" id="L196">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L197">			w.println();</span>
+<span class="nc" id="L198">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L199">			w.println(&quot;  public void notifyFailure(org.powerunit.TestContext context, Throwable cause) {&quot;);</span>
+<span class="nc" id="L200">			w.println(&quot;    System.out.println(\&quot;Failure of \&quot;+context.getFullTestName()+\&quot; because of \&quot;+cause.getMessage());&quot;);</span>
+<span class="nc" id="L201">			w.println(&quot;    cause.printStackTrace();&quot;);</span>
+<span class="nc" id="L202">			w.println(&quot;    error=true;&quot;);</span>
+<span class="nc" id="L203">			w.println(&quot;    result.get(context.getSetName()).setFailures(result.get(context.getSetName()).getFailures()+1);&quot;);</span>
+<span class="nc" id="L204">			w.println(&quot;    result.get(context.getSetName()).getTestcase().add(new org.powerunit.report.Testcase());&quot;);</span>
+<span class="nc" id="L205">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).setName(context.getLocalTestName()+(context.getParameterName()==null?\&quot;\&quot;:(\&quot;[\&quot;+context.getParameterName()+\&quot;]\&quot;)));&quot;);</span>
+<span class="nc" id="L206">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).setClassname(context.getTestSuiteObject().getClass().getCanonicalName());&quot;);</span>
+<span class="nc" id="L207">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).getFailure().add(new org.powerunit.report.Failure());&quot;);</span>
+<span class="nc" id="L208">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).getFailure().get(result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).getFailure().size()-1).setType(cause.getClass().getCanonicalName());&quot;);</span>
+<span class="nc" id="L209">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).getFailure().get(result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).getFailure().size()-1).setMessage(cause.getMessage());&quot;);</span>
+<span class="nc" id="L210">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L211">			w.println();</span>
+<span class="nc" id="L212">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L213">			w.println(&quot;  public void notifySkipped(org.powerunit.TestContext context) {&quot;);</span>
+<span class="nc" id="L214">			w.println(&quot;    System.out.println(\&quot;Skip of \&quot;+context.getFullTestName());&quot;);</span>
+<span class="nc" id="L215">			w.println(&quot;    result.get(context.getSetName()).setDisabled(result.get(context.getSetName()).getDisabled()+1);&quot;);</span>
+<span class="nc" id="L216">			w.println(&quot;    result.get(context.getSetName()).getTestcase().add(new org.powerunit.report.Testcase());&quot;);</span>
+<span class="nc" id="L217">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).setName(context.getLocalTestName()+(context.getParameterName()==null?\&quot;\&quot;:(\&quot;[\&quot;+context.getParameterName()+\&quot;]\&quot;)));&quot;);</span>
+<span class="nc" id="L218">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).setClassname(context.getTestSuiteObject().getClass().getCanonicalName());&quot;);</span>
+<span class="nc" id="L219">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).setSkipped(\&quot;\&quot;);&quot;);</span>
+<span class="nc" id="L220">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L221">			w.println();</span>
+<span class="nc" id="L222">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L223">			w.println(&quot;  public void notifyError(org.powerunit.TestContext context, Throwable cause) {&quot;);</span>
+<span class="nc" id="L224">			w.println(&quot;    System.out.println(\&quot;Error of \&quot;+context.getFullTestName()+\&quot; because of \&quot;+cause.getMessage());&quot;);</span>
+<span class="nc" id="L225">			w.println(&quot;    cause.printStackTrace();&quot;);</span>
+<span class="nc" id="L226">			w.println(&quot;    error=true;&quot;);</span>
+<span class="nc" id="L227">			w.println(&quot;    result.get(context.getSetName()).setErrors(result.get(context.getSetName()).getErrors()+1);&quot;);</span>
+<span class="nc" id="L228">			w.println(&quot;    result.get(context.getSetName()).getTestcase().add(new org.powerunit.report.Testcase());&quot;);</span>
+<span class="nc" id="L229">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).setName(context.getLocalTestName()+(context.getParameterName()==null?\&quot;\&quot;:(\&quot;[\&quot;+context.getParameterName()+\&quot;]\&quot;)));&quot;);</span>
+<span class="nc" id="L230">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).setClassname(context.getTestSuiteObject().getClass().getCanonicalName());&quot;);</span>
+<span class="nc" id="L231">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).getError().add(new org.powerunit.report.Error());&quot;);</span>
+<span class="nc" id="L232">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).getError().get(result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).getError().size()-1).setType(cause.getClass().getCanonicalName());&quot;);</span>
+<span class="nc" id="L233">			w.println(&quot;    result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).getError().get(result.get(context.getSetName()).getTestcase().get(result.get(context.getSetName()).getTestcase().size()-1).getError().size()-1).setMessage(cause.getMessage());&quot;);</span>
+<span class="nc" id="L234">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L235">			w.println();</span>
+<span class="nc" id="L236">			w.println(&quot;  public static void main(String argv[]) {&quot;);</span>
+<span class="nc" id="L237">			w.println(&quot;    if (argv.length==1) {&quot;);</span>
+<span class="nc" id="L238">			w.println(&quot;       suites.keySet().stream().forEach((c)-&gt;{main(new String[]{argv[0],c});});&quot;);</span>
+<span class="nc" id="L239">			w.println(&quot;    return;&quot;);</span>
+<span class="nc" id="L240">			w.println(&quot;    }&quot;);</span>
+<span class="nc" id="L241">			w.println(&quot;    String name = argv[1];&quot;);</span>
+<span class="nc" id="L242">			w.println(&quot;    boolean success=true;&quot;);</span>
+<span class="nc" id="L243">			w.println(&quot;    for(Class&lt;?&gt; c:getSuites().get(name)) {&quot;);</span>
+<span class="nc" id="L244">			w.println(&quot;      Suites p = new Suites(argv[0]);&quot;);</span>
+<span class="nc" id="L245">			w.println(&quot;      org.powerunit.PowerUnitRunner r = new org.powerunit.impl.DefaultPowerUnitRunnerImpl(c);&quot;);</span>
+<span class="nc" id="L246">			w.println(&quot;      r.addListener(p);&quot;);</span>
+<span class="nc" id="L247">			w.println(&quot;      r.run();&quot;);</span>
+<span class="nc" id="L248">			w.println(&quot;      success=success&amp;&amp;!p.error;&quot;);</span>
+<span class="nc" id="L249">			w.println(&quot;    }&quot;);</span>
+<span class="nc" id="L250">			w.println(&quot;    if(!success) {&quot;);</span>
+<span class="nc" id="L251">			w.println(&quot;      System.out.println(\&quot;Tests in error.\&quot;);&quot;);</span>
+<span class="nc" id="L252">			w.println(&quot;      System.exit(-1);&quot;);</span>
+<span class="nc" id="L253">			w.println(&quot;    }&quot;);</span>
+<span class="nc" id="L254">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L255">			w.println();</span>
+<span class="nc" id="L256">			w.println(&quot;}&quot;);</span>
+<span class="nc bnc" id="L257" title="All 8 branches missed.">		}</span>
+<span class="nc" id="L258">	}</span>
 
 	@Override
 	public String elementAsString(Element ee) {
-<span class="nc" id="L209">		return ee.toString() + &quot; of &quot; + ee.getEnclosingElement().toString();</span>
+<span class="nc" id="L262">		return ee.toString() + &quot; of &quot; + ee.getEnclosingElement().toString();</span>
 	}
 
 	@Override
 	public void error(String msg) {
-<span class="nc" id="L214">		processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, msg);</span>
-<span class="nc" id="L215">	}</span>
+<span class="nc" id="L267">		processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, msg);</span>
+<span class="nc" id="L268">	}</span>
 
 	@Override
 	public void warn(String msg) {
-<span class="nc" id="L219">		processingEnv.getMessager().printMessage(</span>
+<span class="nc" id="L272">		processingEnv.getMessager().printMessage(</span>
 				Diagnostic.Kind.MANDATORY_WARNING, msg);
-<span class="nc" id="L221">	}</span>
+<span class="nc" id="L274">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

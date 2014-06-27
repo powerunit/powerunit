@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Testsuite.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">org.powerunit.report</a> &gt; <span class="el_source">Testsuite.java</span></div><h1>Testsuite.java</h1><pre class="source lang-java linenums">//
+// Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB), v2.2.7 
+// Voir &lt;a href=&quot;http://java.sun.com/xml/jaxb&quot;&gt;http://java.sun.com/xml/jaxb&lt;/a&gt; 
+// Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source. 
+// Généré le : 2014.06.27 à 04:58:37 PM CEST 
+//
+
+
+package org.powerunit.report;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * &lt;p&gt;Classe Java pour anonymous complex type.
+ * 
+ * &lt;p&gt;Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+ * 
+ * &lt;pre&gt;
+ * &amp;lt;complexType&gt;
+ *   &amp;lt;complexContent&gt;
+ *     &amp;lt;restriction base=&quot;{http://www.w3.org/2001/XMLSchema}anyType&quot;&gt;
+ *       &amp;lt;sequence&gt;
+ *         &amp;lt;element ref=&quot;{}properties&quot; minOccurs=&quot;0&quot;/&gt;
+ *         &amp;lt;element ref=&quot;{}testcase&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/&gt;
+ *         &amp;lt;element ref=&quot;{}system-out&quot; minOccurs=&quot;0&quot;/&gt;
+ *         &amp;lt;element ref=&quot;{}system-err&quot; minOccurs=&quot;0&quot;/&gt;
+ *       &amp;lt;/sequence&gt;
+ *       &amp;lt;attribute name=&quot;name&quot; use=&quot;required&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;tests&quot; use=&quot;required&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}int&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;failures&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}int&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;errors&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}int&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;time&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;disabled&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}int&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;skipped&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}int&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;timestamp&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;hostname&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;id&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;package&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
+ *     &amp;lt;/restriction&gt;
+ *   &amp;lt;/complexContent&gt;
+ * &amp;lt;/complexType&gt;
+ * &lt;/pre&gt;
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = &quot;&quot;, propOrder = {
+    &quot;properties&quot;,
+    &quot;testcase&quot;,
+    &quot;systemOut&quot;,
+    &quot;systemErr&quot;
+})
+@XmlRootElement(name = &quot;testsuite&quot;)
+<span class="nc" id="L62">public class Testsuite {</span>
+
+    protected Properties properties;
+    protected List&lt;Testcase&gt; testcase;
+    @XmlElement(name = &quot;system-out&quot;)
+    protected String systemOut;
+    @XmlElement(name = &quot;system-err&quot;)
+    protected String systemErr;
+    @XmlAttribute(name = &quot;name&quot;, required = true)
+    protected String name;
+    @XmlAttribute(name = &quot;tests&quot;, required = true)
+    protected int tests;
+    @XmlAttribute(name = &quot;failures&quot;)
+    protected Integer failures;
+    @XmlAttribute(name = &quot;errors&quot;)
+    protected Integer errors;
+    @XmlAttribute(name = &quot;time&quot;)
+    protected String time;
+    @XmlAttribute(name = &quot;disabled&quot;)
+    protected Integer disabled;
+    @XmlAttribute(name = &quot;skipped&quot;)
+    protected Integer skipped;
+    @XmlAttribute(name = &quot;timestamp&quot;)
+    protected String timestamp;
+    @XmlAttribute(name = &quot;hostname&quot;)
+    protected String hostname;
+    @XmlAttribute(name = &quot;id&quot;)
+    protected String id;
+    @XmlAttribute(name = &quot;package&quot;)
+    protected String _package;
+
+    /**
+     * Obtient la valeur de la propriété properties.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Properties }
+     *     
+     */
+    public Properties getProperties() {
+<span class="nc" id="L102">        return properties;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété properties.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Properties }
+     *     
+     */
+    public void setProperties(Properties value) {
+<span class="nc" id="L114">        this.properties = value;</span>
+<span class="nc" id="L115">    }</span>
+
+    /**
+     * Gets the value of the testcase property.
+     * 
+     * &lt;p&gt;
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a &lt;CODE&gt;set&lt;/CODE&gt; method for the testcase property.
+     * 
+     * &lt;p&gt;
+     * For example, to add a new item, do as follows:
+     * &lt;pre&gt;
+     *    getTestcase().add(newItem);
+     * &lt;/pre&gt;
+     * 
+     * 
+     * &lt;p&gt;
+     * Objects of the following type(s) are allowed in the list
+     * {@link Testcase }
+     * 
+     * 
+     */
+    public List&lt;Testcase&gt; getTestcase() {
+<span class="nc bnc" id="L140" title="All 2 branches missed.">        if (testcase == null) {</span>
+<span class="nc" id="L141">            testcase = new ArrayList&lt;Testcase&gt;();</span>
+        }
+<span class="nc" id="L143">        return this.testcase;</span>
+    }
+
+    /**
+     * Obtient la valeur de la propriété systemOut.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSystemOut() {
+<span class="nc" id="L155">        return systemOut;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété systemOut.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSystemOut(String value) {
+<span class="nc" id="L167">        this.systemOut = value;</span>
+<span class="nc" id="L168">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété systemErr.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSystemErr() {
+<span class="nc" id="L179">        return systemErr;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété systemErr.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSystemErr(String value) {
+<span class="nc" id="L191">        this.systemErr = value;</span>
+<span class="nc" id="L192">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété name.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getName() {
+<span class="nc" id="L203">        return name;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété name.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setName(String value) {
+<span class="nc" id="L215">        this.name = value;</span>
+<span class="nc" id="L216">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété tests.
+     * 
+     */
+    public int getTests() {
+<span class="nc" id="L223">        return tests;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété tests.
+     * 
+     */
+    public void setTests(int value) {
+<span class="nc" id="L231">        this.tests = value;</span>
+<span class="nc" id="L232">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété failures.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getFailures() {
+<span class="nc" id="L243">        return failures;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété failures.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setFailures(Integer value) {
+<span class="nc" id="L255">        this.failures = value;</span>
+<span class="nc" id="L256">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété errors.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getErrors() {
+<span class="nc" id="L267">        return errors;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété errors.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setErrors(Integer value) {
+<span class="nc" id="L279">        this.errors = value;</span>
+<span class="nc" id="L280">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété time.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTime() {
+<span class="nc" id="L291">        return time;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété time.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTime(String value) {
+<span class="nc" id="L303">        this.time = value;</span>
+<span class="nc" id="L304">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété disabled.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getDisabled() {
+<span class="nc" id="L315">        return disabled;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété disabled.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setDisabled(Integer value) {
+<span class="nc" id="L327">        this.disabled = value;</span>
+<span class="nc" id="L328">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété skipped.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getSkipped() {
+<span class="nc" id="L339">        return skipped;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété skipped.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setSkipped(Integer value) {
+<span class="nc" id="L351">        this.skipped = value;</span>
+<span class="nc" id="L352">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété timestamp.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTimestamp() {
+<span class="nc" id="L363">        return timestamp;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété timestamp.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTimestamp(String value) {
+<span class="nc" id="L375">        this.timestamp = value;</span>
+<span class="nc" id="L376">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété hostname.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getHostname() {
+<span class="nc" id="L387">        return hostname;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété hostname.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setHostname(String value) {
+<span class="nc" id="L399">        this.hostname = value;</span>
+<span class="nc" id="L400">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété id.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getId() {
+<span class="nc" id="L411">        return id;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété id.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setId(String value) {
+<span class="nc" id="L423">        this.id = value;</span>
+<span class="nc" id="L424">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété package.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPackage() {
+<span class="nc" id="L435">        return _package;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété package.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPackage(String value) {
+<span class="nc" id="L447">        this._package = value;</span>
+<span class="nc" id="L448">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

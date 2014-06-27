@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Testcase.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">org.powerunit.report</a> &gt; <span class="el_source">Testcase.java</span></div><h1>Testcase.java</h1><pre class="source lang-java linenums">//
+// Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB), v2.2.7 
+// Voir &lt;a href=&quot;http://java.sun.com/xml/jaxb&quot;&gt;http://java.sun.com/xml/jaxb&lt;/a&gt; 
+// Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source. 
+// Généré le : 2014.06.27 à 04:58:37 PM CEST 
+//
+
+
+package org.powerunit.report;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+
+/**
+ * &lt;p&gt;Classe Java pour anonymous complex type.
+ * 
+ * &lt;p&gt;Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+ * 
+ * &lt;pre&gt;
+ * &amp;lt;complexType&gt;
+ *   &amp;lt;complexContent&gt;
+ *     &amp;lt;restriction base=&quot;{http://www.w3.org/2001/XMLSchema}anyType&quot;&gt;
+ *       &amp;lt;sequence&gt;
+ *         &amp;lt;element ref=&quot;{}skipped&quot; minOccurs=&quot;0&quot;/&gt;
+ *         &amp;lt;element ref=&quot;{}error&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/&gt;
+ *         &amp;lt;element ref=&quot;{}failure&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/&gt;
+ *         &amp;lt;element ref=&quot;{}system-out&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/&gt;
+ *         &amp;lt;element ref=&quot;{}system-err&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/&gt;
+ *       &amp;lt;/sequence&gt;
+ *       &amp;lt;attribute name=&quot;name&quot; use=&quot;required&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;assertions&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;time&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;classname&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
+ *       &amp;lt;attribute name=&quot;status&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
+ *     &amp;lt;/restriction&gt;
+ *   &amp;lt;/complexContent&gt;
+ * &amp;lt;/complexType&gt;
+ * &lt;/pre&gt;
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = &quot;&quot;, propOrder = {
+    &quot;skipped&quot;,
+    &quot;error&quot;,
+    &quot;failure&quot;,
+    &quot;systemOut&quot;,
+    &quot;systemErr&quot;
+})
+@XmlRootElement(name = &quot;testcase&quot;)
+<span class="nc" id="L58">public class Testcase {</span>
+
+    protected String skipped;
+    protected List&lt;Error&gt; error;
+    protected List&lt;Failure&gt; failure;
+    @XmlElement(name = &quot;system-out&quot;)
+    protected List&lt;String&gt; systemOut;
+    @XmlElement(name = &quot;system-err&quot;)
+    protected List&lt;String&gt; systemErr;
+    @XmlAttribute(name = &quot;name&quot;, required = true)
+    protected String name;
+    @XmlAttribute(name = &quot;assertions&quot;)
+    protected String assertions;
+    @XmlAttribute(name = &quot;time&quot;)
+    protected String time;
+    @XmlAttribute(name = &quot;classname&quot;)
+    protected String classname;
+    @XmlAttribute(name = &quot;status&quot;)
+    protected String status;
+
+    /**
+     * Obtient la valeur de la propriété skipped.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSkipped() {
+<span class="nc" id="L87">        return skipped;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété skipped.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSkipped(String value) {
+<span class="nc" id="L99">        this.skipped = value;</span>
+<span class="nc" id="L100">    }</span>
+
+    /**
+     * Gets the value of the error property.
+     * 
+     * &lt;p&gt;
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a &lt;CODE&gt;set&lt;/CODE&gt; method for the error property.
+     * 
+     * &lt;p&gt;
+     * For example, to add a new item, do as follows:
+     * &lt;pre&gt;
+     *    getError().add(newItem);
+     * &lt;/pre&gt;
+     * 
+     * 
+     * &lt;p&gt;
+     * Objects of the following type(s) are allowed in the list
+     * {@link Error }
+     * 
+     * 
+     */
+    public List&lt;Error&gt; getError() {
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        if (error == null) {</span>
+<span class="nc" id="L126">            error = new ArrayList&lt;Error&gt;();</span>
+        }
+<span class="nc" id="L128">        return this.error;</span>
+    }
+
+    /**
+     * Gets the value of the failure property.
+     * 
+     * &lt;p&gt;
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a &lt;CODE&gt;set&lt;/CODE&gt; method for the failure property.
+     * 
+     * &lt;p&gt;
+     * For example, to add a new item, do as follows:
+     * &lt;pre&gt;
+     *    getFailure().add(newItem);
+     * &lt;/pre&gt;
+     * 
+     * 
+     * &lt;p&gt;
+     * Objects of the following type(s) are allowed in the list
+     * {@link Failure }
+     * 
+     * 
+     */
+    public List&lt;Failure&gt; getFailure() {
+<span class="nc bnc" id="L154" title="All 2 branches missed.">        if (failure == null) {</span>
+<span class="nc" id="L155">            failure = new ArrayList&lt;Failure&gt;();</span>
+        }
+<span class="nc" id="L157">        return this.failure;</span>
+    }
+
+    /**
+     * Gets the value of the systemOut property.
+     * 
+     * &lt;p&gt;
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a &lt;CODE&gt;set&lt;/CODE&gt; method for the systemOut property.
+     * 
+     * &lt;p&gt;
+     * For example, to add a new item, do as follows:
+     * &lt;pre&gt;
+     *    getSystemOut().add(newItem);
+     * &lt;/pre&gt;
+     * 
+     * 
+     * &lt;p&gt;
+     * Objects of the following type(s) are allowed in the list
+     * {@link String }
+     * 
+     * 
+     */
+    public List&lt;String&gt; getSystemOut() {
+<span class="nc bnc" id="L183" title="All 2 branches missed.">        if (systemOut == null) {</span>
+<span class="nc" id="L184">            systemOut = new ArrayList&lt;String&gt;();</span>
+        }
+<span class="nc" id="L186">        return this.systemOut;</span>
+    }
+
+    /**
+     * Gets the value of the systemErr property.
+     * 
+     * &lt;p&gt;
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a &lt;CODE&gt;set&lt;/CODE&gt; method for the systemErr property.
+     * 
+     * &lt;p&gt;
+     * For example, to add a new item, do as follows:
+     * &lt;pre&gt;
+     *    getSystemErr().add(newItem);
+     * &lt;/pre&gt;
+     * 
+     * 
+     * &lt;p&gt;
+     * Objects of the following type(s) are allowed in the list
+     * {@link String }
+     * 
+     * 
+     */
+    public List&lt;String&gt; getSystemErr() {
+<span class="nc bnc" id="L212" title="All 2 branches missed.">        if (systemErr == null) {</span>
+<span class="nc" id="L213">            systemErr = new ArrayList&lt;String&gt;();</span>
+        }
+<span class="nc" id="L215">        return this.systemErr;</span>
+    }
+
+    /**
+     * Obtient la valeur de la propriété name.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getName() {
+<span class="nc" id="L227">        return name;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété name.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setName(String value) {
+<span class="nc" id="L239">        this.name = value;</span>
+<span class="nc" id="L240">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété assertions.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAssertions() {
+<span class="nc" id="L251">        return assertions;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété assertions.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAssertions(String value) {
+<span class="nc" id="L263">        this.assertions = value;</span>
+<span class="nc" id="L264">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété time.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTime() {
+<span class="nc" id="L275">        return time;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété time.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTime(String value) {
+<span class="nc" id="L287">        this.time = value;</span>
+<span class="nc" id="L288">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété classname.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getClassname() {
+<span class="nc" id="L299">        return classname;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété classname.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setClassname(String value) {
+<span class="nc" id="L311">        this.classname = value;</span>
+<span class="nc" id="L312">    }</span>
+
+    /**
+     * Obtient la valeur de la propriété status.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getStatus() {
+<span class="nc" id="L323">        return status;</span>
+    }
+
+    /**
+     * Définit la valeur de la propriété status.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setStatus(String value) {
+<span class="nc" id="L335">        this.status = value;</span>
+<span class="nc" id="L336">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
