@@ -24,6 +24,7 @@ import java.util.function.Function;
 import org.powerunit.impl.AssertThatExceptionImpl;
 import org.powerunit.impl.AssertThatIterableImpl;
 import org.powerunit.impl.AssertThatObjectImpl;
+import org.powerunit.impl.AssertThatStringImpl;
 
 /**
  * This is the assert features.
@@ -77,6 +78,48 @@ interface Assert {
 	 */
 	default <T> AssertThatObject<T> assertThat(String msg, T obj) {
 		return new AssertThatObjectImpl<T>(true, msg, () -> obj);
+	}
+
+	/**
+	 * Assert the value of a String.
+	 * <p>
+	 * For instance
+	 * 
+	 * <pre>
+	 * assertThat(myString).is(&quot;&quot;);
+	 * </pre>
+	 * 
+	 * This will check that <code>myString</code> is <code>""</code> (using the
+	 * <code>equalTo</code> Hamcrest matcher).
+	 * 
+	 * @param obj
+	 *            the String
+	 * @return {@link AssertThatString the assert DSL on this object}
+	 */
+	default AssertThatString assertThat(String obj) {
+		return assertThat(null, obj);
+	}
+
+	/**
+	 * Assert the value of a String.
+	 * <p>
+	 * For instance
+	 * 
+	 * <pre>
+	 * assertThat(&quot;msg&quot;, myString).is(&quot;&quot;);
+	 * </pre>
+	 * 
+	 * This will check that <code>myString</code> is <code>""</code> (using the
+	 * <code>equalTo</code> Hamcrest matcher).
+	 * 
+	 * @param msg
+	 *            a message
+	 * @param obj
+	 *            the String
+	 * @return {@link AssertThatString the assert DSL on this object}
+	 */
+	default AssertThatString assertThat(String msg, String obj) {
+		return new AssertThatStringImpl(true, msg, () -> obj);
 	}
 
 	/**
