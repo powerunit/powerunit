@@ -46,7 +46,7 @@
                                                                                                                                                                                                                                                                                             <li class="collapsed">
                           <a href="project-info.html" title="Project Information">Project Information</a>
                   </li>
-                                                                                                                                                      <li class="expanded">
+                                                                                                                                                                        <li class="expanded">
                           <a href="project-reports.html" title="Project Reports">Project Reports</a>
                     <ul>
                       <li class="none">
@@ -63,6 +63,9 @@
             </li>
                       <li class="none">
                           <a href="xref/index.html" title="Source Xref">Source Xref</a>
+            </li>
+                      <li class="none">
+                          <a href="jacoco/index.html" title="JaCoCo Test">JaCoCo Test</a>
             </li>
               </ul>
         </li>
@@ -113,12 +116,12 @@ function toggleDisplay(elementId) {
 <th>Success Rate</th>
 <th>Time</th></tr>
 <tr class="b">
-<td>92</td>
+<td>67</td>
 <td>0</td>
 <td>0</td>
-<td>8</td>
-<td>91.304%</td>
-<td>0.345</td></tr></table><br />
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr></table><br />
 <p>Note: failures are anticipated and checked for with assertions while errors are unanticipated.</p><br /></div>
 <div class="section">
 <h2>Package List<a name="Package_List"></a></h2><a name="Package_List"></a>
@@ -133,81 +136,7 @@ function toggleDisplay(elementId) {
 <th>Success Rate</th>
 <th>Time</th></tr>
 <tr class="b">
-<td><a href="#org.powerunit.test.base">org.powerunit.test.base</a></td>
-<td>67</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>100%</td>
-<td>0</td></tr>
-<tr class="a">
-<td><a href="#org.powerunit.examples">org.powerunit.examples</a></td>
-<td>9</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>100%</td>
-<td>0.01</td></tr>
-<tr class="b">
-<td><a href="#org.powerunit.examples.demo">org.powerunit.examples.demo</a></td>
-<td>16</td>
-<td>0</td>
-<td>0</td>
-<td>8</td>
-<td>50%</td>
-<td>0.335</td></tr></table><br />
-<p>Note: package statistics are not computed recursively, they only sum up all of its testsuites numbers.</p>
-<div class="section">
-<h3>org.powerunit.test.base<a name="org.powerunit.test.base"></a></h3><a name="org.powerunit.test.base"></a>
-<table border="1" class="bodyTable">
-<tr class="a">
-<th></th>
-<th>Class</th>
-<th>Tests</th>
-<th>Errors </th>
-<th>Failures</th>
-<th>Skipped</th>
-<th>Success Rate</th>
-<th>Time</th></tr>
-<tr class="b">
-<td><a href="#org.powerunit.test.baseExternalResourceTests$TestExternalResourceEmpty"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.test.baseExternalResourceTests$TestExternalResourceEmpty">ExternalResourceTests$TestExternalResourceEmpty</a></td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>100%</td>
-<td>0</td></tr>
-<tr class="a">
-<td><a href="#org.powerunit.test.baseMatchersTests$MatchersTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.test.baseMatchersTests$MatchersTest">MatchersTests$MatchersTest</a></td>
-<td>28</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>100%</td>
-<td>0</td></tr>
-<tr class="b">
-<td><a href="#org.powerunit.test.baseMockitoRuleTests$TestMockito"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.test.baseMockitoRuleTests$TestMockito">MockitoRuleTests$TestMockito</a></td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>100%</td>
-<td>0</td></tr>
-<tr class="a">
-<td><a href="#org.powerunit.test.basePowerUnitProviderListenerTests$PowerUnitProviderListenerTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.test.basePowerUnitProviderListenerTests$PowerUnitProviderListenerTest">PowerUnitProviderListenerTests$PowerUnitProviderListenerTest</a></td>
-<td>9</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>100%</td>
-<td>0</td></tr>
-<tr class="b">
-<td><a href="#org.powerunit.test.basePowerUnitProviderScannerFilterTests$PowerUnitProviderScannerFilterTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.test.basePowerUnitProviderScannerFilterTests$PowerUnitProviderScannerFilterTest">PowerUnitProviderScannerFilterTests$PowerUnitProviderScannerFilterTest</a></td>
+<td><a href="#org.powerunit.test.base.SystemPropertiesRuleTests">org.powerunit.test.base.SystemPropertiesRuleTests</a></td>
 <td>2</td>
 <td>0</td>
 <td>0</td>
@@ -215,8 +144,7 @@ function toggleDisplay(elementId) {
 <td>100%</td>
 <td>0</td></tr>
 <tr class="a">
-<td><a href="#org.powerunit.test.basePowerUnitProviderTests$PowerUnitProviderTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.test.basePowerUnitProviderTests$PowerUnitProviderTest">PowerUnitProviderTests$PowerUnitProviderTest</a></td>
+<td><a href="#org.powerunit.test.base.TestContextRuleTests">org.powerunit.test.base.TestContextRuleTests</a></td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
@@ -224,8 +152,7 @@ function toggleDisplay(elementId) {
 <td>100%</td>
 <td>0</td></tr>
 <tr class="b">
-<td><a href="#org.powerunit.test.baseRuntimeParametersValidatorTests$Tester"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.test.baseRuntimeParametersValidatorTests$Tester">RuntimeParametersValidatorTests$Tester</a></td>
+<td><a href="#org.powerunit.test.base.RuntimeParametersValidatorTests">org.powerunit.test.base.RuntimeParametersValidatorTests</a></td>
 <td>11</td>
 <td>0</td>
 <td>0</td>
@@ -233,8 +160,7 @@ function toggleDisplay(elementId) {
 <td>100%</td>
 <td>0</td></tr>
 <tr class="a">
-<td><a href="#org.powerunit.test.baseRuntimeRuleValidatorTests$Tester"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.test.baseRuntimeRuleValidatorTests$Tester">RuntimeRuleValidatorTests$Tester</a></td>
+<td><a href="#org.powerunit.test.base.RuntimeRuleValidatorTests">org.powerunit.test.base.RuntimeRuleValidatorTests</a></td>
 <td>6</td>
 <td>0</td>
 <td>0</td>
@@ -242,35 +168,63 @@ function toggleDisplay(elementId) {
 <td>100%</td>
 <td>0</td></tr>
 <tr class="b">
-<td><a href="#org.powerunit.test.baseRuntimeTestValidatorTests$Tester"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.test.baseRuntimeTestValidatorTests$Tester">RuntimeTestValidatorTests$Tester</a></td>
-<td>4</td>
+<td><a href="#org.powerunit.test.base.MatchersTests">org.powerunit.test.base.MatchersTests</a></td>
+<td>28</td>
 <td>0</td>
 <td>0</td>
 <td>0</td>
 <td>100%</td>
 <td>0</td></tr>
 <tr class="a">
-<td><a href="#org.powerunit.test.baseStreamParametersMapFunctionTests$StreamParametersMapFunctionTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.test.baseStreamParametersMapFunctionTests$StreamParametersMapFunctionTest">StreamParametersMapFunctionTests$StreamParametersMapFunctionTest</a></td>
+<td><a href="#org.powerunit.test.base.PowerUnitProviderScannerFilterTests">org.powerunit.test.base.PowerUnitProviderScannerFilterTests</a></td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.PowerUnitProviderListenerTests">org.powerunit.test.base.PowerUnitProviderListenerTests</a></td>
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr>
+<tr class="a">
+<td><a href="#org.powerunit.test.base.MockitoRuleTests">org.powerunit.test.base.MockitoRuleTests</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.ExternalResourceTests">org.powerunit.test.base.ExternalResourceTests</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr>
+<tr class="a">
+<td><a href="#org.powerunit.test.base.PowerUnitProviderTests">org.powerunit.test.base.PowerUnitProviderTests</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.StreamParametersMapFunctionTests">org.powerunit.test.base.StreamParametersMapFunctionTests</a></td>
 <td>0</td>
 <td>0</td>
 <td>0</td>
 <td>0</td>
 <td>0%</td>
 <td>0</td></tr>
-<tr class="b">
-<td><a href="#org.powerunit.test.baseSystemPropertiesRuleTests$SystemPropertiesRuleTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.test.baseSystemPropertiesRuleTests$SystemPropertiesRuleTest">SystemPropertiesRuleTests$SystemPropertiesRuleTest</a></td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>100%</td>
-<td>0</td></tr>
 <tr class="a">
-<td><a href="#org.powerunit.test.baseTemporaryFolderTests$TemporaryFolderTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.test.baseTemporaryFolderTests$TemporaryFolderTest">TemporaryFolderTests$TemporaryFolderTest</a></td>
+<td><a href="#org.powerunit.test.base.TemporaryFolderTests">org.powerunit.test.base.TemporaryFolderTests</a></td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
@@ -278,8 +232,50 @@ function toggleDisplay(elementId) {
 <td>100%</td>
 <td>0</td></tr>
 <tr class="b">
-<td><a href="#org.powerunit.test.baseTestContextRuleTests$TestContextRuleTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.test.baseTestContextRuleTests$TestContextRuleTest">TestContextRuleTests$TestContextRuleTest</a></td>
+<td><a href="#org.powerunit.test.base.RuntimeTestValidatorTests">org.powerunit.test.base.RuntimeTestValidatorTests</a></td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr></table><br />
+<p>Note: package statistics are not computed recursively, they only sum up all of its testsuites numbers.</p>
+<div class="section">
+<h3>org.powerunit.test.base.SystemPropertiesRuleTests<a name="org.powerunit.test.base.SystemPropertiesRuleTests"></a></h3><a name="org.powerunit.test.base.SystemPropertiesRuleTests"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.SystemPropertiesRuleTestsSystemPropertiesRuleTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#org.powerunit.test.base.SystemPropertiesRuleTestsSystemPropertiesRuleTest">SystemPropertiesRuleTest</a></td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr></table></div>
+<div class="section">
+<h3>org.powerunit.test.base.TestContextRuleTests<a name="org.powerunit.test.base.TestContextRuleTests"></a></h3><a name="org.powerunit.test.base.TestContextRuleTests"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.TestContextRuleTestsTestContextRuleTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#org.powerunit.test.base.TestContextRuleTestsTestContextRuleTest">TestContextRuleTest</a></td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
@@ -287,7 +283,7 @@ function toggleDisplay(elementId) {
 <td>100%</td>
 <td>0</td></tr></table></div>
 <div class="section">
-<h3>org.powerunit.examples<a name="org.powerunit.examples"></a></h3><a name="org.powerunit.examples"></a>
+<h3>org.powerunit.test.base.RuntimeParametersValidatorTests<a name="org.powerunit.test.base.RuntimeParametersValidatorTests"></a></h3><a name="org.powerunit.test.base.RuntimeParametersValidatorTests"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <th></th>
@@ -299,82 +295,244 @@ function toggleDisplay(elementId) {
 <th>Success Rate</th>
 <th>Time</th></tr>
 <tr class="b">
-<td><a href="#org.powerunit.examplesChildrenTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.examplesChildrenTest">ChildrenTest</a></td>
+<td><a href="#org.powerunit.test.base.RuntimeParametersValidatorTestsTester"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#org.powerunit.test.base.RuntimeParametersValidatorTestsTester">Tester</a></td>
+<td>11</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr></table></div>
+<div class="section">
+<h3>org.powerunit.test.base.RuntimeRuleValidatorTests<a name="org.powerunit.test.base.RuntimeRuleValidatorTests"></a></h3><a name="org.powerunit.test.base.RuntimeRuleValidatorTests"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.RuntimeRuleValidatorTestsTester"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#org.powerunit.test.base.RuntimeRuleValidatorTestsTester">Tester</a></td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr></table></div>
+<div class="section">
+<h3>org.powerunit.test.base.MatchersTests<a name="org.powerunit.test.base.MatchersTests"></a></h3><a name="org.powerunit.test.base.MatchersTests"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.MatchersTestsMatchersTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#org.powerunit.test.base.MatchersTestsMatchersTest">MatchersTest</a></td>
+<td>28</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr></table></div>
+<div class="section">
+<h3>org.powerunit.test.base.PowerUnitProviderScannerFilterTests<a name="org.powerunit.test.base.PowerUnitProviderScannerFilterTests"></a></h3><a name="org.powerunit.test.base.PowerUnitProviderScannerFilterTests"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.PowerUnitProviderScannerFilterTestsPowerUnitProviderScannerFilterTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#org.powerunit.test.base.PowerUnitProviderScannerFilterTestsPowerUnitProviderScannerFilterTest">PowerUnitProviderScannerFilterTest</a></td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr></table></div>
+<div class="section">
+<h3>org.powerunit.test.base.PowerUnitProviderListenerTests<a name="org.powerunit.test.base.PowerUnitProviderListenerTests"></a></h3><a name="org.powerunit.test.base.PowerUnitProviderListenerTests"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.PowerUnitProviderListenerTestsPowerUnitProviderListenerTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#org.powerunit.test.base.PowerUnitProviderListenerTestsPowerUnitProviderListenerTest">PowerUnitProviderListenerTest</a></td>
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr></table></div>
+<div class="section">
+<h3>org.powerunit.test.base.MockitoRuleTests<a name="org.powerunit.test.base.MockitoRuleTests"></a></h3><a name="org.powerunit.test.base.MockitoRuleTests"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.MockitoRuleTestsTestMockito"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#org.powerunit.test.base.MockitoRuleTestsTestMockito">TestMockito</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr></table></div>
+<div class="section">
+<h3>org.powerunit.test.base.ExternalResourceTests<a name="org.powerunit.test.base.ExternalResourceTests"></a></h3><a name="org.powerunit.test.base.ExternalResourceTests"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.ExternalResourceTestsTestExternalResourceEmpty"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#org.powerunit.test.base.ExternalResourceTestsTestExternalResourceEmpty">TestExternalResourceEmpty</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr></table></div>
+<div class="section">
+<h3>org.powerunit.test.base.PowerUnitProviderTests<a name="org.powerunit.test.base.PowerUnitProviderTests"></a></h3><a name="org.powerunit.test.base.PowerUnitProviderTests"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.PowerUnitProviderTestsPowerUnitProviderTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#org.powerunit.test.base.PowerUnitProviderTestsPowerUnitProviderTest">PowerUnitProviderTest</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr></table></div>
+<div class="section">
+<h3>org.powerunit.test.base.StreamParametersMapFunctionTests<a name="org.powerunit.test.base.StreamParametersMapFunctionTests"></a></h3><a name="org.powerunit.test.base.StreamParametersMapFunctionTests"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.StreamParametersMapFunctionTestsStreamParametersMapFunctionTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#org.powerunit.test.base.StreamParametersMapFunctionTestsStreamParametersMapFunctionTest">StreamParametersMapFunctionTest</a></td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0%</td>
+<td>0</td></tr></table></div>
+<div class="section">
+<h3>org.powerunit.test.base.TemporaryFolderTests<a name="org.powerunit.test.base.TemporaryFolderTests"></a></h3><a name="org.powerunit.test.base.TemporaryFolderTests"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.TemporaryFolderTestsTemporaryFolderTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#org.powerunit.test.base.TemporaryFolderTestsTemporaryFolderTest">TemporaryFolderTest</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0</td></tr></table></div>
+<div class="section">
+<h3>org.powerunit.test.base.RuntimeTestValidatorTests<a name="org.powerunit.test.base.RuntimeTestValidatorTests"></a></h3><a name="org.powerunit.test.base.RuntimeTestValidatorTests"></a>
+<table border="1" class="bodyTable">
+<tr class="a">
+<th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th></tr>
+<tr class="b">
+<td><a href="#org.powerunit.test.base.RuntimeTestValidatorTestsTester"><img src="images/icon_success_sml.gif" alt="" /></a></td>
+<td><a href="#org.powerunit.test.base.RuntimeTestValidatorTestsTester">Tester</a></td>
 <td>4</td>
 <td>0</td>
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.002</td></tr>
-<tr class="a">
-<td><a href="#org.powerunit.examplesHelloWorldParameterTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.examplesHelloWorldParameterTest">HelloWorldParameterTest</a></td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>100%</td>
-<td>0</td></tr>
-<tr class="b">
-<td><a href="#org.powerunit.examplesHelloWorldTest"><img src="images/icon_success_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.examplesHelloWorldTest">HelloWorldTest</a></td>
-<td>3</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>100%</td>
-<td>0.008</td></tr></table></div>
-<div class="section">
-<h3>org.powerunit.examples.demo<a name="org.powerunit.examples.demo"></a></h3><a name="org.powerunit.examples.demo"></a>
-<table border="1" class="bodyTable">
-<tr class="a">
-<th></th>
-<th>Class</th>
-<th>Tests</th>
-<th>Errors </th>
-<th>Failures</th>
-<th>Skipped</th>
-<th>Success Rate</th>
-<th>Time</th></tr>
-<tr class="b">
-<td><a href="#org.powerunit.examples.demoFiboTest"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.examples.demoFiboTest">FiboTest</a></td>
-<td>14</td>
-<td>0</td>
-<td>0</td>
-<td>7</td>
-<td>50%</td>
-<td>0.029</td></tr>
-<tr class="a">
-<td><a href="#org.powerunit.examples.demoMockitoRuleTest"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.examples.demoMockitoRuleTest">MockitoRuleTest</a></td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>50%</td>
-<td>0.306</td></tr></table></div><br /></div>
+<td>0</td></tr></table></div><br /></div>
 <div class="section">
 <h2>Test Cases<a name="Test_Cases"></a></h2><a name="Test_Cases"></a>
 <p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p>
 <div class="section">
-<h3>ExternalResourceTests$TestExternalResourceEmpty<a name="ExternalResourceTestsTestExternalResourceEmpty"></a></h3><a name="org.powerunit.test.baseExternalResourceTestsTestExternalResourceEmpty"></a>
+<h3>TestExternalResourceEmpty<a name="TestExternalResourceEmpty"></a></h3><a name="org.powerunit.test.base.ExternalResourceTestsTestExternalResourceEmpty"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>test</td>
 <td>0</td></tr></table></div>
 <div class="section">
-<h3>MatchersTests$MatchersTest<a name="MatchersTestsMatchersTest"></a></h3><a name="org.powerunit.test.baseMatchersTestsMatchersTest"></a>
+<h3>MatchersTest<a name="MatchersTest"></a></h3><a name="org.powerunit.test.base.MatchersTestsMatchersTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testMatcherOptionalPresentTrueAndFalseThenFalse</td>
+<td>testMatcherOptionalDoublePresentTrueAndFalseThenFalse</td>
 <td>0</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testMatcherOptionalDoublePresentTrueAndFalseThenFalse</td>
+<td>testMatcherOptionalPresentTrueAndFalseThenFalse</td>
 <td>0</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
@@ -434,11 +592,11 @@ function toggleDisplay(elementId) {
 <td>0</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testMatcherOptionalValuePresentSameThenTrue</td>
+<td>testMatcherOptionalLongPresentFalseAndTrueThenFalse</td>
 <td>0</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testMatcherOptionalLongPresentFalseAndTrueThenFalse</td>
+<td>testMatcherOptionalValuePresentSameThenTrue</td>
 <td>0</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
@@ -481,14 +639,14 @@ function toggleDisplay(elementId) {
 <td>testMatcherOptionalPresentTrueAndTrueThenTrue</td>
 <td>0</td></tr></table></div>
 <div class="section">
-<h3>MockitoRuleTests$TestMockito<a name="MockitoRuleTestsTestMockito"></a></h3><a name="org.powerunit.test.baseMockitoRuleTestsTestMockito"></a>
+<h3>TestMockito<a name="TestMockito"></a></h3><a name="org.powerunit.test.base.MockitoRuleTestsTestMockito"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>test</td>
 <td>0</td></tr></table></div>
 <div class="section">
-<h3>PowerUnitProviderListenerTests$PowerUnitProviderListenerTest<a name="PowerUnitProviderListenerTestsPowerUnitProviderListenerTest"></a></h3><a name="org.powerunit.test.basePowerUnitProviderListenerTestsPowerUnitProviderListenerTest"></a>
+<h3>PowerUnitProviderListenerTest<a name="PowerUnitProviderListenerTest"></a></h3><a name="org.powerunit.test.base.PowerUnitProviderListenerTestsPowerUnitProviderListenerTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
@@ -527,7 +685,7 @@ function toggleDisplay(elementId) {
 <td>testNotifyStart</td>
 <td>0</td></tr></table></div>
 <div class="section">
-<h3>PowerUnitProviderScannerFilterTests$PowerUnitProviderScannerFilterTest<a name="PowerUnitProviderScannerFilterTestsPowerUnitProviderScannerFilterTest"></a></h3><a name="org.powerunit.test.basePowerUnitProviderScannerFilterTestsPowerUnitProviderScannerFilterTest"></a>
+<h3>PowerUnitProviderScannerFilterTest<a name="PowerUnitProviderScannerFilterTest"></a></h3><a name="org.powerunit.test.base.PowerUnitProviderScannerFilterTestsPowerUnitProviderScannerFilterTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
@@ -538,14 +696,14 @@ function toggleDisplay(elementId) {
 <td>testRejectedClass</td>
 <td>0</td></tr></table></div>
 <div class="section">
-<h3>PowerUnitProviderTests$PowerUnitProviderTest<a name="PowerUnitProviderTestsPowerUnitProviderTest"></a></h3><a name="org.powerunit.test.basePowerUnitProviderTestsPowerUnitProviderTest"></a>
+<h3>PowerUnitProviderTest<a name="PowerUnitProviderTest"></a></h3><a name="org.powerunit.test.base.PowerUnitProviderTestsPowerUnitProviderTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>testGetSuites</td>
 <td>0</td></tr></table></div>
 <div class="section">
-<h3>RuntimeParametersValidatorTests$Tester<a name="RuntimeParametersValidatorTestsTester"></a></h3><a name="org.powerunit.test.baseRuntimeParametersValidatorTestsTester"></a>
+<h3>Tester<a name="Tester"></a></h3><a name="org.powerunit.test.base.RuntimeParametersValidatorTestsTester"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
@@ -592,7 +750,7 @@ function toggleDisplay(elementId) {
 <td>testExpectedError[10]</td>
 <td>0</td></tr></table></div>
 <div class="section">
-<h3>RuntimeRuleValidatorTests$Tester<a name="RuntimeRuleValidatorTestsTester"></a></h3><a name="org.powerunit.test.baseRuntimeRuleValidatorTestsTester"></a>
+<h3>Tester<a name="Tester"></a></h3><a name="org.powerunit.test.base.RuntimeRuleValidatorTestsTester"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
@@ -619,7 +777,7 @@ function toggleDisplay(elementId) {
 <td>testExpectedError[5]</td>
 <td>0</td></tr></table></div>
 <div class="section">
-<h3>RuntimeTestValidatorTests$Tester<a name="RuntimeTestValidatorTestsTester"></a></h3><a name="org.powerunit.test.baseRuntimeTestValidatorTestsTester"></a>
+<h3>Tester<a name="Tester"></a></h3><a name="org.powerunit.test.base.RuntimeTestValidatorTestsTester"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
@@ -638,7 +796,7 @@ function toggleDisplay(elementId) {
 <td>testExpectedError[3]</td>
 <td>0</td></tr></table></div>
 <div class="section">
-<h3>SystemPropertiesRuleTests$SystemPropertiesRuleTest<a name="SystemPropertiesRuleTestsSystemPropertiesRuleTest"></a></h3><a name="org.powerunit.test.baseSystemPropertiesRuleTestsSystemPropertiesRuleTest"></a>
+<h3>SystemPropertiesRuleTest<a name="SystemPropertiesRuleTest"></a></h3><a name="org.powerunit.test.base.SystemPropertiesRuleTestsSystemPropertiesRuleTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
@@ -649,226 +807,19 @@ function toggleDisplay(elementId) {
 <td>changeSystemProperty1</td>
 <td>0</td></tr></table></div>
 <div class="section">
-<h3>TemporaryFolderTests$TemporaryFolderTest<a name="TemporaryFolderTestsTemporaryFolderTest"></a></h3><a name="org.powerunit.test.baseTemporaryFolderTestsTemporaryFolderTest"></a>
+<h3>TemporaryFolderTest<a name="TemporaryFolderTest"></a></h3><a name="org.powerunit.test.base.TemporaryFolderTestsTemporaryFolderTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>emptyTest</td>
 <td>0</td></tr></table></div>
 <div class="section">
-<h3>TestContextRuleTests$TestContextRuleTest<a name="TestContextRuleTestsTestContextRuleTest"></a></h3><a name="org.powerunit.test.baseTestContextRuleTestsTestContextRuleTest"></a>
+<h3>TestContextRuleTest<a name="TestContextRuleTest"></a></h3><a name="org.powerunit.test.base.TestContextRuleTestsTestContextRuleTest"></a>
 <table border="1" class="bodyTable">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>test</td>
-<td>0</td></tr></table></div>
-<div class="section">
-<h3>ChildrenTest<a name="ChildrenTest"></a></h3><a name="org.powerunit.examplesChildrenTest"></a>
-<table border="1" class="bodyTable">
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.ChildrenTest:test2[0]</td>
-<td>0.001</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.ChildrenTest:test1[0]</td>
-<td>0.001</td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.ChildrenTest:test2[1]</td>
-<td>0</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.ChildrenTest:test1[1]</td>
-<td>0</td></tr></table></div>
-<div class="section">
-<h3>FiboTest<a name="FiboTest"></a></h3><a name="org.powerunit.examples.demoFiboTest"></a>
-<table border="1" class="bodyTable">
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.demo.FiboTest:validate the fib suite - no exception expected[0-&gt;0 ; Exception = null]</td>
-<td>0.021</td></tr>
-<tr class="b">
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[0-&gt;0 ; Exception = null]"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[0-&gt;0 ; Exception = null]">org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[0-&gt;0 ; Exception = null]</a>
-<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[0-&gt;0 ; Exception = null]&apos;);"><span style="display:inline;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[0-&gt;0 ; Exception = null]off"> + </span><span style="display:none;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[0-&gt;0 ; Exception = null]on"> - </span>[ Detail ]</a></div></td>
-<td>0</td></tr>
-<tr class="a">
-<td></td>
-<td>skipped</td>
-<td></td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.demo.FiboTest:validate the fib suite - no exception expected[1-&gt;1 ; Exception = null]</td>
-<td>0.001</td></tr>
-<tr class="a">
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[1-&gt;1 ; Exception = null]"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[1-&gt;1 ; Exception = null]">org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[1-&gt;1 ; Exception = null]</a>
-<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[1-&gt;1 ; Exception = null]&apos;);"><span style="display:inline;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[1-&gt;1 ; Exception = null]off"> + </span><span style="display:none;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[1-&gt;1 ; Exception = null]on"> - </span>[ Detail ]</a></div></td>
-<td>0</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped</td>
-<td></td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.demo.FiboTest:validate the fib suite - no exception expected[2-&gt;1 ; Exception = null]</td>
-<td>0</td></tr>
-<tr class="b">
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[2-&gt;1 ; Exception = null]"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[2-&gt;1 ; Exception = null]">org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[2-&gt;1 ; Exception = null]</a>
-<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[2-&gt;1 ; Exception = null]&apos;);"><span style="display:inline;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[2-&gt;1 ; Exception = null]off"> + </span><span style="display:none;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[2-&gt;1 ; Exception = null]on"> - </span>[ Detail ]</a></div></td>
-<td>0</td></tr>
-<tr class="a">
-<td></td>
-<td>skipped</td>
-<td></td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.demo.FiboTest:validate the fib suite - no exception expected[3-&gt;2 ; Exception = null]</td>
-<td>0.001</td></tr>
-<tr class="a">
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[3-&gt;2 ; Exception = null]"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[3-&gt;2 ; Exception = null]">org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[3-&gt;2 ; Exception = null]</a>
-<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[3-&gt;2 ; Exception = null]&apos;);"><span style="display:inline;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[3-&gt;2 ; Exception = null]off"> + </span><span style="display:none;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[3-&gt;2 ; Exception = null]on"> - </span>[ Detail ]</a></div></td>
-<td>0</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped</td>
-<td></td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.demo.FiboTest:validate the fib suite - no exception expected[4-&gt;3 ; Exception = null]</td>
-<td>0</td></tr>
-<tr class="b">
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[4-&gt;3 ; Exception = null]"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[4-&gt;3 ; Exception = null]">org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[4-&gt;3 ; Exception = null]</a>
-<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[4-&gt;3 ; Exception = null]&apos;);"><span style="display:inline;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[4-&gt;3 ; Exception = null]off"> + </span><span style="display:none;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[4-&gt;3 ; Exception = null]on"> - </span>[ Detail ]</a></div></td>
-<td>0</td></tr>
-<tr class="a">
-<td></td>
-<td>skipped</td>
-<td></td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.demo.FiboTest:validate the fib suite - no exception expected[10-&gt;55 ; Exception = null]</td>
-<td>0</td></tr>
-<tr class="a">
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[10-&gt;55 ; Exception = null]"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[10-&gt;55 ; Exception = null]">org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[10-&gt;55 ; Exception = null]</a>
-<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[10-&gt;55 ; Exception = null]&apos;);"><span style="display:inline;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[10-&gt;55 ; Exception = null]off"> + </span><span style="display:none;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - exception expected[10-&gt;55 ; Exception = null]on"> - </span>[ Detail ]</a></div></td>
-<td>0</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped</td>
-<td></td></tr>
-<tr class="a">
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - no exception expected[-1-&gt;-1 ; Exception = class java.lang.IllegalArgumentException]"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate the fib suite - no exception expected[-1-&gt;-1 ; Exception = class java.lang.IllegalArgumentException]">org.powerunit.examples.demo.FiboTest:validate the fib suite - no exception expected[-1-&gt;-1 ; Exception = class java.lang.IllegalArgumentException]</a>
-<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - no exception expected[-1-&gt;-1 ; Exception = class java_lang_IllegalArgumentException]&apos;);"><span style="display:inline;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - no exception expected[-1-&gt;-1 ; Exception = class java_lang_IllegalArgumentException]off"> + </span><span style="display:none;" id="org_powerunit_examples_demo_FiboTest_org_powerunit_examples_demo_FiboTest:validate the fib suite - no exception expected[-1-&gt;-1 ; Exception = class java_lang_IllegalArgumentException]on"> - </span>[ Detail ]</a></div></td>
-<td>0</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped</td>
-<td></td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[-1-&gt;-1 ; Exception = class java.lang.IllegalArgumentException]</td>
-<td>0.006</td></tr></table></div>
-<div class="section">
-<h3>MockitoRuleTest<a name="MockitoRuleTest"></a></h3><a name="org.powerunit.examples.demoMockitoRuleTest"></a>
-<table border="1" class="bodyTable">
-<tr class="a">
-<td><a href="#org.powerunit.examples.demo.MockitoRuleTest.org.powerunit.examples.demo.MockitoRuleTest:testIgnore"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
-<td><a href="#org.powerunit.examples.demo.MockitoRuleTest.org.powerunit.examples.demo.MockitoRuleTest:testIgnore">org.powerunit.examples.demo.MockitoRuleTest:testIgnore</a>
-<div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;org_powerunit_examples_demo_MockitoRuleTest_org_powerunit_examples_demo_MockitoRuleTest:testIgnore&apos;);"><span style="display:inline;" id="org_powerunit_examples_demo_MockitoRuleTest_org_powerunit_examples_demo_MockitoRuleTest:testIgnoreoff"> + </span><span style="display:none;" id="org_powerunit_examples_demo_MockitoRuleTest_org_powerunit_examples_demo_MockitoRuleTest:testIgnoreon"> - </span>[ Detail ]</a></div></td>
-<td>0</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped</td>
-<td></td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.demo.MockitoRuleTest:testException</td>
-<td>0.306</td></tr></table></div>
-<div class="section">
-<h3>HelloWorldParameterTest<a name="HelloWorldParameterTest"></a></h3><a name="org.powerunit.examplesHelloWorldParameterTest"></a>
-<table border="1" class="bodyTable">
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.HelloWorldParameterTest:testSubString[Input string is ab, subString idx is 0, expected result is ab]</td>
-<td>0</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.HelloWorldParameterTest:testSubString[Input string is ab, subString idx is 1, expected result is b]</td>
-<td>0</td></tr></table></div>
-<div class="section">
-<h3>HelloWorldTest<a name="HelloWorldTest"></a></h3><a name="org.powerunit.examplesHelloWorldTest"></a>
-<table border="1" class="bodyTable">
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.HelloWorldTest:testHelloWorld1</td>
-<td>0.004</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.HelloWorldTest:Test Hello World alternate test name</td>
-<td>0.001</td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.powerunit.examples.HelloWorldTest:exception Hello world</td>
-<td>0.003</td></tr></table></div><br /></div>
-<div class="section">
-<h2>Failure Details<a name="Failure_Details"></a></h2><a name="Failure_Details"></a>
-<p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p><br />
-<table border="1" class="bodyTable">
-<tr class="a">
-<td><img src="images/icon_warning_sml.gif" alt="" /></td>
-<td><a name="org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate_the_fib_suite_-_exception_expected0-0__Exception__null"></a>org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[0-&gt;0 ; Exception = null]</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped: skipped</td></tr>
-<tr class="a">
-<td><img src="images/icon_warning_sml.gif" alt="" /></td>
-<td><a name="org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate_the_fib_suite_-_exception_expected1-1__Exception__null"></a>org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[1-&gt;1 ; Exception = null]</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped: skipped</td></tr>
-<tr class="a">
-<td><img src="images/icon_warning_sml.gif" alt="" /></td>
-<td><a name="org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate_the_fib_suite_-_exception_expected2-1__Exception__null"></a>org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[2-&gt;1 ; Exception = null]</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped: skipped</td></tr>
-<tr class="a">
-<td><img src="images/icon_warning_sml.gif" alt="" /></td>
-<td><a name="org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate_the_fib_suite_-_exception_expected3-2__Exception__null"></a>org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[3-&gt;2 ; Exception = null]</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped: skipped</td></tr>
-<tr class="a">
-<td><img src="images/icon_warning_sml.gif" alt="" /></td>
-<td><a name="org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate_the_fib_suite_-_exception_expected4-3__Exception__null"></a>org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[4-&gt;3 ; Exception = null]</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped: skipped</td></tr>
-<tr class="a">
-<td><img src="images/icon_warning_sml.gif" alt="" /></td>
-<td><a name="org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate_the_fib_suite_-_exception_expected10-55__Exception__null"></a>org.powerunit.examples.demo.FiboTest:validate the fib suite - exception expected[10-&gt;55 ; Exception = null]</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped: skipped</td></tr>
-<tr class="a">
-<td><img src="images/icon_warning_sml.gif" alt="" /></td>
-<td><a name="org.powerunit.examples.demo.FiboTest.org.powerunit.examples.demo.FiboTest:validate_the_fib_suite_-_no_exception_expected-1--1__Exception__class_java.lang.IllegalArgumentException"></a>org.powerunit.examples.demo.FiboTest:validate the fib suite - no exception expected[-1-&gt;-1 ; Exception = class java.lang.IllegalArgumentException]</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped: skipped</td></tr>
-<tr class="a">
-<td><img src="images/icon_warning_sml.gif" alt="" /></td>
-<td><a name="org.powerunit.examples.demo.MockitoRuleTest.org.powerunit.examples.demo.MockitoRuleTest:testIgnore"></a>org.powerunit.examples.demo.MockitoRuleTest:testIgnore</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped: skipped</td></tr></table><br /></div>
+<td>0</td></tr></table></div><br /></div>
       </div>
     </div>
     <div class="clear">

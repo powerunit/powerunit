@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PowerUnitProvider.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">org.powerunit.surefire</a> &gt; <span class="el_source">PowerUnitProvider.java</span></div><h1>PowerUnitProvider.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PowerUnitProvider.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">org.powerunit.surefire</a> &gt; <span class="el_source">PowerUnitProvider.java</span></div><h1>PowerUnitProvider.java</h1><pre class="source lang-java linenums">/**
  * Powerunit - A JDK1.8 test framework
  * Copyright (C) 2014 Mathieu Boretti.
  *
@@ -85,35 +85,35 @@ public class PowerUnitProvider&lt;T&gt; extends AbstractProvider {
 	@Override
 	public RunResult invoke(Object forkTestSet) throws TestSetFailedException,
 			ReporterException, InvocationTargetException {
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (forkTestSet == null) {</span>
-<span class="nc" id="L89">			RunResult r = RunResult.noTestsRun();</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (forkTestSet == null) {</span>
+<span class="fc" id="L89">			RunResult r = RunResult.noTestsRun();</span>
 			@SuppressWarnings(&quot;rawtypes&quot;)
-<span class="nc" id="L91">			Iterator&lt;Class&gt; i = getSuites();</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">			while (i.hasNext()) {</span>
-<span class="nc" id="L93">				r = r.aggregate(invoke(i.next()));</span>
+<span class="fc" id="L91">			Iterator&lt;Class&gt; i = getSuites();</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			while (i.hasNext()) {</span>
+<span class="fc" id="L93">				r = r.aggregate(invoke(i.next()));</span>
 			}
-<span class="nc" id="L95">			return r;</span>
+<span class="fc" id="L95">			return r;</span>
 		}
-<span class="nc" id="L97">		ReporterFactory reporterFactory = providerParameters</span>
-<span class="nc" id="L98">				.getReporterFactory();</span>
+<span class="fc" id="L97">		ReporterFactory reporterFactory = providerParameters</span>
+<span class="fc" id="L98">				.getReporterFactory();</span>
 
-<span class="nc" id="L100">		ConsoleLogger consoleLogger = providerParameters.getConsoleLogger();</span>
-<span class="nc" id="L101">		RunListener rl = reporterFactory.createReporter();</span>
+<span class="fc" id="L100">		ConsoleLogger consoleLogger = providerParameters.getConsoleLogger();</span>
+<span class="fc" id="L101">		RunListener rl = reporterFactory.createReporter();</span>
 
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (!(forkTestSet instanceof Class)) {</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (!(forkTestSet instanceof Class)) {</span>
 <span class="nc" id="L104">			throw new TestSetFailedException(</span>
 					&quot;Unexpected error. Received parameter is not a class&quot;);
 		}
 		@SuppressWarnings(&quot;unchecked&quot;)
-<span class="nc" id="L108">		Class&lt;T&gt; underTest = (Class&lt;T&gt;) forkTestSet;</span>
-<span class="nc" id="L109">		TestResultListener&lt;T&gt; listener = new PowerUnitProviderListener&lt;&gt;(</span>
+<span class="fc" id="L108">		Class&lt;T&gt; underTest = (Class&lt;T&gt;) forkTestSet;</span>
+<span class="fc" id="L109">		TestResultListener&lt;T&gt; listener = new PowerUnitProviderListener&lt;&gt;(</span>
 				consoleLogger, rl, underTest);
 
-<span class="nc" id="L112">		DefaultPowerUnitRunnerImpl&lt;T&gt; runner = new DefaultPowerUnitRunnerImpl&lt;&gt;(</span>
+<span class="fc" id="L112">		DefaultPowerUnitRunnerImpl&lt;T&gt; runner = new DefaultPowerUnitRunnerImpl&lt;&gt;(</span>
 				underTest);
-<span class="nc" id="L114">		runner.addListener(listener);</span>
-<span class="nc" id="L115">		runner.run();</span>
-<span class="nc" id="L116">		return reporterFactory.close();</span>
+<span class="fc" id="L114">		runner.addListener(listener);</span>
+<span class="fc" id="L115">		runner.run();</span>
+<span class="fc" id="L116">		return reporterFactory.close();</span>
 
 	}
 }
