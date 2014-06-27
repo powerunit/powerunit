@@ -142,7 +142,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * &lt;pre&gt;
 	 * private TemporaryFolder temporary = temporaryFolder();
 	 * 
-	 * &amp;#64;
+	 * &amp;#064;Rule
 	 * public TestRule rule = before(this::beforeMethodName).around(temporary);
 	 * &lt;/pre&gt;
 	 * 
@@ -252,11 +252,12 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * @param testClass
 	 *            the testClass, as this method is to be used in static mode.
 	 * @return the function on the parameter array
-	 * 
+	 * @see &lt;a href=&quot;./helpers/doc-files/convertedType.html&quot;&gt;Supported automated
+	 *      conversion&lt;/a&gt;
 	 */
 	default StreamParametersMapFunction&lt;String&gt; stringToParameterMap(
 			Class&lt;?&gt; testClass) {
-<span class="fc" id="L259">		return StreamParametersMapFunction.stringToParameterMap(testClass);</span>
+<span class="fc" id="L260">		return StreamParametersMapFunction.stringToParameterMap(testClass);</span>
 	}
 
 	/**
@@ -269,7 +270,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 */
 	default Predicate&lt;Object[]&gt; parametersFilterUsingMatcher(
 			Matcher&lt;Object[]&gt; matcher) {
-<span class="fc" id="L272">		return matcherPredicate(matcher);</span>
+<span class="fc" id="L273">		return matcherPredicate(matcher);</span>
 	}
 
 	/**
@@ -282,7 +283,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 *            The target object type
 	 */
 	default &lt;T&gt; Predicate&lt;T&gt; matcherPredicate(Matcher&lt;T&gt; matcher) {
-<span class="fc" id="L285">		return matcher::matches;</span>
+<span class="fc" id="L286">		return matcher::matches;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -42,6 +42,8 @@ import org.powerunit.exception.AssumptionError;
  * &lt;ol&gt;
  * &lt;li&gt;{@link #onFailure(TestContext, AssertionError)} in case of test failure.&lt;/li&gt;
  * &lt;li&gt;{@link #onError(TestContext, Throwable)} in case of test error.&lt;/li&gt;
+ * &lt;li&gt;{@link #onAssumptionSkip(TestContext, AssumptionError)} in case of test
+ * skip.&lt;/li&gt;
  * &lt;/ol&gt;
  * &lt;/li&gt;
  * &lt;li&gt;In all case, after the test, and after the previous method in case of
@@ -58,16 +60,20 @@ public interface TestListenerRule extends TestRule {
 
 	/**
 	 * Method used at the start of the test.
+	 * &lt;p&gt;
+	 * Default implementation is to do nothing.
 	 * 
 	 * @param context
 	 *            the test context
 	 */
 	default void onStart(TestContext&lt;Object&gt; context) {
 
-<span class="nc" id="L67">	}</span>
+<span class="nc" id="L71">	}</span>
 
 	/**
 	 * Method used when a failure happened.
+	 * &lt;p&gt;
+	 * Default implementation is to do nothing.
 	 * 
 	 * @param context
 	 *            the test context
@@ -76,10 +82,12 @@ public interface TestListenerRule extends TestRule {
 	 */
 	default void onFailure(TestContext&lt;Object&gt; context, AssertionError af) {
 
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L85">	}</span>
 
 	/**
 	 * Method used when an error happened.
+	 * &lt;p&gt;
+	 * Default implementation is to do nothing.
 	 * 
 	 * @param context
 	 *            the test context
@@ -88,10 +96,12 @@ public interface TestListenerRule extends TestRule {
 	 */
 	default void onError(TestContext&lt;Object&gt; context, Throwable error) {
 
-<span class="nc" id="L91">	}</span>
+<span class="nc" id="L99">	}</span>
 
 	/**
 	 * Method used when an assumption error happened.
+	 * &lt;p&gt;
+	 * Default implementation is to do nothing.
 	 * 
 	 * @param context
 	 *            the test context
@@ -101,22 +111,24 @@ public interface TestListenerRule extends TestRule {
 	default void onAssumptionSkip(TestContext&lt;Object&gt; context,
 			AssumptionError error) {
 
-<span class="nc" id="L104">	}</span>
+<span class="nc" id="L114">	}</span>
 
 	/**
 	 * Method used at the end of the test.
+	 * &lt;p&gt;
+	 * Default implementation is to do nothing.
 	 * 
 	 * @param context
 	 *            the test context
 	 */
 	default void onEnd(TestContext&lt;Object&gt; context) {
 
-<span class="nc" id="L114">	}</span>
+<span class="nc" id="L126">	}</span>
 
 	@Override
 	default Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; computeStatement(
 			Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; inner) {
-<span class="fc" id="L119">		return (p) -&gt; {</span>
+<span class="fc" id="L131">		return (p) -&gt; {</span>
 			try {
 				onStart(p);
 				inner.run(p);

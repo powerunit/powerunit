@@ -11,14 +11,14 @@ Powerunit - Java Testing framework for JDK 1.8,org.powerunit.impl.validator,Para
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.surefire,PowerUnitProviderListener,0,126,0,0,0,32,0,8,0,8
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.surefire,PowerUnitProviderScannerFilter,0,98,0,8,0,16,0,6,0,2
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.surefire,PowerUnitProvider,5,96,1,5,1,27,1,5,0,3
-Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Testsuite,69,43,0,2,29,17,20,11,20,10
+Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Testsuite,66,46,0,2,28,18,19,12,19,11
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Error,13,11,0,0,5,5,4,3,4,3
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,ObjectFactory,74,0,0,0,15,0,12,0,12,0
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Testsuites,56,0,2,0,22,0,15,0,14,0
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Property,17,0,0,0,7,0,5,0,5,0
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Failure,13,11,0,0,5,5,4,3,4,3
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Properties,14,0,2,0,4,0,3,0,2,0
-Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Testcase,56,33,4,4,20,11,14,7,12,5
+Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Testcase,52,37,4,4,18,13,13,8,11,6
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit,AssertThatObject,0,28,0,0,0,12,0,6,0,6
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit,TestSuite.new TestSuite() {...},0,3,0,0,0,1,0,1,0,1
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit,Statement,0,39,0,0,0,11,0,4,0,4
@@ -50,5 +50,4 @@ Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,ExternalResou
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,TestListenerRule,5,4,0,0,5,1,5,1,5,1
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,SystemPropertiesRule,0,92,0,6,0,17,0,8,0,5
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,TestContextRule,0,12,0,0,0,3,0,3,0,3
-Powerunit - Java Testing framework for JDK 1.8,org.powerunit.suite,Suites,1055,0,18,0,105,0,20,0,11,0
-Powerunit - Java Testing framework for JDK 1.8,org.powerunit.helpers,StreamParametersMapFunction,19,66,3,3,4,18,3,5,1,4
+Powerunit - Java Testing framework for JDK 1.8,org.powerunit.helpers,StreamParametersMapFunction,58,202,22,30,17,48,22,15,2,9
