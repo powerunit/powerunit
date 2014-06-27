@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Assume.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">org.powerunit</a> &gt; <span class="el_source">Assume.java</span></div><h1>Assume.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package org.powerunit;
+
+import java.util.function.Function;
+
+import org.powerunit.exception.AssumptionError;
+import org.powerunit.impl.AssertThatExceptionImpl;
+import org.powerunit.impl.AssertThatIterableImpl;
+import org.powerunit.impl.AssertThatObjectImpl;
+
+/**
+ * This is the assume features.
+ * 
+ * @author borettim
+ *
+ */
+interface Assume {
+
+	/**
+	 * Assume the value of an object. This is used to skipped the test if the
+	 * assumption fail.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeThat(myObject).is(myOtherObject);
+	 * &lt;/pre&gt;
+	 * 
+	 * This will check that &lt;code&gt;myObject&lt;/code&gt; is &lt;code&gt;myOtherObject&lt;/code&gt;
+	 * (using the &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
+	 * 
+	 * @param &lt;T&gt;
+	 *            the object type.
+	 * @param obj
+	 *            the object
+	 * @return {@link AssertThatObject the assert DSL on this object}
+	 */
+	default &lt;T&gt; AssertThatObject&lt;T&gt; assumeThat(T obj) {
+<span class="fc" id="L57">		return assumeThat(null, obj);</span>
+	}
+
+	/**
+	 * Assume the value of an object. This is used to skipped the test if the
+	 * assumption fail.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeThat(&amp;quot;msg&amp;quot;, myObject).is(myOtherObject);
+	 * &lt;/pre&gt;
+	 * 
+	 * This will check that &lt;code&gt;myObject&lt;/code&gt; is &lt;code&gt;myOtherObject&lt;/code&gt;
+	 * (using the &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
+	 * 
+	 * @param &lt;T&gt;
+	 *            the object type.
+	 * @param msg
+	 *            a message
+	 * @param obj
+	 *            the object
+	 * @return {@link AssertThatObject the assert DSL on this object}
+	 */
+	default &lt;T&gt; AssertThatObject&lt;T&gt; assumeThat(String msg, T obj) {
+<span class="fc" id="L82">		return new AssertThatObjectImpl&lt;T&gt;(false, msg, () -&gt; obj);</span>
+	}
+
+	/**
+	 * Assume on an iterable object. This is used to skipped the test if the
+	 * assumption fail.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeThatIterable(myIterable).hasSize(0);
+	 * &lt;/pre&gt;
+	 * 
+	 * This will check that &lt;code&gt;myIterable&lt;/code&gt; has a size of 0.
+	 * 
+	 * @param &lt;T&gt;
+	 *            the element type.
+	 * @param obj
+	 *            the object (Iterable)
+	 * @return {@link AssertThatIterable the assert DSL on this iterable}
+	 */
+	default &lt;T&gt; AssertThatIterable&lt;T&gt; assumeThatIterable(Iterable&lt;T&gt; obj) {
+<span class="fc" id="L104">		return assumeThatIterable(null, obj);</span>
+	}
+
+	/**
+	 * Assume on an iterable object. This is used to skipped the test if the
+	 * assumption fail.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeThatIterable(&amp;quot;msg&amp;quot;, myIterable).hasSize(0);
+	 * &lt;/pre&gt;
+	 * 
+	 * This will check that &lt;code&gt;myIterable&lt;/code&gt; has a size of 0.
+	 * 
+	 * @param &lt;T&gt;
+	 *            the element type.
+	 * @param msg
+	 *            a message
+	 * @param obj
+	 *            the object (Iterable)
+	 * @return {@link AssertThatIterable the assert DSL on this iterable}
+	 */
+	default &lt;T&gt; AssertThatIterable&lt;T&gt; assumeThatIterable(String msg,
+			Iterable&lt;T&gt; obj) {
+<span class="fc" id="L129">		return new AssertThatIterableImpl&lt;T&gt;(false, msg, () -&gt; obj);</span>
+	}
+
+	/**
+	 * Assume on a function. This is used to skipped the test if the assumption
+	 * fail.
+	 * &lt;p&gt;
+	 * The purpose of this variant of &lt;i&gt;assumeThat&lt;/i&gt; provides a way to apply
+	 * a function on some input and to check the result.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeThatFunction((a) -&amp;gt; a + &amp;quot;x&amp;quot;, &amp;quot;b&amp;quot;).is(&amp;quot;bx&amp;quot;)
+	 * &lt;/pre&gt;
+	 * 
+	 * This will pass the &lt;code&gt;b&lt;/code&gt; string to the passed function (which
+	 * add a &lt;code&gt;x&lt;/code&gt; add the end of the string and then it will check
+	 * that this string is &lt;code&gt;bx&lt;/code&gt; (which is the case).
+	 * 
+	 * @param &lt;T&gt;
+	 *            the object type of the input of the function
+	 * @param &lt;R&gt;
+	 *            the object type of the result
+	 * @param function
+	 *            the function
+	 * @param input
+	 *            the input to the function
+	 * @return {@link AssertThatObject then assert DSL on the result of the
+	 *         function}
+	 */
+	default &lt;T, R&gt; AssertThatObject&lt;R&gt; assumeThatFunction(
+			Function&lt;T, R&gt; function, T input) {
+<span class="fc" id="L162">		return new AssertThatObjectImpl&lt;R&gt;(false, null,</span>
+				() -&gt; function.apply(input));
+	}
+
+	/**
+	 * Assume on a function. This is used to skipped the test if the assumption
+	 * fail.
+	 * &lt;p&gt;
+	 * The purpose of this variant of &lt;i&gt;assertThat&lt;/i&gt; provides a way to apply
+	 * a function on some input and to check the result.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeThatFunction(&amp;quot;msg&amp;quot;, (a) -&amp;gt; a + &amp;quot;x&amp;quot;, &amp;quot;b&amp;quot;).is(&amp;quot;bx&amp;quot;)
+	 * &lt;/pre&gt;
+	 * 
+	 * This will pass the &lt;code&gt;b&lt;/code&gt; string to the passed function (which
+	 * add a &lt;code&gt;x&lt;/code&gt; add the end of the string and then it will check
+	 * that this string is &lt;code&gt;bx&lt;/code&gt; (which is the case).
+	 * 
+	 * @param &lt;T&gt;
+	 *            the object type of the input of the function
+	 * @param &lt;R&gt;
+	 *            the object type of the result
+	 * @param msg
+	 *            a message
+	 * @param function
+	 *            the function
+	 * @param input
+	 *            the input to the function
+	 * @return {@link AssertThatObject then assert DSL on the result of the
+	 *         function}
+	 */
+	default &lt;T, R&gt; AssertThatObject&lt;R&gt; assumeThatFunction(String msg,
+			Function&lt;T, R&gt; function, T input) {
+<span class="fc" id="L198">		return new AssertThatObjectImpl&lt;R&gt;(false, msg,</span>
+				() -&gt; function.apply(input));
+	}
+
+	/**
+	 * Assume that a statement (a piece of code) throw an exception. This is
+	 * used to skipped the test if the assumption fail.
+	 * &lt;p&gt;
+	 * The goal of &lt;code&gt;assumeWhen&lt;/code&gt; is to provide a way to validate that
+	 * an exception is thrown.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeWhen((p) -&amp;gt; {
+	 * 	throw new Throwable(&amp;quot;test&amp;quot;);
+	 * }).throwException(exceptionMessage(&amp;quot;test&amp;quot;));
+	 * &lt;/pre&gt;
+	 * 
+	 * Will run a piece of code that always thrown an exception and then
+	 * validate that the message of the exception is &lt;code&gt;test&lt;/code&gt;.
+	 * 
+	 * @param underTest
+	 *            the {@link Statement} &lt;code&gt;(p)-&amp;gt;{}&lt;/code&gt;
+	 * @return {@link AssertThatException the assert DSL on the exception}
+	 * @param &lt;T&gt;
+	 *            the exception type
+	 */
+	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(
+			Statement&lt;?, T&gt; underTest) {
+<span class="fc" id="L228">		return assumeWhen(null, underTest, null);</span>
+	}
+
+	/**
+	 * Assume that a statement (a piece of code) throw an exception. This is
+	 * used to skipped the test if the assumption fail.
+	 * &lt;p&gt;
+	 * The goal of &lt;code&gt;assumeWhen&lt;/code&gt; is to provide a way to validate that
+	 * an exception is thrown.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeWhen((p) -&amp;gt; {
+	 * 	throw new Throwable(&amp;quot;test&amp;quot;);
+	 * }, null).throwException(exceptionMessage(&amp;quot;test&amp;quot;));
+	 * &lt;/pre&gt;
+	 * 
+	 * Will run a piece of code, passing null as parameter, that always thrown
+	 * an exception and then validate that the message of the exception is
+	 * &lt;code&gt;test&lt;/code&gt;.
+	 * 
+	 * @param underTest
+	 *            the {@link Statement} &lt;code&gt;(p)-&amp;gt;{}&lt;/code&gt;
+	 * @param param
+	 *            the parameter for the statement underTest
+	 * @param &lt;P&gt;
+	 *            the type of the parameter
+	 * @param &lt;T&gt;
+	 *            the exception type
+	 * @return {@link AssertThatException the assert DSL on the exception}
+	 * 
+	 */
+	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(
+			Statement&lt;P, T&gt; underTest, P param) {
+<span class="nc" id="L263">		return assumeWhen(null, underTest, param);</span>
+	}
+
+	/**
+	 * Assume that a statement (a piece of code) throw an exception. This is
+	 * used to skipped the test if the assumption fail.
+	 * &lt;p&gt;
+	 * The goal of &lt;code&gt;assumeWhen&lt;/code&gt; is to provide a way to validate that
+	 * an exception is thrown.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeWhen(&amp;quot;msg&amp;quot;, (p) -&amp;gt; {
+	 * 	throw new Throwable(&amp;quot;test&amp;quot;);
+	 * }).throwException(exceptionMessage(&amp;quot;test&amp;quot;));
+	 * &lt;/pre&gt;
+	 * 
+	 * Will run a piece of code that always thrown an exception and then
+	 * validate that the message of the exception is &lt;code&gt;test&lt;/code&gt;.
+	 * 
+	 * @param msg
+	 *            a message
+	 * @param underTest
+	 *            the statement &lt;code&gt;(p)-&amp;gt;{}&lt;/code&gt;
+	 * @return {@link AssertThatException the assert DSL on the exception}
+	 * @param &lt;T&gt;
+	 *            the exception type
+	 */
+	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(String msg,
+			Statement&lt;?, T&gt; underTest) {
+<span class="fc" id="L294">		return assumeWhen(msg, underTest, null);</span>
+	}
+
+	/**
+	 * Assume that a statement (a piece of code) throw an exception. This is
+	 * used to skipped the test if the assumption fail.
+	 * &lt;p&gt;
+	 * The goal of &lt;code&gt;assumeWhen&lt;/code&gt; is to provide a way to validate that
+	 * an exception is thrown.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeWhen(&amp;quot;msg&amp;quot;, (p) -&amp;gt; {
+	 * 	throw new Throwable(&amp;quot;test&amp;quot;);
+	 * }, null).throwException(exceptionMessage(&amp;quot;test&amp;quot;));
+	 * &lt;/pre&gt;
+	 * 
+	 * Will run a piece of code, passing null as parameter, that always thrown
+	 * an exception and then validate that the message of the exception is
+	 * &lt;code&gt;test&lt;/code&gt;.
+	 * 
+	 * @param msg
+	 *            a message
+	 * @param underTest
+	 *            the statement &lt;code&gt;(p)-&amp;gt;{}&lt;/code&gt;
+	 * @param param
+	 *            the parameter for the statement underTest
+	 * @param &lt;P&gt;
+	 *            the type of the parameter
+	 * @param &lt;T&gt;
+	 *            the exception type
+	 * @return {@link AssertThatException the assert DSL on the exception}
+	 * 
+	 * 
+	 */
+	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(
+			String msg, Statement&lt;P, T&gt; underTest, P param) {
+<span class="fc" id="L332">		return new AssertThatExceptionImpl&lt;P, T&gt;(false, underTest, param, msg);</span>
+	}
+
+	/**
+	 * Always produce a skip.
+	 * &lt;p&gt;
+	 * For instance :
+	 * 
+	 * &lt;pre&gt;
+	 * skip();
+	 * &lt;/pre&gt;
+	 * 
+	 * will immediately skip the current test.
+	 */
+	default void skip() {
+<span class="nc" id="L347">		skip(&quot;Manual skip&quot;);</span>
+<span class="nc" id="L348">	}</span>
+
+	/**
+	 * Always produce a skip.
+	 * &lt;p&gt;
+	 * For instance :
+	 * 
+	 * &lt;pre&gt;
+	 * skip(&amp;quot;my message&amp;quot;);
+	 * &lt;/pre&gt;
+	 * 
+	 * will immediately skip the current test.
+	 * 
+	 * @param msg
+	 *            a message
+	 */
+	default void skip(String msg) {
+<span class="nc" id="L365">		throw new AssumptionError(msg);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

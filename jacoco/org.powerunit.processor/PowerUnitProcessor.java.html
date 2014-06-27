@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PowerUnitProcessor.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">org.powerunit.processor</a> &gt; <span class="el_source">PowerUnitProcessor.java</span></div><h1>PowerUnitProcessor.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package org.powerunit.processor;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedSourceVersion;
+import javax.lang.model.SourceVersion;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeMirror;
+import javax.tools.Diagnostic;
+import javax.tools.JavaFileObject;
+
+import org.powerunit.Categories;
+import org.powerunit.impl.validator.IgnoreProcessorValidator;
+import org.powerunit.impl.validator.ParameterProcessorValidator;
+import org.powerunit.impl.validator.ParametersProcessorValidator;
+import org.powerunit.impl.validator.RuleProcessorValidator;
+import org.powerunit.impl.validator.TestProcessorValidator;
+
+@SupportedAnnotationTypes({ &quot;org.powerunit.Test&quot;, &quot;org.powerunit.Rule&quot;,
+		&quot;org.powerunit.Parameters&quot;, &quot;org.powerunit.Parameter&quot;,
+		&quot;org.powerunit.Ignore&quot;, &quot;org.powerunit.Categories&quot; })
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
+<span class="nc" id="L53">public class PowerUnitProcessor extends AbstractProcessor implements</span>
+		ParametersProcessorValidator, ParameterProcessorValidator,
+		RuleProcessorValidator, TestProcessorValidator,
+		IgnoreProcessorValidator {
+
+<span class="nc" id="L58">	private boolean categoryDone = false;</span>
+
+	@Override
+	public boolean process(Set&lt;? extends TypeElement&gt; annotations,
+			RoundEnvironment roundEnv) {
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (!roundEnv.processingOver()) {</span>
+<span class="nc" id="L64">			testAnnotationValidation(roundEnv);</span>
+<span class="nc" id="L65">			ruleAnnotationValidation(processingEnv, roundEnv);</span>
+<span class="nc" id="L66">			parametersValidation(processingEnv, roundEnv);</span>
+<span class="nc" id="L67">			parameterAnnotationValidation(roundEnv);</span>
+<span class="nc" id="L68">			ignoreAnnotationValidation(roundEnv);</span>
+			try {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">				if (!categoryDone) {</span>
+<span class="nc" id="L71">					generateCategorySuite(roundEnv);</span>
+				}
+<span class="nc" id="L73">			} catch (IOException e) {</span>
+<span class="nc" id="L74">				error(&quot;Unable to generate test suite file, because of &quot;</span>
+<span class="nc" id="L75">						+ e.getMessage());</span>
+<span class="nc" id="L76">			}</span>
+		}
+
+<span class="nc" id="L79">		return true;</span>
+	}
+
+	private void generateCategorySuite(RoundEnvironment roundEnv)
+			throws IOException {
+<span class="nc" id="L84">		categoryDone = true;</span>
+<span class="nc" id="L85">		Set&lt;? extends Element&gt; elements = roundEnv</span>
+<span class="nc" id="L86">				.getElementsAnnotatedWith(Categories.class);</span>
+<span class="nc" id="L87">		Map&lt;String, List&lt;TypeMirror&gt;&gt; categories = new HashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		for (Element element : elements) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			if (element.getKind() == ElementKind.CLASS) {</span>
+<span class="nc" id="L90">				TypeMirror current = element.asType();</span>
+<span class="nc" id="L91">				Categories ca = element.getAnnotation(Categories.class);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">				if (ca != null) {</span>
+<span class="nc" id="L93">					String cat[] = ca.value();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">					for (String c : cat) {</span>
+<span class="nc" id="L95">						List&lt;TypeMirror&gt; lst = categories.get(c);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">						if (lst == null) {</span>
+<span class="nc" id="L97">							lst = new ArrayList&lt;&gt;();</span>
+						}
+<span class="nc" id="L99">						lst.add(current);</span>
+<span class="nc" id="L100">						categories.put(c, lst);</span>
+					}
+				}
+			}
+<span class="nc" id="L104">		}</span>
+<span class="nc" id="L105">		JavaFileObject suite = processingEnv.getFiler().createSourceFile(</span>
+				&quot;org.powerunit.suite.Suites&quot;,
+<span class="nc" id="L107">				elements.toArray(new Element[] {}));</span>
+<span class="nc" id="L108">		try (PrintWriter w = new PrintWriter(suite.openWriter());) {</span>
+<span class="nc" id="L109">			w.println(&quot;package org.powerunit.suite;&quot;);</span>
+<span class="nc" id="L110">			w.println();</span>
+<span class="nc" id="L111">			w.println(&quot;@javax.annotation.Generated(\&quot;Test suites for powerunit\&quot;)&quot;);</span>
+<span class="nc" id="L112">			w.println(&quot;public final class Suites implements org.powerunit.TestResultListener {&quot;);</span>
+<span class="nc" id="L113">			w.println();</span>
+<span class="nc" id="L114">			w.println(&quot;  private Suites() {}&quot;);</span>
+<span class="nc" id="L115">			w.println();</span>
+<span class="nc" id="L116">			w.println(&quot;  private static final java.util.Map&lt;String,Class&lt;?&gt;[]&gt; suites;&quot;);</span>
+<span class="nc" id="L117">			w.println();</span>
+<span class="nc" id="L118">			w.println(&quot;  static {&quot;);</span>
+<span class="nc" id="L119">			w.println(&quot;    java.util.Map&lt;String,Class&lt;?&gt;[]&gt; tmp = new java.util.HashMap&lt;&gt;();&quot;);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			for (Map.Entry&lt;String, List&lt;TypeMirror&gt;&gt; cat : categories</span>
+<span class="nc" id="L121">					.entrySet()) {</span>
+<span class="nc" id="L122">				w.println(&quot;    tmp.put(\&quot;&quot; + cat.getKey()</span>
+						+ &quot;\&quot;,new Class&lt;?&gt;[]{&quot;);
+<span class="nc" id="L124">				int counter = 0;</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">				for (TypeMirror tm : cat.getValue()) {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">					if (counter &gt; 0) {</span>
+<span class="nc" id="L127">						w.println(&quot;,&quot;);</span>
+					}
+<span class="nc" id="L129">					w.print(&quot;      &quot; + tm.toString() + &quot;.class&quot;);</span>
+<span class="nc" id="L130">					counter++;</span>
+<span class="nc" id="L131">				}</span>
+<span class="nc" id="L132">				w.println();</span>
+<span class="nc" id="L133">				w.println(&quot;    });&quot;);</span>
+<span class="nc" id="L134">			}</span>
+<span class="nc" id="L135">			w.println(&quot;    suites=java.util.Collections.unmodifiableMap(tmp);&quot;);</span>
+<span class="nc" id="L136">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L137">			w.println();</span>
+<span class="nc" id="L138">			w.println(&quot;  public static java.util.Map&lt;String,Class&lt;?&gt;[]&gt; getSuites() {&quot;);</span>
+<span class="nc" id="L139">			w.println(&quot;    return suites;&quot;);</span>
+<span class="nc" id="L140">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L141">			w.println();</span>
+<span class="nc" id="L142">			w.println(&quot;  private boolean error=false;&quot;);</span>
+<span class="nc" id="L143">			w.println();</span>
+<span class="nc" id="L144">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L145">			w.println(&quot;  public void notifySetStart(String setName, String parameters) {&quot;);</span>
+<span class="nc" id="L146">			w.println(&quot;    System.out.println(\&quot;Start of \&quot;+setName);&quot;);</span>
+<span class="nc" id="L147">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L148">			w.println();</span>
+<span class="nc" id="L149">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L150">			w.println(&quot;  public void notifySetEnd(String setName, String parameters) {&quot;);</span>
+<span class="nc" id="L151">			w.println(&quot;    System.out.println(\&quot;End of \&quot;+setName);&quot;);</span>
+<span class="nc" id="L152">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L153">			w.println();</span>
+<span class="nc" id="L154">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L155">			w.println(&quot;  public void notifyStart(org.powerunit.TestContext context) {&quot;);</span>
+<span class="nc" id="L156">			w.println(&quot;    System.out.println(\&quot;Start of \&quot;+context.getFullTestName());&quot;);</span>
+<span class="nc" id="L157">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L158">			w.println();</span>
+<span class="nc" id="L159">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L160">			w.println(&quot;  public void notifySuccess(org.powerunit.TestContext context) {&quot;);</span>
+<span class="nc" id="L161">			w.println(&quot;    System.out.println(\&quot;End of \&quot;+context.getFullTestName());&quot;);</span>
+<span class="nc" id="L162">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L163">			w.println();</span>
+<span class="nc" id="L164">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L165">			w.println(&quot;  public void notifyFailure(org.powerunit.TestContext context, Throwable cause) {&quot;);</span>
+<span class="nc" id="L166">			w.println(&quot;    System.out.println(\&quot;Failure of \&quot;+context.getFullTestName()+\&quot; because of \&quot;+cause.getMessage());&quot;);</span>
+<span class="nc" id="L167">			w.println(&quot;    cause.printStackTrace();&quot;);</span>
+<span class="nc" id="L168">			w.println(&quot;    error=true;&quot;);</span>
+<span class="nc" id="L169">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L170">			w.println();</span>
+<span class="nc" id="L171">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L172">			w.println(&quot;  public void notifySkipped(org.powerunit.TestContext context) {&quot;);</span>
+<span class="nc" id="L173">			w.println(&quot;    System.out.println(\&quot;Skip of \&quot;+context.getFullTestName());&quot;);</span>
+<span class="nc" id="L174">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L175">			w.println();</span>
+<span class="nc" id="L176">			w.println(&quot;  @Override&quot;);</span>
+<span class="nc" id="L177">			w.println(&quot;  public void notifyError(org.powerunit.TestContext context, Throwable cause) {&quot;);</span>
+<span class="nc" id="L178">			w.println(&quot;    System.out.println(\&quot;Error of \&quot;+context.getFullTestName()+\&quot; because of \&quot;+cause.getMessage());&quot;);</span>
+<span class="nc" id="L179">			w.println(&quot;    cause.printStackTrace();&quot;);</span>
+<span class="nc" id="L180">			w.println(&quot;    error=true;&quot;);</span>
+<span class="nc" id="L181">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L182">			w.println();</span>
+<span class="nc" id="L183">			w.println(&quot;  public static void main(String argv[]) {&quot;);</span>
+<span class="nc" id="L184">			w.println(&quot;    if (argv.length==0) {&quot;);</span>
+<span class="nc" id="L185">			w.println(&quot;       suites.keySet().stream().forEach((c)-&gt;{main(new String[]{c});});&quot;);</span>
+<span class="nc" id="L186">			w.println(&quot;    return;&quot;);</span>
+<span class="nc" id="L187">			w.println(&quot;    }&quot;);</span>
+<span class="nc" id="L188">			w.println(&quot;    String name = argv[0];&quot;);</span>
+<span class="nc" id="L189">			w.println(&quot;    boolean success=true;&quot;);</span>
+<span class="nc" id="L190">			w.println(&quot;    for(Class&lt;?&gt; c:getSuites().get(name)) {&quot;);</span>
+<span class="nc" id="L191">			w.println(&quot;      Suites p = new Suites();&quot;);</span>
+<span class="nc" id="L192">			w.println(&quot;      org.powerunit.PowerUnitRunner r = new org.powerunit.impl.DefaultPowerUnitRunnerImpl(c);&quot;);</span>
+<span class="nc" id="L193">			w.println(&quot;      r.addListener(p);&quot;);</span>
+<span class="nc" id="L194">			w.println(&quot;      r.run();&quot;);</span>
+<span class="nc" id="L195">			w.println(&quot;      success=success&amp;&amp;!p.error;&quot;);</span>
+<span class="nc" id="L196">			w.println(&quot;    }&quot;);</span>
+<span class="nc" id="L197">			w.println(&quot;    if(!success) {&quot;);</span>
+<span class="nc" id="L198">			w.println(&quot;      System.out.println(\&quot;Tests in error.\&quot;);&quot;);</span>
+<span class="nc" id="L199">			w.println(&quot;      System.exit(-1);&quot;);</span>
+<span class="nc" id="L200">			w.println(&quot;    }&quot;);</span>
+<span class="nc" id="L201">			w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L202">			w.println();</span>
+<span class="nc" id="L203">			w.println(&quot;}&quot;);</span>
+<span class="nc bnc" id="L204" title="All 8 branches missed.">		}</span>
+<span class="nc" id="L205">	}</span>
+
+	@Override
+	public String elementAsString(Element ee) {
+<span class="nc" id="L209">		return ee.toString() + &quot; of &quot; + ee.getEnclosingElement().toString();</span>
+	}
+
+	@Override
+	public void error(String msg) {
+<span class="nc" id="L214">		processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, msg);</span>
+<span class="nc" id="L215">	}</span>
+
+	@Override
+	public void warn(String msg) {
+<span class="nc" id="L219">		processingEnv.getMessager().printMessage(</span>
+				Diagnostic.Kind.MANDATORY_WARNING, msg);
+<span class="nc" id="L221">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
