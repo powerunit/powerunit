@@ -42,6 +42,8 @@ import org.powerunit.exception.AssumptionError;
  * <ol>
  * <li>{@link #onFailure(TestContext, AssertionError)} in case of test failure.</li>
  * <li>{@link #onError(TestContext, Throwable)} in case of test error.</li>
+ * <li>{@link #onAssumptionSkip(TestContext, AssumptionError)} in case of test
+ * skip.</li>
  * </ol>
  * </li>
  * <li>In all case, after the test, and after the previous method in case of
@@ -58,6 +60,8 @@ public interface TestListenerRule extends TestRule {
 
 	/**
 	 * Method used at the start of the test.
+	 * <p>
+	 * Default implementation is to do nothing.
 	 * 
 	 * @param context
 	 *            the test context
@@ -68,6 +72,8 @@ public interface TestListenerRule extends TestRule {
 
 	/**
 	 * Method used when a failure happened.
+	 * <p>
+	 * Default implementation is to do nothing.
 	 * 
 	 * @param context
 	 *            the test context
@@ -80,6 +86,8 @@ public interface TestListenerRule extends TestRule {
 
 	/**
 	 * Method used when an error happened.
+	 * <p>
+	 * Default implementation is to do nothing.
 	 * 
 	 * @param context
 	 *            the test context
@@ -92,6 +100,8 @@ public interface TestListenerRule extends TestRule {
 
 	/**
 	 * Method used when an assumption error happened.
+	 * <p>
+	 * Default implementation is to do nothing.
 	 * 
 	 * @param context
 	 *            the test context
@@ -105,6 +115,8 @@ public interface TestListenerRule extends TestRule {
 
 	/**
 	 * Method used at the end of the test.
+	 * <p>
+	 * Default implementation is to do nothing.
 	 * 
 	 * @param context
 	 *            the test context
