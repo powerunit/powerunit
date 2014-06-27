@@ -142,7 +142,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * <pre>
 	 * private TemporaryFolder temporary = temporaryFolder();
 	 * 
-	 * &#64;
+	 * &#064;Rule
 	 * public TestRule rule = before(this::beforeMethodName).around(temporary);
 	 * </pre>
 	 * 
