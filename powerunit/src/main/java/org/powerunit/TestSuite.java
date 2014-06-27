@@ -252,7 +252,8 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * @param testClass
 	 *            the testClass, as this method is to be used in static mode.
 	 * @return the function on the parameter array
-	 * 
+	 * @see <a href="./helpers/doc-files/convertedType.html">Supported automated
+	 *      conversion</a>
 	 */
 	default StreamParametersMapFunction<String> stringToParameterMap(
 			Class<?> testClass) {

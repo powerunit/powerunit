@@ -20,6 +20,7 @@
 package org.powerunit.test.base;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.stream.Stream;
 
 import org.powerunit.Categories;
@@ -47,10 +48,11 @@ public class StreamParametersMapFunctionTests {
 		@Parameters
 		public static Stream<Object[]> getDatas() {
 			return Arrays
-					.stream(new String[][] { { "a", "1", "java.lang.String" } })
+					.stream(new String[][] { { "a", "1", "java.lang.String",
+							"3,4", "true,false" } })
 					.map(DSL.stringToParameterMap(StreamParametersMapFunctionTest.class))
 					.filter(DSL.parametersFilterUsingMatcher(DSL
-							.arrayWithSize(2)));
+							.arrayWithSize(5)));
 		}
 
 		@Parameter(0)
@@ -62,11 +64,19 @@ public class StreamParametersMapFunctionTests {
 		@Parameter(2)
 		public Class<?> field3;
 
+		@Parameter(3)
+		public String field4[];
+
+		@Parameter(4)
+		public Collection<Boolean> field5;
+
 		@Test
 		public void test() {
 			assertThat(field1).is("a");
 			assertThat(field2).is(1);
 			assertThat(field3).is(equalTo(String.class));
+			assertThat(field4).is(new String[] { "3", "4" });
+			assertThatIterable(field5).contains(true, false);
 		}
 	}
 }
