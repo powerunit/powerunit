@@ -19,6 +19,7 @@
  */
 package org.powerunit.test.base;
 
+import org.powerunit.Categories;
 import org.powerunit.Rule;
 import org.powerunit.Test;
 import org.powerunit.TestSuite;
@@ -34,6 +35,7 @@ public class TestContextRuleTests {
 
 	}
 
+	@Categories("base")
 	public static class TestContextRuleTest implements TestSuite {
 
 		@Rule

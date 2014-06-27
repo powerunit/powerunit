@@ -24,6 +24,7 @@ import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.OptionalLong;
 
+import org.powerunit.Categories;
 import org.powerunit.Test;
 import org.powerunit.TestSuite;
 import org.powerunit.impl.DefaultPowerUnitRunnerImpl;
@@ -41,6 +42,7 @@ public class MatchersTests {
 
 	}
 
+	@Categories("base")
 	public static class MatchersTest implements TestSuite {
 
 		@Test

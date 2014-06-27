@@ -21,6 +21,7 @@ package org.powerunit.test.base;
 
 import java.util.Properties;
 
+import org.powerunit.Categories;
 import org.powerunit.Test;
 import org.powerunit.TestSuite;
 import org.powerunit.impl.DefaultPowerUnitRunnerImpl;
@@ -35,6 +36,7 @@ public class PowerUnitProviderScannerFilterTests {
 		runner.run();
 	}
 
+	@Categories("base")
 	public static class PowerUnitProviderScannerFilterTest implements TestSuite {
 		@Test
 		public void testRejectedClass() {

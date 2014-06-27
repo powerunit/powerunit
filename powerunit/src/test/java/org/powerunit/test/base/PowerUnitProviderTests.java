@@ -30,6 +30,7 @@ import org.apache.maven.surefire.util.ScanResult;
 import org.apache.maven.surefire.util.TestsToRun;
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.powerunit.Categories;
 import org.powerunit.Rule;
 import org.powerunit.Test;
 import org.powerunit.TestRule;
@@ -47,6 +48,7 @@ public class PowerUnitProviderTests {
 
 	}
 
+	@Categories("base")
 	public static class PowerUnitProviderTest implements TestSuite {
 
 		@Mock

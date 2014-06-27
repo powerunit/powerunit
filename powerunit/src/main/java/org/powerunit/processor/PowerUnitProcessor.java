@@ -35,6 +35,7 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
@@ -139,7 +140,9 @@ public class PowerUnitProcessor extends AbstractProcessor implements
 					if (counter > 0) {
 						w.println(",");
 					}
-					w.print("      " + tm.toString() + ".class");
+					w.print("      "
+							+ ((DeclaredType) tm).asElement().toString()
+							+ ".class");
 					counter++;
 				}
 				w.println();

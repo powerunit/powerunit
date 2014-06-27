@@ -22,6 +22,7 @@ package org.powerunit.test.base;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+import org.powerunit.Categories;
 import org.powerunit.Parameter;
 import org.powerunit.Parameters;
 import org.powerunit.Test;
@@ -41,6 +42,7 @@ public class StreamParametersMapFunctionTests {
 
 	}
 
+	@Categories("base")
 	public static class StreamParametersMapFunctionTest implements TestSuite {
 		@Parameters
 		public static Stream<Object[]> getDatas() {

@@ -19,6 +19,7 @@
  */
 package org.powerunit.test.base;
 
+import org.powerunit.Categories;
 import org.powerunit.Rule;
 import org.powerunit.Test;
 import org.powerunit.TestRule;
@@ -39,6 +40,7 @@ public class ExternalResourceTests {
 
 	}
 
+	@Categories("base")
 	public static class TestExternalResourceEmpty implements TestSuite {
 		@Rule
 		public final TestRule rule = new ExternalResource() {

@@ -20,6 +20,7 @@
 package org.powerunit.test.base;
 
 import org.mockito.Mock;
+import org.powerunit.Categories;
 import org.powerunit.Rule;
 import org.powerunit.Test;
 import org.powerunit.TestRule;
@@ -35,6 +36,7 @@ public class MockitoRuleTests {
 
 	}
 
+	@Categories("base")
 	public static class TestMockito implements TestSuite {
 		@Mock
 		private Object mock;

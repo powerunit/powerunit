@@ -22,6 +22,7 @@ package org.powerunit.test.base;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+import org.powerunit.Categories;
 import org.powerunit.Parameter;
 import org.powerunit.Parameters;
 import org.powerunit.Rule;
@@ -40,6 +41,7 @@ public class RuntimeRuleValidatorTests {
 		runner.run();
 	}
 
+	@Categories("base")
 	public static class Tester<T> implements TestSuite, ParametersValidator,
 			ParameterValidator {
 		@Parameters

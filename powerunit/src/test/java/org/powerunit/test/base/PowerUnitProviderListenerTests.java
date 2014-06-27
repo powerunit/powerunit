@@ -27,6 +27,7 @@ import org.apache.maven.surefire.report.SimpleReportEntry;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.powerunit.Categories;
 import org.powerunit.Rule;
 import org.powerunit.Test;
 import org.powerunit.TestContext;
@@ -44,6 +45,7 @@ public class PowerUnitProviderListenerTests {
 		runner.run();
 	}
 
+	@Categories("base")
 	public static class PowerUnitProviderListenerTest implements TestSuite {
 		@Mock
 		private RunListener rl;

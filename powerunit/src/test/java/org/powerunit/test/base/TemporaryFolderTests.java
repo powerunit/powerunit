@@ -22,6 +22,7 @@ package org.powerunit.test.base;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import org.powerunit.Categories;
 import org.powerunit.Rule;
 import org.powerunit.Test;
 import org.powerunit.TestRule;
@@ -42,6 +43,7 @@ public class TemporaryFolderTests {
 
 	}
 
+	@Categories("base")
 	public static class TemporaryFolderTest implements TestSuite {
 
 		private final TemporaryFolder temporaryFolder = temporaryFolder();
