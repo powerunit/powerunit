@@ -173,6 +173,11 @@
 					<artifactId>maven-source-plugin</artifactId>
 					<version>2.2.1</version>
 				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>jaxb2-maven-plugin</artifactId>
+					<version>1.6</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -311,7 +316,7 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>Example Test</id>
+						<id>Example Test OK</id>
 						<phase>test</phase>
 						<goals>
 							<goal>exec</goal>
@@ -324,8 +329,32 @@
 								<argument>-classpath</argument>
 								<classpath />
 								<argument>org.powerunit.suite.Suites</argument>
+								<argument>${project.build.directory}/manual-surefire-reports</argument>
 								<argument>example</argument>
 							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>Example Test KO</id>
+						<phase>test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<classpathScope>test</classpathScope>
+							<executable>java</executable>
+							<arguments>
+								<argument>${argLine}</argument>
+								<argument>-classpath</argument>
+								<classpath />
+								<argument>org.powerunit.suite.Suites</argument>
+								<argument>${project.build.directory}/manual-surefire-reports</argument>
+								<argument>exampleko</argument>
+							</arguments>
+							<successCodes>
+								<successCode>-1</successCode>
+								<successCode>1</successCode>
+							</successCodes>
 						</configuration>
 					</execution>
 				</executions>
@@ -341,7 +370,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<excludePackageNames>org.powerunit.impl*:org.powerunit.matchers*:org.powerunit.processor*</excludePackageNames>
+					<excludePackageNames>org.powerunit.impl*:org.powerunit.matchers*:org.powerunit.processor*:org.powerunit.report*</excludePackageNames>
 					<docfilessubdirs>true</docfilessubdirs>
 					<linksource>true</linksource>
 				</configuration>
@@ -402,6 +431,23 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>jaxb2-maven-plugin</artifactId>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>xjc</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <!-- The schema directory or xsd files. -->
+                <schemaDirectory>${basedir}/src/main/resources/schema</schemaDirectory>
+                <!-- The package in which the source files will be generated. -->
+                <packageName>org.powerunit.report</packageName>
+            </configuration>
+        </plugin>
 		</plugins>
 
 		<resources>
@@ -477,7 +523,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.9.1</version>
 				<configuration>
-					<excludePackageNames>org.powerunit.impl*:org.powerunit.matchers*:org.powerunit.processor*</excludePackageNames>
+					<excludePackageNames>org.powerunit.impl*:org.powerunit.matchers*:org.powerunit.processor*:org.powerunit.report*</excludePackageNames>
 					<docfilessubdirs>true</docfilessubdirs>
 					<linksource>true</linksource>
 				</configuration>
