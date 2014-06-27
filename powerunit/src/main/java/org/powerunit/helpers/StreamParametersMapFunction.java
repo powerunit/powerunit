@@ -29,7 +29,10 @@ import org.powerunit.Parameter;
 
 /**
  * This is a class that provide a way to transform stream of String to Object
- * based on the @Parameter field type
+ * based on the @Parameter field type.
+ * <p>
+ * Access to this class is available from the {@link org.powerunit.TestSuite
+ * TestSuite} interface.
  * 
  * @author borettim
  * @param <T>
