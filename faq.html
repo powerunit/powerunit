@@ -74,7 +74,10 @@
       </a></li>
 <li><a href="#base_syntax">
       What is the syntax of a Test?
-     </a></li></ol></div>
+     </a></li>
+<li><a href="#before-after">
+        How are managed the before and after action of a test.
+      </a></li></ol></div>
 <div class="section">
 <h2>General<a name="General"></a></h2>
 <dl>
@@ -103,7 +106,8 @@ public class HelloWorldTest implements TestSuite {
     assertThat(&quot;Hello world&quot;).is(containsString(&quot; &quot;));
   }
  
-}     </pre></div>
+}      
+</pre></div>
 		
 <p>A test using parameter will look like</p>
 		
@@ -137,8 +141,34 @@ public class HelloWorldParameterTest implements TestSuite {
     assertThat(inputString.substring(inputIndex)).is(expectedString);
   }
 }
-		</pre></div>
-     </dd></dl></div>
+</pre></div>
+     <hr /></dd>
+<dt><a name="before-after">
+        How are managed the before and after action of a test.
+      </a></dt>
+<dd>
+        
+<p>Compared to JUnit that use method annotated with @Before and @After, Powerunit try to avoid this approach in favor
+        of a more JDK 1.8 approach (using lamdba), but also to have more clear test execution. To do so, the concept of rule
+        (also from JUnit), is use as the only way to define element around the test.</p>
+        
+<p>Each test classes can contain one single field annotated with @Rule. This field defines the various modification 
+        of the test execution, and provides way to define the code to be run before or after the test. For example, to define 
+        a before action, the following syntax can be used :</p>
+        
+<div class="source">
+<pre>
+@Rule public final TestRule level2 = before(this::prepare);
+       </pre></div>
+        
+<p>This will define that the method prepare (void, without parameter) will be used before the test. Next action can
+        be chained by using the .around(<i>next rule</i>). For instance to have a before and a after, it is possible to use :</p>
+        
+<div class="source">
+<pre>
+@Rule public final TestRule level2 = before(this::prepare).around(after(this::clean));    
+       </pre></div>
+      </dd></dl></div>
       </div>
     </div>
     <div class="clear">
