@@ -37,9 +37,6 @@ import org.powerunit.surefire.PowerUnitProviderListener;
 
 public class PowerUnitProviderListenerTests {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		DefaultPowerUnitRunnerImpl<PowerUnitProviderListenerTest> runner = new DefaultPowerUnitRunnerImpl<>(
 				PowerUnitProviderListenerTest.class);

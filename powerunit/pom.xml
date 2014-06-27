@@ -7,6 +7,11 @@
 	<name>Powerunit - Java Testing framework for JDK 1.8</name>
 	<description>This is a test framework for the JDK 1.8.</description>
 	<packaging>jar</packaging>
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/powerunit/powerunit/issues</url>
+	</issueManagement>
+	<url>http://powerunit.github.io/powerunit</url>
 
 	<licenses>
 		<license>
@@ -68,7 +73,6 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -322,13 +326,13 @@
 						<goals>
 							<goal>jar</goal>
 						</goals>
-						<configuration>
-							<excludePackageNames>org.powerunit.impl*:org.powerunit.matchers*:org.powerunit.processor*</excludePackageNames>
-							<docfilessubdirs>true</docfilessubdirs>
-							<linksource>true</linksource>
-						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<excludePackageNames>org.powerunit.impl*:org.powerunit.matchers*:org.powerunit.processor*</excludePackageNames>
+					<docfilessubdirs>true</docfilessubdirs>
+					<linksource>true</linksource>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -337,6 +341,16 @@
 					<source>${java.source.version}</source>
 					<target>${java.target.version}</target>
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<proc>none</proc>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -363,6 +377,39 @@
 		</plugins>
 
 	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changes-plugin</artifactId>
+				<version>2.10</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<configuration>
+					<excludePackageNames>org.powerunit.impl*:org.powerunit.matchers*:org.powerunit.processor*</excludePackageNames>
+					<docfilessubdirs>true</docfilessubdirs>
+					<linksource>true</linksource>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<id>default</id>
+						<reports>
+							<report>javadoc</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.6</version>
+			</plugin>
+		</plugins>
+	</reporting>
 
 	<dependencies>
 		<dependency>
