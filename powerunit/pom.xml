@@ -168,6 +168,11 @@
 					<artifactId>site-maven-plugin</artifactId>
 					<version>0.9</version>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.2.1</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -343,6 +348,19 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>${java.source.version}</source>
@@ -385,7 +403,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		
+
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
@@ -396,7 +414,7 @@
 		</resources>
 
 	</build>
-	
+
 
 	<profiles>
 		<profile>

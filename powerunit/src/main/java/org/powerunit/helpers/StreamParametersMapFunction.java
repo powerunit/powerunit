@@ -157,6 +157,7 @@ public final class StreamParametersMapFunction<T> implements
 	 * @param <R>
 	 *            The return type for the function
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public <R> StreamParametersMapFunction<T> andMap(int idx,
 			Function<T, R> mapFunction) {
 		if (idx < 0) {
