@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
  * This annotation can be used only once on a class.
  * 
  * @author borettim
- *
+ * @see TestRule
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

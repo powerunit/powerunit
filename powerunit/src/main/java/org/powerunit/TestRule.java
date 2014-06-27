@@ -39,7 +39,7 @@ import org.mockito.MockitoAnnotations;
  * <code>TestRule</code>. Once you have the outer test rule, it is possible to
  * chain them by using the {@link #around(TestRule)} or
  * {@link #around(Supplier)} methods. One single TestRule (which can be used as
- * a start of the chain, or later), can be builded be :
+ * a start of the chain, or later), can be builded by :
  * <ul>
  * <li>Simply using the constructor (or other way) provided by the rule itself
  * (for instance see the {@link org.powerunit.rules.TestContextRule
@@ -86,7 +86,7 @@ import org.mockito.MockitoAnnotations;
  * </pre>
  * 
  * In this case, the defined chain, will first apply the rule provided by
- * <code>mockitoRule</code>, and the apply the rule included inside the
+ * <code>mockitoRule</code>, and then apply the rule included inside the
  * <code>around</code>. The <code>before</code> method usage inside the
  * <code>around</code> will ensure the method <code>prepare</code> is executed
  * before each test.
@@ -166,6 +166,10 @@ public interface TestRule {
 
 	/**
 	 * Add an inner rule.
+	 * <p>
+	 * This inner rule is created just before usage, thanks to the
+	 * {@link Supplier} object. This can be used for the case when one rule
+	 * depend on the outcome of a previous one.
 	 * 
 	 * @param inner
 	 *            the supplier of the inner rule

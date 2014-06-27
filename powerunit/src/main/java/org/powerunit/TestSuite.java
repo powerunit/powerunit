@@ -78,6 +78,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * @param befores
 	 *            the befores
 	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
 	 */
 	default TestRule before(Runnable... befores) {
 		return Arrays.stream(befores).map(TestRule::before)
@@ -93,6 +94,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * @param afters
 	 *            the afters
 	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
 	 */
 	default TestRule after(Runnable... afters) {
 		return Arrays.stream(afters).map(TestRule::after)
@@ -105,6 +107,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * This provide a way to setup Mockito before each test.
 	 * 
 	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
 	 */
 	default TestRule mockitoRule() {
 		return TestRule.mockitoRule();
@@ -114,6 +117,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * Produces a new rule for the temporary folder.
 	 * 
 	 * @return the temporary folder rule.
+	 * @see Rule
 	 */
 	default TemporaryFolder temporaryFolder() {
 		return new TemporaryFolder();
@@ -125,6 +129,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * @param propertiesName
 	 *            the properties to be restored
 	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
 	 */
 	default TestRule systemPropertiesRule(String... propertiesName) {
 		return new SystemPropertiesRule(propertiesName);
@@ -138,6 +143,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * @param propertyValue
 	 *            the value of the property
 	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
 	 */
 	default TestRule systemProperty(String propertyName,
 			Supplier<String> propertyValue) {
@@ -153,6 +159,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * @param propertyValue
 	 *            the value of the property
 	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
 	 */
 	default TestRule systemProperty(String propertyName, String propertyValue) {
 		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(
