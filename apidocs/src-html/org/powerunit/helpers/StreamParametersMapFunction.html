@@ -165,16 +165,17 @@
 <span class="sourceLineNo">157</span>         * @param &lt;R&gt;<a name="line.157"></a>
 <span class="sourceLineNo">158</span>         *            The return type for the function<a name="line.158"></a>
 <span class="sourceLineNo">159</span>         */<a name="line.159"></a>
-<span class="sourceLineNo">160</span>        public &lt;R&gt; StreamParametersMapFunction&lt;T&gt; andMap(int idx,<a name="line.160"></a>
-<span class="sourceLineNo">161</span>                        Function&lt;T, R&gt; mapFunction) {<a name="line.161"></a>
-<span class="sourceLineNo">162</span>                if (idx &lt; 0) {<a name="line.162"></a>
-<span class="sourceLineNo">163</span>                        throw new IllegalArgumentException("idx can't be negative");<a name="line.163"></a>
-<span class="sourceLineNo">164</span>                }<a name="line.164"></a>
-<span class="sourceLineNo">165</span>                Objects.requireNonNull(mapFunction);<a name="line.165"></a>
-<span class="sourceLineNo">166</span>                mapper.put(idx, (Function) mapFunction);<a name="line.166"></a>
-<span class="sourceLineNo">167</span>                return this;<a name="line.167"></a>
-<span class="sourceLineNo">168</span>        }<a name="line.168"></a>
-<span class="sourceLineNo">169</span>}<a name="line.169"></a>
+<span class="sourceLineNo">160</span>        @SuppressWarnings({ "rawtypes", "unchecked" })<a name="line.160"></a>
+<span class="sourceLineNo">161</span>        public &lt;R&gt; StreamParametersMapFunction&lt;T&gt; andMap(int idx,<a name="line.161"></a>
+<span class="sourceLineNo">162</span>                        Function&lt;T, R&gt; mapFunction) {<a name="line.162"></a>
+<span class="sourceLineNo">163</span>                if (idx &lt; 0) {<a name="line.163"></a>
+<span class="sourceLineNo">164</span>                        throw new IllegalArgumentException("idx can't be negative");<a name="line.164"></a>
+<span class="sourceLineNo">165</span>                }<a name="line.165"></a>
+<span class="sourceLineNo">166</span>                Objects.requireNonNull(mapFunction);<a name="line.166"></a>
+<span class="sourceLineNo">167</span>                mapper.put(idx, (Function) mapFunction);<a name="line.167"></a>
+<span class="sourceLineNo">168</span>                return this;<a name="line.168"></a>
+<span class="sourceLineNo">169</span>        }<a name="line.169"></a>
+<span class="sourceLineNo">170</span>}<a name="line.170"></a>
 
 
 

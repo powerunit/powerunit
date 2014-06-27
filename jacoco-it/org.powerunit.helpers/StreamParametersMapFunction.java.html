@@ -157,14 +157,15 @@ public final class StreamParametersMapFunction&lt;T&gt; implements
 	 * @param &lt;R&gt;
 	 *            The return type for the function
 	 */
+	@SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
 	public &lt;R&gt; StreamParametersMapFunction&lt;T&gt; andMap(int idx,
 			Function&lt;T, R&gt; mapFunction) {
-<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (idx &lt; 0) {</span>
-<span class="nc" id="L163">			throw new IllegalArgumentException(&quot;idx can't be negative&quot;);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (idx &lt; 0) {</span>
+<span class="nc" id="L164">			throw new IllegalArgumentException(&quot;idx can't be negative&quot;);</span>
 		}
-<span class="nc" id="L165">		Objects.requireNonNull(mapFunction);</span>
-<span class="nc" id="L166">		mapper.put(idx, (Function) mapFunction);</span>
-<span class="nc" id="L167">		return this;</span>
+<span class="nc" id="L166">		Objects.requireNonNull(mapFunction);</span>
+<span class="nc" id="L167">		mapper.put(idx, (Function) mapFunction);</span>
+<span class="nc" id="L168">		return this;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

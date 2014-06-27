@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Powerunit - Java Testing framework for JDK 1.8 - About</title>
+    <title>Powerunit - Java Testing framework for JDK 1.8 - </title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -51,37 +51,37 @@
             <strong>About</strong>
           </li>
                       <li class="none">
-                          <a href="team-list.html" title="Project Team">Project Team</a>
-            </li>
-                      <li class="none">
-                          <a href="dependency-info.html" title="Dependency Information">Dependency Information</a>
-            </li>
-                      <li class="none">
-                          <a href="plugins.html" title="Project Plugins">Project Plugins</a>
-            </li>
-                      <li class="none">
-                          <a href="integration.html" title="Continuous Integration">Continuous Integration</a>
-            </li>
-                      <li class="none">
-                          <a href="issue-tracking.html" title="Issue Tracking">Issue Tracking</a>
-            </li>
-                      <li class="none">
-                          <a href="source-repository.html" title="Source Repository">Source Repository</a>
-            </li>
-                      <li class="none">
-                          <a href="license.html" title="Project License">Project License</a>
-            </li>
-                      <li class="none">
                           <a href="plugin-management.html" title="Plugin Management">Plugin Management</a>
             </li>
                       <li class="none">
                           <a href="distribution-management.html" title="Distribution Management">Distribution Management</a>
             </li>
                       <li class="none">
-                          <a href="project-summary.html" title="Project Summary">Project Summary</a>
+                          <a href="dependency-info.html" title="Dependency Information">Dependency Information</a>
+            </li>
+                      <li class="none">
+                          <a href="source-repository.html" title="Source Repository">Source Repository</a>
             </li>
                       <li class="none">
                           <a href="mail-lists.html" title="Mailing Lists">Mailing Lists</a>
+            </li>
+                      <li class="none">
+                          <a href="issue-tracking.html" title="Issue Tracking">Issue Tracking</a>
+            </li>
+                      <li class="none">
+                          <a href="integration.html" title="Continuous Integration">Continuous Integration</a>
+            </li>
+                      <li class="none">
+                          <a href="plugins.html" title="Project Plugins">Project Plugins</a>
+            </li>
+                      <li class="none">
+                          <a href="license.html" title="Project License">Project License</a>
+            </li>
+                      <li class="none">
+                          <a href="team-list.html" title="Project Team">Project Team</a>
+            </li>
+                      <li class="none">
+                          <a href="project-summary.html" title="Project Summary">Project Summary</a>
             </li>
                       <li class="none">
                           <a href="dependencies.html" title="Dependencies">Dependencies</a>
@@ -102,8 +102,45 @@
     <div id="bodyColumn">
       <div id="contentBox">
         <div class="section">
-<h2>About Powerunit - Java Testing framework for JDK 1.8<a name="About_Powerunit_-_Java_Testing_framework_for_JDK_1.8"></a></h2><a name="About_Powerunit_-_Java_Testing_framework_for_JDK_1.8"></a>
-<p>This is a test framework for the JDK 1.8.</p></div>
+<h2>The Powerunit framework<a name="The_Powerunit_framework"></a></h2>
+<div class="section">
+<h3>Main concepts<a name="Main_concepts"></a></h3>
+<p>Powerunit is a unit test framework designed to be used with the JDK 1.8. It is inspired by the JUnit framework and syntax is very similar. For a high level perspective, the main difference are :</p>
+<ul>
+<li>The is no concept of test runner, but the concept of parameterized test is integrated into the default system.</li>
+<li>The is no before/after annotation, but the action around a test are defined by using one single rule chain.</li>
+<li>Assertion syntax is more DSL oriented (only assertThat or similair assertion is available). The assertion system is strongly linked with hamcrest.</li>
+<li>Some additional matcher are available to support new capabilities of the JDK 1.8, for instance the Optional class.
+<p><a href="./apidocs/index.html">Much more details are available in the javadoc of this project</a></p></li></ul></div>
+<div class="section">
+<h3>Hosting<a name="Hosting"></a></h3>
+<p>The source is hosted on <a class="externalLink" href="https://github.com/powerunit/powerunit/">git</a>, as is the <a class="externalLink" href="https://github.com/powerunit/powerunit/issues">issue manager</a>. </p></div>
+<div class="section">
+<h3>Maven integration<a name="Maven_integration"></a></h3>
+<p>At the moment, is framework is not available in the maven central repo. Assuming this will be done at some point (for the first release), it will be possible do use this framework as any maven dependency :</p>
+<div class="source">
+<pre>&lt;dependency&gt;
+ &lt;groupId&gt;org.powerunit&lt;/groupId&gt;
+ &lt;artifactId&gt;powerunit&lt;/artifactId&gt;
+ &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+</pre></div>
+<p>Integration with surefire is also possible. To do so, the dependency must also be added to the extension of the surefire plugin:</p>
+<div class="source">
+<pre>&lt;plugin&gt;
+  &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+  &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.powerunit&lt;/groupId&gt;
+      &lt;artifactId&gt;powerunit&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/plugin&gt;
+</pre></div></div>
+<div class="section">
+<h3>Roadmap<a name="Roadmap"></a></h3>
+<p>At the moment, the roadmap is mainly to deliver a first release of the framework, with the central integration. Once this first essential step is done, the next milestones will be defined.</p></div></div>
       </div>
     </div>
     <div class="clear">
