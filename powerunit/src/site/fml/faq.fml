@@ -17,7 +17,56 @@
       </answer>
     </faq>
     
-    
+    <faq id="base syntax">
+     <question>
+      What is the syntax of a Test?
+     </question>
+     <answer>
+      <p>A simple test look like :</p>
+      <source>
+import org.powerunit.Test;
+import org.powerunit.TestSuite;
+
+public class HelloWorldTest implements TestSuite {
+  &#64;Test()
+  public void testHelloWorld1() {
+    assertThat("Hello world").is(containsString(" "));
+  }
+ 
+}      </source>
+		<p>A test using parameter will look like</p>
+		<source>
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+import org.powerunit.Parameter;
+import org.powerunit.Parameters;
+import org.powerunit.Test;
+import org.powerunit.TestSuite;
+
+public class HelloWorldParameterTest implements TestSuite {
+  &#64;Parameters("Input string is {0}, subString idx is {1}, expected result is {2}")
+  public static Stream&lt;Object[]&gt; getDatas() {
+    return Arrays.stream(new Object[][] { { "ab", 0, "ab" }, { "ab", 1, "b" } });
+  }
+
+  &#64;Parameter(0)
+  public String inputString;
+
+  &#64;Parameter(1)
+  public int inputIndex;
+
+  &#64;Parameter(2)
+  public String expectedString;
+
+  &#64;Test
+  public void testSubString() {
+    assertThat(inputString.substring(inputIndex)).is(expectedString);
+  }
+}
+		</source>
+     </answer>
+    </faq>
     
   </part>
 
