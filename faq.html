@@ -71,7 +71,10 @@
 <ol style="list-style-type: decimal">
 <li><a href="#whats-powerunit">
         What is Powerunit?
-      </a></li></ol></div>
+      </a></li>
+<li><a href="#base_syntax">
+      What is the syntax of a Test?
+     </a></li></ol></div>
 <div class="section">
 <h2>General<a name="General"></a></h2>
 <dl>
@@ -81,7 +84,61 @@
 <dd>
         
 <p>Powerunit is a java test unit framework, baed to work with the JDK 1.8.</p>
-      </dd></dl></div>
+      <hr /></dd>
+<dt><a name="base_syntax">
+      What is the syntax of a Test?
+     </a></dt>
+<dd>
+      
+<p>A simple test look like :</p>
+      
+<div class="source">
+<pre>
+import org.powerunit.Test;
+import org.powerunit.TestSuite;
+
+public class HelloWorldTest implements TestSuite {
+  @Test()
+  public void testHelloWorld1() {
+    assertThat(&quot;Hello world&quot;).is(containsString(&quot; &quot;));
+  }
+ 
+}     </pre></div>
+		
+<p>A test using parameter will look like</p>
+		
+<div class="source">
+<pre>
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+import org.powerunit.Parameter;
+import org.powerunit.Parameters;
+import org.powerunit.Test;
+import org.powerunit.TestSuite;
+
+public class HelloWorldParameterTest implements TestSuite {
+  @Parameters(&quot;Input string is {0}, subString idx is {1}, expected result is {2}&quot;)
+  public static Stream&lt;Object[]&gt; getDatas() {
+    return Arrays.stream(new Object[][] { { &quot;ab&quot;, 0, &quot;ab&quot; }, { &quot;ab&quot;, 1, &quot;b&quot; } });
+  }
+
+  @Parameter(0)
+  public String inputString;
+
+  @Parameter(1)
+  public int inputIndex;
+
+  @Parameter(2)
+  public String expectedString;
+
+  @Test
+  public void testSubString() {
+    assertThat(inputString.substring(inputIndex)).is(expectedString);
+  }
+}
+		</pre></div>
+     </dd></dl></div>
       </div>
     </div>
     <div class="clear">
