@@ -31,7 +31,7 @@
 
 	<scm>
 		<connection>scm:git:git@github.com:powerunit/powerunit.git</connection>
-		<url>scm:git:git@github.com:powerunit/powerunit.git</url>
+		<url>https://github.com/powerunit/powerunit/</url>
 		<developerConnection>scm:git:git@github.com:powerunit/powerunit.git</developerConnection>
 	</scm>
 	<properties>
