@@ -25,6 +25,7 @@ import org.powerunit.exception.AssumptionError;
 import org.powerunit.impl.AssertThatExceptionImpl;
 import org.powerunit.impl.AssertThatIterableImpl;
 import org.powerunit.impl.AssertThatObjectImpl;
+import org.powerunit.impl.AssertThatStringImpl;
 
 /**
  * This is the assume features.
@@ -54,7 +55,7 @@ interface Assume {
 	 * @return {@link AssertThatObject the assert DSL on this object}
 	 */
 	default &lt;T&gt; AssertThatObject&lt;T&gt; assumeThat(T obj) {
-<span class="fc" id="L57">		return assumeThat(null, obj);</span>
+<span class="fc" id="L58">		return assumeThat(null, obj);</span>
 	}
 
 	/**
@@ -79,7 +80,49 @@ interface Assume {
 	 * @return {@link AssertThatObject the assert DSL on this object}
 	 */
 	default &lt;T&gt; AssertThatObject&lt;T&gt; assumeThat(String msg, T obj) {
-<span class="fc" id="L82">		return new AssertThatObjectImpl&lt;T&gt;(false, msg, () -&gt; obj);</span>
+<span class="fc" id="L83">		return new AssertThatObjectImpl&lt;T&gt;(false, msg, () -&gt; obj);</span>
+	}
+
+	/**
+	 * Assume the value of a String.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeThat(myString).is(&amp;quot;&amp;quot;);
+	 * &lt;/pre&gt;
+	 * 
+	 * This will check that &lt;code&gt;myString&lt;/code&gt; is &lt;code&gt;&quot;&quot;&lt;/code&gt; (using the
+	 * &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
+	 * 
+	 * @param obj
+	 *            the String
+	 * @return {@link AssertThatString the assert DSL on this object}
+	 */
+	default AssertThatString assumeThat(String obj) {
+<span class="fc" id="L103">		return assumeThat(null, obj);</span>
+	}
+
+	/**
+	 * Assume the value of a String.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeThat(&amp;quot;msg&amp;quot;, myString).is(&amp;quot;&amp;quot;);
+	 * &lt;/pre&gt;
+	 * 
+	 * This will check that &lt;code&gt;myString&lt;/code&gt; is &lt;code&gt;&quot;&quot;&lt;/code&gt; (using the
+	 * &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
+	 * 
+	 * @param msg
+	 *            a message
+	 * @param obj
+	 *            the String
+	 * @return {@link AssertThatString the assert DSL on this object}
+	 */
+	default AssertThatString assumeThat(String msg, String obj) {
+<span class="fc" id="L125">		return new AssertThatStringImpl(true, msg, () -&gt; obj);</span>
 	}
 
 	/**
@@ -101,7 +144,7 @@ interface Assume {
 	 * @return {@link AssertThatIterable the assert DSL on this iterable}
 	 */
 	default &lt;T&gt; AssertThatIterable&lt;T&gt; assumeThatIterable(Iterable&lt;T&gt; obj) {
-<span class="fc" id="L104">		return assumeThatIterable(null, obj);</span>
+<span class="fc" id="L147">		return assumeThatIterable(null, obj);</span>
 	}
 
 	/**
@@ -126,7 +169,7 @@ interface Assume {
 	 */
 	default &lt;T&gt; AssertThatIterable&lt;T&gt; assumeThatIterable(String msg,
 			Iterable&lt;T&gt; obj) {
-<span class="fc" id="L129">		return new AssertThatIterableImpl&lt;T&gt;(false, msg, () -&gt; obj);</span>
+<span class="fc" id="L172">		return new AssertThatIterableImpl&lt;T&gt;(false, msg, () -&gt; obj);</span>
 	}
 
 	/**
@@ -159,7 +202,7 @@ interface Assume {
 	 */
 	default &lt;T, R&gt; AssertThatObject&lt;R&gt; assumeThatFunction(
 			Function&lt;T, R&gt; function, T input) {
-<span class="fc" id="L162">		return new AssertThatObjectImpl&lt;R&gt;(false, null,</span>
+<span class="fc" id="L205">		return new AssertThatObjectImpl&lt;R&gt;(false, null,</span>
 				() -&gt; function.apply(input));
 	}
 
@@ -195,7 +238,7 @@ interface Assume {
 	 */
 	default &lt;T, R&gt; AssertThatObject&lt;R&gt; assumeThatFunction(String msg,
 			Function&lt;T, R&gt; function, T input) {
-<span class="fc" id="L198">		return new AssertThatObjectImpl&lt;R&gt;(false, msg,</span>
+<span class="fc" id="L241">		return new AssertThatObjectImpl&lt;R&gt;(false, msg,</span>
 				() -&gt; function.apply(input));
 	}
 
@@ -225,7 +268,7 @@ interface Assume {
 	 */
 	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(
 			Statement&lt;?, T&gt; underTest) {
-<span class="fc" id="L228">		return assumeWhen(null, underTest, null);</span>
+<span class="fc" id="L271">		return assumeWhen(null, underTest, null);</span>
 	}
 
 	/**
@@ -260,7 +303,7 @@ interface Assume {
 	 */
 	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(
 			Statement&lt;P, T&gt; underTest, P param) {
-<span class="nc" id="L263">		return assumeWhen(null, underTest, param);</span>
+<span class="nc" id="L306">		return assumeWhen(null, underTest, param);</span>
 	}
 
 	/**
@@ -291,7 +334,7 @@ interface Assume {
 	 */
 	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(String msg,
 			Statement&lt;?, T&gt; underTest) {
-<span class="fc" id="L294">		return assumeWhen(msg, underTest, null);</span>
+<span class="fc" id="L337">		return assumeWhen(msg, underTest, null);</span>
 	}
 
 	/**
@@ -329,7 +372,7 @@ interface Assume {
 	 */
 	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(
 			String msg, Statement&lt;P, T&gt; underTest, P param) {
-<span class="fc" id="L332">		return new AssertThatExceptionImpl&lt;P, T&gt;(false, underTest, param, msg);</span>
+<span class="fc" id="L375">		return new AssertThatExceptionImpl&lt;P, T&gt;(false, underTest, param, msg);</span>
 	}
 
 	/**
@@ -344,8 +387,8 @@ interface Assume {
 	 * will immediately skip the current test.
 	 */
 	default void skip() {
-<span class="nc" id="L347">		skip(&quot;Manual skip&quot;);</span>
-<span class="nc" id="L348">	}</span>
+<span class="nc" id="L390">		skip(&quot;Manual skip&quot;);</span>
+<span class="nc" id="L391">	}</span>
 
 	/**
 	 * Always produce a skip.
@@ -362,7 +405,7 @@ interface Assume {
 	 *            a message
 	 */
 	default void skip(String msg) {
-<span class="nc" id="L365">		throw new AssumptionError(msg);</span>
+<span class="nc" id="L408">		throw new AssumptionError(msg);</span>
 	}
 
 }

@@ -24,6 +24,7 @@ import java.util.function.Function;
 import org.powerunit.impl.AssertThatExceptionImpl;
 import org.powerunit.impl.AssertThatIterableImpl;
 import org.powerunit.impl.AssertThatObjectImpl;
+import org.powerunit.impl.AssertThatStringImpl;
 
 /**
  * This is the assert features.
@@ -52,7 +53,7 @@ interface Assert {
 	 * @return {@link AssertThatObject the assert DSL on this object}
 	 */
 	default &lt;T&gt; AssertThatObject&lt;T&gt; assertThat(T obj) {
-<span class="fc" id="L55">		return assertThat(null, obj);</span>
+<span class="fc" id="L56">		return assertThat(null, obj);</span>
 	}
 
 	/**
@@ -76,7 +77,49 @@ interface Assert {
 	 * @return {@link AssertThatObject the assert DSL on this object}
 	 */
 	default &lt;T&gt; AssertThatObject&lt;T&gt; assertThat(String msg, T obj) {
-<span class="fc" id="L79">		return new AssertThatObjectImpl&lt;T&gt;(true, msg, () -&gt; obj);</span>
+<span class="fc" id="L80">		return new AssertThatObjectImpl&lt;T&gt;(true, msg, () -&gt; obj);</span>
+	}
+
+	/**
+	 * Assert the value of a String.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myString).is(&amp;quot;&amp;quot;);
+	 * &lt;/pre&gt;
+	 * 
+	 * This will check that &lt;code&gt;myString&lt;/code&gt; is &lt;code&gt;&quot;&quot;&lt;/code&gt; (using the
+	 * &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
+	 * 
+	 * @param obj
+	 *            the String
+	 * @return {@link AssertThatString the assert DSL on this object}
+	 */
+	default AssertThatString assertThat(String obj) {
+<span class="fc" id="L100">		return assertThat(null, obj);</span>
+	}
+
+	/**
+	 * Assert the value of a String.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(&amp;quot;msg&amp;quot;, myString).is(&amp;quot;&amp;quot;);
+	 * &lt;/pre&gt;
+	 * 
+	 * This will check that &lt;code&gt;myString&lt;/code&gt; is &lt;code&gt;&quot;&quot;&lt;/code&gt; (using the
+	 * &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
+	 * 
+	 * @param msg
+	 *            a message
+	 * @param obj
+	 *            the String
+	 * @return {@link AssertThatString the assert DSL on this object}
+	 */
+	default AssertThatString assertThat(String msg, String obj) {
+<span class="fc" id="L122">		return new AssertThatStringImpl(true, msg, () -&gt; obj);</span>
 	}
 
 	/**
@@ -97,7 +140,7 @@ interface Assert {
 	 * @return {@link AssertThatIterable the assert DSL on this iterable}
 	 */
 	default &lt;T&gt; AssertThatIterable&lt;T&gt; assertThatIterable(Iterable&lt;T&gt; obj) {
-<span class="fc" id="L100">		return assertThatIterable(null, obj);</span>
+<span class="fc" id="L143">		return assertThatIterable(null, obj);</span>
 	}
 
 	/**
@@ -121,7 +164,7 @@ interface Assert {
 	 */
 	default &lt;T&gt; AssertThatIterable&lt;T&gt; assertThatIterable(String msg,
 			Iterable&lt;T&gt; obj) {
-<span class="fc" id="L124">		return new AssertThatIterableImpl&lt;T&gt;(true, msg, () -&gt; obj);</span>
+<span class="fc" id="L167">		return new AssertThatIterableImpl&lt;T&gt;(true, msg, () -&gt; obj);</span>
 	}
 
 	/**
@@ -153,7 +196,7 @@ interface Assert {
 	 */
 	default &lt;T, R&gt; AssertThatObject&lt;R&gt; assertThatFunction(
 			Function&lt;T, R&gt; function, T input) {
-<span class="fc" id="L156">		return new AssertThatObjectImpl&lt;R&gt;(true, null,</span>
+<span class="fc" id="L199">		return new AssertThatObjectImpl&lt;R&gt;(true, null,</span>
 				() -&gt; function.apply(input));
 	}
 
@@ -188,7 +231,7 @@ interface Assert {
 	 */
 	default &lt;T, R&gt; AssertThatObject&lt;R&gt; assertThatFunction(String msg,
 			Function&lt;T, R&gt; function, T input) {
-<span class="fc" id="L191">		return new AssertThatObjectImpl&lt;R&gt;(true, msg,</span>
+<span class="fc" id="L234">		return new AssertThatObjectImpl&lt;R&gt;(true, msg,</span>
 				() -&gt; function.apply(input));
 	}
 
@@ -217,7 +260,7 @@ interface Assert {
 	 */
 	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
 			Statement&lt;?, T&gt; underTest) {
-<span class="fc" id="L220">		return assertWhen(null, underTest, null);</span>
+<span class="fc" id="L263">		return assertWhen(null, underTest, null);</span>
 	}
 
 	/**
@@ -251,7 +294,7 @@ interface Assert {
 	 */
 	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
 			Statement&lt;P, T&gt; underTest, P param) {
-<span class="fc" id="L254">		return assertWhen(null, underTest, param);</span>
+<span class="fc" id="L297">		return assertWhen(null, underTest, param);</span>
 	}
 
 	/**
@@ -281,7 +324,7 @@ interface Assert {
 	 */
 	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(String msg,
 			Statement&lt;?, T&gt; underTest) {
-<span class="fc" id="L284">		return assertWhen(msg, underTest, null);</span>
+<span class="fc" id="L327">		return assertWhen(msg, underTest, null);</span>
 	}
 
 	/**
@@ -318,7 +361,7 @@ interface Assert {
 	 */
 	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
 			String msg, Statement&lt;P, T&gt; underTest, P param) {
-<span class="fc" id="L321">		return new AssertThatExceptionImpl&lt;P, T&gt;(true, underTest, param, msg);</span>
+<span class="fc" id="L364">		return new AssertThatExceptionImpl&lt;P, T&gt;(true, underTest, param, msg);</span>
 	}
 
 	/**
@@ -333,8 +376,8 @@ interface Assert {
 	 * will immediately fail the current test.
 	 */
 	default void fail() {
-<span class="nc" id="L336">		fail(&quot;Manual failure&quot;);</span>
-<span class="nc" id="L337">	}</span>
+<span class="nc" id="L379">		fail(&quot;Manual failure&quot;);</span>
+<span class="nc" id="L380">	}</span>
 
 	/**
 	 * Always produce a failure.
@@ -351,7 +394,7 @@ interface Assert {
 	 *            a message
 	 */
 	default void fail(String msg) {
-<span class="fc" id="L354">		throw new AssertionError(msg);</span>
+<span class="fc" id="L397">		throw new AssertionError(msg);</span>
 	}
 
 	/**
@@ -371,7 +414,7 @@ interface Assert {
 	 *            the error cause
 	 */
 	default void fail(String msg, Throwable innerError) {
-<span class="nc" id="L374">		throw new AssertionError(msg, innerError);</span>
+<span class="nc" id="L417">		throw new AssertionError(msg, innerError);</span>
 	}
 
 }
