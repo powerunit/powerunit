@@ -30,6 +30,17 @@ import java.lang.annotation.Target;
  * <p>
  * This can be used on a class (to ignore completely the class) or on a method
  * (to ignore only the method).
+ * <p>
+ * Depending on the context, the action is not exactly the same :
+ * <ul>
+ * <li><b>Usage on class</b>
+ * <p>
+ * In this case, no check on the class are done. A single pseudo test execution
+ * will be done, with a skipped status.</li>
+ * <li><b>Usage on method</b>
+ * <p>
+ * In this case, test rule related of this method are not executed.</li>
+ * </ul>
  * 
  * @author borettim
  *

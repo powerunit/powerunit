@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
  * This method will be run once only.
  * 
  * @author borettim
- *
+ * @see java.util.stream.Stream
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

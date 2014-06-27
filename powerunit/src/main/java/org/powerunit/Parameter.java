@@ -30,6 +30,13 @@ import java.lang.annotation.Target;
  * <p>
  * The field must be numbered (using {@link #value()}) from 0 to n, in a
  * continuous way.
+ * <p>
+ * For example, a parameter field can be defined in the following way:
+ * 
+ * <pre>
+ * &#064;Parameter(0)
+ * public String fieldName;
+ * </pre>
  * 
  * @author borettim
  * @see Parameters
