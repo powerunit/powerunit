@@ -27,7 +27,14 @@ import java.nio.file.Path;
 import org.powerunit.TestSuite;
 
 /**
- * This rule provides a way to support temporary folder
+ * This rule provides a way to support temporary folder.
+ * <p>
+ * This class is exposed by the
+ * {@link org.powerunit.TestSuite#temporaryFolder() temporaryFolder()} method of
+ * the {@link org.powerunit.TestSuite TestSuite} interface. Direct instantiation
+ * of this class should be avoided. Created file and folder by this rule (or
+ * created inside the once created by this rule) are removed after test
+ * execution.
  * 
  * @author borettim
  *

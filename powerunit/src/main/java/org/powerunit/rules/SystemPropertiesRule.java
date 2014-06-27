@@ -27,6 +27,13 @@ import org.powerunit.TestRule;
 
 /**
  * Rule that restore system properties after test.
+ * <p>
+ * This class is exposed by the
+ * {@link org.powerunit.TestSuite#systemPropertiesRule(String...)
+ * systemPropertiesRule()} method of the {@link org.powerunit.TestSuite
+ * TestSuite} interface. Direct instantiation of this class should be avoided.
+ * Other methods are also available in the TestSuite interface to set one
+ * property.
  * 
  * @author borettim
  *
@@ -71,7 +78,7 @@ public final class SystemPropertiesRule implements ExternalResource {
 	}
 
 	/**
-	 * Set a system property before a test and ensure the correct restore
+	 * Set a system property before a test and ensure the correct restore.
 	 * 
 	 * @param propertyName
 	 *            the property name
@@ -87,7 +94,7 @@ public final class SystemPropertiesRule implements ExternalResource {
 	}
 
 	/**
-	 * Set a system property before a test and ensure the correct restore
+	 * Set a system property before a test and ensure the correct restore.
 	 * 
 	 * @param propertyName
 	 *            the property name

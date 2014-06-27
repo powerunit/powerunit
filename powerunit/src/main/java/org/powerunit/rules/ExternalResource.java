@@ -24,7 +24,19 @@ import org.powerunit.TestContext;
 /**
  * Default Rule to do some stuff before the test, and after (always).
  * <p>
- * This interface is provided here as a facility for rule provider.
+ * This interface is provided here as a facility for rule provider, which will
+ * implement the {@link #before()} and {@link #after()} methods. The idea is to
+ * support use case that access some external system which need preparation and
+ * cleanup between each test.
+ * <p>
+ * To use this interface, implementer should :
+ * <ul>
+ * <li>Implement the method {@link #before()} with the code that prepare the
+ * external resource (creation of folder, start of server, etc).</li>
+ * <li>Implement the method {@link #after()} with the code that cleanup the
+ * external resource (destruction of folder, shutdown of server, etc). This
+ * method is used even in case the test is in failure or error.</li>
+ * </ul>
  * 
  * @author borettim
  */

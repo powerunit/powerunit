@@ -27,6 +27,9 @@ import java.lang.annotation.Target;
 
 /**
  * Can be used to defined categories of this test classes.
+ * <p>
+ * This marker annotation is for the moment only use to mark the categories. It
+ * may be used in the future release to do selective test run.
  * 
  * @author borettim
  *

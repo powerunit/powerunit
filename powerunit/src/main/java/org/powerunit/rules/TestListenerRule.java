@@ -29,8 +29,30 @@ import org.powerunit.exception.AssumptionError;
  * <p>
  * The purpose is here to provide an interface that can be implemented by rule
  * implementor to do action, before, after and on some condition.
+ * <p>
+ * Rule implementer should implements this interface and then implement the
+ * required methods (which are do-nothing method by default).
+ * 
+ * The order of execution is the following :
+ * <ul>
+ * <li>Before the test, the method {@link #onStart(TestContext)} is executed.</li>
+ * <li>Then the test is executed.</li>
+ * <li>In case of error/failure, one (and only one) of the next methods is
+ * executed
+ * <ol>
+ * <li>{@link #onFailure(TestContext, AssertionError)} in case of test failure.</li>
+ * <li>{@link #onError(TestContext, Throwable)} in case of test error.</li>
+ * </ol>
+ * </li>
+ * <li>In all case, after the test, and after the previous method in case of
+ * error/failure, the method {@link #onEnd(TestContext)} is executed.</li>
+ * </ul>
+ * 
+ * The {@link ExternalResource} rule implements this interface to provide simple
+ * use case (action before and always after test).
  * 
  * @author borettim
+ * @see ExternalResource
  */
 public interface TestListenerRule extends TestRule {
 
