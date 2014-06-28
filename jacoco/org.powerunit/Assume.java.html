@@ -19,6 +19,7 @@
  */
 package org.powerunit;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.powerunit.exception.AssumptionError;
@@ -55,7 +56,7 @@ interface Assume {
 	 * @return {@link AssertThatObject the assert DSL on this object}
 	 */
 	default &lt;T&gt; AssertThatObject&lt;T&gt; assumeThat(T obj) {
-<span class="fc" id="L58">		return assumeThat(null, obj);</span>
+<span class="fc" id="L59">		return assumeThat(null, obj);</span>
 	}
 
 	/**
@@ -80,7 +81,7 @@ interface Assume {
 	 * @return {@link AssertThatObject the assert DSL on this object}
 	 */
 	default &lt;T&gt; AssertThatObject&lt;T&gt; assumeThat(String msg, T obj) {
-<span class="fc" id="L83">		return new AssertThatObjectImpl&lt;T&gt;(false, msg, () -&gt; obj);</span>
+<span class="fc" id="L84">		return new AssertThatObjectImpl&lt;T&gt;(false, msg, () -&gt; obj);</span>
 	}
 
 	/**
@@ -100,7 +101,7 @@ interface Assume {
 	 * @return {@link AssertThatString the assert DSL on this object}
 	 */
 	default AssertThatString assumeThat(String obj) {
-<span class="fc" id="L103">		return assumeThat(null, obj);</span>
+<span class="fc" id="L104">		return assumeThat(null, obj);</span>
 	}
 
 	/**
@@ -122,7 +123,7 @@ interface Assume {
 	 * @return {@link AssertThatString the assert DSL on this object}
 	 */
 	default AssertThatString assumeThat(String msg, String obj) {
-<span class="fc" id="L125">		return new AssertThatStringImpl(true, msg, () -&gt; obj);</span>
+<span class="fc" id="L126">		return new AssertThatStringImpl(true, msg, () -&gt; obj);</span>
 	}
 
 	/**
@@ -144,7 +145,7 @@ interface Assume {
 	 * @return {@link AssertThatIterable the assert DSL on this iterable}
 	 */
 	default &lt;T&gt; AssertThatIterable&lt;T&gt; assumeThatIterable(Iterable&lt;T&gt; obj) {
-<span class="fc" id="L147">		return assumeThatIterable(null, obj);</span>
+<span class="fc" id="L148">		return assumeThatIterable(null, obj);</span>
 	}
 
 	/**
@@ -169,7 +170,7 @@ interface Assume {
 	 */
 	default &lt;T&gt; AssertThatIterable&lt;T&gt; assumeThatIterable(String msg,
 			Iterable&lt;T&gt; obj) {
-<span class="fc" id="L172">		return new AssertThatIterableImpl&lt;T&gt;(false, msg, () -&gt; obj);</span>
+<span class="fc" id="L173">		return new AssertThatIterableImpl&lt;T&gt;(false, msg, () -&gt; obj);</span>
 	}
 
 	/**
@@ -202,7 +203,7 @@ interface Assume {
 	 */
 	default &lt;T, R&gt; AssertThatObject&lt;R&gt; assumeThatFunction(
 			Function&lt;T, R&gt; function, T input) {
-<span class="fc" id="L205">		return new AssertThatObjectImpl&lt;R&gt;(false, null,</span>
+<span class="fc" id="L206">		return new AssertThatObjectImpl&lt;R&gt;(false, null,</span>
 				() -&gt; function.apply(input));
 	}
 
@@ -238,8 +239,84 @@ interface Assume {
 	 */
 	default &lt;T, R&gt; AssertThatObject&lt;R&gt; assumeThatFunction(String msg,
 			Function&lt;T, R&gt; function, T input) {
-<span class="fc" id="L241">		return new AssertThatObjectImpl&lt;R&gt;(false, msg,</span>
+<span class="fc" id="L242">		return new AssertThatObjectImpl&lt;R&gt;(false, msg,</span>
 				() -&gt; function.apply(input));
+	}
+
+	/**
+	 * Assume on a bifunction.
+	 * &lt;p&gt;
+	 * The purpose of this variant of &lt;i&gt;assumeThat&lt;/i&gt; provides a way to apply
+	 * a bifunction on some input and to check the result.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeThatBiFunction((a, b) -&amp;gt; a + b, &amp;quot;a&amp;quot;, &amp;quot;b&amp;quot;).is(&amp;quot;ab&amp;quot;)
+	 * &lt;/pre&gt;
+	 * 
+	 * This will pass the &lt;code&gt;b&lt;/code&gt; string to the passed function (which
+	 * add a &lt;code&gt;x&lt;/code&gt; add the end of the string and then it will check
+	 * that this string is &lt;code&gt;bx&lt;/code&gt; (which is the case).
+	 * 
+	 * @param &lt;T&gt;
+	 *            the object type of the first input of the function
+	 * @param &lt;U&gt;
+	 *            the object type fo the second input of the function
+	 * @param &lt;R&gt;
+	 *            the object type of the result
+	 * @param function
+	 *            the function
+	 * @param input1
+	 *            the first input to the function
+	 * @param input2
+	 *            the second input to the function
+	 * @return {@link AssertThatObject then assert DSL on the result of the
+	 *         bifunction}
+	 */
+	default &lt;T, U, R&gt; AssertThatObject&lt;R&gt; assumeThatBiFunction(
+			BiFunction&lt;T, U, R&gt; function, T input1, U input2) {
+<span class="nc" id="L279">		return new AssertThatObjectImpl&lt;R&gt;(false, null, () -&gt; function.apply(</span>
+				input1, input2));
+	}
+
+	/**
+	 * Assume on a bifunction.
+	 * &lt;p&gt;
+	 * The purpose of this variant of &lt;i&gt;assumeThat&lt;/i&gt; provides a way to apply
+	 * a bifunction on some input and to check the result.
+	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assumeThatBiFunction((a, b) -&amp;gt; a + b, &amp;quot;a&amp;quot;, &amp;quot;b&amp;quot;).is(&amp;quot;ab&amp;quot;)
+	 * &lt;/pre&gt;
+	 * 
+	 * This will pass the &lt;code&gt;b&lt;/code&gt; string to the passed function (which
+	 * add a &lt;code&gt;x&lt;/code&gt; add the end of the string and then it will check
+	 * that this string is &lt;code&gt;bx&lt;/code&gt; (which is the case).
+	 * 
+	 * @param &lt;T&gt;
+	 *            the object type of the first input of the function
+	 * @param &lt;U&gt;
+	 *            the object type fo the second input of the function
+	 * @param &lt;R&gt;
+	 *            the object type of the result
+	 * @param msg
+	 *            a message
+	 * @param function
+	 *            the function
+	 * @param input1
+	 *            the first input to the function
+	 * @param input2
+	 *            the second input to the function
+	 * @return {@link AssertThatObject then assert DSL on the result of the
+	 *         bifunction}
+	 */
+	default &lt;T, U, R&gt; AssertThatObject&lt;R&gt; assumeThatBiFunction(String msg,
+			BiFunction&lt;T, U, R&gt; function, T input1, U input2) {
+<span class="nc" id="L318">		return new AssertThatObjectImpl&lt;R&gt;(false, msg, () -&gt; function.apply(</span>
+				input1, input2));
 	}
 
 	/**
@@ -268,7 +345,7 @@ interface Assume {
 	 */
 	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(
 			Statement&lt;?, T&gt; underTest) {
-<span class="fc" id="L271">		return assumeWhen(null, underTest, null);</span>
+<span class="fc" id="L348">		return assumeWhen(null, underTest, null);</span>
 	}
 
 	/**
@@ -303,7 +380,7 @@ interface Assume {
 	 */
 	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(
 			Statement&lt;P, T&gt; underTest, P param) {
-<span class="nc" id="L306">		return assumeWhen(null, underTest, param);</span>
+<span class="nc" id="L383">		return assumeWhen(null, underTest, param);</span>
 	}
 
 	/**
@@ -334,7 +411,7 @@ interface Assume {
 	 */
 	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(String msg,
 			Statement&lt;?, T&gt; underTest) {
-<span class="fc" id="L337">		return assumeWhen(msg, underTest, null);</span>
+<span class="fc" id="L414">		return assumeWhen(msg, underTest, null);</span>
 	}
 
 	/**
@@ -372,7 +449,7 @@ interface Assume {
 	 */
 	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(
 			String msg, Statement&lt;P, T&gt; underTest, P param) {
-<span class="fc" id="L375">		return new AssertThatExceptionImpl&lt;P, T&gt;(false, underTest, param, msg);</span>
+<span class="fc" id="L452">		return new AssertThatExceptionImpl&lt;P, T&gt;(false, underTest, param, msg);</span>
 	}
 
 	/**
@@ -387,8 +464,8 @@ interface Assume {
 	 * will immediately skip the current test.
 	 */
 	default void skip() {
-<span class="nc" id="L390">		skip(&quot;Manual skip&quot;);</span>
-<span class="nc" id="L391">	}</span>
+<span class="nc" id="L467">		skip(&quot;Manual skip&quot;);</span>
+<span class="nc" id="L468">	}</span>
 
 	/**
 	 * Always produce a skip.
@@ -405,7 +482,7 @@ interface Assume {
 	 *            a message
 	 */
 	default void skip(String msg) {
-<span class="nc" id="L408">		throw new AssumptionError(msg);</span>
+<span class="nc" id="L485">		throw new AssumptionError(msg);</span>
 	}
 
 }
