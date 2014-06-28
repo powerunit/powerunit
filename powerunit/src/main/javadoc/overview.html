@@ -265,6 +265,14 @@ org.powerunit.examples.ChildrenTest:test1[1]:clean1
 			org.powerunit.AssertThatObject AssertThatObject}, which will be used
 			to validate the result of the function application.
 			<p /></li>
+		<li><b><code>assertThatBiFunction</code>/<code>assumeThatBiFunction</code></b><br />This
+			is a much complicated assertion/assumption usage. Here the goal is to
+			check the application of a <i>lambda</i> <i>bifunction</i> on two
+			input data. The base syntax is (for the assertion) :<pre>assertThatBiFunction((p1,p2)-&gt;p1+p2,myObject1,myObject2)...</pre>
+			This method will return an instance of {@link
+			org.powerunit.AssertThatObject AssertThatObject}, which will be used
+			to validate the result of the bifunction application.
+			<p /></li>
 		<li><b><code>assertWhen</code>/<code>assumeWhen</code></b><br />This
 			is the approach to validate that some piece of code is throwing an
 			expected exception. This assertion/assumption will fail in case the

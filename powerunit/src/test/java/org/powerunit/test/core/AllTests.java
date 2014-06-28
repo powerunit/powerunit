@@ -27,10 +27,12 @@ public class AllTests {
 		AssertThatTests.main(args);
 		AssertThatIterableTests.main(args);
 		AssertThatFunctionTests.main(args);
+		AssertThatBiFunctionTests.main(args);
 		AssertWhenTests.main(args);
 		TestResultListenerTests.main(args);
 		DefaultPowerUnitRunnerImplRunTests.main(args);
 		AssumeThatFunctionTests.main(args);
+		AssumeThatBiFunctionTests.main(args);
 		AssumeThatIterableTests.main(args);
 		AssumeThatTests.main(args);
 		AssumeWhenTests.main(args);

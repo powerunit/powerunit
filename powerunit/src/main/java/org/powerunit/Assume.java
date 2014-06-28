@@ -19,6 +19,7 @@
  */
 package org.powerunit;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.powerunit.exception.AssumptionError;
@@ -240,6 +241,82 @@ interface Assume {
 			Function<T, R> function, T input) {
 		return new AssertThatObjectImpl<R>(false, msg,
 				() -> function.apply(input));
+	}
+
+	/**
+	 * Assume on a bifunction.
+	 * <p>
+	 * The purpose of this variant of <i>assumeThat</i> provides a way to apply
+	 * a bifunction on some input and to check the result.
+	 * <p>
+	 * For instance
+	 * 
+	 * <pre>
+	 * assumeThatBiFunction((a, b) -&gt; a + b, &quot;a&quot;, &quot;b&quot;).is(&quot;ab&quot;)
+	 * </pre>
+	 * 
+	 * This will pass the <code>b</code> string to the passed function (which
+	 * add a <code>x</code> add the end of the string and then it will check
+	 * that this string is <code>bx</code> (which is the case).
+	 * 
+	 * @param <T>
+	 *            the object type of the first input of the function
+	 * @param <U>
+	 *            the object type fo the second input of the function
+	 * @param <R>
+	 *            the object type of the result
+	 * @param function
+	 *            the function
+	 * @param input1
+	 *            the first input to the function
+	 * @param input2
+	 *            the second input to the function
+	 * @return {@link AssertThatObject then assert DSL on the result of the
+	 *         bifunction}
+	 */
+	default <T, U, R> AssertThatObject<R> assumeThatBiFunction(
+			BiFunction<T, U, R> function, T input1, U input2) {
+		return new AssertThatObjectImpl<R>(false, null, () -> function.apply(
+				input1, input2));
+	}
+
+	/**
+	 * Assume on a bifunction.
+	 * <p>
+	 * The purpose of this variant of <i>assumeThat</i> provides a way to apply
+	 * a bifunction on some input and to check the result.
+	 * <p>
+	 * For instance
+	 * 
+	 * <pre>
+	 * assumeThatBiFunction((a, b) -&gt; a + b, &quot;a&quot;, &quot;b&quot;).is(&quot;ab&quot;)
+	 * </pre>
+	 * 
+	 * This will pass the <code>b</code> string to the passed function (which
+	 * add a <code>x</code> add the end of the string and then it will check
+	 * that this string is <code>bx</code> (which is the case).
+	 * 
+	 * @param <T>
+	 *            the object type of the first input of the function
+	 * @param <U>
+	 *            the object type fo the second input of the function
+	 * @param <R>
+	 *            the object type of the result
+	 * @param msg
+	 *            a message
+	 * @param function
+	 *            the function
+	 * @param input1
+	 *            the first input to the function
+	 * @param input2
+	 *            the second input to the function
+	 * @return {@link AssertThatObject then assert DSL on the result of the
+	 *         bifunction}
+	 */
+	default <T, U, R> AssertThatObject<R> assumeThatBiFunction(String msg,
+			BiFunction<T, U, R> function, T input1, U input2) {
+		return new AssertThatObjectImpl<R>(false, msg, () -> function.apply(
+				input1, input2));
 	}
 
 	/**
