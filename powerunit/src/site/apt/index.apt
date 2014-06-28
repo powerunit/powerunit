@@ -3,7 +3,7 @@ The Powerunit framework
 * Main concepts
 
  Powerunit is a unit test framework designed to be used with the JDK 1.8. It is inspired by the JUnit framework and
- syntax is very similar. For a high level perspective, the main difference are :
+ syntax is very similar. from a high level perspective, the main difference are :
  
  * The is no concept of test runner, but the concept of parameterized test is integrated into the default system.
 
