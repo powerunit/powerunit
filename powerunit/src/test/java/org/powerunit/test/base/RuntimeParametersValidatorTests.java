@@ -48,7 +48,7 @@ public class RuntimeParametersValidatorTests {
 					TestClass3.class, TestClass4.class, TestClass5.class,
 					TestClass6.class, TestClass7.class, TestClass8.class,
 					TestClass9.class, TestClass10.class, TestClass11.class,
-					TestClass12.class });
+					TestClass12.class, TestClass13.class });
 		}
 
 		@Parameter(0)
@@ -172,5 +172,18 @@ public class RuntimeParametersValidatorTests {
 
 		@Parameter(-1)
 		public String p1;
+	}
+
+	public static class TestClass13 {
+		@Parameters
+		public static Stream<Object[]> getDatas() {
+			return null;
+		}
+
+		@Parameter(0)
+		public String p1;
+
+		@Parameter(0)
+		public String p2;
 	}
 }

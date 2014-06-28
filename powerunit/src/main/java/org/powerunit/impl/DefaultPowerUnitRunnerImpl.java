@@ -184,33 +184,37 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 
 	private Method parameters = null;
 
-	private Map<Integer, Field> parameterFields = new HashMap<>();
+	private Map<Integer, Field> parameterFields;
 
 	private void findParametersMethod(T targetObject, Class<T> testClass) {
-		Arrays.stream(testClass.getDeclaredMethods())
+		parameters = Arrays
+				.stream(testClass.getDeclaredMethods())
 				.filter(m -> m.isAnnotationPresent(Parameters.class))
-				.forEach(
-						m -> {
-							checkParametersAnnotationForMethod(m);
-							if (parameters != null) {
-								throw new InternalError(
-										"@Parameters method can't only be once");
-							}
-							parameters = m;
-						});
-		Arrays.stream(testClass.getDeclaredFields())
+				.peek(m -> checkParametersAnnotationForMethod(m))
+				.reduce((o, n) -> {
+					throw new InternalError(
+							"@Parameters method can't only be once");
+				}).orElse(null);
+		parameterFields = Arrays
+				.stream(testClass.getDeclaredFields())
 				.filter(f -> f.isAnnotationPresent(Parameter.class))
-				.forEach(
-						f -> {
-							if (parameters == null) {
-								throw new InternalError(
-										"@Parameter can't be used without @Parameters method");
-							}
-							checkParameterAnnotationForField(f);
-							int position = f.getAnnotation(Parameter.class)
-									.value();
-							parameterFields.put(position, f);
-						});
+				.peek(f -> {
+					if (parameters == null) {
+						throw new InternalError(
+								"@Parameter can't be used without @Parameters method");
+					}
+				})
+				.peek(f -> checkParameterAnnotationForField(f))
+				.collect(
+						Collectors
+								.<Field, Integer, Field> toMap(
+										(Field f) -> f.getAnnotation(
+												Parameter.class).value(),
+										(Field f) -> f,
+										(f1, f2) -> {
+											throw new InternalError(
+													"@Parameter can't be used twice with the same value number");
+										}));
 		if (parameters != null) {
 			// assuming field numbering 0 to
 			int size = parameterFields.size();
