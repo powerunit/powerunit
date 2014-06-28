@@ -38,13 +38,11 @@ import java.lang.annotation.Target;
  * import java.util.function.Function;
  * import java.util.stream.Stream;
  * 
- * import org.powerunit.Categories;
  * import org.powerunit.Parameter;
  * import org.powerunit.Parameters;
  * import org.powerunit.Test;
  * import org.powerunit.TestSuite;
  * 
- * &#064;Categories({ &quot;example&quot;, &quot;demo&quot; })
  * public class FunctionParameterTest&lt;T, R&gt; implements TestSuite {
  * 
  * 	&#064;Parameters(&quot;{0} on {1} expecting {2}&quot;)
