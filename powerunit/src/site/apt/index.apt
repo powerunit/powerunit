@@ -5,9 +5,9 @@ The Powerunit framework
  Powerunit is a unit test framework designed to be used with the JDK 1.8. It is inspired by the JUnit framework and
  syntax is very similar. from a high level perspective, the main difference are :
  
- * The is no concept of test runner, but the concept of parameterized test is integrated into the default system.
+ * There is no concept of test runner, but the concept of parameterized test is integrated into the default system.
 
- * The is no before/after annotation, but the action around a test are defined by using one single rule chain.
+ * There is no before/after annotation, but the action around a test are defined by using one single rule chain.
 
  * Assertion syntax is more DSL oriented (only assertThat or similair assertion is available). The assertion system 
  is strongly linked with hamcrest.
