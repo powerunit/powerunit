@@ -31,7 +31,7 @@ Powerunit - Java Testing framework for JDK 1.8,org.powerunit,Assume,15,77,0,0,4,
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit,Matchers,319,161,0,0,127,26,94,26,94,26
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.processor,PowerUnitProcessor,656,0,28,0,189,0,20,0,6,0
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.impl,AssertThatStringImpl,0,6,0,0,0,2,0,1,0,1
-Powerunit - Java Testing framework for JDK 1.8,org.powerunit.impl,DefaultPowerUnitRunnerImpl,95,431,9,25,7,114,8,28,1,18
+Powerunit - Java Testing framework for JDK 1.8,org.powerunit.impl,DefaultPowerUnitRunnerImpl,95,444,9,25,7,120,8,28,1,18
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.impl,TestContextImpl,0,69,0,2,0,15,0,8,0,7
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.impl,AssertThatIterableImpl,0,6,0,0,0,2,0,1,0,1
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.impl,AssertThatExceptionImpl,0,94,0,8,0,16,0,6,0,2
