@@ -19,6 +19,8 @@
  */
 package org.powerunit;
 
+import java.util.regex.Pattern;
+
 import org.hamcrest.Matchers;
 
 /**
@@ -59,5 +61,26 @@ public interface AssertThatString extends AssertThatObject<String> {
 	 */
 	default void endsWith(String prefix) {
 		is(Matchers.endsWith(prefix));
+	}
+
+	/**
+	 * Validate a string with a {@link java.util.regex.Pattern}.
+	 * 
+	 * @param pattern
+	 *            the pattern to be used.
+	 */
+	default void matchesRegex(Pattern pattern) {
+		is(TestSuite.DSL.matchesRegex(pattern));
+	}
+
+	/**
+	 * Validate a string with a regex.
+	 * 
+	 * 
+	 * @param regex
+	 *            The regex to be used for the validation.
+	 */
+	default void matchesRegex(String regex) {
+		is(TestSuite.DSL.matchesRegex(regex));
 	}
 }

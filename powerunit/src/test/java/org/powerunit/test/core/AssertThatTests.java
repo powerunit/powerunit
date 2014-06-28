@@ -25,7 +25,7 @@ public class AssertThatTests {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void main(String[] args) {
 		AllTests.testNoException("testAssertThatIsObjectOKWithoutMessage",
-				() -> TestSuite.DSL.assertThat("x").is("x"));
+				() -> TestSuite.DSL.assertThat(1).is(1));
 
 		AllTests.testException("testAssertThatIsObjectKOWithoutMessage",
 				() -> TestSuite.DSL.assertThat("x").is("xy"),
@@ -95,6 +95,16 @@ public class AssertThatTests {
 				() -> TestSuite.DSL.assertThat("msg", "x").isA(
 						(Class) Integer.class),
 				"msg\nexpecting is an instance of java.lang.Integer but \"x\" is a java.lang.String");
+
+		AllTests.testNoException("testAssertThatOnStringContainsOKWithMessage",
+				() -> TestSuite.DSL.assertThat("abc").containsString("b"));
+
+		AllTests.testNoException("testAssertThatOnStringPrefixOKWithMessage",
+				() -> TestSuite.DSL.assertThat("abc").startsWith("a"));
+
+		AllTests.testNoException(
+				"testAssertThatOnStringEndPrefixOKWithMessage",
+				() -> TestSuite.DSL.assertThat("abc").endsWith("c"));
 	}
 
 }

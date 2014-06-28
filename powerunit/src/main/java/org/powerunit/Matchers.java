@@ -23,7 +23,9 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.OptionalLong;
+import java.util.regex.Pattern;
 
+import org.hamcrest.Matcher;
 import org.powerunit.matchers.ExceptionMessageMatcher;
 import org.powerunit.matchers.OptionalDoubleMatcher;
 import org.powerunit.matchers.OptionalDoublePresentMatcher;
@@ -33,6 +35,7 @@ import org.powerunit.matchers.OptionalLongMatcher;
 import org.powerunit.matchers.OptionalLongPresentMatcher;
 import org.powerunit.matchers.OptionalMatcher;
 import org.powerunit.matchers.OptionalPresentMatcher;
+import org.powerunit.matchers.StringPatternMatcher;
 
 /**
  * @author borettim
@@ -2619,5 +2622,35 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher<OptionalLong> optionalLongIs(Long target) {
 		return optionalLongIs(is(target));
+	}
+
+	/**
+	 * Validate a string with a {@link java.util.regex.Pattern}.
+	 * 
+	 * <pre>
+	 * assertThat(&quot;abc&quot;, matchesRegex(Pattern.compile(&quot;&circ;[a-z]$&quot;));
+	 * </pre>
+	 * 
+	 * @param pattern
+	 *            the pattern to be used.
+	 * @return The matcher.
+	 */
+	default Matcher<String> matchesRegex(Pattern pattern) {
+		return new StringPatternMatcher(pattern);
+	}
+
+	/**
+	 * Validate a string with a regex.
+	 * 
+	 * <pre>
+	 * assertThat(&quot;abc&quot;, matchesRegex(&quot;&circ;[a-z]+$&quot;));
+	 * </pre>
+	 * 
+	 * @param regex
+	 *            The regex to be used for the validation.
+	 * @return The matcher.
+	 */
+	default Matcher<String> matchesRegex(String regex) {
+		return matchesRegex(Pattern.compile(regex));
 	}
 }
