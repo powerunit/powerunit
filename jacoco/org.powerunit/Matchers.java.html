@@ -23,7 +23,9 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.OptionalLong;
+import java.util.regex.Pattern;
 
+import org.hamcrest.Matcher;
 import org.powerunit.matchers.ExceptionMessageMatcher;
 import org.powerunit.matchers.OptionalDoubleMatcher;
 import org.powerunit.matchers.OptionalDoublePresentMatcher;
@@ -33,6 +35,7 @@ import org.powerunit.matchers.OptionalLongMatcher;
 import org.powerunit.matchers.OptionalLongPresentMatcher;
 import org.powerunit.matchers.OptionalMatcher;
 import org.powerunit.matchers.OptionalPresentMatcher;
+import org.powerunit.matchers.StringPatternMatcher;
 
 /**
  * @author borettim
@@ -58,7 +61,7 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; allOf(
 			java.lang.Iterable&lt;org.hamcrest.Matcher&lt;? super T&gt;&gt; matchers) {
-<span class="nc" id="L61">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(matchers);</span>
+<span class="nc" id="L64">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(matchers);</span>
 	}
 
 	/**
@@ -79,7 +82,7 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; allOf(
 			org.hamcrest.Matcher&lt;? super T&gt;... matchers) {
-<span class="nc" id="L82">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(matchers);</span>
+<span class="nc" id="L85">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(matchers);</span>
 	}
 
 	/**
@@ -103,7 +106,7 @@ interface Matchers {
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; allOf(
 			org.hamcrest.Matcher&lt;? super T&gt; first,
 			org.hamcrest.Matcher&lt;? super T&gt; second) {
-<span class="nc" id="L106">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(first, second);</span>
+<span class="nc" id="L109">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(first, second);</span>
 	}
 
 	/**
@@ -130,7 +133,7 @@ interface Matchers {
 			org.hamcrest.Matcher&lt;? super T&gt; first,
 			org.hamcrest.Matcher&lt;? super T&gt; second,
 			org.hamcrest.Matcher&lt;? super T&gt; third) {
-<span class="nc" id="L133">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(first, second, third);</span>
+<span class="nc" id="L136">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(first, second, third);</span>
 	}
 
 	/**
@@ -160,7 +163,7 @@ interface Matchers {
 			org.hamcrest.Matcher&lt;? super T&gt; second,
 			org.hamcrest.Matcher&lt;? super T&gt; third,
 			org.hamcrest.Matcher&lt;? super T&gt; fourth) {
-<span class="nc" id="L163">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(first, second, third, fourth);</span>
+<span class="nc" id="L166">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(first, second, third, fourth);</span>
 	}
 
 	/**
@@ -193,7 +196,7 @@ interface Matchers {
 			org.hamcrest.Matcher&lt;? super T&gt; third,
 			org.hamcrest.Matcher&lt;? super T&gt; fourth,
 			org.hamcrest.Matcher&lt;? super T&gt; fifth) {
-<span class="nc" id="L196">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(first, second, third, fourth,</span>
+<span class="nc" id="L199">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(first, second, third, fourth,</span>
 				fifth);
 	}
 
@@ -230,7 +233,7 @@ interface Matchers {
 			org.hamcrest.Matcher&lt;? super T&gt; fourth,
 			org.hamcrest.Matcher&lt;? super T&gt; fifth,
 			org.hamcrest.Matcher&lt;? super T&gt; sixth) {
-<span class="nc" id="L233">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(first, second, third, fourth,</span>
+<span class="nc" id="L236">		return org.hamcrest.core.AllOf.&lt;T&gt; allOf(first, second, third, fourth,</span>
 				fifth, sixth);
 	}
 
@@ -252,7 +255,7 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.core.AnyOf&lt;T&gt; anyOf(
 			java.lang.Iterable&lt;org.hamcrest.Matcher&lt;? super T&gt;&gt; matchers) {
-<span class="nc" id="L255">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(matchers);</span>
+<span class="nc" id="L258">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(matchers);</span>
 	}
 
 	/**
@@ -278,7 +281,7 @@ interface Matchers {
 	default &lt;T&gt; org.hamcrest.core.AnyOf&lt;T&gt; anyOf(org.hamcrest.Matcher&lt;T&gt; first,
 			org.hamcrest.Matcher&lt;? super T&gt; second,
 			org.hamcrest.Matcher&lt;? super T&gt; third) {
-<span class="nc" id="L281">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(first, second, third);</span>
+<span class="nc" id="L284">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(first, second, third);</span>
 	}
 
 	/**
@@ -307,7 +310,7 @@ interface Matchers {
 			org.hamcrest.Matcher&lt;? super T&gt; second,
 			org.hamcrest.Matcher&lt;? super T&gt; third,
 			org.hamcrest.Matcher&lt;? super T&gt; fourth) {
-<span class="nc" id="L310">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(first, second, third, fourth);</span>
+<span class="nc" id="L313">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(first, second, third, fourth);</span>
 	}
 
 	/**
@@ -339,7 +342,7 @@ interface Matchers {
 			org.hamcrest.Matcher&lt;? super T&gt; third,
 			org.hamcrest.Matcher&lt;? super T&gt; fourth,
 			org.hamcrest.Matcher&lt;? super T&gt; fifth) {
-<span class="nc" id="L342">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(first, second, third, fourth,</span>
+<span class="nc" id="L345">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(first, second, third, fourth,</span>
 				fifth);
 	}
 
@@ -375,7 +378,7 @@ interface Matchers {
 			org.hamcrest.Matcher&lt;? super T&gt; fourth,
 			org.hamcrest.Matcher&lt;? super T&gt; fifth,
 			org.hamcrest.Matcher&lt;? super T&gt; sixth) {
-<span class="nc" id="L378">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(first, second, third, fourth,</span>
+<span class="nc" id="L381">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(first, second, third, fourth,</span>
 				fifth, sixth);
 	}
 
@@ -399,7 +402,7 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.core.AnyOf&lt;T&gt; anyOf(org.hamcrest.Matcher&lt;T&gt; first,
 			org.hamcrest.Matcher&lt;? super T&gt; second) {
-<span class="nc" id="L402">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(first, second);</span>
+<span class="nc" id="L405">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(first, second);</span>
 	}
 
 	/**
@@ -420,7 +423,7 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.core.AnyOf&lt;T&gt; anyOf(
 			org.hamcrest.Matcher&lt;? super T&gt;... matchers) {
-<span class="nc" id="L423">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(matchers);</span>
+<span class="nc" id="L426">		return org.hamcrest.core.AnyOf.&lt;T&gt; anyOf(matchers);</span>
 	}
 
 	/**
@@ -441,7 +444,7 @@ interface Matchers {
 	 */
 	default &lt;LHS&gt; org.hamcrest.core.CombinableMatcher.CombinableBothMatcher&lt;LHS&gt; both(
 			org.hamcrest.Matcher&lt;? super LHS&gt; matcher) {
-<span class="fc" id="L444">		return org.hamcrest.core.CombinableMatcher.&lt;LHS&gt; both(matcher);</span>
+<span class="fc" id="L447">		return org.hamcrest.core.CombinableMatcher.&lt;LHS&gt; both(matcher);</span>
 	}
 
 	/**
@@ -462,7 +465,7 @@ interface Matchers {
 	 */
 	default &lt;LHS&gt; org.hamcrest.core.CombinableMatcher.CombinableEitherMatcher&lt;LHS&gt; either(
 			org.hamcrest.Matcher&lt;? super LHS&gt; matcher) {
-<span class="nc" id="L465">		return org.hamcrest.core.CombinableMatcher.&lt;LHS&gt; either(matcher);</span>
+<span class="nc" id="L468">		return org.hamcrest.core.CombinableMatcher.&lt;LHS&gt; either(matcher);</span>
 	}
 
 	/**
@@ -490,7 +493,7 @@ interface Matchers {
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; describedAs(
 			java.lang.String description, org.hamcrest.Matcher&lt;T&gt; matcher,
 			java.lang.Object... values) {
-<span class="nc" id="L493">		return org.hamcrest.core.DescribedAs.&lt;T&gt; describedAs(description,</span>
+<span class="nc" id="L496">		return org.hamcrest.core.DescribedAs.&lt;T&gt; describedAs(description,</span>
 				matcher, values);
 	}
 
@@ -514,7 +517,7 @@ interface Matchers {
 	 */
 	default &lt;U&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;U&gt;&gt; everyItem(
 			org.hamcrest.Matcher&lt;U&gt; itemMatcher) {
-<span class="nc" id="L517">		return org.hamcrest.core.Every.&lt;U&gt; everyItem(itemMatcher);</span>
+<span class="nc" id="L520">		return org.hamcrest.core.Every.&lt;U&gt; everyItem(itemMatcher);</span>
 	}
 
 	/**
@@ -539,7 +542,7 @@ interface Matchers {
 	 * @return the matcher on data
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; is(T value) {
-<span class="fc" id="L542">		return org.hamcrest.core.Is.&lt;T&gt; is(value);</span>
+<span class="fc" id="L545">		return org.hamcrest.core.Is.&lt;T&gt; is(value);</span>
 	}
 
 	/**
@@ -565,7 +568,7 @@ interface Matchers {
 	 * @return the matcher on data
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; is(org.hamcrest.Matcher&lt;T&gt; matcher) {
-<span class="nc" id="L568">		return org.hamcrest.core.Is.&lt;T&gt; is(matcher);</span>
+<span class="nc" id="L571">		return org.hamcrest.core.Is.&lt;T&gt; is(matcher);</span>
 	}
 
 	/**
@@ -591,7 +594,7 @@ interface Matchers {
 	 * @return the matcher on data
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; isA(java.lang.Class&lt;T&gt; type) {
-<span class="nc" id="L594">		return org.hamcrest.core.Is.&lt;T&gt; isA(type);</span>
+<span class="nc" id="L597">		return org.hamcrest.core.Is.&lt;T&gt; isA(type);</span>
 	}
 
 	/**
@@ -600,7 +603,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default org.hamcrest.Matcher&lt;java.lang.Object&gt; anything() {
-<span class="nc" id="L603">		return org.hamcrest.core.IsAnything.anything();</span>
+<span class="nc" id="L606">		return org.hamcrest.core.IsAnything.anything();</span>
 	}
 
 	/**
@@ -613,7 +616,7 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;java.lang.Object&gt; anything(
 			java.lang.String description) {
-<span class="nc" id="L616">		return org.hamcrest.core.IsAnything.anything(description);</span>
+<span class="nc" id="L619">		return org.hamcrest.core.IsAnything.anything(description);</span>
 	}
 
 	/**
@@ -638,7 +641,7 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;? super T&gt;&gt; hasItem(
 			T item) {
-<span class="nc" id="L641">		return org.hamcrest.core.IsCollectionContaining.&lt;T&gt; hasItem(item);</span>
+<span class="nc" id="L644">		return org.hamcrest.core.IsCollectionContaining.&lt;T&gt; hasItem(item);</span>
 	}
 
 	/**
@@ -663,8 +666,8 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;? super T&gt;&gt; hasItem(
 			org.hamcrest.Matcher&lt;? super T&gt; itemMatcher) {
-<span class="nc" id="L666">		return org.hamcrest.core.IsCollectionContaining</span>
-<span class="nc" id="L667">				.&lt;T&gt; hasItem(itemMatcher);</span>
+<span class="nc" id="L669">		return org.hamcrest.core.IsCollectionContaining</span>
+<span class="nc" id="L670">				.&lt;T&gt; hasItem(itemMatcher);</span>
 	}
 
 	/**
@@ -688,7 +691,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;T&gt;&gt; hasItems(T... items) {
-<span class="nc" id="L691">		return org.hamcrest.core.IsCollectionContaining.&lt;T&gt; hasItems(items);</span>
+<span class="nc" id="L694">		return org.hamcrest.core.IsCollectionContaining.&lt;T&gt; hasItems(items);</span>
 	}
 
 	/**
@@ -714,8 +717,8 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;T&gt;&gt; hasItems(
 			org.hamcrest.Matcher&lt;? super T&gt;... itemMatchers) {
-<span class="nc" id="L717">		return org.hamcrest.core.IsCollectionContaining</span>
-<span class="nc" id="L718">				.&lt;T&gt; hasItems(itemMatchers);</span>
+<span class="nc" id="L720">		return org.hamcrest.core.IsCollectionContaining</span>
+<span class="nc" id="L721">				.&lt;T&gt; hasItems(itemMatchers);</span>
 	}
 
 	/**
@@ -753,7 +756,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; equalTo(T operand) {
-<span class="fc" id="L756">		return org.hamcrest.core.IsEqual.&lt;T&gt; equalTo(operand);</span>
+<span class="fc" id="L759">		return org.hamcrest.core.IsEqual.&lt;T&gt; equalTo(operand);</span>
 	}
 
 	/**
@@ -781,7 +784,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; any(java.lang.Class&lt;T&gt; type) {
-<span class="nc" id="L784">		return org.hamcrest.core.IsInstanceOf.&lt;T&gt; any(type);</span>
+<span class="nc" id="L787">		return org.hamcrest.core.IsInstanceOf.&lt;T&gt; any(type);</span>
 	}
 
 	/**
@@ -807,7 +810,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; instanceOf(java.lang.Class&lt;?&gt; type) {
-<span class="fc" id="L810">		return org.hamcrest.core.IsInstanceOf.&lt;T&gt; instanceOf(type);</span>
+<span class="fc" id="L813">		return org.hamcrest.core.IsInstanceOf.&lt;T&gt; instanceOf(type);</span>
 	}
 
 	/**
@@ -827,7 +830,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; not(org.hamcrest.Matcher&lt;T&gt; matcher) {
-<span class="nc" id="L830">		return org.hamcrest.core.IsNot.&lt;T&gt; not(matcher);</span>
+<span class="nc" id="L833">		return org.hamcrest.core.IsNot.&lt;T&gt; not(matcher);</span>
 	}
 
 	/**
@@ -852,7 +855,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; not(T value) {
-<span class="fc" id="L855">		return org.hamcrest.core.IsNot.&lt;T&gt; not(value);</span>
+<span class="fc" id="L858">		return org.hamcrest.core.IsNot.&lt;T&gt; not(value);</span>
 	}
 
 	/**
@@ -867,7 +870,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default org.hamcrest.Matcher&lt;java.lang.Object&gt; nullValue() {
-<span class="nc" id="L870">		return org.hamcrest.core.IsNull.nullValue();</span>
+<span class="nc" id="L873">		return org.hamcrest.core.IsNull.nullValue();</span>
 	}
 
 	/**
@@ -888,7 +891,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; nullValue(java.lang.Class&lt;T&gt; type) {
-<span class="nc" id="L891">		return org.hamcrest.core.IsNull.&lt;T&gt; nullValue(type);</span>
+<span class="nc" id="L894">		return org.hamcrest.core.IsNull.&lt;T&gt; nullValue(type);</span>
 	}
 
 	/**
@@ -909,7 +912,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default org.hamcrest.Matcher&lt;java.lang.Object&gt; notNullValue() {
-<span class="nc" id="L912">		return org.hamcrest.core.IsNull.notNullValue();</span>
+<span class="nc" id="L915">		return org.hamcrest.core.IsNull.notNullValue();</span>
 	}
 
 	/**
@@ -937,7 +940,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; notNullValue(java.lang.Class&lt;T&gt; type) {
-<span class="nc" id="L940">		return org.hamcrest.core.IsNull.&lt;T&gt; notNullValue(type);</span>
+<span class="nc" id="L943">		return org.hamcrest.core.IsNull.&lt;T&gt; notNullValue(type);</span>
 	}
 
 	/**
@@ -951,7 +954,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; sameInstance(T target) {
-<span class="fc" id="L954">		return org.hamcrest.core.IsSame.&lt;T&gt; sameInstance(target);</span>
+<span class="fc" id="L957">		return org.hamcrest.core.IsSame.&lt;T&gt; sameInstance(target);</span>
 	}
 
 	/**
@@ -965,7 +968,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; theInstance(T target) {
-<span class="nc" id="L968">		return org.hamcrest.core.IsSame.&lt;T&gt; theInstance(target);</span>
+<span class="nc" id="L971">		return org.hamcrest.core.IsSame.&lt;T&gt; theInstance(target);</span>
 	}
 
 	/**
@@ -985,7 +988,7 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;java.lang.String&gt; containsString(
 			java.lang.String substring) {
-<span class="fc" id="L988">		return org.hamcrest.core.StringContains.containsString(substring);</span>
+<span class="fc" id="L991">		return org.hamcrest.core.StringContains.containsString(substring);</span>
 	}
 
 	/**
@@ -1005,7 +1008,7 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;java.lang.String&gt; startsWith(
 			java.lang.String prefix) {
-<span class="nc" id="L1008">		return org.hamcrest.core.StringStartsWith.startsWith(prefix);</span>
+<span class="nc" id="L1011">		return org.hamcrest.core.StringStartsWith.startsWith(prefix);</span>
 	}
 
 	/**
@@ -1025,7 +1028,7 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;java.lang.String&gt; endsWith(
 			java.lang.String suffix) {
-<span class="nc" id="L1028">		return org.hamcrest.core.StringEndsWith.endsWith(suffix);</span>
+<span class="nc" id="L1031">		return org.hamcrest.core.StringEndsWith.endsWith(suffix);</span>
 	}
 
 	/**
@@ -1050,7 +1053,7 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.collection.IsArray&lt;T&gt; array(
 			org.hamcrest.Matcher&lt;? super T&gt;... elementMatchers) {
-<span class="nc" id="L1053">		return org.hamcrest.collection.IsArray.&lt;T&gt; array(elementMatchers);</span>
+<span class="nc" id="L1056">		return org.hamcrest.collection.IsArray.&lt;T&gt; array(elementMatchers);</span>
 	}
 
 	/**
@@ -1076,8 +1079,8 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T[]&gt; hasItemInArray(T element) {
-<span class="nc" id="L1079">		return org.hamcrest.collection.IsArrayContaining</span>
-<span class="nc" id="L1080">				.&lt;T&gt; hasItemInArray(element);</span>
+<span class="nc" id="L1082">		return org.hamcrest.collection.IsArrayContaining</span>
+<span class="nc" id="L1083">				.&lt;T&gt; hasItemInArray(element);</span>
 	}
 
 	/**
@@ -1100,8 +1103,8 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T[]&gt; hasItemInArray(
 			org.hamcrest.Matcher&lt;? super T&gt; elementMatcher) {
-<span class="nc" id="L1103">		return org.hamcrest.collection.IsArrayContaining</span>
-<span class="nc" id="L1104">				.&lt;T&gt; hasItemInArray(elementMatcher);</span>
+<span class="nc" id="L1106">		return org.hamcrest.collection.IsArrayContaining</span>
+<span class="nc" id="L1107">				.&lt;T&gt; hasItemInArray(elementMatcher);</span>
 	}
 
 	/**
@@ -1126,8 +1129,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;E[]&gt; arrayContaining(
 			java.util.List&lt;org.hamcrest.Matcher&lt;? super E&gt;&gt; itemMatchers) {
-<span class="nc" id="L1129">		return org.hamcrest.collection.IsArrayContainingInOrder</span>
-<span class="nc" id="L1130">				.&lt;E&gt; arrayContaining(itemMatchers);</span>
+<span class="nc" id="L1132">		return org.hamcrest.collection.IsArrayContainingInOrder</span>
+<span class="nc" id="L1133">				.&lt;E&gt; arrayContaining(itemMatchers);</span>
 	}
 
 	/**
@@ -1149,8 +1152,8 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;E[]&gt; arrayContaining(E... items) {
-<span class="nc" id="L1152">		return org.hamcrest.collection.IsArrayContainingInOrder</span>
-<span class="nc" id="L1153">				.&lt;E&gt; arrayContaining(items);</span>
+<span class="nc" id="L1155">		return org.hamcrest.collection.IsArrayContainingInOrder</span>
+<span class="nc" id="L1156">				.&lt;E&gt; arrayContaining(items);</span>
 	}
 
 	/**
@@ -1175,8 +1178,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;E[]&gt; arrayContaining(
 			org.hamcrest.Matcher&lt;? super E&gt;... itemMatchers) {
-<span class="nc" id="L1178">		return org.hamcrest.collection.IsArrayContainingInOrder</span>
-<span class="nc" id="L1179">				.&lt;E&gt; arrayContaining(itemMatchers);</span>
+<span class="nc" id="L1181">		return org.hamcrest.collection.IsArrayContainingInOrder</span>
+<span class="nc" id="L1182">				.&lt;E&gt; arrayContaining(itemMatchers);</span>
 	}
 
 	/**
@@ -1203,8 +1206,8 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;E[]&gt; arrayContainingInAnyOrder(E... items) {
-<span class="nc" id="L1206">		return org.hamcrest.collection.IsArrayContainingInAnyOrder</span>
-<span class="nc" id="L1207">				.&lt;E&gt; arrayContainingInAnyOrder(items);</span>
+<span class="nc" id="L1209">		return org.hamcrest.collection.IsArrayContainingInAnyOrder</span>
+<span class="nc" id="L1210">				.&lt;E&gt; arrayContainingInAnyOrder(items);</span>
 	}
 
 	/**
@@ -1233,8 +1236,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;E[]&gt; arrayContainingInAnyOrder(
 			org.hamcrest.Matcher&lt;? super E&gt;... itemMatchers) {
-<span class="nc" id="L1236">		return org.hamcrest.collection.IsArrayContainingInAnyOrder</span>
-<span class="nc" id="L1237">				.&lt;E&gt; arrayContainingInAnyOrder(itemMatchers);</span>
+<span class="nc" id="L1239">		return org.hamcrest.collection.IsArrayContainingInAnyOrder</span>
+<span class="nc" id="L1240">				.&lt;E&gt; arrayContainingInAnyOrder(itemMatchers);</span>
 	}
 
 	/**
@@ -1264,8 +1267,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;E[]&gt; arrayContainingInAnyOrder(
 			java.util.Collection&lt;org.hamcrest.Matcher&lt;? super E&gt;&gt; itemMatchers) {
-<span class="nc" id="L1267">		return org.hamcrest.collection.IsArrayContainingInAnyOrder</span>
-<span class="nc" id="L1268">				.&lt;E&gt; arrayContainingInAnyOrder(itemMatchers);</span>
+<span class="nc" id="L1270">		return org.hamcrest.collection.IsArrayContainingInAnyOrder</span>
+<span class="nc" id="L1271">				.&lt;E&gt; arrayContainingInAnyOrder(itemMatchers);</span>
 	}
 
 	/**
@@ -1286,8 +1289,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;E[]&gt; arrayWithSize(
 			org.hamcrest.Matcher&lt;? super java.lang.Integer&gt; sizeMatcher) {
-<span class="nc" id="L1289">		return org.hamcrest.collection.IsArrayWithSize</span>
-<span class="nc" id="L1290">				.&lt;E&gt; arrayWithSize(sizeMatcher);</span>
+<span class="nc" id="L1292">		return org.hamcrest.collection.IsArrayWithSize</span>
+<span class="nc" id="L1293">				.&lt;E&gt; arrayWithSize(sizeMatcher);</span>
 	}
 
 	/**
@@ -1308,7 +1311,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;E[]&gt; arrayWithSize(int size) {
-<span class="fc" id="L1311">		return org.hamcrest.collection.IsArrayWithSize.&lt;E&gt; arrayWithSize(size);</span>
+<span class="fc" id="L1314">		return org.hamcrest.collection.IsArrayWithSize.&lt;E&gt; arrayWithSize(size);</span>
 	}
 
 	/**
@@ -1326,7 +1329,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;E[]&gt; emptyArray() {
-<span class="nc" id="L1329">		return org.hamcrest.collection.IsArrayWithSize.&lt;E&gt; emptyArray();</span>
+<span class="nc" id="L1332">		return org.hamcrest.collection.IsArrayWithSize.&lt;E&gt; emptyArray();</span>
 	}
 
 	/**
@@ -1349,8 +1352,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;java.util.Collection&lt;? extends E&gt;&gt; hasSize(
 			org.hamcrest.Matcher&lt;? super java.lang.Integer&gt; sizeMatcher) {
-<span class="nc" id="L1352">		return org.hamcrest.collection.IsCollectionWithSize</span>
-<span class="nc" id="L1353">				.&lt;E&gt; hasSize(sizeMatcher);</span>
+<span class="nc" id="L1355">		return org.hamcrest.collection.IsCollectionWithSize</span>
+<span class="nc" id="L1356">				.&lt;E&gt; hasSize(sizeMatcher);</span>
 	}
 
 	/**
@@ -1372,7 +1375,7 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;java.util.Collection&lt;? extends E&gt;&gt; hasSize(
 			int size) {
-<span class="nc" id="L1375">		return org.hamcrest.collection.IsCollectionWithSize.&lt;E&gt; hasSize(size);</span>
+<span class="nc" id="L1378">		return org.hamcrest.collection.IsCollectionWithSize.&lt;E&gt; hasSize(size);</span>
 	}
 
 	/**
@@ -1390,7 +1393,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;java.util.Collection&lt;? extends E&gt;&gt; empty() {
-<span class="nc" id="L1393">		return org.hamcrest.collection.IsEmptyCollection.&lt;E&gt; empty();</span>
+<span class="nc" id="L1396">		return org.hamcrest.collection.IsEmptyCollection.&lt;E&gt; empty();</span>
 	}
 
 	/**
@@ -1411,8 +1414,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;java.util.Collection&lt;E&gt;&gt; emptyCollectionOf(
 			java.lang.Class&lt;E&gt; type) {
-<span class="nc" id="L1414">		return org.hamcrest.collection.IsEmptyCollection</span>
-<span class="nc" id="L1415">				.&lt;E&gt; emptyCollectionOf(type);</span>
+<span class="nc" id="L1417">		return org.hamcrest.collection.IsEmptyCollection</span>
+<span class="nc" id="L1418">				.&lt;E&gt; emptyCollectionOf(type);</span>
 	}
 
 	/**
@@ -1430,7 +1433,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;? extends E&gt;&gt; emptyIterable() {
-<span class="nc" id="L1433">		return org.hamcrest.collection.IsEmptyIterable.&lt;E&gt; emptyIterable();</span>
+<span class="nc" id="L1436">		return org.hamcrest.collection.IsEmptyIterable.&lt;E&gt; emptyIterable();</span>
 	}
 
 	/**
@@ -1451,8 +1454,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;E&gt;&gt; emptyIterableOf(
 			java.lang.Class&lt;E&gt; type) {
-<span class="nc" id="L1454">		return org.hamcrest.collection.IsEmptyIterable</span>
-<span class="nc" id="L1455">				.&lt;E&gt; emptyIterableOf(type);</span>
+<span class="nc" id="L1457">		return org.hamcrest.collection.IsEmptyIterable</span>
+<span class="nc" id="L1458">				.&lt;E&gt; emptyIterableOf(type);</span>
 	}
 
 	/**
@@ -1478,8 +1481,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;? extends E&gt;&gt; contains(
 			org.hamcrest.Matcher&lt;? super E&gt;... itemMatchers) {
-<span class="nc" id="L1481">		return org.hamcrest.collection.IsIterableContainingInOrder</span>
-<span class="nc" id="L1482">				.&lt;E&gt; contains(itemMatchers);</span>
+<span class="nc" id="L1484">		return org.hamcrest.collection.IsIterableContainingInOrder</span>
+<span class="nc" id="L1485">				.&lt;E&gt; contains(itemMatchers);</span>
 	}
 
 	/**
@@ -1504,8 +1507,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;? extends E&gt;&gt; contains(
 			E... items) {
-<span class="nc" id="L1507">		return org.hamcrest.collection.IsIterableContainingInOrder</span>
-<span class="nc" id="L1508">				.&lt;E&gt; contains(items);</span>
+<span class="nc" id="L1510">		return org.hamcrest.collection.IsIterableContainingInOrder</span>
+<span class="nc" id="L1511">				.&lt;E&gt; contains(items);</span>
 	}
 
 	/**
@@ -1529,8 +1532,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;? extends E&gt;&gt; contains(
 			org.hamcrest.Matcher&lt;? super E&gt; itemMatcher) {
-<span class="nc" id="L1532">		return org.hamcrest.collection.IsIterableContainingInOrder</span>
-<span class="nc" id="L1533">				.&lt;E&gt; contains(itemMatcher);</span>
+<span class="nc" id="L1535">		return org.hamcrest.collection.IsIterableContainingInOrder</span>
+<span class="nc" id="L1536">				.&lt;E&gt; contains(itemMatcher);</span>
 	}
 
 	/**
@@ -1556,8 +1559,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;? extends E&gt;&gt; contains(
 			java.util.List&lt;org.hamcrest.Matcher&lt;? super E&gt;&gt; itemMatchers) {
-<span class="nc" id="L1559">		return org.hamcrest.collection.IsIterableContainingInOrder</span>
-<span class="nc" id="L1560">				.&lt;E&gt; contains(itemMatchers);</span>
+<span class="nc" id="L1562">		return org.hamcrest.collection.IsIterableContainingInOrder</span>
+<span class="nc" id="L1563">				.&lt;E&gt; contains(itemMatchers);</span>
 	}
 
 	/**
@@ -1586,8 +1589,8 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;? extends T&gt;&gt; containsInAnyOrder(
 			T... items) {
-<span class="nc" id="L1589">		return org.hamcrest.collection.IsIterableContainingInAnyOrder</span>
-<span class="nc" id="L1590">				.&lt;T&gt; containsInAnyOrder(items);</span>
+<span class="nc" id="L1592">		return org.hamcrest.collection.IsIterableContainingInAnyOrder</span>
+<span class="nc" id="L1593">				.&lt;T&gt; containsInAnyOrder(items);</span>
 	}
 
 	/**
@@ -1617,8 +1620,8 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;? extends T&gt;&gt; containsInAnyOrder(
 			java.util.Collection&lt;org.hamcrest.Matcher&lt;? super T&gt;&gt; itemMatchers) {
-<span class="nc" id="L1620">		return org.hamcrest.collection.IsIterableContainingInAnyOrder</span>
-<span class="nc" id="L1621">				.&lt;T&gt; containsInAnyOrder(itemMatchers);</span>
+<span class="nc" id="L1623">		return org.hamcrest.collection.IsIterableContainingInAnyOrder</span>
+<span class="nc" id="L1624">				.&lt;T&gt; containsInAnyOrder(itemMatchers);</span>
 	}
 
 	/**
@@ -1648,8 +1651,8 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;? extends T&gt;&gt; containsInAnyOrder(
 			org.hamcrest.Matcher&lt;? super T&gt;... itemMatchers) {
-<span class="nc" id="L1651">		return org.hamcrest.collection.IsIterableContainingInAnyOrder</span>
-<span class="nc" id="L1652">				.&lt;T&gt; containsInAnyOrder(itemMatchers);</span>
+<span class="nc" id="L1654">		return org.hamcrest.collection.IsIterableContainingInAnyOrder</span>
+<span class="nc" id="L1655">				.&lt;T&gt; containsInAnyOrder(itemMatchers);</span>
 	}
 
 	/**
@@ -1672,8 +1675,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;E&gt;&gt; iterableWithSize(
 			org.hamcrest.Matcher&lt;? super java.lang.Integer&gt; sizeMatcher) {
-<span class="nc" id="L1675">		return org.hamcrest.collection.IsIterableWithSize</span>
-<span class="nc" id="L1676">				.&lt;E&gt; iterableWithSize(sizeMatcher);</span>
+<span class="nc" id="L1678">		return org.hamcrest.collection.IsIterableWithSize</span>
+<span class="nc" id="L1679">				.&lt;E&gt; iterableWithSize(sizeMatcher);</span>
 	}
 
 	/**
@@ -1696,8 +1699,8 @@ interface Matchers {
 	 */
 	default &lt;E&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;E&gt;&gt; iterableWithSize(
 			int size) {
-<span class="nc" id="L1699">		return org.hamcrest.collection.IsIterableWithSize</span>
-<span class="nc" id="L1700">				.&lt;E&gt; iterableWithSize(size);</span>
+<span class="nc" id="L1702">		return org.hamcrest.collection.IsIterableWithSize</span>
+<span class="nc" id="L1703">				.&lt;E&gt; iterableWithSize(size);</span>
 	}
 
 	/**
@@ -1726,7 +1729,7 @@ interface Matchers {
 	 */
 	default &lt;K, V&gt; org.hamcrest.Matcher&lt;java.util.Map&lt;? extends K, ? extends V&gt;&gt; hasEntry(
 			K key, V value) {
-<span class="nc" id="L1729">		return org.hamcrest.collection.IsMapContaining.&lt;K, V&gt; hasEntry(key,</span>
+<span class="nc" id="L1732">		return org.hamcrest.collection.IsMapContaining.&lt;K, V&gt; hasEntry(key,</span>
 				value);
 	}
 
@@ -1757,7 +1760,7 @@ interface Matchers {
 	default &lt;K, V&gt; org.hamcrest.Matcher&lt;java.util.Map&lt;? extends K, ? extends V&gt;&gt; hasEntry(
 			org.hamcrest.Matcher&lt;? super K&gt; keyMatcher,
 			org.hamcrest.Matcher&lt;? super V&gt; valueMatcher) {
-<span class="nc" id="L1760">		return org.hamcrest.collection.IsMapContaining.&lt;K, V&gt; hasEntry(</span>
+<span class="nc" id="L1763">		return org.hamcrest.collection.IsMapContaining.&lt;K, V&gt; hasEntry(</span>
 				keyMatcher, valueMatcher);
 	}
 
@@ -1780,7 +1783,7 @@ interface Matchers {
 	 */
 	default &lt;K&gt; org.hamcrest.Matcher&lt;java.util.Map&lt;? extends K, ?&gt;&gt; hasKey(
 			org.hamcrest.Matcher&lt;? super K&gt; keyMatcher) {
-<span class="nc" id="L1783">		return org.hamcrest.collection.IsMapContaining.&lt;K&gt; hasKey(keyMatcher);</span>
+<span class="nc" id="L1786">		return org.hamcrest.collection.IsMapContaining.&lt;K&gt; hasKey(keyMatcher);</span>
 	}
 
 	/**
@@ -1801,7 +1804,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;K&gt; org.hamcrest.Matcher&lt;java.util.Map&lt;? extends K, ?&gt;&gt; hasKey(K key) {
-<span class="nc" id="L1804">		return org.hamcrest.collection.IsMapContaining.&lt;K&gt; hasKey(key);</span>
+<span class="nc" id="L1807">		return org.hamcrest.collection.IsMapContaining.&lt;K&gt; hasKey(key);</span>
 	}
 
 	/**
@@ -1823,7 +1826,7 @@ interface Matchers {
 	 */
 	default &lt;V&gt; org.hamcrest.Matcher&lt;java.util.Map&lt;?, ? extends V&gt;&gt; hasValue(
 			V value) {
-<span class="nc" id="L1826">		return org.hamcrest.collection.IsMapContaining.&lt;V&gt; hasValue(value);</span>
+<span class="nc" id="L1829">		return org.hamcrest.collection.IsMapContaining.&lt;V&gt; hasValue(value);</span>
 	}
 
 	/**
@@ -1845,8 +1848,8 @@ interface Matchers {
 	 */
 	default &lt;V&gt; org.hamcrest.Matcher&lt;java.util.Map&lt;?, ? extends V&gt;&gt; hasValue(
 			org.hamcrest.Matcher&lt;? super V&gt; valueMatcher) {
-<span class="nc" id="L1848">		return org.hamcrest.collection.IsMapContaining</span>
-<span class="nc" id="L1849">				.&lt;V&gt; hasValue(valueMatcher);</span>
+<span class="nc" id="L1851">		return org.hamcrest.collection.IsMapContaining</span>
+<span class="nc" id="L1852">				.&lt;V&gt; hasValue(valueMatcher);</span>
 	}
 
 	/**
@@ -1866,11 +1869,11 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; isIn(java.util.Collection&lt;T&gt; collection) {
-<span class="nc" id="L1869">		return org.hamcrest.collection.IsIn.&lt;T&gt; isIn(collection);</span>
+<span class="nc" id="L1872">		return org.hamcrest.collection.IsIn.&lt;T&gt; isIn(collection);</span>
 	}
 
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; isIn(T[] param1) {
-<span class="nc" id="L1873">		return org.hamcrest.collection.IsIn.&lt;T&gt; isIn(param1);</span>
+<span class="nc" id="L1876">		return org.hamcrest.collection.IsIn.&lt;T&gt; isIn(param1);</span>
 	}
 
 	/**
@@ -1890,7 +1893,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; isOneOf(T... elements) {
-<span class="nc" id="L1893">		return org.hamcrest.collection.IsIn.&lt;T&gt; isOneOf(elements);</span>
+<span class="nc" id="L1896">		return org.hamcrest.collection.IsIn.&lt;T&gt; isOneOf(elements);</span>
 	}
 
 	/**
@@ -1912,7 +1915,7 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;java.lang.Double&gt; closeTo(double operand,
 			double error) {
-<span class="fc" id="L1915">		return org.hamcrest.number.IsCloseTo.closeTo(operand, error);</span>
+<span class="fc" id="L1918">		return org.hamcrest.number.IsCloseTo.closeTo(operand, error);</span>
 	}
 
 	/**
@@ -1937,7 +1940,7 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;java.math.BigDecimal&gt; closeTo(
 			java.math.BigDecimal operand, java.math.BigDecimal error) {
-<span class="nc" id="L1940">		return org.hamcrest.number.BigDecimalCloseTo.closeTo(operand, error);</span>
+<span class="nc" id="L1943">		return org.hamcrest.number.BigDecimalCloseTo.closeTo(operand, error);</span>
 	}
 
 	/**
@@ -1960,8 +1963,8 @@ interface Matchers {
 	 */
 	default &lt;T extends java.lang.Comparable&lt;T&gt;&gt; org.hamcrest.Matcher&lt;T&gt; comparesEqualTo(
 			T value) {
-<span class="nc" id="L1963">		return org.hamcrest.number.OrderingComparison</span>
-<span class="nc" id="L1964">				.&lt;T&gt; comparesEqualTo(value);</span>
+<span class="nc" id="L1966">		return org.hamcrest.number.OrderingComparison</span>
+<span class="nc" id="L1967">				.&lt;T&gt; comparesEqualTo(value);</span>
 	}
 
 	/**
@@ -1984,7 +1987,7 @@ interface Matchers {
 	 */
 	default &lt;T extends java.lang.Comparable&lt;T&gt;&gt; org.hamcrest.Matcher&lt;T&gt; greaterThan(
 			T value) {
-<span class="nc" id="L1987">		return org.hamcrest.number.OrderingComparison.&lt;T&gt; greaterThan(value);</span>
+<span class="nc" id="L1990">		return org.hamcrest.number.OrderingComparison.&lt;T&gt; greaterThan(value);</span>
 	}
 
 	/**
@@ -2008,8 +2011,8 @@ interface Matchers {
 	 */
 	default &lt;T extends java.lang.Comparable&lt;T&gt;&gt; org.hamcrest.Matcher&lt;T&gt; greaterThanOrEqualTo(
 			T value) {
-<span class="nc" id="L2011">		return org.hamcrest.number.OrderingComparison</span>
-<span class="nc" id="L2012">				.&lt;T&gt; greaterThanOrEqualTo(value);</span>
+<span class="nc" id="L2014">		return org.hamcrest.number.OrderingComparison</span>
+<span class="nc" id="L2015">				.&lt;T&gt; greaterThanOrEqualTo(value);</span>
 	}
 
 	/**
@@ -2032,7 +2035,7 @@ interface Matchers {
 	 */
 	default &lt;T extends java.lang.Comparable&lt;T&gt;&gt; org.hamcrest.Matcher&lt;T&gt; lessThan(
 			T value) {
-<span class="nc" id="L2035">		return org.hamcrest.number.OrderingComparison.&lt;T&gt; lessThan(value);</span>
+<span class="nc" id="L2038">		return org.hamcrest.number.OrderingComparison.&lt;T&gt; lessThan(value);</span>
 	}
 
 	/**
@@ -2055,8 +2058,8 @@ interface Matchers {
 	 */
 	default &lt;T extends java.lang.Comparable&lt;T&gt;&gt; org.hamcrest.Matcher&lt;T&gt; lessThanOrEqualTo(
 			T value) {
-<span class="nc" id="L2058">		return org.hamcrest.number.OrderingComparison</span>
-<span class="nc" id="L2059">				.&lt;T&gt; lessThanOrEqualTo(value);</span>
+<span class="nc" id="L2061">		return org.hamcrest.number.OrderingComparison</span>
+<span class="nc" id="L2062">				.&lt;T&gt; lessThanOrEqualTo(value);</span>
 	}
 
 	/**
@@ -2075,8 +2078,8 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;java.lang.String&gt; equalToIgnoringCase(
 			java.lang.String expectedString) {
-<span class="nc" id="L2078">		return org.hamcrest.text.IsEqualIgnoringCase</span>
-<span class="nc" id="L2079">				.equalToIgnoringCase(expectedString);</span>
+<span class="nc" id="L2081">		return org.hamcrest.text.IsEqualIgnoringCase</span>
+<span class="nc" id="L2082">				.equalToIgnoringCase(expectedString);</span>
 	}
 
 	/**
@@ -2103,8 +2106,8 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;java.lang.String&gt; equalToIgnoringWhiteSpace(
 			java.lang.String expectedString) {
-<span class="nc" id="L2106">		return org.hamcrest.text.IsEqualIgnoringWhiteSpace</span>
-<span class="nc" id="L2107">				.equalToIgnoringWhiteSpace(expectedString);</span>
+<span class="nc" id="L2109">		return org.hamcrest.text.IsEqualIgnoringWhiteSpace</span>
+<span class="nc" id="L2110">				.equalToIgnoringWhiteSpace(expectedString);</span>
 	}
 
 	/**
@@ -2120,7 +2123,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default org.hamcrest.Matcher&lt;java.lang.String&gt; isEmptyString() {
-<span class="nc" id="L2123">		return org.hamcrest.text.IsEmptyString.isEmptyString();</span>
+<span class="nc" id="L2126">		return org.hamcrest.text.IsEmptyString.isEmptyString();</span>
 	}
 
 	/**
@@ -2136,7 +2139,7 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default org.hamcrest.Matcher&lt;java.lang.String&gt; isEmptyOrNullString() {
-<span class="nc" id="L2139">		return org.hamcrest.text.IsEmptyString.isEmptyOrNullString();</span>
+<span class="nc" id="L2142">		return org.hamcrest.text.IsEmptyString.isEmptyOrNullString();</span>
 	}
 
 	/**
@@ -2156,8 +2159,8 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;java.lang.String&gt; stringContainsInOrder(
 			java.lang.Iterable&lt;java.lang.String&gt; substrings) {
-<span class="nc" id="L2159">		return org.hamcrest.text.StringContainsInOrder</span>
-<span class="nc" id="L2160">				.stringContainsInOrder(substrings);</span>
+<span class="nc" id="L2162">		return org.hamcrest.text.StringContainsInOrder</span>
+<span class="nc" id="L2163">				.stringContainsInOrder(substrings);</span>
 	}
 
 	/**
@@ -2179,7 +2182,7 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; hasToString(
 			org.hamcrest.Matcher&lt;? super java.lang.String&gt; toStringMatcher) {
-<span class="nc" id="L2182">		return org.hamcrest.object.HasToString.&lt;T&gt; hasToString(toStringMatcher);</span>
+<span class="nc" id="L2185">		return org.hamcrest.object.HasToString.&lt;T&gt; hasToString(toStringMatcher);</span>
 	}
 
 	/**
@@ -2201,8 +2204,8 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; hasToString(
 			java.lang.String expectedToString) {
-<span class="nc" id="L2204">		return org.hamcrest.object.HasToString</span>
-<span class="nc" id="L2205">				.&lt;T&gt; hasToString(expectedToString);</span>
+<span class="nc" id="L2207">		return org.hamcrest.object.HasToString</span>
+<span class="nc" id="L2208">				.&lt;T&gt; hasToString(expectedToString);</span>
 	}
 
 	/**
@@ -2223,8 +2226,8 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;java.lang.Class&lt;?&gt;&gt; typeCompatibleWith(
 			java.lang.Class&lt;T&gt; baseType) {
-<span class="nc" id="L2226">		return org.hamcrest.object.IsCompatibleType</span>
-<span class="nc" id="L2227">				.&lt;T&gt; typeCompatibleWith(baseType);</span>
+<span class="nc" id="L2229">		return org.hamcrest.object.IsCompatibleType</span>
+<span class="nc" id="L2230">				.&lt;T&gt; typeCompatibleWith(baseType);</span>
 	}
 
 	/**
@@ -2246,7 +2249,7 @@ interface Matchers {
 	default org.hamcrest.Matcher&lt;java.util.EventObject&gt; eventFrom(
 			java.lang.Class&lt;? extends java.util.EventObject&gt; eventClass,
 			java.lang.Object source) {
-<span class="nc" id="L2249">		return org.hamcrest.object.IsEventFrom.eventFrom(eventClass, source);</span>
+<span class="nc" id="L2252">		return org.hamcrest.object.IsEventFrom.eventFrom(eventClass, source);</span>
 	}
 
 	/**
@@ -2265,7 +2268,7 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;java.util.EventObject&gt; eventFrom(
 			java.lang.Object source) {
-<span class="nc" id="L2268">		return org.hamcrest.object.IsEventFrom.eventFrom(source);</span>
+<span class="nc" id="L2271">		return org.hamcrest.object.IsEventFrom.eventFrom(source);</span>
 	}
 
 	/**
@@ -2287,7 +2290,7 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; hasProperty(
 			java.lang.String propertyName) {
-<span class="nc" id="L2290">		return org.hamcrest.beans.HasProperty.&lt;T&gt; hasProperty(propertyName);</span>
+<span class="nc" id="L2293">		return org.hamcrest.beans.HasProperty.&lt;T&gt; hasProperty(propertyName);</span>
 	}
 
 	/**
@@ -2313,7 +2316,7 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; hasProperty(
 			java.lang.String propertyName, org.hamcrest.Matcher&lt;?&gt; valueMatcher) {
-<span class="nc" id="L2316">		return org.hamcrest.beans.HasPropertyWithValue.&lt;T&gt; hasProperty(</span>
+<span class="nc" id="L2319">		return org.hamcrest.beans.HasPropertyWithValue.&lt;T&gt; hasProperty(</span>
 				propertyName, valueMatcher);
 	}
 
@@ -2335,8 +2338,8 @@ interface Matchers {
 	 * @return the matcher
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;T&gt; samePropertyValuesAs(T expectedBean) {
-<span class="nc" id="L2338">		return org.hamcrest.beans.SamePropertyValuesAs</span>
-<span class="nc" id="L2339">				.&lt;T&gt; samePropertyValuesAs(expectedBean);</span>
+<span class="nc" id="L2341">		return org.hamcrest.beans.SamePropertyValuesAs</span>
+<span class="nc" id="L2342">				.&lt;T&gt; samePropertyValuesAs(expectedBean);</span>
 	}
 
 	/**
@@ -2359,7 +2362,7 @@ interface Matchers {
 	default org.hamcrest.Matcher&lt;org.w3c.dom.Node&gt; hasXPath(
 			java.lang.String xPath,
 			javax.xml.namespace.NamespaceContext namespaceContext) {
-<span class="nc" id="L2362">		return org.hamcrest.xml.HasXPath.hasXPath(xPath, namespaceContext);</span>
+<span class="nc" id="L2365">		return org.hamcrest.xml.HasXPath.hasXPath(xPath, namespaceContext);</span>
 	}
 
 	/**
@@ -2379,7 +2382,7 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;org.w3c.dom.Node&gt; hasXPath(
 			java.lang.String xPath) {
-<span class="nc" id="L2382">		return org.hamcrest.xml.HasXPath.hasXPath(xPath);</span>
+<span class="nc" id="L2385">		return org.hamcrest.xml.HasXPath.hasXPath(xPath);</span>
 	}
 
 	/**
@@ -2406,7 +2409,7 @@ interface Matchers {
 			java.lang.String xPath,
 			javax.xml.namespace.NamespaceContext namespaceContext,
 			org.hamcrest.Matcher&lt;java.lang.String&gt; valueMatcher) {
-<span class="nc" id="L2409">		return org.hamcrest.xml.HasXPath.hasXPath(xPath, namespaceContext,</span>
+<span class="nc" id="L2412">		return org.hamcrest.xml.HasXPath.hasXPath(xPath, namespaceContext,</span>
 				valueMatcher);
 	}
 
@@ -2430,7 +2433,7 @@ interface Matchers {
 	default org.hamcrest.Matcher&lt;org.w3c.dom.Node&gt; hasXPath(
 			java.lang.String xPath,
 			org.hamcrest.Matcher&lt;java.lang.String&gt; valueMatcher) {
-<span class="nc" id="L2433">		return org.hamcrest.xml.HasXPath.hasXPath(xPath, valueMatcher);</span>
+<span class="nc" id="L2436">		return org.hamcrest.xml.HasXPath.hasXPath(xPath, valueMatcher);</span>
 	}
 
 	/**
@@ -2442,7 +2445,7 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;Throwable&gt; exceptionMessage(
 			org.hamcrest.Matcher&lt;? super String&gt; matching) {
-<span class="fc" id="L2445">		return new ExceptionMessageMatcher(matching);</span>
+<span class="fc" id="L2448">		return new ExceptionMessageMatcher(matching);</span>
 	}
 
 	/**
@@ -2453,7 +2456,7 @@ interface Matchers {
 	 * @return the matcher on the exception
 	 */
 	default org.hamcrest.Matcher&lt;Throwable&gt; exceptionMessage(String message) {
-<span class="fc" id="L2456">		return exceptionMessage(equalTo(message));</span>
+<span class="fc" id="L2459">		return exceptionMessage(equalTo(message));</span>
 	}
 
 	/**
@@ -2464,7 +2467,7 @@ interface Matchers {
 	 *            the type for what is inside the optional
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;Optional&lt;T&gt;&gt; optionalIsPresent() {
-<span class="fc" id="L2467">		return new OptionalPresentMatcher&lt;&gt;(is(true));</span>
+<span class="fc" id="L2470">		return new OptionalPresentMatcher&lt;&gt;(is(true));</span>
 	}
 
 	/**
@@ -2475,7 +2478,7 @@ interface Matchers {
 	 *            the type for what is inside the optional
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;Optional&lt;T&gt;&gt; optionalIsNotPresent() {
-<span class="fc" id="L2478">		return new OptionalPresentMatcher&lt;&gt;(not(true));</span>
+<span class="fc" id="L2481">		return new OptionalPresentMatcher&lt;&gt;(not(true));</span>
 	}
 
 	/**
@@ -2489,7 +2492,7 @@ interface Matchers {
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;Optional&lt;? super T&gt;&gt; optionalIs(
 			org.hamcrest.Matcher&lt;? super T&gt; subMatcher) {
-<span class="fc" id="L2492">		return both((org.hamcrest.Matcher) optionalIsPresent()).and(</span>
+<span class="fc" id="L2495">		return both((org.hamcrest.Matcher) optionalIsPresent()).and(</span>
 				new OptionalMatcher&lt;T&gt;(subMatcher));
 	}
 
@@ -2503,7 +2506,7 @@ interface Matchers {
 	 *            the type for what is inside the optional
 	 */
 	default &lt;T&gt; org.hamcrest.Matcher&lt;Optional&lt;? super T&gt;&gt; optionalIs(T target) {
-<span class="fc" id="L2506">		return optionalIs(is(target));</span>
+<span class="fc" id="L2509">		return optionalIs(is(target));</span>
 	}
 
 	/**
@@ -2512,7 +2515,7 @@ interface Matchers {
 	 * @return the matcher on the optional
 	 */
 	default org.hamcrest.Matcher&lt;OptionalDouble&gt; optionalDoubleIsPresent() {
-<span class="fc" id="L2515">		return new OptionalDoublePresentMatcher(is(true));</span>
+<span class="fc" id="L2518">		return new OptionalDoublePresentMatcher(is(true));</span>
 	}
 
 	/**
@@ -2521,7 +2524,7 @@ interface Matchers {
 	 * @return the matcher on the optional
 	 */
 	default org.hamcrest.Matcher&lt;OptionalDouble&gt; optionalDoubleIsNotPresent() {
-<span class="fc" id="L2524">		return new OptionalDoublePresentMatcher(not(true));</span>
+<span class="fc" id="L2527">		return new OptionalDoublePresentMatcher(not(true));</span>
 	}
 
 	/**
@@ -2533,7 +2536,7 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;OptionalDouble&gt; optionalDoubleIs(
 			org.hamcrest.Matcher&lt;? super Double&gt; subMatcher) {
-<span class="fc" id="L2536">		return both((org.hamcrest.Matcher) optionalDoubleIsPresent()).and(</span>
+<span class="fc" id="L2539">		return both((org.hamcrest.Matcher) optionalDoubleIsPresent()).and(</span>
 				new OptionalDoubleMatcher(subMatcher));
 	}
 
@@ -2543,7 +2546,7 @@ interface Matchers {
 	 * @return the matcher on the optional
 	 */
 	default org.hamcrest.Matcher&lt;OptionalInt&gt; optionalIntIsPresent() {
-<span class="fc" id="L2546">		return new OptionalIntPresentMatcher(is(true));</span>
+<span class="fc" id="L2549">		return new OptionalIntPresentMatcher(is(true));</span>
 	}
 
 	/**
@@ -2552,7 +2555,7 @@ interface Matchers {
 	 * @return the matcher on the optional
 	 */
 	default org.hamcrest.Matcher&lt;OptionalInt&gt; optionalIntIsNotPresent() {
-<span class="fc" id="L2555">		return new OptionalIntPresentMatcher(not(true));</span>
+<span class="fc" id="L2558">		return new OptionalIntPresentMatcher(not(true));</span>
 	}
 
 	/**
@@ -2564,7 +2567,7 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;OptionalInt&gt; optionalIntIs(
 			org.hamcrest.Matcher&lt;? super Integer&gt; subMatcher) {
-<span class="fc" id="L2567">		return both((org.hamcrest.Matcher) optionalIntIsPresent()).and(</span>
+<span class="fc" id="L2570">		return both((org.hamcrest.Matcher) optionalIntIsPresent()).and(</span>
 				new OptionalIntMatcher(subMatcher));
 	}
 
@@ -2576,7 +2579,7 @@ interface Matchers {
 	 * @return the matcher on the optional
 	 */
 	default org.hamcrest.Matcher&lt;OptionalInt&gt; optionalIntIs(Integer target) {
-<span class="fc" id="L2579">		return optionalIntIs(is(target));</span>
+<span class="fc" id="L2582">		return optionalIntIs(is(target));</span>
 	}
 
 	/**
@@ -2585,7 +2588,7 @@ interface Matchers {
 	 * @return the matcher on the optional
 	 */
 	default org.hamcrest.Matcher&lt;OptionalLong&gt; optionalLongIsPresent() {
-<span class="fc" id="L2588">		return new OptionalLongPresentMatcher(is(true));</span>
+<span class="fc" id="L2591">		return new OptionalLongPresentMatcher(is(true));</span>
 	}
 
 	/**
@@ -2594,7 +2597,7 @@ interface Matchers {
 	 * @return the matcher on the optional
 	 */
 	default org.hamcrest.Matcher&lt;OptionalLong&gt; optionalLongIsNotPresent() {
-<span class="fc" id="L2597">		return new OptionalLongPresentMatcher(not(true));</span>
+<span class="fc" id="L2600">		return new OptionalLongPresentMatcher(not(true));</span>
 	}
 
 	/**
@@ -2606,7 +2609,7 @@ interface Matchers {
 	 */
 	default org.hamcrest.Matcher&lt;OptionalLong&gt; optionalLongIs(
 			org.hamcrest.Matcher&lt;? super Long&gt; subMatcher) {
-<span class="fc" id="L2609">		return both((org.hamcrest.Matcher) optionalLongIsPresent()).and(</span>
+<span class="fc" id="L2612">		return both((org.hamcrest.Matcher) optionalLongIsPresent()).and(</span>
 				new OptionalLongMatcher(subMatcher));
 	}
 
@@ -2618,7 +2621,37 @@ interface Matchers {
 	 * @return the matcher on the optional
 	 */
 	default org.hamcrest.Matcher&lt;OptionalLong&gt; optionalLongIs(Long target) {
-<span class="fc" id="L2621">		return optionalLongIs(is(target));</span>
+<span class="fc" id="L2624">		return optionalLongIs(is(target));</span>
+	}
+
+	/**
+	 * Validate a string with a {@link java.util.regex.Pattern}.
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(&amp;quot;abc&amp;quot;, matchesRegex(Pattern.compile(&amp;quot;&amp;circ;[a-z]$&amp;quot;));
+	 * &lt;/pre&gt;
+	 * 
+	 * @param pattern
+	 *            the pattern to be used.
+	 * @return The matcher.
+	 */
+	default Matcher&lt;String&gt; matchesRegex(Pattern pattern) {
+<span class="nc" id="L2639">		return new StringPatternMatcher(pattern);</span>
+	}
+
+	/**
+	 * Validate a string with a regex.
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(&amp;quot;abc&amp;quot;, matchesRegex(&amp;quot;&amp;circ;[a-z]+$&amp;quot;));
+	 * &lt;/pre&gt;
+	 * 
+	 * @param regex
+	 *            The regex to be used for the validation.
+	 * @return The matcher.
+	 */
+	default Matcher&lt;String&gt; matchesRegex(String regex) {
+<span class="nc" id="L2654">		return matchesRegex(Pattern.compile(regex));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

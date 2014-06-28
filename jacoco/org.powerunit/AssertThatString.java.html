@@ -19,6 +19,8 @@
  */
 package org.powerunit;
 
+import java.util.regex.Pattern;
+
 import org.hamcrest.Matchers;
 
 /**
@@ -38,8 +40,8 @@ public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	 *            the other string.
 	 */
 	default void containsString(String substring) {
-<span class="nc" id="L41">		is(Matchers.containsString(substring));</span>
-<span class="nc" id="L42">	}</span>
+<span class="fc" id="L43">		is(Matchers.containsString(substring));</span>
+<span class="fc" id="L44">	}</span>
 
 	/**
 	 * Check that a string starts with another one.
@@ -48,8 +50,8 @@ public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	 *            the prefix.
 	 */
 	default void startsWith(String prefix) {
-<span class="nc" id="L51">		is(Matchers.startsWith(prefix));</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L53">		is(Matchers.startsWith(prefix));</span>
+<span class="fc" id="L54">	}</span>
 
 	/**
 	 * Check that a string ends with another one.
@@ -58,7 +60,28 @@ public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	 *            the prefix.
 	 */
 	default void endsWith(String prefix) {
-<span class="nc" id="L61">		is(Matchers.endsWith(prefix));</span>
-<span class="nc" id="L62">	}</span>
+<span class="fc" id="L63">		is(Matchers.endsWith(prefix));</span>
+<span class="fc" id="L64">	}</span>
+
+	/**
+	 * Validate a string with a {@link java.util.regex.Pattern}.
+	 * 
+	 * @param pattern
+	 *            the pattern to be used.
+	 */
+	default void matchesRegex(Pattern pattern) {
+<span class="nc" id="L73">		is(TestSuite.DSL.matchesRegex(pattern));</span>
+<span class="nc" id="L74">	}</span>
+
+	/**
+	 * Validate a string with a regex.
+	 * 
+	 * 
+	 * @param regex
+	 *            The regex to be used for the validation.
+	 */
+	default void matchesRegex(String regex) {
+<span class="nc" id="L84">		is(TestSuite.DSL.matchesRegex(regex));</span>
+<span class="nc" id="L85">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
