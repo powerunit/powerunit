@@ -30,6 +30,45 @@ import java.lang.annotation.Target;
  * 0-args) as method to provide test parameter.
  * <p>
  * This method will be run once only.
+ * <p>
+ * For instance, we may wrote this code
+ * 
+ * <pre>
+ * import java.util.Arrays;
+ * import java.util.function.Function;
+ * import java.util.stream.Stream;
+ * 
+ * import org.powerunit.Categories;
+ * import org.powerunit.Parameter;
+ * import org.powerunit.Parameters;
+ * import org.powerunit.Test;
+ * import org.powerunit.TestSuite;
+ * 
+ * &#064;Categories({ &quot;example&quot;, &quot;demo&quot; })
+ * public class FunctionParameterTest&lt;T, R&gt; implements TestSuite {
+ * 
+ * 	&#064;Parameters(&quot;{0} on {1} expecting {2}&quot;)
+ * 	public static Stream&lt;Object[]&gt; getDatas() {
+ * 		return Arrays.stream(new Object[][] { {
+ * 				(Function&lt;String, Integer&gt;) Integer::valueOf, &quot;1&quot;, 1 } });
+ * 	}
+ * 
+ * 	&#064;Parameter(0)
+ * 	public Function&lt;T, R&gt; function;
+ * 
+ * 	&#064;Parameter(1)
+ * 	public T input;
+ * 
+ * 	&#064;Parameter(2)
+ * 	public R expected;
+ * 
+ * 	&#064;Test
+ * 	public void testAFunction() {
+ * 		assertThatFunction(function, input).is(expected);
+ * 	}
+ * }
+ * 
+ * </pre>
  * 
  * @author borettim
  * @see java.util.stream.Stream
