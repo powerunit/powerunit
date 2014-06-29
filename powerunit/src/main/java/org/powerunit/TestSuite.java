@@ -159,7 +159,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	}
 
 	/**
-	 * Produces a new rule for the temporary folder.
+	 * Produces a new rule builder for the temporary folder.
 	 * <p>
 	 * As the {@link TemporaryFolder} rule provides several methods that are
 	 * required for the test, except in the case when only this rule is
@@ -177,6 +177,9 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * 
 	 * This is required to ensure that the method of the {@link TemporaryFolder}
 	 * object can be used (using the field named <code>temporary</code>).
+	 * <p>
+	 * The builder provide several capabilities to create initial folder
+	 * structure at the same time than the temporary folder itself.
 	 * 
 	 * @return the temporary folder rule builder.
 	 * @see Rule
