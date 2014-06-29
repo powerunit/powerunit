@@ -28,6 +28,11 @@
 			<url>http://visite-suisse.blogspot.ch/</url>
 		</developer>
 	</developers>
+	
+	<ciManagement>
+		<system>travis-ci</system>
+		<url>https://travis-ci.org/powerunit/powerunit</url>
+	</ciManagement>
 
 	<scm>
 		<connection>scm:git:git@github.com:powerunit/powerunit.git</connection>
