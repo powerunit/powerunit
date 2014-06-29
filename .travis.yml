@@ -1,5 +1,0 @@
-language: java
-jdk:
-  - oraclejdk8
-script: "[ ${TRAVIS_PULL_REQUEST} = 'false' ] && (cd powerunit && mvn clean install)"
-
