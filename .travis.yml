@@ -1,5 +1,8 @@
 language: java
 jdk:
-  - oraclejdk8
-script: "[ ${TRAVIS_PULL_REQUEST} = 'false' ] && (cd powerunit && mvn clean install)"
-
+- oraclejdk8
+script: '[ ${TRAVIS_PULL_REQUEST} = ''false'' ] && (cd powerunit && mvn clean install)'
+env:
+  global:
+  - secure: kX7y1PhsuTRW2GGXGkg88x5HmdoQ1uKnK1M+/y2YYNSu7boLZ+8iLwM07Nb+1WILadrWP9AxWU+8EEhq2+p8bO9wZo3uxcBz7I0Qw2UURJZE6kSMx1sdnvqWEul1ySgvFYi0Ynph6v7W8cUhEF3QzUcMs/1P9PmbE5lpl8KUg6o=
+  - secure: J7sLSRJ15Xu02BO4t0b0vx2g4OSEbxN5OjN7cQDWAz0PMIhStZSrRu/m37QwFV3dl1WoSRLJAFGAoyA7Zx3OOgidyTQk2KO1U0UrPOI8Qk8mtGOf5Yc4bgdWbFQD9vDX4PlpMR/xNcv767Cpo6wuejbo9qmWWjrNiQMRaHmEZxA=
