@@ -156,18 +156,56 @@ public interface TemporaryFolder extends ExternalResource {
 		TemporaryFolder build();
 	}
 
+	/**
+	 * Generic part regarding initial context of a temporary folder.
+	 * 
+	 * @author borettim
+	 *
+	 */
 	interface InitialEntry {
+		/**
+		 * Get the name (file or folder)
+		 * 
+		 * @return the name
+		 */
 		String getName();
 	}
 
+	/**
+	 * An initial folder.
+	 * 
+	 * @author borettim
+	 *
+	 */
 	interface InitialFolderEntry extends InitialEntry {
 
+		/**
+		 * The list of files.
+		 * 
+		 * @return the list of files
+		 */
 		Collection<InitialFileEntry> getFiles();
 
+		/**
+		 * The list of folder.
+		 * 
+		 * @return the list of folders.
+		 */
 		Collection<InitialFolderEntry> getFolders();
 	}
 
+	/**
+	 * An initial file.
+	 * 
+	 * @author borettim
+	 *
+	 */
 	interface InitialFileEntry extends InitialEntry {
+		/**
+		 * the initial data of the file
+		 * 
+		 * @return the data (can be null).
+		 */
 		byte[] getData();
 	}
 
