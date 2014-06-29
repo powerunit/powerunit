@@ -189,7 +189,8 @@ public interface TestRule {
 <span class="fc" id="L189">		return (i) -&gt; Statement.around(i, (p) -&gt; {</span>
 			MockitoAnnotations.initMocks(p.getTestSuiteObject());
 		}, (p) -&gt; {
-		});
+			// Do nothing as default
+			});
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

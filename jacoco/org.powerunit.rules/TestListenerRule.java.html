@@ -67,7 +67,7 @@ public interface TestListenerRule extends TestRule {
 	 *            the test context
 	 */
 	default void onStart(TestContext&lt;Object&gt; context) {
-
+		// Do nothing as default
 <span class="nc" id="L71">	}</span>
 
 	/**
@@ -81,7 +81,7 @@ public interface TestListenerRule extends TestRule {
 	 *            the failure
 	 */
 	default void onFailure(TestContext&lt;Object&gt; context, AssertionError af) {
-
+		// Do nothing as default
 <span class="nc" id="L85">	}</span>
 
 	/**
@@ -95,7 +95,7 @@ public interface TestListenerRule extends TestRule {
 	 *            the error
 	 */
 	default void onError(TestContext&lt;Object&gt; context, Throwable error) {
-
+		// Do nothing as default
 <span class="nc" id="L99">	}</span>
 
 	/**
@@ -110,7 +110,7 @@ public interface TestListenerRule extends TestRule {
 	 */
 	default void onAssumptionSkip(TestContext&lt;Object&gt; context,
 			AssumptionError error) {
-
+		// Do nothing as default
 <span class="nc" id="L114">	}</span>
 
 	/**
@@ -122,8 +122,8 @@ public interface TestListenerRule extends TestRule {
 	 *            the test context
 	 */
 	default void onEnd(TestContext&lt;Object&gt; context) {
-
-<span class="nc" id="L126">	}</span>
+		// Do nothing as default
+<span class="fc" id="L126">	}</span>
 
 	@Override
 	default Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; computeStatement(

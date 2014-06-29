@@ -53,7 +53,7 @@ Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules.impl,Temporar
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules.impl,TemporaryFolderImpl.InitialFolderEntryImpl,0,45,0,0,0,14,0,7,0,7
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules.impl,TemporaryFolderImpl.InitialFileEntryImpl,0,15,0,0,0,6,0,3,0,3
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,ExternalResource,0,8,0,0,0,6,0,4,0,4
-Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,TestListenerRule,5,4,0,0,5,1,5,1,5,1
+Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,TestListenerRule,4,5,0,0,4,2,4,2,4,2
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,SystemPropertiesRule,0,92,0,6,0,17,0,8,0,5
-Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,TestContextRule,0,12,0,0,0,3,0,3,0,3
+Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,TestContextRule,0,10,0,0,0,4,0,3,0,3
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.helpers,StreamParametersMapFunction,58,202,22,30,17,48,22,15,2,9
