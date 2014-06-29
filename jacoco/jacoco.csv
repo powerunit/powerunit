@@ -12,8 +12,8 @@ Powerunit - Java Testing framework for JDK 1.8,org.powerunit.surefire,PowerUnitP
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.surefire,PowerUnitProviderScannerFilter,0,98,0,8,0,16,0,6,0,2
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.surefire,PowerUnitProvider,5,96,1,5,1,27,1,5,0,3
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Testsuite,66,46,0,2,28,18,19,12,19,11
-Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Error,13,11,0,0,5,5,4,3,4,3
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,ObjectFactory,74,0,0,0,15,0,12,0,12,0
+Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Error,13,11,0,0,5,5,4,3,4,3
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Testsuites,56,0,2,0,22,0,15,0,14,0
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Property,17,0,0,0,7,0,5,0,5,0
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.report,Failure,13,11,0,0,5,5,4,3,4,3
@@ -38,8 +38,8 @@ Powerunit - Java Testing framework for JDK 1.8,org.powerunit.impl,AssertThatExce
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.impl,AssertThatObjectImpl,0,95,0,8,0,18,0,6,0,2
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.matchers,OptionalIntMatcher,0,10,0,0,0,3,0,2,0,2
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.matchers,StringPatternMatcher,35,0,2,0,10,0,4,0,3,0
-Powerunit - Java Testing framework for JDK 1.8,org.powerunit.matchers,OptionalDoubleMatcher,0,10,0,0,0,3,0,2,0,2
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.matchers,OptionalMatcher,0,9,0,0,0,3,0,2,0,2
+Powerunit - Java Testing framework for JDK 1.8,org.powerunit.matchers,OptionalDoubleMatcher,0,10,0,0,0,3,0,2,0,2
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.matchers,OptionalLongPresentMatcher,0,10,0,0,0,3,0,2,0,2
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.matchers,OptionalDoublePresentMatcher,0,10,0,0,0,3,0,2,0,2
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.matchers,OptionalLongMatcher,0,10,0,0,0,3,0,2,0,2
