@@ -19,6 +19,7 @@
  */
 package org.powerunit.test.base;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -47,7 +48,9 @@ public class TemporaryFolderTests {
 	@Categories("base")
 	public static class TemporaryFolderTest implements TestSuite {
 
-		private final TemporaryFolder temporaryFolder = temporaryFolder();
+		private final TemporaryFolder temporaryFolder = temporaryFolderBuilder()
+				.file("toto").folder("tito").file("pipo").end()
+				.file("tata", new byte[] { 'x' }).build();
 
 		private Path f;
 
@@ -72,6 +75,22 @@ public class TemporaryFolderTests {
 			assertThat(f3.toFile().isDirectory()).is(true);
 			assertThat(Files.exists(d1)).is(true);
 			assertThat(Files.readAllBytes(d1)).is(new byte[] { 'a' });
+			assertThat(
+					new File(temporaryFolder.getRootFolder().toFile(), "toto")
+							.exists()).is(true);
+			assertThat(
+					new File(temporaryFolder.getRootFolder().toFile(), "tito")
+							.exists()).is(true);
+			assertThat(
+					new File(temporaryFolder.getRootFolder().toFile(),
+							"tito/pipo").exists()).is(true);
+			assertThat(
+					new File(temporaryFolder.getRootFolder().toFile(), "tata")
+							.exists()).is(true);
+			assertThat(
+					Files.readAllBytes(new File(temporaryFolder.getRootFolder()
+							.toFile(), "tata").toPath()))
+					.is(new byte[] { 'x' });
 		}
 
 		public void postCheck() {

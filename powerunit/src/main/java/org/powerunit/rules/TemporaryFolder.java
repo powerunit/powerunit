@@ -21,6 +21,7 @@ package org.powerunit.rules;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Collection;
 
 /**
  * This rule provides a way to support temporary folder.
@@ -95,5 +96,79 @@ public interface TemporaryFolder extends ExternalResource {
 	 * @return the rootFolder
 	 */
 	Path getRootFolder();
+
+	/**
+	 * Get the initial temporary folder info
+	 * 
+	 * @return the initial data
+	 */
+	InitialFolderEntry getInitial();
+
+	/**
+	 * This is a builder for temporary folder.
+	 * 
+	 * @author borettim
+	 *
+	 */
+	interface TemporaryFolderBuilder {
+
+		/**
+		 * Create a new file, in the current folder.
+		 * 
+		 * @param fileName
+		 *            the file name
+		 * @return the temporary folder builder
+		 */
+		TemporaryFolderBuilder file(String fileName);
+
+		/**
+		 * Create a new file, in the current folder.
+		 * 
+		 * @param fileName
+		 *            the file name
+		 * @param data
+		 *            the data to be wrote in the file
+		 * @return the temporary folder builder
+		 */
+		TemporaryFolderBuilder file(String fileName, byte data[]);
+
+		/**
+		 * Create a new folder, in the current folder.
+		 * 
+		 * @param folderName
+		 *            the folder name
+		 * @return the temporary folder builder (moved in this folder)
+		 */
+		TemporaryFolderBuilder folder(String folderName);
+
+		/**
+		 * Move up from this folder.
+		 * 
+		 * @return the builder
+		 */
+		TemporaryFolderBuilder end();
+
+		/**
+		 * Build the temporary folder.
+		 * 
+		 * @return The temporary folder rule
+		 */
+		TemporaryFolder build();
+	}
+
+	interface InitialEntry {
+		String getName();
+	}
+
+	interface InitialFolderEntry extends InitialEntry {
+
+		Collection<InitialFileEntry> getFiles();
+
+		Collection<InitialFolderEntry> getFolders();
+	}
+
+	interface InitialFileEntry extends InitialEntry {
+		byte[] getData();
+	}
 
 }

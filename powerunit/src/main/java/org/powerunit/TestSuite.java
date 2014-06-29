@@ -28,6 +28,7 @@ import org.hamcrest.Matcher;
 import org.powerunit.helpers.StreamParametersMapFunction;
 import org.powerunit.rules.SystemPropertiesRule;
 import org.powerunit.rules.TemporaryFolder;
+import org.powerunit.rules.TemporaryFolder.TemporaryFolderBuilder;
 import org.powerunit.rules.impl.TemporaryFolderImpl;
 
 /**
@@ -154,7 +155,34 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * @see Rule
 	 */
 	default TemporaryFolder temporaryFolder() {
-		return new TemporaryFolderImpl();
+		return temporaryFolderBuilder().build();
+	}
+
+	/**
+	 * Produces a new rule for the temporary folder.
+	 * <p>
+	 * As the {@link TemporaryFolder} rule provides several methods that are
+	 * required for the test, except in the case when only this rule is
+	 * required, a direct usage in the rule DSL is not adapted.
+	 * 
+	 * For instance, assuming that it is required to mix a before and the
+	 * {@link TemporaryFolder} rule, the code will look like :
+	 * 
+	 * <pre>
+	 * private TemporaryFolder temporary = temporaryFolderBuilder().build();
+	 * 
+	 * &#064;Rule
+	 * public TestRule rule = before(this::beforeMethodName).around(temporary);
+	 * </pre>
+	 * 
+	 * This is required to ensure that the method of the {@link TemporaryFolder}
+	 * object can be used (using the field named <code>temporary</code>).
+	 * 
+	 * @return the temporary folder rule builder.
+	 * @see Rule
+	 */
+	default TemporaryFolderBuilder temporaryFolderBuilder() {
+		return new TemporaryFolderImpl.TemporaryFolderBuilderImpl();
 	}
 
 	/**
