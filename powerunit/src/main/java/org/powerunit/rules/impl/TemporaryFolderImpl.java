@@ -51,6 +51,13 @@ public class TemporaryFolderImpl implements TemporaryFolder {
 	}
 
 	@Override
+	public Path newFile(String fileName, byte[] data) throws IOException {
+		Path p = newFile(fileName);
+		Files.write(p, data);
+		return p;
+	}
+
+	@Override
 	public Path newFolder() throws IOException {
 		return Files.createTempDirectory(rootFolder, "tmp");
 	}

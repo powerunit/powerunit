@@ -55,6 +55,8 @@ public class TemporaryFolderTests {
 
 		private Path f3;
 
+		private Path d1;
+
 		@Rule
 		public final TestRule chain = after(this::postCheck).around(
 				temporaryFolder).around(before(this::createOther));
@@ -68,12 +70,15 @@ public class TemporaryFolderTests {
 			assertThat(Files.exists(f2)).is(true);
 			assertThat(Files.exists(f3)).is(true);
 			assertThat(f3.toFile().isDirectory()).is(true);
+			assertThat(Files.exists(d1)).is(true);
+			assertThat(Files.readAllBytes(d1)).is(new byte[] { 'a' });
 		}
 
 		public void postCheck() {
 			assertThat(Files.exists(f)).is(false);
 			assertThat(Files.exists(f2)).is(false);
 			assertThat(Files.exists(f3)).is(false);
+			assertThat(Files.exists(d1)).is(false);
 			assertThat(f2.toFile().getName()).is("myName");
 			assertThat(temporaryFolder.getRootFolder().toFile().exists()).is(
 					false);
@@ -83,6 +88,7 @@ public class TemporaryFolderTests {
 			try {
 				f2 = temporaryFolder.newFile("myName");
 				f3 = temporaryFolder.newFolder("myFolder");
+				d1 = temporaryFolder.newFile("myName2", new byte[] { 'a' });
 			} catch (IOException e) {
 				fail("Unable to create the new file/folder name "
 						+ e.getMessage(), e);

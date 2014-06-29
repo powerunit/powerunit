@@ -57,6 +57,19 @@ public interface TemporaryFolder extends ExternalResource {
 	Path newFile(String fileName) throws IOException;
 
 	/**
+	 * Create a new file.
+	 * 
+	 * @param fileName
+	 *            the file name
+	 * @param data
+	 *            the byte that must be wrote into the file
+	 * @return the file
+	 * @throws IOException
+	 *             in case of error
+	 */
+	Path newFile(String fileName, byte data[]) throws IOException;
+
+	/**
 	 * Create a new folder.
 	 * 
 	 * @return the folder
