@@ -127,6 +127,27 @@
 										<ignore />
 									</action>
 								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-changes-plugin
+										</artifactId>
+										<versionRange>
+											[2.10,)
+										</versionRange>
+										<goals>
+											<goal>
+												announcement-generate
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
@@ -449,6 +470,26 @@
 					<!-- The package in which the source files will be generated. -->
 					<packageName>org.powerunit.report</packageName>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changes-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>include-announcement-file</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>announcement-generate</goal>
+						</goals>
+						<configuration>
+							<announcementFile>CHANGES.txt</announcementFile>
+							<announcementDirectory>${project.build.outputDirectory}/META-INF</announcementDirectory>
+							<issueManagementSystems>
+								<issueManagementSystem>GitHub</issueManagementSystem>
+							</issueManagementSystems>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 
