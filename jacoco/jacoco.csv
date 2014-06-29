@@ -48,7 +48,7 @@ Powerunit - Java Testing framework for JDK 1.8,org.powerunit.matchers,ExceptionM
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.matchers,OptionalIntPresentMatcher,0,10,0,0,0,3,0,2,0,2
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.exception,InternalError,0,9,0,0,0,4,0,2,0,2
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.exception,AssumptionError,0,4,0,0,0,2,0,1,0,1
-Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,TemporaryFolder,20,59,1,5,4,15,2,8,1,6
+Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules.impl,TemporaryFolderImpl,20,95,1,5,4,22,2,11,1,9
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,ExternalResource,0,8,0,0,0,6,0,4,0,4
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,TestListenerRule,5,4,0,0,5,1,5,1,5,1
 Powerunit - Java Testing framework for JDK 1.8,org.powerunit.rules,SystemPropertiesRule,0,92,0,6,0,17,0,8,0,5
