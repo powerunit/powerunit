@@ -20,6 +20,7 @@
 package org.powerunit.test.base;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.powerunit.Categories;
@@ -50,23 +51,36 @@ public class TemporaryFolderTests {
 
 		private Path f;
 
+		private Path f2;
+
 		@Rule
 		public final TestRule chain = after(this::postCheck).around(
-				temporaryFolder);
+				temporaryFolder).around(before(this::createOther));
 
 		@Test
 		public void emptyTest() throws IOException {
 			assertThat(temporaryFolder.getRootFolder().toFile().exists()).is(
 					true);
 			f = temporaryFolder.newFile();
-			assertThat(f.toFile().exists()).is(true);
+			assertThat(Files.exists(f)).is(true);
+			assertThat(Files.exists(f2)).is(true);
 
 		}
 
 		public void postCheck() {
-			assertThat(f.toFile().exists()).is(false);
+			assertThat(Files.exists(f)).is(false);
+			assertThat(Files.exists(f2)).is(false);
+			assertThat(f2.toFile().getName()).is("myName");
 			assertThat(temporaryFolder.getRootFolder().toFile().exists()).is(
 					false);
+		}
+
+		public void createOther() {
+			try {
+				f2 = temporaryFolder.newFile("myName");
+			} catch (IOException e) {
+				fail("Unable to create the new file name " + e.getMessage(), e);
+			}
 		}
 	}
 

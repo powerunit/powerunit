@@ -19,56 +19,22 @@
  */
 package org.powerunit.rules;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-
-import org.powerunit.TestSuite;
 
 /**
  * This rule provides a way to support temporary folder.
  * <p>
  * This class is exposed by the
  * {@link org.powerunit.TestSuite#temporaryFolder() temporaryFolder()} method of
- * the {@link org.powerunit.TestSuite TestSuite} interface. Direct instantiation
- * of this class should be avoided. Created file and folder by this rule (or
- * created inside the once created by this rule) are removed after test
- * execution.
+ * the {@link org.powerunit.TestSuite TestSuite} interface. Created file and
+ * folder by this rule (or created inside the once created by this rule) are
+ * removed after test execution.
  * 
  * @author borettim
  *
  */
-public final class TemporaryFolder implements ExternalResource {
-
-	private Path rootFolder;
-
-	@Override
-	public void before() {
-		try {
-			rootFolder = Files.createTempDirectory("powerunit");
-		} catch (IOException e) {
-			TestSuite.DSL.fail("Unable to create the rootFolder because of "
-					+ e.getMessage(), e);
-		}
-	}
-
-	@Override
-	public void after() {
-		if (rootFolder != null) {
-			recursiveDelete(rootFolder.toFile());
-		}
-	}
-
-	private void recursiveDelete(File file) {
-		File[] files = file.listFiles();
-		if (files != null) {
-			for (File each : files) {
-				recursiveDelete(each);
-			}
-		}
-		file.delete();
-	}
+public interface TemporaryFolder extends ExternalResource {
 
 	/**
 	 * Create a new file.
@@ -77,9 +43,18 @@ public final class TemporaryFolder implements ExternalResource {
 	 * @throws IOException
 	 *             in case of error
 	 */
-	public Path newFile() throws IOException {
-		return Files.createTempFile(rootFolder, "tmp", ".tmp");
-	}
+	Path newFile() throws IOException;
+
+	/**
+	 * Create a new file.
+	 * 
+	 * @param fileName
+	 *            the fileName
+	 * @return the file
+	 * @throws IOException
+	 *             in case of error
+	 */
+	Path newFile(String fileName) throws IOException;
 
 	/**
 	 * Create a new folder.
@@ -88,17 +63,13 @@ public final class TemporaryFolder implements ExternalResource {
 	 * @throws IOException
 	 *             in case of error
 	 */
-	public Path newFolder() throws IOException {
-		return Files.createTempDirectory(rootFolder, "tmp");
-	}
+	Path newFolder() throws IOException;
 
 	/**
 	 * Get the rootFolder.
 	 * 
 	 * @return the rootFolder
 	 */
-	public Path getRootFolder() {
-		return rootFolder;
-	}
+	Path getRootFolder();
 
 }

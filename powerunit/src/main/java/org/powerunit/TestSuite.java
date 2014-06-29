@@ -28,6 +28,7 @@ import org.hamcrest.Matcher;
 import org.powerunit.helpers.StreamParametersMapFunction;
 import org.powerunit.rules.SystemPropertiesRule;
 import org.powerunit.rules.TemporaryFolder;
+import org.powerunit.rules.impl.TemporaryFolderImpl;
 
 /**
  * This is the interface to be implemented by test class, in order to have
@@ -153,7 +154,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
 	 * @see Rule
 	 */
 	default TemporaryFolder temporaryFolder() {
-		return new TemporaryFolder();
+		return new TemporaryFolderImpl();
 	}
 
 	/**
