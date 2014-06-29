@@ -189,6 +189,7 @@ public interface TestRule {
 		return (i) -> Statement.around(i, (p) -> {
 			MockitoAnnotations.initMocks(p.getTestSuiteObject());
 		}, (p) -> {
-		});
+			// Do nothing as default
+			});
 	}
 }

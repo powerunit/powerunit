@@ -19,9 +19,7 @@
  */
 package org.powerunit.rules;
 
-import org.powerunit.Statement;
 import org.powerunit.TestContext;
-import org.powerunit.TestRule;
 
 /**
  * This rule can be used to have access to the {@link TestContext test execution
@@ -30,15 +28,19 @@ import org.powerunit.TestRule;
  * @author borettim
  *
  */
-public final class TestContextRule implements TestRule {
+public final class TestContextRule implements TestListenerRule {
 
 	private TestContext<Object> testContext;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.powerunit.rules.ExternalResource#onStart(org.powerunit.TestContext)
+	 */
 	@Override
-	public Statement<TestContext<Object>, Throwable> computeStatement(
-			Statement<TestContext<Object>, Throwable> inner) {
-		return Statement.around(inner, (p) -> testContext = p, (p) -> {
-		});
+	public void onStart(TestContext<Object> context) {
+		this.testContext = context;
 	}
 
 	/**

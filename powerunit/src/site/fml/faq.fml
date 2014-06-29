@@ -3,7 +3,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/FML/1.0.1 http://maven.apache.org/xsd/fml-1.0.1.xsd"
   title="Frequently Asked Questions"
-  toplink="false">
+  toplink="true">
 
   <part id="general">
     <title>General</title>

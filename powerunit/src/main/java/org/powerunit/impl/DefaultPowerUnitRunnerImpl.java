@@ -77,7 +77,7 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 					o.addAll(n);
 					return o;
 				}).orElse(new HashSet<>());
-		this.parentGroups = groups.size() == 0 ? TestResultListener.ALL_GROUPS
+		this.parentGroups = groups.isEmpty() ? TestResultListener.ALL_GROUPS
 				: Arrays.toString(groups.toArray());
 
 		try {
@@ -87,7 +87,7 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 		}
 
 		if (testClass.isAnnotationPresent(Ignore.class)) {
-			executableTests.put(setName, (p) -> {
+			executableTests.put(setName, p -> {
 				TestContextImpl<Object> ctx = new TestContextImpl<>(
 						targetObject, setName, setName, null, parentGroups);
 				notifyStartTest(ctx);
@@ -126,7 +126,7 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 		}
 	}
 
-	public int testIndex = 0;
+	private int testIndex = 0;
 
 	private void runOneParameter(Object op) {
 		String formatter = parameters.getAnnotation(Parameters.class).value();
@@ -169,7 +169,8 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 								new TestContextImpl<Object>(targetObject,
 										setName, singleTest.getKey(), name,
 										parentGroups));
-					} catch (Throwable e) {
+					} catch (Throwable e) {// NOSONAR
+						// As we really want all error
 						throw new InternalError("Unexpected error "
 								+ e.getMessage(), e);
 					}
@@ -298,13 +299,12 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 									Statement<TestContext<Object>, Throwable> stest;
 									if (test.getValue().isAnnotationPresent(
 											Ignore.class)) {
-										stest = (p) -> {
+										stest = p -> {
 											throw new AssumptionError(
 													"Test method is annotated with @Ignore");
 										};
 									} else {
-										Statement<TestContext<Object>, Throwable> itest = (
-												p) -> {
+										Statement<TestContext<Object>, Throwable> itest = p -> {
 											Statement
 													.<TestContext<Object>, Throwable> reflectionMethod(
 															targetObject,
@@ -312,7 +312,7 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 													.run(p);
 										};
 										if (testRules != null) {
-											stest = (p) -> testRules
+											stest = p -> testRules
 													.computeStatement(itest)
 													.run(p);
 										} else {
@@ -320,7 +320,7 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 										}
 
 									}
-									return (p) -> {
+									return p -> {
 										notifyStartTest(p);
 										try {
 											stest.run(p);
@@ -331,7 +331,8 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 											notifyEndFailureTest(p, e);
 										} catch (AssumptionError e) {
 											notifyEndSkippedTest(p);
-										} catch (Throwable e) {
+										} catch (Throwable e) {// NOSONAR
+											// As we really want all error
 											notifyEndFailureTest(p, e);
 										}
 									};

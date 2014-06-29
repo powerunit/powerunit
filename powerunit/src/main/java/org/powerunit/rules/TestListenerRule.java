@@ -67,7 +67,7 @@ public interface TestListenerRule extends TestRule {
 	 *            the test context
 	 */
 	default void onStart(TestContext<Object> context) {
-
+		// Do nothing as default
 	}
 
 	/**
@@ -81,7 +81,7 @@ public interface TestListenerRule extends TestRule {
 	 *            the failure
 	 */
 	default void onFailure(TestContext<Object> context, AssertionError af) {
-
+		// Do nothing as default
 	}
 
 	/**
@@ -95,7 +95,7 @@ public interface TestListenerRule extends TestRule {
 	 *            the error
 	 */
 	default void onError(TestContext<Object> context, Throwable error) {
-
+		// Do nothing as default
 	}
 
 	/**
@@ -110,7 +110,7 @@ public interface TestListenerRule extends TestRule {
 	 */
 	default void onAssumptionSkip(TestContext<Object> context,
 			AssumptionError error) {
-
+		// Do nothing as default
 	}
 
 	/**
@@ -122,7 +122,7 @@ public interface TestListenerRule extends TestRule {
 	 *            the test context
 	 */
 	default void onEnd(TestContext<Object> context) {
-
+		// Do nothing as default
 	}
 
 	@Override

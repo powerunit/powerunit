@@ -56,11 +56,13 @@ public interface ExternalResource extends TestListenerRule {
 	 * Code to be done before
 	 */
 	default void before() {
+		// Do nothing as default
 	}
 
 	/**
 	 * Code to be done after.
 	 */
 	default void after() {
+		// Do nothing as default
 	}
 }

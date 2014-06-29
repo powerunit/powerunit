@@ -49,7 +49,8 @@ public class AssertThatExceptionImpl<P, T extends Throwable> implements
 	public void throwException(Matcher<T> matching) {
 		try {
 			runnable.run(param);
-		} catch (Throwable t) {
+		} catch (Throwable t) {// NOSONAR
+			// As we really want all error
 			if (assertion) {
 				assertThat(msg, t).is((Matcher) matching);
 			} else {
