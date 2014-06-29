@@ -37,7 +37,7 @@ import java.nio.file.Path;
 public interface TemporaryFolder extends ExternalResource {
 
 	/**
-	 * Create a new file.
+	 * Create a new file with generated name.
 	 * 
 	 * @return the file
 	 * @throws IOException
@@ -46,7 +46,7 @@ public interface TemporaryFolder extends ExternalResource {
 	Path newFile() throws IOException;
 
 	/**
-	 * Create a new file.
+	 * Create a new file with specified name.
 	 * 
 	 * @param fileName
 	 *            the file name
@@ -57,7 +57,7 @@ public interface TemporaryFolder extends ExternalResource {
 	Path newFile(String fileName) throws IOException;
 
 	/**
-	 * Create a new file.
+	 * Create a new file with specified name and data.
 	 * 
 	 * @param fileName
 	 *            the file name
@@ -70,7 +70,7 @@ public interface TemporaryFolder extends ExternalResource {
 	Path newFile(String fileName, byte data[]) throws IOException;
 
 	/**
-	 * Create a new folder.
+	 * Create a new folder with generated name.
 	 * 
 	 * @return the folder
 	 * @throws IOException
@@ -79,7 +79,7 @@ public interface TemporaryFolder extends ExternalResource {
 	Path newFolder() throws IOException;
 
 	/**
-	 * Create a new folder.
+	 * Create a new folder with specified name.
 	 * 
 	 * @param folderName
 	 *            the folder name
