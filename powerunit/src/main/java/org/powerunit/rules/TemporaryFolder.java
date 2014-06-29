@@ -49,7 +49,7 @@ public interface TemporaryFolder extends ExternalResource {
 	 * Create a new file.
 	 * 
 	 * @param fileName
-	 *            the fileName
+	 *            the file name
 	 * @return the file
 	 * @throws IOException
 	 *             in case of error
@@ -64,6 +64,17 @@ public interface TemporaryFolder extends ExternalResource {
 	 *             in case of error
 	 */
 	Path newFolder() throws IOException;
+
+	/**
+	 * Create a new folder.
+	 * 
+	 * @param folderName
+	 *            the folder name
+	 * @return the folder
+	 * @throws IOException
+	 *             in case of error
+	 */
+	Path newFolder(String folderName) throws IOException;
 
 	/**
 	 * Get the rootFolder.

@@ -56,6 +56,12 @@ public class TemporaryFolderImpl implements TemporaryFolder {
 	}
 
 	@Override
+	public Path newFolder(String folderName) throws IOException {
+		return Files.createDirectory(new File(rootFolder.toFile(), folderName)
+				.toPath());
+	}
+
+	@Override
 	public Path getRootFolder() {
 		return rootFolder;
 	}
