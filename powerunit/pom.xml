@@ -358,6 +358,7 @@
 							<successCodes>
 								<successCode>-1</successCode>
 								<successCode>1</successCode>
+								<successCode>255</successCode>
 							</successCodes>
 						</configuration>
 					</execution>
