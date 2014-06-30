@@ -17,8 +17,8 @@
 	<h5>The Hello world test example</h5>
 
 	<pre>
-import org.powerunit.Test;
-import org.powerunit.TestSuite;
+import ch.powerunit.Test;
+import ch.powerunit.TestSuite;
 
 public class HelloWorldTest implements TestSuite {
   &#64;Test()
@@ -29,15 +29,15 @@ public class HelloWorldTest implements TestSuite {
 }</pre>
 	Several elements are interesting here :
 	<ul>
-		<li>The class implements the {@link org.powerunit.TestSuite}.
+		<li>The class implements the {@link ch.powerunit.TestSuite}.
 			This is not strictly required by the framework but it is the best way
 			to integrate nicely with the framework. This implementation provides
 			the DSL of the framework (assertions, matchers, etc). As the
 			interface name says it, a test class is considered as a test suite
 			(has it should contains a set of test, that share a common fixture).</li>
 		<li>The test method are annotated with the {@link
-			org.powerunit.Test} annotation.</li>
-		<li>The {@link org.powerunit.TestSuite assertThat} used here is
+			ch.powerunit.Test} annotation.</li>
+		<li>The {@link ch.powerunit.TestSuite assertThat} used here is
 			one of the several way to do assertion. Here, only assertion based on
 			DSL syntax and hamcrest matcher are provided. There is no AssertTrue
 			for instance.</li>
@@ -49,10 +49,10 @@ public class HelloWorldTest implements TestSuite {
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import org.powerunit.Parameter;
-import org.powerunit.Parameters;
-import org.powerunit.Test;
-import org.powerunit.TestSuite;
+import ch.powerunit.Parameter;
+import ch.powerunit.Parameters;
+import ch.powerunit.Test;
+import ch.powerunit.TestSuite;
 
 public class HelloWorldParameterTest implements TestSuite {
   &#64;Parameters("Input string is {0}, subString idx is {1}, expected result is {2}")
@@ -104,10 +104,10 @@ public class HelloWorldParameterTest implements TestSuite {
 	To demonstrate this sequence of action, here is an example of all
 	theses concepts. Let's assume we have the two following classes :
 	<pre>
-import org.powerunit.Rule;
-import org.powerunit.TestRule;
-import org.powerunit.TestSuite;
-import org.powerunit.rules.TestContextRule;
+import ch.powerunit.Rule;
+import ch.powerunit.TestRule;
+import ch.powerunit.TestSuite;
+import ch.powerunit.rules.TestContextRule;
 
 public abstract class ParentTest implements TestSuite {
   protected final TestContextRule context = new TestContextRule&lt;&gt;();
@@ -128,11 +128,11 @@ public abstract class ParentTest implements TestSuite {
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import org.powerunit.Parameter;
-import org.powerunit.Parameters;
-import org.powerunit.Rule;
-import org.powerunit.Test;
-import org.powerunit.TestRule;
+import ch.powerunit.Parameter;
+import ch.powerunit.Parameters;
+import ch.powerunit.Rule;
+import ch.powerunit.Test;
+import ch.powerunit.TestRule;
 
 public class ChildrenTest extends ParentTest {
 
@@ -180,26 +180,26 @@ public class ChildrenTest extends ParentTest {
 	<code>p1=B</code>
 	. The output of the execution will be :
 	<pre>
-org.powerunit.examples.ChildrenTest:test2[0]:prepare1
-org.powerunit.examples.ChildrenTest:test2[0]:prepare2
+ch.powerunit.examples.ChildrenTest:test2[0]:prepare1
+ch.powerunit.examples.ChildrenTest:test2[0]:prepare2
 test2 A
-org.powerunit.examples.ChildrenTest:test2[0]:clean2
-org.powerunit.examples.ChildrenTest:test2[0]:clean1
-org.powerunit.examples.ChildrenTest:test1[0]:prepare1
-org.powerunit.examples.ChildrenTest:test1[0]:prepare2
+ch.powerunit.examples.ChildrenTest:test2[0]:clean2
+ch.powerunit.examples.ChildrenTest:test2[0]:clean1
+ch.powerunit.examples.ChildrenTest:test1[0]:prepare1
+ch.powerunit.examples.ChildrenTest:test1[0]:prepare2
 test1 A
-org.powerunit.examples.ChildrenTest:test1[0]:clean2
-org.powerunit.examples.ChildrenTest:test1[0]:clean1
-org.powerunit.examples.ChildrenTest:test2[1]:prepare1
-org.powerunit.examples.ChildrenTest:test2[1]:prepare2
+ch.powerunit.examples.ChildrenTest:test1[0]:clean2
+ch.powerunit.examples.ChildrenTest:test1[0]:clean1
+ch.powerunit.examples.ChildrenTest:test2[1]:prepare1
+ch.powerunit.examples.ChildrenTest:test2[1]:prepare2
 test2 B
-org.powerunit.examples.ChildrenTest:test2[1]:clean2
-org.powerunit.examples.ChildrenTest:test2[1]:clean1
-org.powerunit.examples.ChildrenTest:test1[1]:prepare1
-org.powerunit.examples.ChildrenTest:test1[1]:prepare2
+ch.powerunit.examples.ChildrenTest:test2[1]:clean2
+ch.powerunit.examples.ChildrenTest:test2[1]:clean1
+ch.powerunit.examples.ChildrenTest:test1[1]:prepare1
+ch.powerunit.examples.ChildrenTest:test1[1]:prepare2
 test1 B
-org.powerunit.examples.ChildrenTest:test1[1]:clean2
-org.powerunit.examples.ChildrenTest:test1[1]:clean1
+ch.powerunit.examples.ChildrenTest:test1[1]:clean2
+ch.powerunit.examples.ChildrenTest:test1[1]:clean1
 </pre>
 	It is possible to say that the before of the parent class are executed
 	before the once of the children class. The after are executed in the
@@ -220,7 +220,7 @@ org.powerunit.examples.ChildrenTest:test1[1]:clean1
 	<h4>Assertion and Assumption usage</h4>
 
 	Assertion and assumption are provided by the interface {@link
-	org.powerunit.TestSuite TestSuite} that may be implemented by the test
+	ch.powerunit.TestSuite TestSuite} that may be implemented by the test
 	class. Assertion and assumption use the same DSL language and
 	capabilities, but they are started by a different methods :
 	<ul>
@@ -238,12 +238,12 @@ org.powerunit.examples.ChildrenTest:test1[1]:clean1
 			is the much simple usage. The goal is here to validate the passed
 			value against a specific check. The base syntax is (for the
 			assertion): <pre>assertThat(myObject)...</pre> This method will
-			return an instance of {@link org.powerunit.AssertThatObject
+			return an instance of {@link ch.powerunit.AssertThatObject
 			AssertThatObject}, which provides several method to validate the
 			passed object (equality, nullability or application of a hamcrest
 			matcher).
 			<p />A specialized version of the <code>assertThat</code> method
-			exists and return {@link org.powerunit.AssertThatString
+			exists and return {@link ch.powerunit.AssertThatString
 			AssertThatString}. This is an extension of AssertThatObject with
 			additional methods related to string.
 			<p /></li>
@@ -252,8 +252,8 @@ org.powerunit.examples.ChildrenTest:test1[1]:clean1
 			the passed iterable value against a specific check. The base syntax
 			is (for the assertion): <pre>assertThatIterable(myIterable)...</pre>
 			This method will return an instance of {@link
-			org.powerunit.AssertThatIterable AssertThatIterable} (which is an
-			extension of {@link org.powerunit.AssertThatObject
+			ch.powerunit.AssertThatIterable AssertThatIterable} (which is an
+			extension of {@link ch.powerunit.AssertThatObject
 			AssertThatObject}), providing the same features as before and several
 			additional method to validate the iterable (size, contains).
 			<p /></li>
@@ -262,7 +262,7 @@ org.powerunit.examples.ChildrenTest:test1[1]:clean1
 			check the application of a <i>lambda</i> <i>function</i> on an input
 			data. The base syntax is (for the assertion) :<pre>assertThatFunction((p)-&gt;p,myObject)...</pre>
 			This method will return an instance of {@link
-			org.powerunit.AssertThatObject AssertThatObject}, which will be used
+			ch.powerunit.AssertThatObject AssertThatObject}, which will be used
 			to validate the result of the function application.
 			<p /></li>
 		<li><b><code>assertThatBiFunction</code>/<code>assumeThatBiFunction</code></b><br />This
@@ -270,7 +270,7 @@ org.powerunit.examples.ChildrenTest:test1[1]:clean1
 			check the application of a <i>lambda</i> <i>bifunction</i> on two
 			input data. The base syntax is (for the assertion) :<pre>assertThatBiFunction((p1,p2)-&gt;p1+p2,myObject1,myObject2)...</pre>
 			This method will return an instance of {@link
-			org.powerunit.AssertThatObject AssertThatObject}, which will be used
+			ch.powerunit.AssertThatObject AssertThatObject}, which will be used
 			to validate the result of the bifunction application.
 			<p /></li>
 		<li><b><code>assertWhen</code>/<code>assumeWhen</code></b><br />This
@@ -279,7 +279,7 @@ org.powerunit.examples.ChildrenTest:test1[1]:clean1
 			code doesn't thrown an exception or the thrown exception is not
 			accepted by the provided matcher. The base syntax is (for the
 			assertion) :<pre>assertWhen((p)-&gt;{/*...*/})...</pre> This method
-			will return an instance of {@link org.powerunit.AssertThatException},
+			will return an instance of {@link ch.powerunit.AssertThatException},
 			which will provide a way to specify the matcher to be used to check
 			the thrown exception.
 			<p /></li>
@@ -299,11 +299,11 @@ org.powerunit.examples.ChildrenTest:test1[1]:clean1
 			do some check at compile time. All non correct usage detected at this
 			stage are reported by the compiler as warning. For instance, the
 			usage of the annotation <code>Test</code> on a non public method will
-			be reported as <pre>[WARNING] Method testPrivateMethod() of org.powerunit.test.base.RuntimeTestValidatorTests.TestClass5
+			be reported as <pre>[WARNING] Method testPrivateMethod() of ch.powerunit.test.base.RuntimeTestValidatorTests.TestClass5
     is prefixed with @Test and is not public 
     A test method must be public</pre>
 		</li>
-		<li>A main class (<code>org.powerunit.suite.Suites</code>) is
+		<li>A main class (<code>ch.powerunit.suite.Suites</code>) is
 			generated to provide a way to manually run the test. This an be use
 			for instance in context where no integration is available.
 		</li>
@@ -318,7 +318,7 @@ org.powerunit.examples.ChildrenTest:test1[1]:clean1
   &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
   &lt;dependencies&gt;
     &lt;dependency&gt;
-      &lt;groupId&gt;org.powerunit&lt;/groupId&gt;
+      &lt;groupId&gt;ch.powerunit&lt;/groupId&gt;
       &lt;artifactId&gt;powerunit&lt;/artifactId&gt;
     &lt;/dependency&gt;
   &lt;/dependencies&gt;
@@ -326,7 +326,7 @@ org.powerunit.examples.ChildrenTest:test1[1]:clean1
 
 	<h3>About Hamcrest integration</h3>
 	Hamcrest is integrated with this framework, as a maven dependency. Here
-	the {@link org.powerunit.TestSuite TestSuite} interface provides the
+	the {@link ch.powerunit.TestSuite TestSuite} interface provides the
 	standard hamcrest DSL features, with some additional matcher (for
 	exception and the new {@link java.util.Optional Optional} class for
 	instance).

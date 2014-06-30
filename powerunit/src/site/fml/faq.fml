@@ -24,8 +24,8 @@
      <answer>
       <p>A simple test look like :</p>
       <source>
-import org.powerunit.Test;
-import org.powerunit.TestSuite;
+import ch.powerunit.Test;
+import ch.powerunit.TestSuite;
 
 public class HelloWorldTest implements TestSuite {
   &#64;Test()
@@ -40,10 +40,10 @@ public class HelloWorldTest implements TestSuite {
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import org.powerunit.Parameter;
-import org.powerunit.Parameters;
-import org.powerunit.Test;
-import org.powerunit.TestSuite;
+import ch.powerunit.Parameter;
+import ch.powerunit.Parameters;
+import ch.powerunit.Test;
+import ch.powerunit.TestSuite;
 
 public class HelloWorldParameterTest implements TestSuite {
   &#64;Parameters("Input string is {0}, subString idx is {1}, expected result is {2}")

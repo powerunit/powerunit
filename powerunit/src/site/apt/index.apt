@@ -28,7 +28,7 @@ The Powerunit framework
  
 +--
 <dependency>
- <groupId>org.powerunit</groupId>
+ <groupId>ch.powerunit</groupId>
  <artifactId>powerunit</artifactId>
  <scope>test</scope>
 </dependency>
@@ -42,7 +42,7 @@ The Powerunit framework
   <artifactId>maven-surefire-plugin</artifactId>
   <dependencies>
     <dependency>
-      <groupId>org.powerunit</groupId>
+      <groupId>ch.powerunit</groupId>
       <artifactId>powerunit</artifactId>
     </dependency>
   </dependencies>

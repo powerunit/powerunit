@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.powerunit</groupId>
+	<groupId>ch.powerunit</groupId>
 	<artifactId>powerunit</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Powerunit - Java Testing framework for JDK 1.8</name>
@@ -163,7 +163,7 @@
 					<version>${surefire.version}</version>
 					<dependencies>
 						<dependency>
-							<groupId>org.powerunit</groupId>
+							<groupId>ch.powerunit</groupId>
 							<artifactId>powerunit</artifactId>
 							<version>${project.version}</version>
 						</dependency>
@@ -308,7 +308,7 @@
 								<argument>${argLine}</argument>
 								<argument>-classpath</argument>
 								<classpath />
-								<argument>org.powerunit.test.core.AllTests</argument>
+								<argument>ch.powerunit.test.core.AllTests</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -325,7 +325,7 @@
 								<argument>${argLine}</argument>
 								<argument>-classpath</argument>
 								<classpath />
-								<argument>org.powerunit.test.base.AllTests</argument>
+								<argument>ch.powerunit.test.base.AllTests</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -342,7 +342,7 @@
 								<argument>${argLine}</argument>
 								<argument>-classpath</argument>
 								<classpath />
-								<argument>org.powerunit.suite.Suites</argument>
+								<argument>ch.powerunit.suite.Suites</argument>
 								<argument>${project.build.directory}/manual-surefire-reports</argument>
 								<argument>example</argument>
 							</arguments>
@@ -361,7 +361,7 @@
 								<argument>${argLine}</argument>
 								<argument>-classpath</argument>
 								<classpath />
-								<argument>org.powerunit.suite.Suites</argument>
+								<argument>ch.powerunit.suite.Suites</argument>
 								<argument>${project.build.directory}/manual-surefire-reports</argument>
 								<argument>exampleko</argument>
 							</arguments>
@@ -385,7 +385,7 @@
 								<argument>${argLine}</argument>
 								<argument>-classpath</argument>
 								<classpath />
-								<argument>org.powerunit.suite.Suites</argument>
+								<argument>ch.powerunit.suite.Suites</argument>
 								<argument>${project.build.directory}/base-surefire-reports</argument>
 								<argument>base</argument>
 							</arguments>
@@ -404,7 +404,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<excludePackageNames>org.powerunit.impl*:org.powerunit.matchers*:org.powerunit.processor*:org.powerunit.report*:org.powerunit.rules.impl*</excludePackageNames>
+					<excludePackageNames>ch.powerunit.impl*:ch.powerunit.matchers*:ch.powerunit.processor*:ch.powerunit.report*:ch.powerunit.rules.impl*</excludePackageNames>
 					<docfilessubdirs>true</docfilessubdirs>
 					<linksource>true</linksource>
 				</configuration>
@@ -479,7 +479,7 @@
 					<!-- The schema directory or xsd files. -->
 					<schemaDirectory>${basedir}/src/main/resources/schema</schemaDirectory>
 					<!-- The package in which the source files will be generated. -->
-					<packageName>org.powerunit.report</packageName>
+					<packageName>ch.powerunit.report</packageName>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -577,7 +577,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.9.1</version>
 				<configuration>
-					<excludePackageNames>org.powerunit.impl*:org.powerunit.matchers*:org.powerunit.processor*:org.powerunit.report*:org.powerunit.rules.impl*</excludePackageNames>
+					<excludePackageNames>ch.powerunit.impl*:ch.powerunit.matchers*:ch.powerunit.processor*:ch.powerunit.report*:ch.powerunit.rules.impl*</excludePackageNames>
 					<docfilessubdirs>true</docfilessubdirs>
 					<linksource>true</linksource>
 				</configuration>
