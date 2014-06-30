@@ -86,35 +86,35 @@ public class PowerUnitProvider&lt;T&gt; extends AbstractProvider {
 	@Override
 	public RunResult invoke(Object forkTestSet) throws TestSetFailedException,
 			ReporterException, InvocationTargetException {
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (forkTestSet == null) {</span>
-<span class="nc" id="L90">			RunResult r = RunResult.noTestsRun();</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (forkTestSet == null) {</span>
+<span class="fc" id="L90">			RunResult r = RunResult.noTestsRun();</span>
 			@SuppressWarnings(&quot;rawtypes&quot;)
-<span class="nc" id="L92">			Iterator&lt;Class&gt; i = getSuites();</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">			while (i.hasNext()) {</span>
-<span class="nc" id="L94">				r = r.aggregate(invoke(i.next()));</span>
+<span class="fc" id="L92">			Iterator&lt;Class&gt; i = getSuites();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			while (i.hasNext()) {</span>
+<span class="fc" id="L94">				r = r.aggregate(invoke(i.next()));</span>
 			}
-<span class="nc" id="L96">			return r;</span>
+<span class="fc" id="L96">			return r;</span>
 		}
-<span class="nc" id="L98">		ReporterFactory reporterFactory = providerParameters</span>
-<span class="nc" id="L99">				.getReporterFactory();</span>
+<span class="fc" id="L98">		ReporterFactory reporterFactory = providerParameters</span>
+<span class="fc" id="L99">				.getReporterFactory();</span>
 
-<span class="nc" id="L101">		ConsoleLogger consoleLogger = providerParameters.getConsoleLogger();</span>
-<span class="nc" id="L102">		RunListener rl = reporterFactory.createReporter();</span>
+<span class="fc" id="L101">		ConsoleLogger consoleLogger = providerParameters.getConsoleLogger();</span>
+<span class="fc" id="L102">		RunListener rl = reporterFactory.createReporter();</span>
 
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (!(forkTestSet instanceof Class)) {</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (!(forkTestSet instanceof Class)) {</span>
 <span class="nc" id="L105">			throw new TestSetFailedException(</span>
 					&quot;Unexpected error. Received parameter is not a class&quot;);
 		}
 		@SuppressWarnings(&quot;unchecked&quot;)
-<span class="nc" id="L109">		Class&lt;T&gt; underTest = (Class&lt;T&gt;) forkTestSet;</span>
-<span class="nc" id="L110">		TestResultListener&lt;T&gt; listener = new PowerUnitProviderListener&lt;&gt;(</span>
+<span class="fc" id="L109">		Class&lt;T&gt; underTest = (Class&lt;T&gt;) forkTestSet;</span>
+<span class="fc" id="L110">		TestResultListener&lt;T&gt; listener = new PowerUnitProviderListener&lt;&gt;(</span>
 				consoleLogger, rl, underTest);
 
-<span class="nc" id="L113">		DefaultPowerUnitRunnerImpl&lt;T&gt; runner = new DefaultPowerUnitRunnerImpl&lt;&gt;(</span>
+<span class="fc" id="L113">		DefaultPowerUnitRunnerImpl&lt;T&gt; runner = new DefaultPowerUnitRunnerImpl&lt;&gt;(</span>
 				underTest);
-<span class="nc" id="L115">		runner.addListener(listener);</span>
-<span class="nc" id="L116">		runner.run();</span>
-<span class="nc" id="L117">		return reporterFactory.close();</span>
+<span class="fc" id="L115">		runner.addListener(listener);</span>
+<span class="fc" id="L116">		runner.run();</span>
+<span class="fc" id="L117">		return reporterFactory.close();</span>
 
 	}
 }

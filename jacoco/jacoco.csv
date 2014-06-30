@@ -9,7 +9,7 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.report,Property,17,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.report,Testsuite,66,46,0,2,28,18,19,12,19,11
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.report,Testsuites,56,0,2,0,22,0,15,0,14,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.surefire,PowerUnitProviderScannerFilter,0,98,0,8,0,16,0,6,0,2
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.surefire,PowerUnitProvider,62,39,6,0,18,10,4,2,1,2
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.surefire,PowerUnitProvider,5,96,1,5,1,27,1,5,0,3
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.surefire,PowerUnitProviderListener,0,126,0,0,0,32,0,8,0,8
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.processor,PowerUnitProcessor,656,0,28,0,189,0,20,0,6,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatIterableImpl,0,6,0,0,0,2,0,1,0,1
