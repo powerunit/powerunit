@@ -1,5 +1,5 @@
-org.powerunit
-org.powerunit.exception
-org.powerunit.helpers
-org.powerunit.rules
-org.powerunit.surefire
+ch.powerunit
+ch.powerunit.exception
+ch.powerunit.helpers
+ch.powerunit.rules
+ch.powerunit.surefire

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TemporaryFolderImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.rules.impl</a> &gt; <span class="el_source">TemporaryFolderImpl.java</span></div><h1>TemporaryFolderImpl.java</h1><pre class="source lang-java linenums">package ch.powerunit.rules.impl;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
+import ch.powerunit.TestSuite;
+import ch.powerunit.rules.TemporaryFolder;
+
+public class TemporaryFolderImpl implements TemporaryFolder {
+
+<span class="fc" id="L16">	public TemporaryFolderImpl(InitialFolderEntry root) {</span>
+<span class="fc" id="L17">		this.root = root;</span>
+<span class="fc" id="L18">	}</span>
+
+	private final InitialFolderEntry root;
+
+	private Path rootFolder;
+
+	@Override
+	public void before() {
+		try {
+<span class="fc" id="L27">			rootFolder = Files.createTempDirectory(&quot;powerunit&quot;);</span>
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">			if (root != null) {</span>
+<span class="fc" id="L29">				addInitial(rootFolder, root);</span>
+			}
+<span class="nc" id="L31">		} catch (IOException e) {</span>
+<span class="nc" id="L32">			TestSuite.DSL.fail(&quot;Unable to create the rootFolder because of &quot;</span>
+<span class="nc" id="L33">					+ e.getMessage(), e);</span>
+<span class="fc" id="L34">		}</span>
+<span class="fc" id="L35">	}</span>
+
+	private void addInitial(Path current, InitialFolderEntry init)
+			throws IOException {
+<span class="fc bfc" id="L39" title="All 2 branches covered.">		for (InitialFileEntry f : init.getFiles()) {</span>
+<span class="fc" id="L40">			Path p = Files.createFile(new File(current.toFile(), f.getName())</span>
+<span class="fc" id="L41">					.toPath());</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">			if (f.getData() != null) {</span>
+<span class="fc" id="L43">				Files.write(p, f.getData());</span>
+			}
+<span class="fc" id="L45">		}</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		for (InitialFolderEntry f : init.getFolders()) {</span>
+<span class="fc" id="L47">			Path p = Files.createDirectories(new File(current.toFile(), f</span>
+<span class="fc" id="L48">					.getName()).toPath());</span>
+<span class="fc" id="L49">			addInitial(p, f);</span>
+<span class="fc" id="L50">		}</span>
+<span class="fc" id="L51">	}</span>
+
+	@Override
+	public void after() {
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (rootFolder != null) {</span>
+<span class="fc" id="L56">			recursiveDelete(rootFolder.toFile());</span>
+		}
+<span class="fc" id="L58">	}</span>
+
+	private void recursiveDelete(File file) {
+<span class="fc" id="L61">		File[] files = file.listFiles();</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (files != null) {</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">			for (File each : files) {</span>
+<span class="fc" id="L64">				recursiveDelete(each);</span>
+			}
+		}
+<span class="fc" id="L67">		file.delete();</span>
+<span class="fc" id="L68">	}</span>
+
+	@Override
+	public Path newFile() throws IOException {
+<span class="fc" id="L72">		return Files.createTempFile(rootFolder, &quot;tmp&quot;, &quot;.tmp&quot;);</span>
+	}
+
+	@Override
+	public Path newFile(String fileName) throws IOException {
+<span class="fc" id="L77">		return Files.createFile(new File(rootFolder.toFile(), fileName)</span>
+<span class="fc" id="L78">				.toPath());</span>
+	}
+
+	@Override
+	public Path newFile(String fileName, byte[] data) throws IOException {
+<span class="fc" id="L83">		Path p = newFile(fileName);</span>
+<span class="fc" id="L84">		Files.write(p, data);</span>
+<span class="fc" id="L85">		return p;</span>
+	}
+
+	@Override
+	public Path newFolder() throws IOException {
+<span class="nc" id="L90">		return Files.createTempDirectory(rootFolder, &quot;tmp&quot;);</span>
+	}
+
+	@Override
+	public Path newFolder(String folderName) throws IOException {
+<span class="fc" id="L95">		return Files.createDirectory(new File(rootFolder.toFile(), folderName)</span>
+<span class="fc" id="L96">				.toPath());</span>
+	}
+
+	@Override
+	public Path getRootFolder() {
+<span class="fc" id="L101">		return rootFolder;</span>
+	}
+
+	@Override
+	public InitialFolderEntry getInitial() {
+<span class="nc" id="L106">		return root;</span>
+	}
+
+<span class="fc" id="L109">	public static class TemporaryFolderBuilderImpl implements</span>
+			TemporaryFolderBuilder {
+
+<span class="fc" id="L112">		private InitialFolderEntryImpl root = new InitialFolderEntryImpl(null,</span>
+				null);
+
+<span class="fc" id="L115">		private InitialFolderEntryImpl current = root;</span>
+
+		@Override
+		public TemporaryFolderBuilder file(String fileName) {
+<span class="fc" id="L119">			return file(fileName, null);</span>
+		}
+
+		@Override
+		public TemporaryFolderBuilder file(String fileName, byte[] data) {
+<span class="fc" id="L124">			current.addFile(new InitialFileEntryImpl(fileName, data));</span>
+<span class="fc" id="L125">			return this;</span>
+		}
+
+		@Override
+		public TemporaryFolderBuilder folder(String folderName) {
+<span class="fc" id="L130">			InitialFolderEntryImpl n = new InitialFolderEntryImpl(current,</span>
+					folderName);
+<span class="fc" id="L132">			current.addFolder(n);</span>
+<span class="fc" id="L133">			current = n;</span>
+<span class="fc" id="L134">			return this;</span>
+		}
+
+		@Override
+		public TemporaryFolderBuilder end() {
+<span class="fc" id="L139">			current = current.getParent();</span>
+<span class="fc" id="L140">			return this;</span>
+		}
+
+		@Override
+		public TemporaryFolder build() {
+<span class="fc" id="L145">			return new TemporaryFolderImpl(root);</span>
+		}
+
+	}
+
+	private static class InitialFolderEntryImpl implements InitialFolderEntry {
+
+<span class="fc" id="L152">		public InitialFolderEntryImpl(InitialFolderEntryImpl parent, String name) {</span>
+<span class="fc" id="L153">			this.name = name;</span>
+<span class="fc" id="L154">			this.parent = parent;</span>
+<span class="fc" id="L155">		}</span>
+
+		private final String name;
+
+		private final InitialFolderEntryImpl parent;
+
+<span class="fc" id="L161">		private final Collection&lt;InitialFileEntry&gt; files = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L163">		private final Collection&lt;InitialFolderEntry&gt; folders = new ArrayList&lt;&gt;();</span>
+
+		@Override
+		public String getName() {
+<span class="fc" id="L167">			return name;</span>
+		}
+
+		@Override
+		public Collection&lt;InitialFileEntry&gt; getFiles() {
+<span class="fc" id="L172">			return Collections.unmodifiableCollection(files);</span>
+		}
+
+		@Override
+		public Collection&lt;InitialFolderEntry&gt; getFolders() {
+<span class="fc" id="L177">			return Collections.unmodifiableCollection(folders);</span>
+		}
+
+		public void addFile(InitialFileEntry file) {
+<span class="fc" id="L181">			files.add(file);</span>
+<span class="fc" id="L182">		}</span>
+
+		public void addFolder(InitialFolderEntry folder) {
+<span class="fc" id="L185">			folders.add(folder);</span>
+<span class="fc" id="L186">		}</span>
+
+		public InitialFolderEntryImpl getParent() {
+<span class="fc" id="L189">			return parent;</span>
+		}
+
+	}
+
+	private static class InitialFileEntryImpl implements InitialFileEntry {
+
+<span class="fc" id="L196">		public InitialFileEntryImpl(String name, byte[] data) {</span>
+<span class="fc" id="L197">			this.name = name;</span>
+<span class="fc" id="L198">			this.data = data;</span>
+<span class="fc" id="L199">		}</span>
+
+		private final String name;
+
+		private final byte[] data;
+
+		@Override
+		public String getName() {
+<span class="fc" id="L207">			return name;</span>
+		}
+
+		@Override
+		public byte[] getData() {
+<span class="fc" id="L212">			return data;</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
