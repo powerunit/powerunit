@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FileMatchers.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit</a> &gt; <span class="el_source">FileMatchers.java</span></div><h1>FileMatchers.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit;
+
+import java.io.File;
+
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.Matcher;
+
+import ch.powerunit.matchers.file.FileCanExecuteMatcher;
+import ch.powerunit.matchers.file.FileCanReadMatcher;
+import ch.powerunit.matchers.file.FileCanWriteMatcher;
+import ch.powerunit.matchers.file.FileExistsMatcher;
+import ch.powerunit.matchers.file.FileIsDirectoryMatcher;
+
+/**
+ * @author borettim
+ *
+ */
+interface FileMatchers {
+	/**
+	 * Validate that a file can execute.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileCanExecute(is(true)));
+	 * &lt;/pre&gt;
+	 * 
+	 * @param matcher
+	 *            the matcher on the can execute flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileCanExecute(Matcher&lt;? super Boolean&gt; matcher) {
+<span class="nc" id="L52">		return new FileCanExecuteMatcher(matcher);</span>
+	}
+
+	/**
+	 * Validate that a file can execute.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileCanExecute(true);
+	 * &lt;/pre&gt;
+	 * 
+	 * @param canExecute
+	 *            the expected value for the can execute flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileCanExecute(boolean canExecute) {
+<span class="nc" id="L69">		return fileCanExecute(CoreMatchers.is(canExecute));</span>
+	}
+
+	/**
+	 * Validate that a file can read.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileCanRead(is(true)));
+	 * &lt;/pre&gt;
+	 * 
+	 * @param matcher
+	 *            the matcher on the can read flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileCanRead(Matcher&lt;? super Boolean&gt; matcher) {
+<span class="nc" id="L86">		return new FileCanReadMatcher(matcher);</span>
+	}
+
+	/**
+	 * Validate that a file can read.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileCanRead(true);
+	 * &lt;/pre&gt;
+	 * 
+	 * @param canRead
+	 *            the expected value for the can read flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileCanRead(boolean canRead) {
+<span class="nc" id="L103">		return fileCanRead(CoreMatchers.is(canRead));</span>
+	}
+
+	/**
+	 * Validate that a file can write.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileCanWrite(is(true)));
+	 * &lt;/pre&gt;
+	 * 
+	 * @param matcher
+	 *            the matcher on the can write flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileCanWrite(Matcher&lt;? super Boolean&gt; matcher) {
+<span class="nc" id="L120">		return new FileCanWriteMatcher(matcher);</span>
+	}
+
+	/**
+	 * Validate that a file can write.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileCanWrite(true);
+	 * &lt;/pre&gt;
+	 * 
+	 * @param canWrite
+	 *            the expected value for the can write flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileCanWrite(boolean canWrite) {
+<span class="nc" id="L137">		return fileCanWrite(CoreMatchers.is(canWrite));</span>
+	}
+
+	/**
+	 * Validate that a file is a directory.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileIsDirectory(is(true)));
+	 * &lt;/pre&gt;
+	 * 
+	 * @param matcher
+	 *            the matcher on the is directory flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileIsDirectory(Matcher&lt;? super Boolean&gt; matcher) {
+<span class="fc" id="L154">		return new FileIsDirectoryMatcher(matcher);</span>
+	}
+
+	/**
+	 * Validate that a file is a directory.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileIsDirectory(true);
+	 * &lt;/pre&gt;
+	 * 
+	 * @param isDirectory
+	 *            the expected value for the is directory flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileIsDirectory(boolean isDirectory) {
+<span class="fc" id="L171">		return fileIsDirectory(CoreMatchers.is(isDirectory));</span>
+	}
+
+	/**
+	 * Validate that a file exists.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileExists(is(true)));
+	 * &lt;/pre&gt;
+	 * 
+	 * @param matcher
+	 *            the matcher on the exists flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileExists(Matcher&lt;? super Boolean&gt; matcher) {
+<span class="fc" id="L188">		return new FileExistsMatcher(matcher);</span>
+	}
+
+	/**
+	 * Validate that a file exists.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileExists(true);
+	 * &lt;/pre&gt;
+	 * 
+	 * @param exists
+	 *            the expected value for the exists flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileExists(boolean exists) {
+<span class="fc" id="L205">		return fileExists(CoreMatchers.is(exists));</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
