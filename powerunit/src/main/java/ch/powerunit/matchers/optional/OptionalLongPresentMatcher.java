@@ -17,24 +17,34 @@
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-package ch.powerunit.test.base;
+package ch.powerunit.matchers.optional;
 
-public class AllTests {
-	public static void main(String[] args) {
-		PowerUnitProviderListenerTests.main(args);
-		PowerUnitProviderScannerFilterTests.main(args);
-		MockitoRuleTests.main(args);
-		TestContextRuleTests.main(args);
-		ExternalResourceTests.main(args);
-		RuntimeParametersValidatorTests.main(args);
-		RuntimeRuleValidatorTests.main(args);
-		RuntimeTestValidatorTests.main(args);
-		PowerUnitProviderTests.main(args);
-		SystemPropertiesRuleTests.main(args);
-		TemporaryFolderTests.main(args);
-		StreamParametersMapFunctionTests.main(args);
-		MatchersTests.main(args);
-		FileMatchersTests.main(args);
+import java.util.OptionalLong;
+
+import org.hamcrest.FeatureMatcher;
+import org.hamcrest.Matcher;
+
+/**
+ * Support for presence check on optional
+ * 
+ * @author borettim
+ *
+ */
+public class OptionalLongPresentMatcher extends
+		FeatureMatcher<OptionalLong, Boolean> {
+
+	/**
+	 * Default constructor.
+	 * 
+	 * @param subMatcher
+	 *            the matcher
+	 */
+	public OptionalLongPresentMatcher(Matcher<? super Boolean> subMatcher) {
+		super(subMatcher, "is present", "is present");
 	}
 
+	@Override
+	protected Boolean featureValueOf(OptionalLong actual) {
+		return actual.isPresent();
+	}
 }

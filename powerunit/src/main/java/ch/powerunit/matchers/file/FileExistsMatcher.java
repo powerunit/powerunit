@@ -17,33 +17,28 @@
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-package ch.powerunit.matchers;
+package ch.powerunit.matchers.file;
 
-import java.util.OptionalLong;
+import java.io.File;
 
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 
 /**
- * Support for value check on optional
+ * The Mather on exists File
  * 
  * @author borettim
  *
  */
-public class OptionalLongMatcher extends FeatureMatcher<OptionalLong, Long> {
+public class FileExistsMatcher extends FeatureMatcher<File, Boolean> {
 
-	/**
-	 * Default constructor.
-	 * 
-	 * @param subMatcher
-	 *            the matcher
-	 */
-	public OptionalLongMatcher(Matcher<? super Long> subMatcher) {
-		super(subMatcher, "has value", "has value");
+	public FileExistsMatcher(Matcher<? super Boolean> subMatcher) {
+		super(subMatcher, "exists", "exists");
 	}
 
 	@Override
-	protected Long featureValueOf(OptionalLong actual) {
-		return actual.getAsLong();
+	protected Boolean featureValueOf(File actual) {
+		return actual.exists();
 	}
+
 }

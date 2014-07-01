@@ -17,34 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-package ch.powerunit.matchers;
-
-import java.util.Optional;
-
-import org.hamcrest.FeatureMatcher;
-import org.hamcrest.Matcher;
-
 /**
- * Support for presence check on optional
- * 
+ * Matcher on optional
  * @author borettim
  *
  */
-public class OptionalPresentMatcher<T> extends
-		FeatureMatcher<Optional<T>, Boolean> {
-
-	/**
-	 * Default constructor.
-	 * 
-	 * @param subMatcher
-	 *            the matcher
-	 */
-	public OptionalPresentMatcher(Matcher<? super Boolean> subMatcher) {
-		super(subMatcher, "is present", "is present");
-	}
-
-	@Override
-	protected Boolean featureValueOf(Optional<T> actual) {
-		return actual.isPresent();
-	}
-}
+package ch.powerunit.matchers.optional;

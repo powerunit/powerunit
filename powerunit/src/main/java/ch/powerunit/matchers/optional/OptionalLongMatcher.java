@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-package ch.powerunit.matchers;
+package ch.powerunit.matchers.optional;
 
 import java.util.OptionalLong;
 
@@ -25,13 +25,12 @@ import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 
 /**
- * Support for presence check on optional
+ * Support for value check on optional
  * 
  * @author borettim
  *
  */
-public class OptionalLongPresentMatcher extends
-		FeatureMatcher<OptionalLong, Boolean> {
+public class OptionalLongMatcher extends FeatureMatcher<OptionalLong, Long> {
 
 	/**
 	 * Default constructor.
@@ -39,12 +38,12 @@ public class OptionalLongPresentMatcher extends
 	 * @param subMatcher
 	 *            the matcher
 	 */
-	public OptionalLongPresentMatcher(Matcher<? super Boolean> subMatcher) {
-		super(subMatcher, "is present", "is present");
+	public OptionalLongMatcher(Matcher<? super Long> subMatcher) {
+		super(subMatcher, "has value", "has value");
 	}
 
 	@Override
-	protected Boolean featureValueOf(OptionalLong actual) {
-		return actual.isPresent();
+	protected Long featureValueOf(OptionalLong actual) {
+		return actual.getAsLong();
 	}
 }

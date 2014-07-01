@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-package ch.powerunit.matchers;
+package ch.powerunit.matchers.optional;
 
 import java.util.OptionalInt;
 

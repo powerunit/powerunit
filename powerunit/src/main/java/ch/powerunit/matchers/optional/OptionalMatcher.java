@@ -17,24 +17,33 @@
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-package ch.powerunit.test.base;
+package ch.powerunit.matchers.optional;
 
-public class AllTests {
-	public static void main(String[] args) {
-		PowerUnitProviderListenerTests.main(args);
-		PowerUnitProviderScannerFilterTests.main(args);
-		MockitoRuleTests.main(args);
-		TestContextRuleTests.main(args);
-		ExternalResourceTests.main(args);
-		RuntimeParametersValidatorTests.main(args);
-		RuntimeRuleValidatorTests.main(args);
-		RuntimeTestValidatorTests.main(args);
-		PowerUnitProviderTests.main(args);
-		SystemPropertiesRuleTests.main(args);
-		TemporaryFolderTests.main(args);
-		StreamParametersMapFunctionTests.main(args);
-		MatchersTests.main(args);
-		FileMatchersTests.main(args);
+import java.util.Optional;
+
+import org.hamcrest.FeatureMatcher;
+import org.hamcrest.Matcher;
+
+/**
+ * Support for value check on optional
+ * 
+ * @author borettim
+ *
+ */
+public class OptionalMatcher<T> extends FeatureMatcher<Optional<T>, T> {
+
+	/**
+	 * Default constructor.
+	 * 
+	 * @param subMatcher
+	 *            the matcher
+	 */
+	public OptionalMatcher(Matcher<? super T> subMatcher) {
+		super(subMatcher, "has value", "has value");
 	}
 
+	@Override
+	protected T featureValueOf(Optional<T> actual) {
+		return actual.get();
+	}
 }

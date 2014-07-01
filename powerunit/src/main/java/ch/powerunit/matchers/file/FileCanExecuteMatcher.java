@@ -17,24 +17,28 @@
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-package ch.powerunit.test.base;
+package ch.powerunit.matchers.file;
 
-public class AllTests {
-	public static void main(String[] args) {
-		PowerUnitProviderListenerTests.main(args);
-		PowerUnitProviderScannerFilterTests.main(args);
-		MockitoRuleTests.main(args);
-		TestContextRuleTests.main(args);
-		ExternalResourceTests.main(args);
-		RuntimeParametersValidatorTests.main(args);
-		RuntimeRuleValidatorTests.main(args);
-		RuntimeTestValidatorTests.main(args);
-		PowerUnitProviderTests.main(args);
-		SystemPropertiesRuleTests.main(args);
-		TemporaryFolderTests.main(args);
-		StreamParametersMapFunctionTests.main(args);
-		MatchersTests.main(args);
-		FileMatchersTests.main(args);
+import java.io.File;
+
+import org.hamcrest.FeatureMatcher;
+import org.hamcrest.Matcher;
+
+/**
+ * The Mather on can execute File
+ * 
+ * @author borettim
+ *
+ */
+public class FileCanExecuteMatcher extends FeatureMatcher<File, Boolean> {
+
+	public FileCanExecuteMatcher(Matcher<? super Boolean> subMatcher) {
+		super(subMatcher, "canExecute", "canExecute");
+	}
+
+	@Override
+	protected Boolean featureValueOf(File actual) {
+		return actual.canExecute();
 	}
 
 }
