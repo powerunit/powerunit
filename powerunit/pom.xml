@@ -420,7 +420,7 @@
 					<excludePackageNames>ch.powerunit.impl*:ch.powerunit.matchers*:ch.powerunit.processor*:ch.powerunit.report*:ch.powerunit.rules.impl*</excludePackageNames>
 					<docfilessubdirs>true</docfilessubdirs>
 					<linksource>true</linksource>
-					<footer><![CDATA[<img src="http://www.powerunit.ch/powerunit/logo.png"/>]]></footer>
+					<footer><![CDATA[<img src="http://www.powerunit.ch/powerunit/logo.png" width="80%" height="80%"/>]]></footer>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -594,7 +594,7 @@
 					<excludePackageNames>ch.powerunit.impl*:ch.powerunit.matchers*:ch.powerunit.processor*:ch.powerunit.report*:ch.powerunit.rules.impl*</excludePackageNames>
 					<docfilessubdirs>true</docfilessubdirs>
 					<linksource>true</linksource>
-					<footer><![CDATA[<img src="http://www.powerunit.ch/powerunit/logo.png"/>]]></footer>
+					<footer><![CDATA[<img src="http://www.powerunit.ch/powerunit/logo.png" width="80%" height="80%"/>]]></footer>
 				</configuration>
 				<reportSets>
 					<reportSet>
