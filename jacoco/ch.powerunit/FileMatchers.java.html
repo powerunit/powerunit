@@ -28,7 +28,10 @@ import ch.powerunit.matchers.file.FileCanExecuteMatcher;
 import ch.powerunit.matchers.file.FileCanReadMatcher;
 import ch.powerunit.matchers.file.FileCanWriteMatcher;
 import ch.powerunit.matchers.file.FileExistsMatcher;
+import ch.powerunit.matchers.file.FileIsAbsoluteMatcher;
 import ch.powerunit.matchers.file.FileIsDirectoryMatcher;
+import ch.powerunit.matchers.file.FileListMatcher;
+import ch.powerunit.matchers.file.FileNameMatcher;
 
 /**
  * @author borettim
@@ -49,7 +52,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileCanExecute(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="nc" id="L52">		return new FileCanExecuteMatcher(matcher);</span>
+<span class="nc" id="L55">		return new FileCanExecuteMatcher(matcher);</span>
 	}
 
 	/**
@@ -66,7 +69,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileCanExecute(boolean canExecute) {
-<span class="nc" id="L69">		return fileCanExecute(CoreMatchers.is(canExecute));</span>
+<span class="nc" id="L72">		return fileCanExecute(CoreMatchers.is(canExecute));</span>
 	}
 
 	/**
@@ -83,7 +86,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileCanRead(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="nc" id="L86">		return new FileCanReadMatcher(matcher);</span>
+<span class="nc" id="L89">		return new FileCanReadMatcher(matcher);</span>
 	}
 
 	/**
@@ -100,7 +103,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileCanRead(boolean canRead) {
-<span class="nc" id="L103">		return fileCanRead(CoreMatchers.is(canRead));</span>
+<span class="nc" id="L106">		return fileCanRead(CoreMatchers.is(canRead));</span>
 	}
 
 	/**
@@ -117,7 +120,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileCanWrite(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="nc" id="L120">		return new FileCanWriteMatcher(matcher);</span>
+<span class="nc" id="L123">		return new FileCanWriteMatcher(matcher);</span>
 	}
 
 	/**
@@ -134,7 +137,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileCanWrite(boolean canWrite) {
-<span class="nc" id="L137">		return fileCanWrite(CoreMatchers.is(canWrite));</span>
+<span class="nc" id="L140">		return fileCanWrite(CoreMatchers.is(canWrite));</span>
 	}
 
 	/**
@@ -151,7 +154,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileIsDirectory(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="fc" id="L154">		return new FileIsDirectoryMatcher(matcher);</span>
+<span class="fc" id="L157">		return new FileIsDirectoryMatcher(matcher);</span>
 	}
 
 	/**
@@ -168,7 +171,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileIsDirectory(boolean isDirectory) {
-<span class="fc" id="L171">		return fileIsDirectory(CoreMatchers.is(isDirectory));</span>
+<span class="fc" id="L174">		return fileIsDirectory(CoreMatchers.is(isDirectory));</span>
 	}
 
 	/**
@@ -185,7 +188,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileExists(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="fc" id="L188">		return new FileExistsMatcher(matcher);</span>
+<span class="fc" id="L191">		return new FileExistsMatcher(matcher);</span>
 	}
 
 	/**
@@ -202,7 +205,101 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileExists(boolean exists) {
-<span class="fc" id="L205">		return fileExists(CoreMatchers.is(exists));</span>
+<span class="fc" id="L208">		return fileExists(CoreMatchers.is(exists));</span>
 	}
+
+	/**
+	 * Validate that a file is absolute.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileIsAbsolute(is(true)));
+	 * &lt;/pre&gt;
+	 * 
+	 * @param matcher
+	 *            the matcher on the absolute flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileIsAbsolute(Matcher&lt;? super Boolean&gt; matcher) {
+<span class="nc" id="L225">		return new FileIsAbsoluteMatcher(matcher);</span>
+	}
+
+	/**
+	 * Validate that a file is absolute.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileIsAbsolute(true);
+	 * &lt;/pre&gt;
+	 * 
+	 * @param absolute
+	 *            the expected value for the absolute flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileIsAbsolute(boolean absolute) {
+<span class="nc" id="L242">		return fileIsAbsolute(CoreMatchers.is(absolute));</span>
+	}
+
+	/**
+	 * Validate that a file contains something.
+	 * &lt;p&gt;
+	 * The returned String[] is the one produced by list().
+	 * 
+	 * @param matcher
+	 *            the matcher on the list() result.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileContains(Matcher&lt;String[]&gt; matcher) {
+<span class="fc" id="L255">		return new FileListMatcher(matcher);</span>
+	}
+
+	/**
+	 * Validate that a file contains some other file name.
+	 * 
+	 * @param atLeastThisName
+	 *            the file name.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileContains(String atLeastThisName) {
+<span class="fc" id="L266">		return fileContains(org.hamcrest.Matchers</span>
+<span class="fc" id="L267">				.hasItemInArray(atLeastThisName));</span>
+	}
+
+	/**
+	 * Validate that a file has some name.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileNamed(is(&amp;quot;x&amp;quot;)));
+	 * &lt;/pre&gt;
+	 * 
+	 * @param matcher
+	 *            the matcher on the name.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileNamed(Matcher&lt;? super String&gt; matcher) {
+<span class="fc" id="L284">		return new FileNameMatcher(matcher);</span>
+	}
+
+	/**
+	 * Validate that a file has some name.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(myFile).is(fileNamed(&amp;quot;x&amp;quot;));
+	 * &lt;/pre&gt;
+	 * 
+	 * @param name
+	 *            the expected value for the name.
+	 * @return the matcher on the file.
+	 */
+	default Matcher&lt;File&gt; fileNamed(String name) {
+<span class="fc" id="L301">		return fileNamed(CoreMatchers.is(name));</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
