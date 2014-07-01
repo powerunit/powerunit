@@ -92,5 +92,35 @@ public class HelloWorldParameterTest implements TestSuite {
     </faq>
     
   </part>
+  
+  <part id="matchers">
+  	<title>Matchers</title>
+  	
+  	<faq id="matchers-integration">
+  	  <question>
+  	   How is done the integration with Hamcrest ?
+  	  </question>
+  	  <answer>
+  	   <p>The short answer is that hamcrest matchers (and powerunit matchers) are available from the various method of the TestSuite 
+  	   interface that must be implemented by the test classes.</p>
+  	   <p>The long answer is a quiet more complex :</p>
+  	   <ol>
+  	   	<li>First of all, the hamcrest library is defined as a maven dependency of powerunit. Specifically the hamcrest-all is
+  	   	used as a dependency.</li>
+  	   	<li>It is of course possible to use the DSL classes of hamcrest directly.</li>
+  	   	<li>The TestSuite interface exposes almost all the methods provided by <tt>org.hamcrest.Matchers</tt>. 
+  	   	It also add more matchers :
+  	   		<ul>
+  	   			<li>Matchers related to regular expression (<tt>matchesRegex</tt>).</li>
+  	   			<li>Matchers related to exception (<tt>exceptionMessage</tt>).</li>
+  	   			<li>Matchers related to the optional class of java (<tt>optional...</tt>).</li>
+  	   			<li>Matchers related to the file (<tt>file...</tt>).</li>
+  	   		</ul>
+  	   	</li>
+  	   </ol>
+  	  </answer>
+  	</faq>
+  
+  </part>
 
 </faqs>
