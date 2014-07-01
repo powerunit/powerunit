@@ -77,7 +77,12 @@
      </a></li>
 <li><a href="#before-after">
         How are managed the before and after action of a test.
-      </a></li></ol></div>
+      </a></li></ol>
+<p><b>Matchers</b></p>
+<ol style="list-style-type: decimal">
+<li><a href="#matchers-integration">
+  	   How is done the integration with Hamcrest ?
+  	  </a></li></ol></div>
 <div class="section">
 <h2>General<a name="General"></a></h2>
 <dl>
@@ -171,6 +176,43 @@ public class HelloWorldParameterTest implements TestSuite {
 @Rule public final TestRule level2 = before(this::prepare).around(after(this::clean));    
        </pre></div>
       
+<p align="right"><a href="#top">[top]</a></p></dd></dl></div>
+<div class="section">
+<h2>Matchers<a name="Matchers"></a></h2>
+<dl>
+<dt><a name="matchers-integration">
+  	   How is done the integration with Hamcrest ?
+  	  </a></dt>
+<dd>
+  	   
+<p>The short answer is that hamcrest matchers (and powerunit matchers) are available from the various method of the TestSuite 
+  	   interface that must be implemented by the test classes.</p>
+  	   
+<p>The long answer is a quiet more complex :</p>
+  	   
+<ol style="list-style-type: decimal">
+  	   	
+<li>First of all, the hamcrest library is defined as a maven dependency of powerunit. Specifically the hamcrest-all is
+  	   	used as a dependency.</li>
+  	   	
+<li>It is of course possible to use the DSL classes of hamcrest directly.</li>
+  	   	
+<li>The TestSuite interface exposes almost all the methods provided by <tt>org.hamcrest.Matchers</tt>. 
+  	   	It also add more matchers :
+  	   		
+<ul>
+  	   			
+<li>Matchers related to regular expression (<tt>matchesRegex</tt>).</li>
+  	   			
+<li>Matchers related to exception (<tt>exceptionMessage</tt>).</li>
+  	   			
+<li>Matchers related to the optional class of java (<tt>optional...</tt>).</li>
+  	   			
+<li>Matchers related to the file (<tt>file...</tt>).</li>
+  	   		</ul>
+  	   	</li>
+  	  </ol>
+  	  
 <p align="right"><a href="#top">[top]</a></p></dd></dl></div>
       </div>
     </div>
