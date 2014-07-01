@@ -53,12 +53,16 @@ public class FileMatchersTests {
 
 		@Test
 		public void emptyTest() throws IOException {
-			Path p = temporaryFolder.newFile();
+			Path p = temporaryFolder.newFile("toto");
 			assertThat(fileExists(true).matches(p.toFile())).is(true);
 			assertThat(fileIsDirectory(false).matches(p.toFile())).is(true);
-			p = temporaryFolder.newFolder();
+			p = temporaryFolder.newFolder("titi");
 			assertThat(fileExists(true).matches(p.toFile())).is(true);
 			assertThat(fileIsDirectory(true).matches(p.toFile())).is(true);
+			assertThat(
+					fileContains("toto").matches(
+							temporaryFolder.getRootFolder().toFile())).is(true);
+			assertThat(fileNamed("titi").matches(p.toFile())).is(true);
 		}
 
 	}

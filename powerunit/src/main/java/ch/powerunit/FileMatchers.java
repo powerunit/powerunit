@@ -28,7 +28,10 @@ import ch.powerunit.matchers.file.FileCanExecuteMatcher;
 import ch.powerunit.matchers.file.FileCanReadMatcher;
 import ch.powerunit.matchers.file.FileCanWriteMatcher;
 import ch.powerunit.matchers.file.FileExistsMatcher;
+import ch.powerunit.matchers.file.FileIsAbsoluteMatcher;
 import ch.powerunit.matchers.file.FileIsDirectoryMatcher;
+import ch.powerunit.matchers.file.FileListMatcher;
+import ch.powerunit.matchers.file.FileNameMatcher;
 
 /**
  * @author borettim
@@ -204,4 +207,98 @@ interface FileMatchers {
 	default Matcher<File> fileExists(boolean exists) {
 		return fileExists(CoreMatchers.is(exists));
 	}
+
+	/**
+	 * Validate that a file is absolute.
+	 * <p>
+	 * For example :
+	 * 
+	 * <pre>
+	 * assertThat(myFile).is(fileIsAbsolute(is(true)));
+	 * </pre>
+	 * 
+	 * @param matcher
+	 *            the matcher on the absolute flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher<File> fileIsAbsolute(Matcher<? super Boolean> matcher) {
+		return new FileIsAbsoluteMatcher(matcher);
+	}
+
+	/**
+	 * Validate that a file is absolute.
+	 * <p>
+	 * For example :
+	 * 
+	 * <pre>
+	 * assertThat(myFile).is(fileIsAbsolute(true);
+	 * </pre>
+	 * 
+	 * @param absolute
+	 *            the expected value for the absolute flag.
+	 * @return the matcher on the file.
+	 */
+	default Matcher<File> fileIsAbsolute(boolean absolute) {
+		return fileIsAbsolute(CoreMatchers.is(absolute));
+	}
+
+	/**
+	 * Validate that a file contains something.
+	 * <p>
+	 * The returned String[] is the one produced by list().
+	 * 
+	 * @param matcher
+	 *            the matcher on the list() result.
+	 * @return the matcher on the file.
+	 */
+	default Matcher<File> fileContains(Matcher<String[]> matcher) {
+		return new FileListMatcher(matcher);
+	}
+
+	/**
+	 * Validate that a file contains some other file name.
+	 * 
+	 * @param atLeastThisName
+	 *            the file name.
+	 * @return the matcher on the file.
+	 */
+	default Matcher<File> fileContains(String atLeastThisName) {
+		return fileContains(org.hamcrest.Matchers
+				.hasItemInArray(atLeastThisName));
+	}
+
+	/**
+	 * Validate that a file has some name.
+	 * <p>
+	 * For example :
+	 * 
+	 * <pre>
+	 * assertThat(myFile).is(fileNamed(is(&quot;x&quot;)));
+	 * </pre>
+	 * 
+	 * @param matcher
+	 *            the matcher on the name.
+	 * @return the matcher on the file.
+	 */
+	default Matcher<File> fileNamed(Matcher<? super String> matcher) {
+		return new FileNameMatcher(matcher);
+	}
+
+	/**
+	 * Validate that a file has some name.
+	 * <p>
+	 * For example :
+	 * 
+	 * <pre>
+	 * assertThat(myFile).is(fileNamed(&quot;x&quot;));
+	 * </pre>
+	 * 
+	 * @param name
+	 *            the expected value for the name.
+	 * @return the matcher on the file.
+	 */
+	default Matcher<File> fileNamed(String name) {
+		return fileNamed(CoreMatchers.is(name));
+	}
+
 }
