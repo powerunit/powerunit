@@ -20,6 +20,7 @@
 package ch.powerunit;
 
 import java.io.File;
+import java.nio.file.Path;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matcher;
@@ -32,6 +33,7 @@ import ch.powerunit.matchers.file.FileIsAbsoluteMatcher;
 import ch.powerunit.matchers.file.FileIsDirectoryMatcher;
 import ch.powerunit.matchers.file.FileListMatcher;
 import ch.powerunit.matchers.file.FileNameMatcher;
+import ch.powerunit.matchers.file.Path2FileMatcher;
 
 /**
  * @author borettim
@@ -52,7 +54,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileCanExecute(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="nc" id="L55">		return new FileCanExecuteMatcher(matcher);</span>
+<span class="nc" id="L57">		return new FileCanExecuteMatcher(matcher);</span>
 	}
 
 	/**
@@ -69,7 +71,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileCanExecute(boolean canExecute) {
-<span class="nc" id="L72">		return fileCanExecute(CoreMatchers.is(canExecute));</span>
+<span class="nc" id="L74">		return fileCanExecute(CoreMatchers.is(canExecute));</span>
 	}
 
 	/**
@@ -86,7 +88,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileCanRead(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="nc" id="L89">		return new FileCanReadMatcher(matcher);</span>
+<span class="nc" id="L91">		return new FileCanReadMatcher(matcher);</span>
 	}
 
 	/**
@@ -103,7 +105,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileCanRead(boolean canRead) {
-<span class="nc" id="L106">		return fileCanRead(CoreMatchers.is(canRead));</span>
+<span class="nc" id="L108">		return fileCanRead(CoreMatchers.is(canRead));</span>
 	}
 
 	/**
@@ -120,7 +122,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileCanWrite(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="nc" id="L123">		return new FileCanWriteMatcher(matcher);</span>
+<span class="nc" id="L125">		return new FileCanWriteMatcher(matcher);</span>
 	}
 
 	/**
@@ -137,7 +139,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileCanWrite(boolean canWrite) {
-<span class="nc" id="L140">		return fileCanWrite(CoreMatchers.is(canWrite));</span>
+<span class="nc" id="L142">		return fileCanWrite(CoreMatchers.is(canWrite));</span>
 	}
 
 	/**
@@ -154,7 +156,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileIsDirectory(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="fc" id="L157">		return new FileIsDirectoryMatcher(matcher);</span>
+<span class="fc" id="L159">		return new FileIsDirectoryMatcher(matcher);</span>
 	}
 
 	/**
@@ -171,7 +173,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileIsDirectory(boolean isDirectory) {
-<span class="fc" id="L174">		return fileIsDirectory(CoreMatchers.is(isDirectory));</span>
+<span class="fc" id="L176">		return fileIsDirectory(CoreMatchers.is(isDirectory));</span>
 	}
 
 	/**
@@ -188,7 +190,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileExists(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="fc" id="L191">		return new FileExistsMatcher(matcher);</span>
+<span class="fc" id="L193">		return new FileExistsMatcher(matcher);</span>
 	}
 
 	/**
@@ -205,7 +207,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileExists(boolean exists) {
-<span class="fc" id="L208">		return fileExists(CoreMatchers.is(exists));</span>
+<span class="fc" id="L210">		return fileExists(CoreMatchers.is(exists));</span>
 	}
 
 	/**
@@ -222,7 +224,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileIsAbsolute(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="nc" id="L225">		return new FileIsAbsoluteMatcher(matcher);</span>
+<span class="nc" id="L227">		return new FileIsAbsoluteMatcher(matcher);</span>
 	}
 
 	/**
@@ -239,7 +241,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileIsAbsolute(boolean absolute) {
-<span class="nc" id="L242">		return fileIsAbsolute(CoreMatchers.is(absolute));</span>
+<span class="nc" id="L244">		return fileIsAbsolute(CoreMatchers.is(absolute));</span>
 	}
 
 	/**
@@ -252,7 +254,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileContains(Matcher&lt;String[]&gt; matcher) {
-<span class="fc" id="L255">		return new FileListMatcher(matcher);</span>
+<span class="fc" id="L257">		return new FileListMatcher(matcher);</span>
 	}
 
 	/**
@@ -263,8 +265,8 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileContains(String atLeastThisName) {
-<span class="fc" id="L266">		return fileContains(org.hamcrest.Matchers</span>
-<span class="fc" id="L267">				.hasItemInArray(atLeastThisName));</span>
+<span class="fc" id="L268">		return fileContains(org.hamcrest.Matchers</span>
+<span class="fc" id="L269">				.hasItemInArray(atLeastThisName));</span>
 	}
 
 	/**
@@ -281,7 +283,7 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileNamed(Matcher&lt;? super String&gt; matcher) {
-<span class="fc" id="L284">		return new FileNameMatcher(matcher);</span>
+<span class="fc" id="L286">		return new FileNameMatcher(matcher);</span>
 	}
 
 	/**
@@ -298,7 +300,19 @@ interface FileMatchers {
 	 * @return the matcher on the file.
 	 */
 	default Matcher&lt;File&gt; fileNamed(String name) {
-<span class="fc" id="L301">		return fileNamed(CoreMatchers.is(name));</span>
+<span class="fc" id="L303">		return fileNamed(CoreMatchers.is(name));</span>
+	}
+
+	/**
+	 * This is a special matcher that apply the toFile() method to the in
+	 * matching path, and then apply the specified matcher.
+	 * 
+	 * @param matcher
+	 *            the matcher on File.
+	 * @return the matcher on Path.
+	 */
+	default Matcher&lt;Path&gt; pathMatchedAsFile(Matcher&lt;? super File&gt; matcher) {
+<span class="fc" id="L315">		return new Path2FileMatcher(matcher);</span>
 	}
 
 }

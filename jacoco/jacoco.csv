@@ -47,7 +47,7 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl.validator,Ignor
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl.validator,RuleProcessorValidator,186,0,16,0,32,0,9,0,1,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl.validator,ParametersValidator,0,69,0,8,0,13,0,5,0,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl.validator,TestProcessorValidator,104,0,10,0,19,0,7,0,2,0
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,FileMatchers,44,42,0,0,8,9,8,8,8,8
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,FileMatchers,44,47,0,0,8,10,8,9,8,9
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,TestSuite.new TestSuite() {...},0,3,0,0,0,1,0,1,0,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,Assert,10,108,0,0,3,15,2,15,2,15
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,TestSuite,8,55,0,0,2,13,2,11,2,11
@@ -67,3 +67,4 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers.file,FileCa
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers.file,FileCanReadMatcher,10,0,0,0,3,0,2,0,2,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers.file,FileIsDirectoryMatcher,0,10,0,0,0,3,0,2,0,2
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers.file,FileExistsMatcher,0,10,0,0,0,3,0,2,0,2
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers.file,Path2FileMatcher,0,9,0,0,0,3,0,2,0,2

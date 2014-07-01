@@ -71,11 +71,13 @@
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  					fileContains(<span class="jxr_string">"toto"</span>).matches(
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  							temporaryFolder.getRootFolder().toFile())).is(<strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  			assertThat(fileNamed(<span class="jxr_string">"titi"</span>).matches(p.toFile())).is(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>  		}
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>  
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>  	}
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  			assertThat(pathMatchedAsFile(fileNamed(<span class="jxr_string">"titi"</span>)).matches(p))
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  					.is(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>  		}
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>  
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  }
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  	}
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2014. All rights reserved.</div>
