@@ -31,7 +31,7 @@
 
 	<ciManagement>
 		<system>travis-ci</system>
-		<url>https://travis-ci.ch/powerunit/powerunit</url>
+		<url>https://travis-ci.org/powerunit/powerunit</url>
 	</ciManagement>
 
 	<scm>
