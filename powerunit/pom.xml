@@ -407,6 +407,7 @@
 					<excludePackageNames>ch.powerunit.impl*:ch.powerunit.matchers*:ch.powerunit.processor*:ch.powerunit.report*:ch.powerunit.rules.impl*</excludePackageNames>
 					<docfilessubdirs>true</docfilessubdirs>
 					<linksource>true</linksource>
+					<footer><![CDATA[<img src="http://www.powerunit.ch/powerunit/logo.png"/>]]></footer>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -580,6 +581,7 @@
 					<excludePackageNames>ch.powerunit.impl*:ch.powerunit.matchers*:ch.powerunit.processor*:ch.powerunit.report*:ch.powerunit.rules.impl*</excludePackageNames>
 					<docfilessubdirs>true</docfilessubdirs>
 					<linksource>true</linksource>
+					<footer><![CDATA[<img src="http://www.powerunit.ch/powerunit/logo.png"/>]]></footer>
 				</configuration>
 				<reportSets>
 					<reportSet>

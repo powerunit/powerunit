@@ -1,4 +1,8 @@
 <project>
+  <poweredBy>
+    <logo name="PowerUnit" href="http://www.powerunit.ch/"
+          img="http://www.powerunit.ch/powerunit/logo.png"/>
+  </poweredBy>
   <body>
     <menu ref="reports" />
     <menu name="General documentations">
