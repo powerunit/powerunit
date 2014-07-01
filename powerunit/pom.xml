@@ -19,6 +19,19 @@
 			<url>http://www.gnu.org/licenses/gpl.txt</url>
 		</license>
 	</licenses>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>oss-snapshots</id>
+			<name>OSS Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>oss-release</id>
+			<name>OSS Release</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
+	</distributionManagement>
 
 	<developers>
 		<developer>
