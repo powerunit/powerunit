@@ -20,6 +20,7 @@
 package ch.powerunit;
 
 import java.io.File;
+import java.nio.file.Path;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matcher;
@@ -32,6 +33,7 @@ import ch.powerunit.matchers.file.FileIsAbsoluteMatcher;
 import ch.powerunit.matchers.file.FileIsDirectoryMatcher;
 import ch.powerunit.matchers.file.FileListMatcher;
 import ch.powerunit.matchers.file.FileNameMatcher;
+import ch.powerunit.matchers.file.Path2FileMatcher;
 
 /**
  * @author borettim
@@ -299,6 +301,18 @@ interface FileMatchers {
 	 */
 	default Matcher<File> fileNamed(String name) {
 		return fileNamed(CoreMatchers.is(name));
+	}
+
+	/**
+	 * This is a special matcher that apply the toFile() method to the in
+	 * matching path, and then apply the specified matcher.
+	 * 
+	 * @param matcher
+	 *            the matcher on File.
+	 * @return the matcher on Path.
+	 */
+	default Matcher<Path> pathMatchedAsFile(Matcher<? super File> matcher) {
+		return new Path2FileMatcher(matcher);
 	}
 
 }

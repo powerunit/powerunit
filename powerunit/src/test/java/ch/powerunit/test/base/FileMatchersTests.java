@@ -63,6 +63,8 @@ public class FileMatchersTests {
 					fileContains("toto").matches(
 							temporaryFolder.getRootFolder().toFile())).is(true);
 			assertThat(fileNamed("titi").matches(p.toFile())).is(true);
+			assertThat(pathMatchedAsFile(fileNamed("titi")).matches(p))
+					.is(true);
 		}
 
 	}
