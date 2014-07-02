@@ -14,8 +14,7 @@
 	<servers>
 		<server>
 			<id>github</id>
-			<username>${env.CI_SITE_USERNAME}</username>
-			<password>${env.CI_SITE_PASSWORD}</password>
+			<password>${env.CI_SITE_OAUTH}</password>
 		</server>
 	</servers>
 
