@@ -140,10 +140,10 @@ public final class StreamParametersMapFunction&lt;T&gt; implements
 <span class="fc" id="L140">			Class&lt;?&gt; param = (Class&lt;?&gt;) p.getActualTypeArguments()[0];</span>
 <span class="fc" id="L141">			return collectionMapper((Class) param,</span>
 <span class="fc" id="L142">					getEntryClassMapperFunction(param), DEFAULT_REGEX_FOR_ARRAY);</span>
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		} else if (Set.class.equals(raw)</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">				&amp;&amp; p.getActualTypeArguments()[0] instanceof Class) {</span>
-<span class="nc" id="L145">			Class&lt;?&gt; param = (Class&lt;?&gt;) p.getActualTypeArguments()[0];</span>
-<span class="nc" id="L146">			return setMapper((Class) param, getEntryClassMapperFunction(param),</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		} else if (Set.class.equals(raw)</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">				&amp;&amp; p.getActualTypeArguments()[0] instanceof Class) {</span>
+<span class="fc" id="L145">			Class&lt;?&gt; param = (Class&lt;?&gt;) p.getActualTypeArguments()[0];</span>
+<span class="fc" id="L146">			return setMapper((Class) param, getEntryClassMapperFunction(param),</span>
 					DEFAULT_REGEX_FOR_ARRAY);
 <span class="pc bpc" id="L148" title="1 of 2 branches missed.">		} else if (Class.class.equals(raw)) {</span>
 <span class="fc" id="L149">			return getEntryClassMapperFunction((Class) raw);</span>
@@ -176,10 +176,10 @@ public final class StreamParametersMapFunction&lt;T&gt; implements
 <span class="nc" id="L176">			return Short::valueOf;</span>
 <span class="pc bpc" id="L177" title="2 of 4 branches missed.">		} else if (double.class.equals(c) || Double.class.equals(c)) {</span>
 <span class="nc" id="L178">			return Double::valueOf;</span>
-<span class="pc bpc" id="L179" title="2 of 4 branches missed.">		} else if (long.class.equals(c) || Long.class.equals(c)) {</span>
-<span class="nc" id="L180">			return Long::valueOf;</span>
-<span class="pc bpc" id="L181" title="2 of 4 branches missed.">		} else if (char.class.equals(c) || Character.class.equals(c)) {</span>
-<span class="nc" id="L182">			return s -&gt; s.charAt(0);</span>
+<span class="pc bpc" id="L179" title="1 of 4 branches missed.">		} else if (long.class.equals(c) || Long.class.equals(c)) {</span>
+<span class="fc" id="L180">			return Long::valueOf;</span>
+<span class="pc bpc" id="L181" title="1 of 4 branches missed.">		} else if (char.class.equals(c) || Character.class.equals(c)) {</span>
+<span class="fc" id="L182">			return s -&gt; s.charAt(0);</span>
 <span class="fc bfc" id="L183" title="All 2 branches covered.">		} else if (String.class.equals(c)) {</span>
 <span class="fc" id="L184">			return Function.identity();</span>
 <span class="pc bpc" id="L185" title="1 of 4 branches missed.">		} else if (boolean.class.equals(c) || Boolean.class.equals(c)) {</span>
@@ -223,7 +223,7 @@ public final class StreamParametersMapFunction&lt;T&gt; implements
 
 	private static &lt;T&gt; Function&lt;String, Set&lt;T&gt;&gt; setMapper(Class&lt;T&gt; clazz,
 			Function&lt;String, T&gt; singleElementMapper, String separator) {
-<span class="nc" id="L226">		return (s) -&gt; {</span>
+<span class="fc" id="L226">		return (s) -&gt; {</span>
 			if (s == null) {
 				return null;
 			}
