@@ -25,8 +25,7 @@ The Powerunit framework
  
 * Maven integration
 
- At the moment, is framework is not available in the maven central repo. Assuming this will be done at some point (for the
- first release), it will be possible do use this framework as any maven dependency :
+ This framework is available in the maven central repo. It is be possible do use this framework as any maven dependency :
  
 +--
 <dependency>
