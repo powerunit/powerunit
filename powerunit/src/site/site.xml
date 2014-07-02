@@ -4,6 +4,8 @@
   <poweredBy>
     <logo name="PowerUnit" href="http://www.powerunit.ch/"
           img="http://www.powerunit.ch/powerunit/logo.png"/>
+    <logo name="Travis-ci" href="https://travis-ci.org/powerunit/powerunit"
+          img="https://travis-ci.org/powerunit/powerunit.svg?branch=master"/>
   </poweredBy>
   <body>
     <menu ref="reports" />
