@@ -1,4 +1,4 @@
-powerunit
+powerunit[![Build Status](https://travis-ci.org/powerunit/powerunit.svg?branch=master)](https://travis-ci.org/powerunit/powerunit)
 =========
 
 This is a unit test framework for java 8. [Please check the site for more information](http://powerunit.github.io/powerunit/).
