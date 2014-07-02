@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DefaultTestResultListener.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.impl</a> &gt; <span class="el_source">DefaultTestResultListener.java</span></div><h1>DefaultTestResultListener.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.impl;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+
+import ch.powerunit.TestContext;
+import ch.powerunit.TestResultListener;
+import ch.powerunit.report.Error;
+import ch.powerunit.report.Failure;
+import ch.powerunit.report.Testcase;
+import ch.powerunit.report.Testsuite;
+import ch.powerunit.report.Testsuites;
+
+/**
+ * @author borettim
+ *
+ */
+public class DefaultTestResultListener&lt;T&gt; implements TestResultListener&lt;T&gt; {
+
+<span class="fc" id="L43">	public DefaultTestResultListener(String targetFolder) {</span>
+<span class="fc" id="L44">		this.targetFolder = new File(targetFolder);</span>
+<span class="fc" id="L45">		this.targetFolder.mkdirs();</span>
+<span class="fc" id="L46">	}</span>
+
+	private static final JAXBContext JAXB_CONTEXT;
+
+	static {
+		try {
+<span class="fc" id="L52">			JAXB_CONTEXT = JAXBContext.newInstance(Testsuites.class);</span>
+<span class="nc" id="L53">		} catch (JAXBException e) {</span>
+<span class="nc" id="L54">			throw new IllegalArgumentException(&quot;Unable to setup jaxb &quot;</span>
+<span class="nc" id="L55">					+ e.getMessage(), e);</span>
+<span class="fc" id="L56">		}</span>
+<span class="fc" id="L57">	}</span>
+
+<span class="fc" id="L59">	private boolean error = false;</span>
+
+<span class="fc" id="L61">	private Map&lt;String, Testsuite&gt; result = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L63">	private Map&lt;String, Testsuites&gt; results = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L65">	private Map&lt;String, Map&lt;String, Testcase&gt;&gt; resultcase = new HashMap&lt;&gt;();</span>
+
+	private File targetFolder;
+
+	@Override
+	public void notifySetStart(String setName, String parameters) {
+<span class="fc" id="L71">		Testsuites tss = new Testsuites();</span>
+<span class="fc" id="L72">		tss.setDisabled(0);</span>
+<span class="fc" id="L73">		tss.setErrors(0);</span>
+<span class="fc" id="L74">		tss.setFailures(0);</span>
+<span class="fc" id="L75">		tss.setName(setName);</span>
+<span class="fc" id="L76">		tss.setTests(0);</span>
+<span class="fc" id="L77">		tss.setTime(0l);</span>
+<span class="fc" id="L78">		results.put(setName, tss);</span>
+
+<span class="fc" id="L80">		Testsuite ts = new Testsuite();</span>
+<span class="fc" id="L81">		result.put(setName, ts);</span>
+<span class="fc" id="L82">		ts.setName(setName.replace('$', '.'));</span>
+<span class="fc" id="L83">		ts.setDisabled(0);</span>
+<span class="fc" id="L84">		ts.setErrors(0);</span>
+<span class="fc" id="L85">		ts.setFailures(0);</span>
+<span class="fc" id="L86">		ts.setTests(0);</span>
+<span class="fc" id="L87">		ts.setTime(0l);</span>
+<span class="fc" id="L88">		resultcase.put(setName, new HashMap&lt;&gt;());</span>
+
+<span class="fc" id="L90">	}</span>
+
+	@Override
+	public void notifySetEnd(String setName, String parameters) {
+		try {
+<span class="fc" id="L95">			File target = new File(targetFolder, setName + &quot;.xml&quot;);</span>
+<span class="fc" id="L96">			Object o = results.get(setName);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			if (results.get(setName).getTestsuite().size() == 0) {</span>
+<span class="fc" id="L98">				o = result.get(setName);</span>
+			}
+<span class="fc" id="L100">			JAXB_CONTEXT.createMarshaller().marshal(o, target);</span>
+<span class="nc" id="L101">		} catch (JAXBException e) {</span>
+<span class="nc" id="L102">			throw new IllegalArgumentException(&quot;Unable to setup jaxb &quot;</span>
+<span class="nc" id="L103">					+ e.getMessage(), e);</span>
+<span class="fc" id="L104">		}</span>
+<span class="fc" id="L105">	}</span>
+
+	@Override
+	public void notifyStart(TestContext&lt;T&gt; context) {
+<span class="fc" id="L109">		String setName = context.getSetName()</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
+<span class="fc" id="L111">						.getParameterName());</span>
+<span class="fc" id="L112">		Testsuite ts = result.get(setName);</span>
+<span class="fc" id="L113">		Testcase tc = new Testcase();</span>
+<span class="fc" id="L114">		tc.setName(context.getLocalTestName()</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">				+ (context.getParameterName() == null ? &quot;&quot; : (&quot;[&quot;</span>
+<span class="fc" id="L116">						+ context.getParameterName() + &quot;]&quot;)));</span>
+<span class="fc" id="L117">		tc.setClassname(context.getTestSuiteObject().getClass()</span>
+<span class="fc" id="L118">				.getCanonicalName());</span>
+<span class="fc" id="L119">		resultcase.get(setName).put(context.getFullTestName(), tc);</span>
+<span class="fc" id="L120">		ts.getTestcase().add(tc);</span>
+<span class="fc" id="L121">		tc.setTime(System.currentTimeMillis());</span>
+
+<span class="fc" id="L123">	}</span>
+
+	@Override
+	public void notifySuccess(TestContext&lt;T&gt; context) {
+<span class="fc" id="L127">		String setName = context.getSetName()</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
+<span class="fc" id="L129">						.getParameterName());</span>
+<span class="fc" id="L130">		long end = System.currentTimeMillis();</span>
+<span class="fc" id="L131">		Testsuite ts = result.get(setName);</span>
+<span class="fc" id="L132">		Testcase tc = resultcase.get(setName).get(context.getFullTestName());</span>
+<span class="fc" id="L133">		tc.setTime((end - tc.getTime()) / 1000);</span>
+<span class="fc" id="L134">		ts.setTime(ts.getTime() + tc.getTime());</span>
+<span class="fc" id="L135">		ts.setTests(ts.getTests() + 1);</span>
+<span class="fc" id="L136">	}</span>
+
+	@Override
+	public void notifyFailure(TestContext&lt;T&gt; context, Throwable cause) {
+<span class="fc" id="L140">		String setName = context.getSetName()</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
+<span class="pc" id="L142">						.getParameterName());</span>
+<span class="fc" id="L143">		long end = System.currentTimeMillis();</span>
+<span class="fc" id="L144">		Testsuite ts = result.get(setName);</span>
+<span class="fc" id="L145">		Testcase tc = resultcase.get(setName).get(context.getFullTestName());</span>
+<span class="fc" id="L146">		tc.setTime((end - tc.getTime()) / 1000);</span>
+<span class="fc" id="L147">		ts.setTime(ts.getTime() + tc.getTime());</span>
+<span class="fc" id="L148">		error = true;</span>
+<span class="fc" id="L149">		ts.setFailures(ts.getFailures() + 1);</span>
+
+<span class="fc" id="L151">		Failure f = new Failure();</span>
+<span class="fc" id="L152">		tc.getFailure().add(f);</span>
+<span class="fc" id="L153">		f.setType(cause.getClass().getCanonicalName());</span>
+<span class="fc" id="L154">		f.setMessage(cause.getMessage());</span>
+<span class="fc" id="L155">		StringBuffer stack = new StringBuffer(cause.getMessage()).append('\n');</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		for (StackTraceElement ste : cause.getStackTrace()) {</span>
+<span class="fc" id="L157">			stack.append(ste.toString()).append('\n');</span>
+		}
+<span class="fc" id="L159">		f.setContent(stack.toString());</span>
+<span class="fc" id="L160">	}</span>
+
+	@Override
+	public void notifySkipped(TestContext&lt;T&gt; context) {
+<span class="fc" id="L164">		String setName = context.getSetName()</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
+<span class="fc" id="L166">						.getParameterName());</span>
+<span class="fc" id="L167">		long end = System.currentTimeMillis();</span>
+<span class="fc" id="L168">		Testsuite ts = result.get(setName);</span>
+<span class="fc" id="L169">		Testcase tc = resultcase.get(setName).get(context.getFullTestName());</span>
+<span class="fc" id="L170">		tc.setTime((end - tc.getTime()) / 1000);</span>
+<span class="fc" id="L171">		ts.setTime(ts.getTime() + tc.getTime());</span>
+<span class="fc" id="L172">		ts.setDisabled(ts.getDisabled() + 1);</span>
+
+<span class="fc" id="L174">		tc.setSkipped(&quot;Skipped&quot;);</span>
+<span class="fc" id="L175">	}</span>
+
+	@Override
+	public void notifyError(TestContext&lt;T&gt; context, Throwable cause) {
+<span class="fc" id="L179">		String setName = context.getSetName()</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
+<span class="pc" id="L181">						.getParameterName());</span>
+<span class="fc" id="L182">		long end = System.currentTimeMillis();</span>
+<span class="fc" id="L183">		Testsuite ts = result.get(setName);</span>
+<span class="fc" id="L184">		Testcase tc = resultcase.get(setName).get(context.getFullTestName());</span>
+<span class="fc" id="L185">		tc.setTime((end - tc.getTime()) / 1000);</span>
+<span class="fc" id="L186">		ts.setTime(ts.getTime() + tc.getTime());</span>
+<span class="fc" id="L187">		error = true;</span>
+<span class="fc" id="L188">		ts.setErrors(ts.getErrors() + 1);</span>
+
+<span class="fc" id="L190">		Error e = new Error();</span>
+<span class="fc" id="L191">		tc.getError().add(e);</span>
+<span class="fc" id="L192">		e.setType(cause.getClass().getCanonicalName());</span>
+<span class="fc" id="L193">		e.setMessage(cause.getMessage());</span>
+<span class="fc" id="L194">		StringBuffer stack = new StringBuffer(cause.getMessage()).append('\n');</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">		for (StackTraceElement ste : cause.getStackTrace()) {</span>
+<span class="fc" id="L196">			stack.append(ste.toString()).append('\n');</span>
+		}
+<span class="fc" id="L198">		e.setContent(stack.toString());</span>
+<span class="fc" id="L199">	}</span>
+
+	@Override
+	public void notifyParameterStart(String setName, String parameterName) {
+<span class="fc" id="L203">		Testsuites tss = results.get(setName);</span>
+<span class="fc" id="L204">		Testsuite ts = new Testsuite();</span>
+<span class="fc" id="L205">		result.put(setName + parameterName, ts);</span>
+<span class="fc" id="L206">		ts.setName(setName + &quot;[&quot; + parameterName + &quot;]&quot;);</span>
+<span class="fc" id="L207">		ts.setDisabled(0);</span>
+<span class="fc" id="L208">		ts.setErrors(0);</span>
+<span class="fc" id="L209">		ts.setFailures(0);</span>
+<span class="fc" id="L210">		ts.setTests(0);</span>
+<span class="fc" id="L211">		ts.setTime(0l);</span>
+<span class="fc" id="L212">		resultcase.put(setName + parameterName, new HashMap&lt;&gt;());</span>
+<span class="fc" id="L213">		tss.getTestsuite().add(ts);</span>
+<span class="fc" id="L214">	}</span>
+
+	@Override
+	public void notifyParameterEnd(String setName, String parameterName) {
+<span class="fc" id="L218">		Testsuites tss = results.get(setName);</span>
+<span class="fc" id="L219">		Testsuite ts = result.get(setName + parameterName);</span>
+<span class="fc" id="L220">		tss.setDisabled(tss.getDisabled() + ts.getDisabled());</span>
+<span class="fc" id="L221">		tss.setErrors(tss.getErrors() + ts.getErrors());</span>
+<span class="fc" id="L222">		tss.setFailures(tss.getFailures() + ts.getFailures());</span>
+<span class="fc" id="L223">		tss.setTests(tss.getTests() + ts.getTests());</span>
+<span class="fc" id="L224">		tss.setTime(tss.getTime() + ts.getTime());</span>
+<span class="fc" id="L225">	}</span>
+
+	/**
+	 * @return the error
+	 */
+	public boolean isError() {
+<span class="fc" id="L231">		return error;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -140,29 +140,36 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 <span class="fc" id="L140">			o = new Object[] { op };</span>
 		}
 <span class="fc" id="L142">		String name = MessageFormat.format(formatter, o);</span>
-<span class="fc" id="L143">		int pidx = 0;</span>
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (o.length != parameterFields.size()) {</span>
-<span class="nc" id="L145">			throw new InternalError(</span>
-					&quot;Parameter fields count doesn't match with array size returned by parameters&quot;);
-		}
-<span class="fc bfc" id="L148" title="All 2 branches covered.">		for (Object p : o) {</span>
-			try {
-<span class="fc" id="L150">				Field f = parameterFields.get(pidx);</span>
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">				if (f == null) {</span>
-<span class="nc" id="L152">					throw new InternalError(&quot;Field &quot; + pidx + &quot; is not found&quot;);</span>
-				}
-<span class="fc" id="L154">				f.set(targetObject, p);</span>
-<span class="nc" id="L155">			} catch (IllegalArgumentException | IllegalAccessException e) {</span>
-<span class="nc" id="L156">				throw new InternalError(&quot;Unexpected error &quot; + e.getMessage(), e);</span>
-<span class="fc" id="L157">			}</span>
-<span class="fc" id="L158">			pidx++;</span>
-		}
-<span class="fc" id="L160">		runOne(name);</span>
-<span class="fc" id="L161">		testIndex++;</span>
-<span class="fc" id="L162">	}</span>
+		try {
+<span class="fc" id="L144">			notifyStartParameter(setName, name);</span>
+<span class="fc" id="L145">			int pidx = 0;</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">			if (o.length != parameterFields.size()) {</span>
+<span class="nc" id="L147">				throw new InternalError(</span>
+						&quot;Parameter fields count doesn't match with array size returned by parameters&quot;);
+			}
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			for (Object p : o) {</span>
+				try {
+<span class="fc" id="L152">					Field f = parameterFields.get(pidx);</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">					if (f == null) {</span>
+<span class="nc" id="L154">						throw new InternalError(&quot;Field &quot; + pidx</span>
+								+ &quot; is not found&quot;);
+					}
+<span class="fc" id="L157">					f.set(targetObject, p);</span>
+<span class="nc" id="L158">				} catch (IllegalArgumentException | IllegalAccessException e) {</span>
+<span class="nc" id="L159">					throw new InternalError(&quot;Unexpected error &quot;</span>
+<span class="nc" id="L160">							+ e.getMessage(), e);</span>
+<span class="fc" id="L161">				}</span>
+<span class="fc" id="L162">				pidx++;</span>
+			}
+<span class="fc" id="L164">			runOne(name);</span>
+<span class="fc" id="L165">			testIndex++;</span>
+		} finally {
+<span class="pc" id="L167">			notifyEndParameter(setName, name);</span>
+<span class="fc" id="L168">		}</span>
+<span class="fc" id="L169">	}</span>
 
 	private void runOne(String name) {
-<span class="fc" id="L165">		executableTests.entrySet().forEach(</span>
+<span class="fc" id="L172">		executableTests.entrySet().forEach(</span>
 				singleTest -&gt; {
 					try {
 						singleTest.getValue().run(
@@ -175,40 +182,40 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 								+ e.getMessage(), e);
 					}
 				});
-<span class="fc" id="L178">	}</span>
+<span class="fc" id="L185">	}</span>
 
-<span class="fc" id="L180">	private final Map&lt;String, Method&gt; testMethods = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L187">	private final Map&lt;String, Method&gt; testMethods = new HashMap&lt;&gt;();</span>
 
-<span class="fc" id="L182">	private TestRule testRules = null;</span>
+<span class="fc" id="L189">	private TestRule testRules = null;</span>
 
-<span class="fc" id="L184">	private Map&lt;String, Statement&lt;TestContext&lt;Object&gt;, Throwable&gt;&gt; executableTests = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L191">	private Map&lt;String, Statement&lt;TestContext&lt;Object&gt;, Throwable&gt;&gt; executableTests = new HashMap&lt;&gt;();</span>
 
-<span class="fc" id="L186">	private Method parameters = null;</span>
+<span class="fc" id="L193">	private Method parameters = null;</span>
 
 	private Map&lt;Integer, Field&gt; parameterFields;
 
 	private void findParametersMethod(T targetObject, Class&lt;T&gt; testClass) {
-<span class="fc" id="L191">		parameters = Arrays</span>
-<span class="fc" id="L192">				.stream(testClass.getDeclaredMethods())</span>
-<span class="fc" id="L193">				.filter(m -&gt; m.isAnnotationPresent(Parameters.class))</span>
-<span class="fc" id="L194">				.peek(m -&gt; checkParametersAnnotationForMethod(m))</span>
-<span class="fc" id="L195">				.reduce((o, n) -&gt; {</span>
+<span class="fc" id="L198">		parameters = Arrays</span>
+<span class="fc" id="L199">				.stream(testClass.getDeclaredMethods())</span>
+<span class="fc" id="L200">				.filter(m -&gt; m.isAnnotationPresent(Parameters.class))</span>
+<span class="fc" id="L201">				.peek(m -&gt; checkParametersAnnotationForMethod(m))</span>
+<span class="fc" id="L202">				.reduce((o, n) -&gt; {</span>
 					throw new InternalError(
 							&quot;@Parameters method can't only be once&quot;);
-<span class="fc" id="L198">				}).orElse(null);</span>
-<span class="fc" id="L199">		parameterFields = Arrays</span>
-<span class="fc" id="L200">				.stream(testClass.getDeclaredFields())</span>
-<span class="fc" id="L201">				.filter(f -&gt; f.isAnnotationPresent(Parameter.class))</span>
-<span class="fc" id="L202">				.peek(f -&gt; {</span>
+<span class="fc" id="L205">				}).orElse(null);</span>
+<span class="fc" id="L206">		parameterFields = Arrays</span>
+<span class="fc" id="L207">				.stream(testClass.getDeclaredFields())</span>
+<span class="fc" id="L208">				.filter(f -&gt; f.isAnnotationPresent(Parameter.class))</span>
+<span class="fc" id="L209">				.peek(f -&gt; {</span>
 					if (parameters == null) {
 						throw new InternalError(
 								&quot;@Parameter can't be used without @Parameters method&quot;);
 					}
 				})
-<span class="fc" id="L208">				.peek(f -&gt; checkParameterAnnotationForField(f))</span>
-<span class="fc" id="L209">				.collect(</span>
+<span class="fc" id="L215">				.peek(f -&gt; checkParameterAnnotationForField(f))</span>
+<span class="fc" id="L216">				.collect(</span>
 						Collectors
-<span class="fc" id="L211">								.&lt;Field, Integer, Field&gt; toMap(</span>
+<span class="fc" id="L218">								.&lt;Field, Integer, Field&gt; toMap(</span>
 										(Field f) -&gt; f.getAnnotation(
 												Parameter.class).value(),
 										(Field f) -&gt; f,
@@ -216,24 +223,24 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 											throw new InternalError(
 													&quot;@Parameter can't be used twice with the same value number&quot;);
 										}));
-<span class="fc bfc" id="L219" title="All 2 branches covered.">		if (parameters != null) {</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">		if (parameters != null) {</span>
 			// assuming field numbering 0 to
-<span class="fc" id="L221">			int size = parameterFields.size();</span>
-<span class="fc bfc" id="L222" title="All 2 branches covered.">			if (size == 0) {</span>
-<span class="fc" id="L223">				throw new InternalError(&quot;No @Parameter field found&quot;);</span>
+<span class="fc" id="L228">			int size = parameterFields.size();</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">			if (size == 0) {</span>
+<span class="fc" id="L230">				throw new InternalError(&quot;No @Parameter field found&quot;);</span>
 			}
-<span class="fc" id="L225">			int expected = (size * (size - 1)) / 2;</span>
-<span class="fc" id="L226">			int sum = parameterFields.keySet().stream().mapToInt(i -&gt; i).sum();</span>
-<span class="fc bfc" id="L227" title="All 2 branches covered.">			if (sum != expected) {</span>
-<span class="fc" id="L228">				throw new InternalError(</span>
+<span class="fc" id="L232">			int expected = (size * (size - 1)) / 2;</span>
+<span class="fc" id="L233">			int sum = parameterFields.keySet().stream().mapToInt(i -&gt; i).sum();</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">			if (sum != expected) {</span>
+<span class="fc" id="L235">				throw new InternalError(</span>
 						&quot;@Parameter field number aren't continuus&quot;);
 			}
 		}
-<span class="fc" id="L232">	}</span>
+<span class="fc" id="L239">	}</span>
 
 	private void findTestsMethod(T targetObject, Class&lt;T&gt; testClass,
 			String parentGroup) {
-<span class="fc" id="L236">		findClass(testClass).forEach(</span>
+<span class="fc" id="L243">		findClass(testClass).forEach(</span>
 				cls -&gt; {
 					Arrays.stream(cls.getDeclaredMethods())
 							.filter(m -&gt; m.isAnnotationPresent(Test.class))
@@ -247,12 +254,12 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 								testMethods.put(testName, m);
 							});
 				});
-<span class="fc" id="L250">	}</span>
+<span class="fc" id="L257">	}</span>
 
 	private void findTestsRule(T targetObject, Class&lt;T&gt; testClass) {
-<span class="fc" id="L253">		testRules = findClass(testClass)</span>
-<span class="fc" id="L254">				.stream()</span>
-<span class="fc" id="L255">				.map(cls -&gt; Arrays</span>
+<span class="fc" id="L260">		testRules = findClass(testClass)</span>
+<span class="fc" id="L261">				.stream()</span>
+<span class="fc" id="L262">				.map(cls -&gt; Arrays</span>
 						.stream(cls.getDeclaredFields())
 						.filter(f -&gt; f.isAnnotationPresent(Rule.class))
 						.map(f -&gt; {
@@ -273,27 +280,27 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 						.reduce((o, n) -&gt; {
 							throw new InternalError(
 									&quot;@Rule annotation can only be used once on field&quot;);
-<span class="fc" id="L276">						}).orElse(null)).filter(i -&gt; i != null)</span>
-<span class="fc" id="L277">				.reduce((o, n) -&gt; o.around(n)).orElse(null);</span>
+<span class="fc" id="L283">						}).orElse(null)).filter(i -&gt; i != null)</span>
+<span class="fc" id="L284">				.reduce((o, n) -&gt; o.around(n)).orElse(null);</span>
 
-<span class="fc" id="L279">	}</span>
+<span class="fc" id="L286">	}</span>
 
 	private List&lt;Class&lt;?&gt;&gt; findClass(Class&lt;T&gt; testClass) {
-<span class="fc" id="L282">		List&lt;Class&lt;?&gt;&gt; clazzs = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L283">		Class&lt;?&gt; current = testClass;</span>
-<span class="fc bfc" id="L284" title="All 2 branches covered.">		while (current != null) {</span>
-<span class="fc" id="L285">			clazzs.add(0, current);</span>
-<span class="fc" id="L286">			current = current.getSuperclass();</span>
+<span class="fc" id="L289">		List&lt;Class&lt;?&gt;&gt; clazzs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L290">		Class&lt;?&gt; current = testClass;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">		while (current != null) {</span>
+<span class="fc" id="L292">			clazzs.add(0, current);</span>
+<span class="fc" id="L293">			current = current.getSuperclass();</span>
 		}
-<span class="fc" id="L288">		return clazzs;</span>
+<span class="fc" id="L295">		return clazzs;</span>
 	}
 
 	private void computeExecutableStatements() {
-<span class="fc" id="L292">		executableTests = testMethods</span>
-<span class="fc" id="L293">				.entrySet()</span>
-<span class="fc" id="L294">				.stream()</span>
-<span class="fc" id="L295">				.collect(</span>
-<span class="fc" id="L296">						Collectors.toMap(</span>
+<span class="fc" id="L299">		executableTests = testMethods</span>
+<span class="fc" id="L300">				.entrySet()</span>
+<span class="fc" id="L301">				.stream()</span>
+<span class="fc" id="L302">				.collect(</span>
+<span class="fc" id="L303">						Collectors.toMap(</span>
 								test -&gt; test.getKey(),
 								test -&gt; {
 									Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; stest;
@@ -337,46 +344,56 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 										}
 									};
 								}));
-<span class="fc" id="L340">	}</span>
+<span class="fc" id="L347">	}</span>
 
 	@Override
 	public void addListener(TestResultListener&lt;T&gt; listener) {
-<span class="fc" id="L344">		listeners.add((TestResultListener) listener);</span>
-<span class="fc" id="L345">	}</span>
+<span class="fc" id="L351">		listeners.add((TestResultListener) listener);</span>
+<span class="fc" id="L352">	}</span>
 
 	private void notifyStartTests(String setName, String groups) {
-<span class="fc" id="L348">		listeners.forEach(trl -&gt; trl.notifySetStart(setName, groups));</span>
-<span class="fc" id="L349">	}</span>
+<span class="fc" id="L355">		listeners.forEach(trl -&gt; trl.notifySetStart(setName, groups));</span>
+<span class="fc" id="L356">	}</span>
 
 	private void notifyEndTests(String setName, String groups) {
-<span class="fc" id="L352">		listeners.forEach(trl -&gt; trl.notifySetEnd(setName, groups));</span>
-<span class="fc" id="L353">	}</span>
+<span class="fc" id="L359">		listeners.forEach(trl -&gt; trl.notifySetEnd(setName, groups));</span>
+<span class="fc" id="L360">	}</span>
+
+	private void notifyStartParameter(String setName, String parameterName) {
+<span class="fc" id="L363">		listeners.forEach(trl -&gt; trl.notifyParameterStart(setName,</span>
+				parameterName));
+<span class="fc" id="L365">	}</span>
+
+	private void notifyEndParameter(String setName, String parameterName) {
+<span class="fc" id="L368">		listeners</span>
+<span class="fc" id="L369">				.forEach(trl -&gt; trl.notifyParameterEnd(setName, parameterName));</span>
+<span class="fc" id="L370">	}</span>
 
 	private void notifyStartTest(TestContext&lt;Object&gt; context) {
-<span class="fc" id="L356">		listeners.forEach(trl -&gt; trl.notifyStart(context));</span>
-<span class="fc" id="L357">	}</span>
+<span class="fc" id="L373">		listeners.forEach(trl -&gt; trl.notifyStart(context));</span>
+<span class="fc" id="L374">	}</span>
 
 	private void notifyEndSuccessTest(TestContext&lt;Object&gt; context) {
-<span class="fc" id="L360">		listeners.forEach(trl -&gt; trl.notifySuccess(context));</span>
-<span class="fc" id="L361">	}</span>
+<span class="fc" id="L377">		listeners.forEach(trl -&gt; trl.notifySuccess(context));</span>
+<span class="fc" id="L378">	}</span>
 
 	private void notifyEndSkippedTest(TestContext&lt;Object&gt; context) {
-<span class="fc" id="L364">		listeners.forEach(trl -&gt; trl.notifySkipped(context));</span>
-<span class="fc" id="L365">	}</span>
+<span class="fc" id="L381">		listeners.forEach(trl -&gt; trl.notifySkipped(context));</span>
+<span class="fc" id="L382">	}</span>
 
 	private void notifyEndFailureTest(TestContext&lt;Object&gt; context,
 			AssertionError cause) {
-<span class="fc" id="L369">		listeners.forEach(trl -&gt; trl.notifyFailure(context, cause));</span>
-<span class="fc" id="L370">	}</span>
+<span class="fc" id="L386">		listeners.forEach(trl -&gt; trl.notifyFailure(context, cause));</span>
+<span class="fc" id="L387">	}</span>
 
 	private void notifyEndFailureTest(TestContext&lt;Object&gt; context,
 			InternalError cause) {
-<span class="nc" id="L374">		listeners.forEach(trl -&gt; trl.notifyError(context, cause));</span>
-<span class="nc" id="L375">	}</span>
+<span class="nc" id="L391">		listeners.forEach(trl -&gt; trl.notifyError(context, cause));</span>
+<span class="nc" id="L392">	}</span>
 
 	private void notifyEndFailureTest(TestContext&lt;Object&gt; context,
 			Throwable cause) {
-<span class="fc" id="L379">		listeners.forEach(trl -&gt; trl.notifyError(context, cause));</span>
-<span class="fc" id="L380">	}</span>
+<span class="fc" id="L396">		listeners.forEach(trl -&gt; trl.notifyError(context, cause));</span>
+<span class="fc" id="L397">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
