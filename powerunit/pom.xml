@@ -496,7 +496,7 @@
 					<packageName>ch.powerunit.report</packageName>
 				</configuration>
 			</plugin>
-			<plugin>
+			<!--plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-changes-plugin</artifactId>
 				<executions>
@@ -515,7 +515,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin-->
 		</plugins>
 
 		<resources>
