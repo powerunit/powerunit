@@ -1,4 +1,6 @@
-<project>
+<project xmlns="http://maven.apache.org/DECORATION/1.3.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd">
   <poweredBy>
     <logo name="PowerUnit" href="http://www.powerunit.ch/"
           img="http://www.powerunit.ch/powerunit/logo.png"/>
@@ -7,6 +9,7 @@
     <menu ref="reports" />
     <menu name="General documentations">
       <item name="FAQ" href="faq.html" />
+      <item name="Release principles" href="release.html" />
     </menu>
   </body>
 </project>

@@ -9,10 +9,12 @@ The Powerunit framework
 
  * There is no before/after annotation, but the action around a test are defined by using one single rule chain.
 
- * Assertion syntax is more DSL oriented (only assertThat or similair assertion is available). The assertion system 
+ * Assertion syntax is more DSL oriented (only assertThat or similar assertion is available). The assertion system 
  is strongly linked with hamcrest.
  
  * Some additional matcher are available to support new capabilities of the JDK 1.8, for instance the Optional class.
+ 
+ []
  
  {{{./apidocs/index.html}Much more details are available in the javadoc of this project}}
  
@@ -51,6 +53,6 @@ The Powerunit framework
 
 * Roadmap
 
- At the moment, the roadmap is mainly to deliver a first release of the framework, with the central integration. Once this 
- first essential step is done, the next milestones will be defined.
+ The version 0.0.1 of this library is the first release. Please refer to {{{./release.html}the release principles page}} for more 
+ information.
  

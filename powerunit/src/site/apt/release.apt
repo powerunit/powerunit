@@ -1,0 +1,21 @@
+Release principles
+
+* Version pattern
+
+ Every release version of this framework is defined on three digits (<<<X.Y.Z>>>):
+ 
+ * The first one (<<<X>>>) is incremented for new version of java. For the JDK 1.8, the value is <<<0>>>.
+ 
+ * The second one (<<<Y>>>) is incremented for enhancement and new functionnalities of the framework. The initial value is <<<0>>>.
+ 
+ * The last one (<<<Z>>>) is used for bug fixes or documentation update only. 
+ 
+* Release criteria
+
+ A new bug fixes or documentation should be created for every blocking issues. It may include others non-blocking issues. Regarding 
+ the enhancement and java update release, the release should be done when all planned issues are closed.
+ 
+* Planned release
+
+ The release plan is not yet defined.
+ 
