@@ -45,7 +45,7 @@
             </xs:sequence>
             <xs:attribute name="name" type="xs:string" use="required"/>
             <xs:attribute name="assertions" type="xs:string" use="optional"/>
-            <xs:attribute name="time" type="xs:string" use="optional"/>
+            <xs:attribute name="time" type="xs:long" use="optional"/>
             <xs:attribute name="classname" type="xs:string" use="optional"/>
             <xs:attribute name="status" type="xs:string" use="optional"/>
         </xs:complexType>
@@ -63,7 +63,7 @@
             <xs:attribute name="tests" type="xs:int" use="required"/>
             <xs:attribute name="failures" type="xs:int" use="optional"/>
             <xs:attribute name="errors" type="xs:int" use="optional"/>
-            <xs:attribute name="time" type="xs:string" use="optional"/>
+            <xs:attribute name="time" type="xs:long" use="optional"/>
             <xs:attribute name="disabled" type="xs:int" use="optional"/>
             <xs:attribute name="skipped" type="xs:int" use="optional"/>
             <xs:attribute name="timestamp" type="xs:string" use="optional"/>
@@ -79,7 +79,7 @@
                 <xs:element ref="testsuite" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
             <xs:attribute name="name" type="xs:string" use="optional"/>
-            <xs:attribute name="time" type="xs:string" use="optional"/>
+            <xs:attribute name="time" type="xs:long" use="optional"/>
             <xs:attribute name="tests" type="xs:int" use="optional"/>
             <xs:attribute name="failures" type="xs:int" use="optional"/>
             <xs:attribute name="disabled" type="xs:int" use="optional"/>
