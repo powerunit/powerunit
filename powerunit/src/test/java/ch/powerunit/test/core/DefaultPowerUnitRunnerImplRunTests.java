@@ -58,7 +58,8 @@ public class DefaultPowerUnitRunnerImplRunTests {
 					TestSuite.DSL.assertThat(TestClass1.counter6).is(4);
 					TestSuite.DSL.assertThat(TestClass1.bigCounter).is(0);
 					TestSuite.DSL.assertThat(counter).is(
-							1000 + 10000 + 100000 + 100000 + 1000000 + 1000000);
+							1000l + 10000 + 100000 + 100000 + 1000000 + 1000000
+									+ 10000000000l + 100000000000l);
 
 				});
 		AllTests.testNoException(
@@ -77,7 +78,8 @@ public class DefaultPowerUnitRunnerImplRunTests {
 					TestSuite.DSL.assertThat(TestClass1.counter6).is(4);
 					TestSuite.DSL.assertThat(TestClass1.bigCounter).is(0);
 					TestSuite.DSL.assertThat(counter).is(
-							1000 + 10000 + 100000 + 100000 + 1000000 + 1000000);
+							1000l + 10000 + 100000 + 100000 + 1000000 + 1000000
+									+ 10000000000l + 100000000000l);
 
 				});
 	}
@@ -98,7 +100,7 @@ public class DefaultPowerUnitRunnerImplRunTests {
 					underTest.addListener(new Listener<TestClass3>());
 					underTest.run();
 					TestSuite.DSL.assertThat(counter).is(
-							1000 + 10000 + 100000 + 100000000);
+							1000l + 10000 + 100000 + 100000000);
 				});
 	}
 
@@ -139,9 +141,19 @@ public class DefaultPowerUnitRunnerImplRunTests {
 			counter += 1000000000;
 		}
 
+		@Override
+		public void notifyParameterStart(String setName, String parameterName) {
+			counter += 10000000000l;
+		}
+
+		@Override
+		public void notifyParameterEnd(String setName, String parameterName) {
+			counter += 100000000000l;
+		}
+
 	}
 
-	private static int counter = 0;
+	private static long counter = 0;
 
 	public static class TestClass1 implements TestSuite {
 

@@ -60,12 +60,23 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 
 	private Map<String, Testsuite> result = new HashMap<>();
 
+	private Map<String, Testsuites> results = new HashMap<>();
+
 	private Map<String, Map<String, Testcase>> resultcase = new HashMap<>();
 
 	private File targetFolder;
 
 	@Override
 	public void notifySetStart(String setName, String parameters) {
+		Testsuites tss = new Testsuites();
+		tss.setDisabled(0);
+		tss.setErrors(0);
+		tss.setFailures(0);
+		tss.setName(setName);
+		tss.setTests(0);
+		tss.setTime(0l);
+		results.put(setName, tss);
+
 		Testsuite ts = new Testsuite();
 		result.put(setName, ts);
 		ts.setName(setName.replace('$', '.'));
@@ -75,14 +86,18 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 		ts.setTests(0);
 		ts.setTime(0l);
 		resultcase.put(setName, new HashMap<>());
+
 	}
 
 	@Override
 	public void notifySetEnd(String setName, String parameters) {
 		try {
 			File target = new File(targetFolder, setName + ".xml");
-			JAXB_CONTEXT.createMarshaller()
-					.marshal(result.get(setName), target);
+			Object o = results.get(setName);
+			if (results.get(setName).getTestsuite().size() == 0) {
+				o = result.get(setName);
+			}
+			JAXB_CONTEXT.createMarshaller().marshal(o, target);
 		} catch (JAXBException e) {
 			throw new IllegalArgumentException("Unable to setup jaxb "
 					+ e.getMessage(), e);
@@ -91,14 +106,17 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 
 	@Override
 	public void notifyStart(TestContext<T> context) {
-		Testsuite ts = result.get(context.getSetName());
+		String setName = context.getSetName()
+				+ (context.getParameterName() == null ? "" : context
+						.getParameterName());
+		Testsuite ts = result.get(setName);
 		Testcase tc = new Testcase();
 		tc.setName(context.getLocalTestName()
 				+ (context.getParameterName() == null ? "" : ("["
 						+ context.getParameterName() + "]")));
 		tc.setClassname(context.getTestSuiteObject().getClass()
 				.getCanonicalName());
-		resultcase.get(context.getSetName()).put(context.getFullTestName(), tc);
+		resultcase.get(setName).put(context.getFullTestName(), tc);
 		ts.getTestcase().add(tc);
 		tc.setTime(System.currentTimeMillis());
 
@@ -106,10 +124,12 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 
 	@Override
 	public void notifySuccess(TestContext<T> context) {
+		String setName = context.getSetName()
+				+ (context.getParameterName() == null ? "" : context
+						.getParameterName());
 		long end = System.currentTimeMillis();
-		Testsuite ts = result.get(context.getSetName());
-		Testcase tc = resultcase.get(context.getSetName()).get(
-				context.getFullTestName());
+		Testsuite ts = result.get(setName);
+		Testcase tc = resultcase.get(setName).get(context.getFullTestName());
 		tc.setTime((end - tc.getTime()) / 1000);
 		ts.setTime(ts.getTime() + tc.getTime());
 		ts.setTests(ts.getTests() + 1);
@@ -117,10 +137,12 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 
 	@Override
 	public void notifyFailure(TestContext<T> context, Throwable cause) {
+		String setName = context.getSetName()
+				+ (context.getParameterName() == null ? "" : context
+						.getParameterName());
 		long end = System.currentTimeMillis();
-		Testsuite ts = result.get(context.getSetName());
-		Testcase tc = resultcase.get(context.getSetName()).get(
-				context.getFullTestName());
+		Testsuite ts = result.get(setName);
+		Testcase tc = resultcase.get(setName).get(context.getFullTestName());
 		tc.setTime((end - tc.getTime()) / 1000);
 		ts.setTime(ts.getTime() + tc.getTime());
 		error = true;
@@ -139,10 +161,12 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 
 	@Override
 	public void notifySkipped(TestContext<T> context) {
+		String setName = context.getSetName()
+				+ (context.getParameterName() == null ? "" : context
+						.getParameterName());
 		long end = System.currentTimeMillis();
-		Testsuite ts = result.get(context.getSetName());
-		Testcase tc = resultcase.get(context.getSetName()).get(
-				context.getFullTestName());
+		Testsuite ts = result.get(setName);
+		Testcase tc = resultcase.get(setName).get(context.getFullTestName());
 		tc.setTime((end - tc.getTime()) / 1000);
 		ts.setTime(ts.getTime() + tc.getTime());
 		ts.setDisabled(ts.getDisabled() + 1);
@@ -152,10 +176,12 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 
 	@Override
 	public void notifyError(TestContext<T> context, Throwable cause) {
+		String setName = context.getSetName()
+				+ (context.getParameterName() == null ? "" : context
+						.getParameterName());
 		long end = System.currentTimeMillis();
-		Testsuite ts = result.get(context.getSetName());
-		Testcase tc = resultcase.get(context.getSetName()).get(
-				context.getFullTestName());
+		Testsuite ts = result.get(setName);
+		Testcase tc = resultcase.get(setName).get(context.getFullTestName());
 		tc.setTime((end - tc.getTime()) / 1000);
 		ts.setTime(ts.getTime() + tc.getTime());
 		error = true;
@@ -170,6 +196,32 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 			stack.append(ste.toString()).append('\n');
 		}
 		e.setContent(stack.toString());
+	}
+
+	@Override
+	public void notifyParameterStart(String setName, String parameterName) {
+		Testsuites tss = results.get(setName);
+		Testsuite ts = new Testsuite();
+		result.put(setName + parameterName, ts);
+		ts.setName(setName + "[" + parameterName + "]");
+		ts.setDisabled(0);
+		ts.setErrors(0);
+		ts.setFailures(0);
+		ts.setTests(0);
+		ts.setTime(0l);
+		resultcase.put(setName + parameterName, new HashMap<>());
+		tss.getTestsuite().add(ts);
+	}
+
+	@Override
+	public void notifyParameterEnd(String setName, String parameterName) {
+		Testsuites tss = results.get(setName);
+		Testsuite ts = result.get(setName + parameterName);
+		tss.setDisabled(tss.getDisabled() + ts.getDisabled());
+		tss.setErrors(tss.getErrors() + ts.getErrors());
+		tss.setFailures(tss.getFailures() + ts.getFailures());
+		tss.setTests(tss.getTests() + ts.getTests());
+		tss.setTime(tss.getTime() + ts.getTime());
 	}
 
 	/**

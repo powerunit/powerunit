@@ -140,25 +140,32 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 			o = new Object[] { op };
 		}
 		String name = MessageFormat.format(formatter, o);
-		int pidx = 0;
-		if (o.length != parameterFields.size()) {
-			throw new InternalError(
-					"Parameter fields count doesn't match with array size returned by parameters");
-		}
-		for (Object p : o) {
-			try {
-				Field f = parameterFields.get(pidx);
-				if (f == null) {
-					throw new InternalError("Field " + pidx + " is not found");
-				}
-				f.set(targetObject, p);
-			} catch (IllegalArgumentException | IllegalAccessException e) {
-				throw new InternalError("Unexpected error " + e.getMessage(), e);
+		try {
+			notifyStartParameter(setName, name);
+			int pidx = 0;
+			if (o.length != parameterFields.size()) {
+				throw new InternalError(
+						"Parameter fields count doesn't match with array size returned by parameters");
 			}
-			pidx++;
+			for (Object p : o) {
+				try {
+					Field f = parameterFields.get(pidx);
+					if (f == null) {
+						throw new InternalError("Field " + pidx
+								+ " is not found");
+					}
+					f.set(targetObject, p);
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					throw new InternalError("Unexpected error "
+							+ e.getMessage(), e);
+				}
+				pidx++;
+			}
+			runOne(name);
+			testIndex++;
+		} finally {
+			notifyEndParameter(setName, name);
 		}
-		runOne(name);
-		testIndex++;
 	}
 
 	private void runOne(String name) {
@@ -350,6 +357,16 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 
 	private void notifyEndTests(String setName, String groups) {
 		listeners.forEach(trl -> trl.notifySetEnd(setName, groups));
+	}
+
+	private void notifyStartParameter(String setName, String parameterName) {
+		listeners.forEach(trl -> trl.notifyParameterStart(setName,
+				parameterName));
+	}
+
+	private void notifyEndParameter(String setName, String parameterName) {
+		listeners
+				.forEach(trl -> trl.notifyParameterEnd(setName, parameterName));
 	}
 
 	private void notifyStartTest(TestContext<Object> context) {

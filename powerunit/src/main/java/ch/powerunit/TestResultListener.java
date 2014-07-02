@@ -98,4 +98,26 @@ public interface TestResultListener<T> {
 	 */
 	void notifySkipped(TestContext<T> context);
 
+	/**
+	 * Notification of the start of the tests for one parameter. Ignore for non
+	 * parameter test.
+	 * 
+	 * @param setName
+	 *            the Set name.
+	 * @param parameterName
+	 *            the Parameter name.
+	 */
+	void notifyParameterStart(String setName, String parameterName);
+
+	/**
+	 * Notification of the end of the tests for one parameter. Ignore for non
+	 * parameter test.
+	 * 
+	 * @param setName
+	 *            the Set name.
+	 * @param parameterName
+	 *            the Parameter name.
+	 */
+	void notifyParameterEnd(String setName, String parameterName);
+
 }

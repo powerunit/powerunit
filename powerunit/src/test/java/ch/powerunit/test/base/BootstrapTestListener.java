@@ -68,4 +68,16 @@ class BootstrapTestListener<T> implements TestResultListener<T>, TestSuite {// p
 		fail("Unexpected error " + cause.getMessage(), cause);
 	}
 
+	@Override
+	public void notifyParameterStart(String setName, String parameterName) {
+		System.out.println("Start of parameter " + parameterName + " on "
+				+ setName);
+	}
+
+	@Override
+	public void notifyParameterEnd(String setName, String parameterName) {
+		System.out.println("End of parameter " + parameterName + " on "
+				+ setName);
+	}
+
 }

@@ -90,4 +90,14 @@ public class PowerUnitProviderListener<T> implements TestResultListener<T> {
 				new LegacyPojoStackTraceWriter(underTest.getCanonicalName(),
 						context.getFullTestName(), cause), null));
 	}
+
+	@Override
+	public void notifyParameterStart(String setName, String parameterName) {
+		// Do nothing
+	}
+
+	@Override
+	public void notifyParameterEnd(String setName, String parameterName) {
+		// Do nothing
+	}
 }

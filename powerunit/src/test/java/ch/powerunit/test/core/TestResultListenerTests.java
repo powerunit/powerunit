@@ -36,9 +36,9 @@ public class TestResultListenerTests {
 					runner.addListener(new Listener());
 					runner.run();
 					TestSuite.DSL.assertThat(counter).is(
-							1000 + 10000 + 100000 + 100000 + 1000000 + 10000000
-									+ 100000 + 100000000 + 1000000000 + 100000
-									+ 100000 + 100000000);
+							1000l + 10000 + 100000 + 100000 + 1000000
+									+ 10000000 + 100000 + 100000000
+									+ 1000000000 + 100000 + 100000 + 100000000);
 				});
 	}
 
@@ -80,9 +80,19 @@ public class TestResultListenerTests {
 			counter += 1000000000;
 		}
 
+		@Override
+		public void notifyParameterStart(String setName, String parameterName) {
+			counter += 10000000000l;
+		}
+
+		@Override
+		public void notifyParameterEnd(String setName, String parameterName) {
+			counter += 100000000000l;
+		}
+
 	}
 
-	private static int counter = 0;
+	private static long counter = 0;
 
 	public static class TestClass implements TestSuite {
 		@Test
