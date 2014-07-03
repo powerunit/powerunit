@@ -14,6 +14,7 @@
       <item name="Release principles" href="release.html" />
       <item name="Samples" collapse="true" href="helloworldmaven.html">
       	<item name="HelloWorld Test" href="helloworldmaven.html"/>
+      	<item name="EqualsVerifier integration" href="equalsverifier.html"/>
       </item>
     </menu>
   </body>

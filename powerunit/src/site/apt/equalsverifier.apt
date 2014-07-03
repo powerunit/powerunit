@@ -1,0 +1,38 @@
+EqualsVerifier integration
+
+ Powerunit is compatible with the {{{http://www.jqno.nl/equalsverifier/}EqualsVerifier}} framework. Here is an example of usage.
+ 
+* Maven
+
+ It is possible to use the pom from the {{{./helloworldmaven.html}Hello World sample}} ; Then add the dependency to EqualsVerifier :
+ 
+-----
+<dependency>
+  <groupId>nl.jqno.equalsverifier</groupId>
+  <artifactId>equalsverifier</artifactId>
+</dependency>
+-----
+
+* Usage
+
+ The EqualsVerifier features can be used as with others frameworks ; For instance :
+ 
+-----
+package ch.powerunit.demo;
+
+
+import ch.powerunit.Test;
+import ch.powerunit.TestRule;
+import ch.powerunit.TestSuite;
+import nl.jqno.equalsverifier.EqualsVerifier;
+
+public class MyBeanTest implements TestSuite {
+
+  @Test
+  public void testEquals() {
+    EqualsVerifier.forClass(MyBean.class)
+      .usingGetClass()
+      .verify();
+  }
+}
+-----
