@@ -19,7 +19,7 @@
 			<url>http://www.gnu.org/licenses/gpl.txt</url>
 		</license>
 	</licenses>
-	
+
 	<distributionManagement>
 		<snapshotRepository>
 			<id>oss-snapshots</id>
@@ -226,6 +226,10 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>sonar-maven-plugin</artifactId>
 					<version>2.3.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-invoker-plugin</artifactId>
+					<version>1.9</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -496,26 +500,34 @@
 					<packageName>ch.powerunit.report</packageName>
 				</configuration>
 			</plugin>
-			<!--plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-changes-plugin</artifactId>
+			<plugin>
+				<artifactId>maven-invoker-plugin</artifactId>
+				<configuration>
+					<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+					<localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
+					<postBuildHookScript>verify.bsh</postBuildHookScript>
+					<settingsFile>src/it/settings.xml</settingsFile>
+					<extraArtifacts>
+						<extraArtifact>nl.jqno.equalsverifier:equalsverifier:1.4.1:jar</extraArtifact>
+					</extraArtifacts>
+					<invokerPropertiesFile>params.properties</invokerPropertiesFile>
+				</configuration>
 				<executions>
 					<execution>
-						<id>include-announcement-file</id>
-						<phase>verify</phase>
+						<id>integration-test</id>
 						<goals>
-							<goal>announcement-generate</goal>
+							<goal>install</goal>
+							<goal>run</goal>
 						</goals>
-						<configuration>
-							<announcementFile>CHANGES.txt</announcementFile>
-							<announcementDirectory>${project.build.outputDirectory}/META-INF</announcementDirectory>
-							<issueManagementSystems>
-								<issueManagementSystem>GitHub</issueManagementSystem>
-							</issueManagementSystems>
-						</configuration>
 					</execution>
 				</executions>
-			</plugin-->
+			</plugin>
+			<!--plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-changes-plugin</artifactId> 
+				<executions> <execution> <id>include-announcement-file</id> <phase>verify</phase> 
+				<goals> <goal>announcement-generate</goal> </goals> <configuration> <announcementFile>CHANGES.txt</announcementFile> 
+				<announcementDirectory>${project.build.outputDirectory}/META-INF</announcementDirectory> 
+				<issueManagementSystems> <issueManagementSystem>GitHub</issueManagementSystem> 
+				</issueManagementSystems> </configuration> </execution> </executions> </plugin -->
 		</plugins>
 
 		<resources>
@@ -648,6 +660,11 @@
 						</configuration>
 					</reportSet>
 				</reportSets>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-invoker-plugin</artifactId>
+				<version>1.9</version>
 			</plugin>
 		</plugins>
 	</reporting>

@@ -12,6 +12,9 @@
     <menu name="General documentations">
       <item name="FAQ" href="faq.html" />
       <item name="Release principles" href="release.html" />
+      <item name="Samples" collapse="true" href="helloworldmaven.html">
+      	<item name="HelloWorld Test" href="helloworldmaven.html"/>
+      </item>
     </menu>
   </body>
 </project>

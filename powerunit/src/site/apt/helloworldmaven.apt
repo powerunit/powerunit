@@ -1,0 +1,124 @@
+The helloworld test
+
+* Introduction
+
+ This is the classical <HelloWorld> sample. this example describes the basical elements of a test based on PowerUnit.
+ 
+* Maven integration
+
+ <As a general warning, it is important to remarks that the version of the powerunit artifact is ommited in the sample>
+ 
+ First of all, the maven compiler must be defined to use the java 1.8 :
+ 
+-----
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <configuration>
+    <source>1.8</source>
+    <target>1.8</target>
+  </configuration>
+</plugin>
+-----
+
+ Also, surefire must be defined to use the powerunit library :
+ 
+-----
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-surefire-plugin</artifactId>
+  <dependencies>
+    <dependency>
+      <groupId>ch.powerunit</groupId>
+      <artifactId>powerunit</artifactId>
+    </dependency>
+  </dependencies>
+</plugin>
+-----
+
+ Finally, the powerunit libary must be added as a dependency :
+ 
+-----
+<dependency>
+  <groupId>ch.powerunit</groupId>
+  <artifactId>powerunit</artifactId>
+  <scope>test</scope>
+</dependency>
+-----
+
+* The class under test
+
+ As an example, a simple POJO class with one field is used as the under test class :
+ 
+-----
+package ch.powerunit.demo;
+
+public class MyBean {
+  private String field1;
+
+  public String getField1() {
+    return field1;
+  }
+
+  public void setField1(String field1) {
+    this.field1 = field1;
+  }
+}
+-----
+
+* The test class
+
+ Here is the test class :
+ 
+-----
+package ch.powerunit.demo;
+
+import ch.powerunit.Rule;
+import ch.powerunit.Test;
+import ch.powerunit.TestRule;
+import ch.powerunit.TestSuite;
+
+public class MyBeanTest implements TestSuite {
+  @Rule
+  public final TestRule rule = before(this::prepare);
+
+  private MyBean bean;
+
+  private void prepare() {
+    bean = new MyBean();
+  }
+
+  @Test
+  public void testSimple() {
+    bean.setField1("x");
+    assertThat(bean.getField1()).is("x");
+  }
+}
+-----
+
+ This class will check that the value set using the <<<setField1>>> method is available by using the <<<getField1>>> method. The 
+ interesting elements are :
+ 
+ * The test class implements the <<<TestSuite>>> interface. This interface provides the DSL support for the test.
+ 
+ * The field annotated with <<<@Rule>>> define the action to be done around each test. In this case, it defines to invoke the method
+ <<<prepare>>> before every test method.
+ 
+ * Finally, the method annotated with <<<@Test>>> is the test methd itself. this method use the DSL method <<<assertThat>>> on the
+ <<<getField1>>> method of the class under test. and then use a shortcut to the hamcrest matcher to check the equality of the result
+ with an expected value.
+ 
+ []
+ 
+* Output
+
+ In the output of maven, the result of the test is display as a normal test by surefire :
+ 
+-----
+Running ch.powerunit.demo.MyBeanTest (of <none>)
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 sec - in ch.powerunit.demo.MyBeanTest (of <none>)
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+-----
