@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Powerunit - Java Testing framework for JDK 1.8 - Invoker Report</title>
+    <title>Powerunit - Java Testing framework for JDK 1.8 - </title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -46,32 +46,9 @@
                                                                                                                                                                                                                                                                                             <li class="collapsed">
                           <a href="project-info.html" title="Project Information">Project Information</a>
                   </li>
-                                                                                                                                                                                          <li class="expanded">
+                                                                                                                                                                                <li class="collapsed">
                           <a href="project-reports.html" title="Project Reports">Project Reports</a>
-                    <ul>
-                      <li class="none">
-                          <a href="github-report.html" title="GitHub Report">GitHub Report</a>
-            </li>
-                      <li class="none">
-                          <a href="apidocs/index.html" title="JavaDocs">JavaDocs</a>
-            </li>
-                      <li class="none">
-                          <a href="surefire-report.html" title="Surefire Report">Surefire Report</a>
-            </li>
-                      <li class="none">
-                          <a href="xref-test/index.html" title="Test Source Xref">Test Source Xref</a>
-            </li>
-                      <li class="none">
-                          <a href="xref/index.html" title="Source Xref">Source Xref</a>
-            </li>
-                      <li class="none">
-                          <a href="jacoco/index.html" title="JaCoCo Test">JaCoCo Test</a>
-            </li>
-                      <li class="none">
-            <strong>Invoker Build Results</strong>
-          </li>
-              </ul>
-        </li>
+                  </li>
           </ul>
                        <h5>General documentations</h5>
                   <ul>
@@ -81,9 +58,17 @@
                   <li class="none">
                           <a href="release.html" title="Release principles">Release principles</a>
             </li>
-                                                                                      <li class="collapsed">
+                                                                                                <li class="expanded">
                           <a href="helloworldmaven.html" title="Samples">Samples</a>
-                  </li>
+                    <ul>
+                      <li class="none">
+                          <a href="helloworldmaven.html" title="HelloWorld Test">HelloWorld Test</a>
+            </li>
+                      <li class="none">
+            <strong>EqualsVerifier integration</strong>
+          </li>
+              </ul>
+        </li>
           </ul>
                                                                                                                                      <a href="../" title="PowerUnit" class="poweredBy">
         <img class="poweredBy"  alt="PowerUnit" src="logo.png"     />
@@ -98,45 +83,37 @@
     <div id="bodyColumn">
       <div id="contentBox">
         <div class="section">
-<h2>Invoker Report<a name="Invoker_Report"></a></h2>
-<p>The results of the Maven invocations.</p></div>
+<h2>EqualsVerifier integration<a name="EqualsVerifier_integration"></a></h2>
+<p>Powerunit is compatible with the <a class="externalLink" href="http://www.jqno.nl/equalsverifier/">EqualsVerifier</a> framework. Here is an example of usage.</p>
 <div class="section">
-<h3>Summary<a name="Summary"></a></h3></div>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th>Builds</th>
-<th>Success</th>
-<th>Failures</th>
-<th>Skipped</th>
-<th>Success Rate</th>
-<th>Total Time</th>
-<th>Avg Time</th></tr>
-<tr class="b">
-<td>2</td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>100.0%</td>
-<td>10.8&#xa0;s</td>
-<td>5.4&#xa0;s</td></tr></table>
+<h3>Maven<a name="Maven"></a></h3>
+<p>It is possible to use the pom from the <a href="./helloworldmaven.html">Hello World sample</a> ; Then add the dependency to EqualsVerifier :</p>
+<div>
+<pre>&lt;dependency&gt;
+  &lt;groupId&gt;nl.jqno.equalsverifier&lt;/groupId&gt;
+  &lt;artifactId&gt;equalsverifier&lt;/artifactId&gt;
+&lt;/dependency&gt;</pre></div></div>
 <div class="section">
-<h3>Build Details<a name="Build_Details"></a></h3></div>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th>Name</th>
-<th>Result</th>
-<th>Time</th>
-<th>Message</th></tr>
-<tr class="b">
-<td>equalsverifier/pom.xml</td>
-<td>success</td>
-<td>5.2&#xa0;s</td>
-<td></td></tr>
-<tr class="a">
-<td>helloworldmaven/pom.xml</td>
-<td>success</td>
-<td>5.6&#xa0;s</td>
-<td></td></tr></table>
+<h3>Usage<a name="Usage"></a></h3>
+<p>The EqualsVerifier features can be used as with others frameworks ; For instance :</p>
+<div>
+<pre>package ch.powerunit.demo;
+
+
+import ch.powerunit.Test;
+import ch.powerunit.TestRule;
+import ch.powerunit.TestSuite;
+import nl.jqno.equalsverifier.EqualsVerifier;
+
+public class MyBeanTest implements TestSuite {
+
+  @Test
+  public void testEquals() {
+    EqualsVerifier.forClass(MyBean.class)
+      .usingGetClass()
+      .verify();
+  }
+}</pre></div></div></div>
       </div>
     </div>
     <div class="clear">
