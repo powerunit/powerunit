@@ -60,6 +60,8 @@
 		<junit.version>4.11</junit.version>
 		<surefire.version>2.17</surefire.version>
 		<mockito.version>1.9.5</mockito.version>
+		<deploy.url>https://oss.sonatype.org/content/repositories/snapshots</deploy.url>
+		<deploy.id>oss-snapshots</deploy.id>
 	</properties>
 
 	<build>
@@ -230,6 +232,15 @@
 				<plugin>
 					<artifactId>maven-invoker-plugin</artifactId>
 					<version>1.9</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>xml-maven-plugin</artifactId>
+					<version>1.0</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -522,6 +533,24 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<attach>false</attach>
+				</configuration>
+				<executions>
+					<execution>
+						<id>jar-with-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<!--plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-changes-plugin</artifactId> 
 				<executions> <execution> <id>include-announcement-file</id> <phase>verify</phase> 
 				<goals> <goal>announcement-generate</goal> </goals> <configuration> <announcementFile>CHANGES.txt</announcementFile> 
@@ -567,12 +596,54 @@
 			</build>
 		</profile>
 		<profile>
+			<id>release</id>
+			<properties>
+				<url.deploy>https://oss.sonatype.org/service/local/staging/deploy/maven2</url.deploy>
+				<deploy.id>oss-release</deploy.id>
+			</properties>
+		</profile>
+		<profile>
 			<id>sign</id>
 			<build>
 				<plugins>
 					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>xml-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>prepare-pom</id>
+								<phase>package</phase>
+								<goals>
+									<goal>transform</goal>
+								</goals>
+								<configuration>
+									<transformationSets>
+										<transformationSet>
+											<dir>${basedir}</dir>
+											<outputDir>${project.build.directory}</outputDir>
+											<includes>
+												<include>pom.xml</include>
+											</includes>
+											<stylesheet>src/main/xslt/jar-with-dependencies.xsl</stylesheet>
+											<fileMappers>
+												<fileMapper
+													implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
+													<pattern>.xml$</pattern>
+													<replacement>-jar-with-dependencies.xml</replacement>
+												</fileMapper>
+											</fileMappers>
+										</transformationSet>
+									</transformationSets>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
+						<configuration>
+							<passphrase>${powerunit.passphrase}</passphrase>
+						</configuration>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -580,8 +651,22 @@
 								<goals>
 									<goal>sign</goal>
 								</goals>
+							</execution>
+							<execution>
+								<id>sign-and-deploy</id>
+								<phase>deploy</phase>
+								<goals>
+									<goal>sign-and-deploy-file</goal>
+								</goals>
 								<configuration>
-									<passphrase>${powerunit.passphrase}</passphrase>
+									<url>${deploy.url}</url>
+									<file>${project.build.directory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</file>
+									<artifactId>${project.artifactId}-with-dependencies</artifactId>
+									<groupId>${project.groupId}</groupId>
+									<pomFile>${project.build.directory}/pom-jar-with-dependencies.xml</pomFile>
+									<repositoryId>${deploy.id}</repositoryId>
+									<javadoc>${project.build.directory}/${project.artifactId}-${project.version}-javadoc.jar</javadoc>
+									<sources>${project.build.directory}/${project.artifactId}-${project.version}-sources.jar</sources>
 								</configuration>
 							</execution>
 						</executions>
