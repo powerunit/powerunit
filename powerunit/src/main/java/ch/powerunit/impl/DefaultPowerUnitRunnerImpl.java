@@ -161,21 +161,24 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
                 }
                 pidx++;
             }
-            runOne(name);
+            runOne(name, o);
             testIndex++;
         } finally {
             notifyEndParameter(setName, name);
         }
     }
 
-    private void runOne(String name) {
+    private void runOne(String name, Object... parameters) {
         executableTests.entrySet().forEach(
                 singleTest -> {
                     try {
+                        String tname = singleTest.getKey();
+                        if (parameters.length > 0) {
+                            tname = MessageFormat.format(tname, parameters);
+                        }
                         singleTest.getValue().run(
                                 new TestContextImpl<Object>(targetObject,
-                                        setName, singleTest.getKey(), name,
-                                        parentGroups));
+                                        setName, tname, name, parentGroups));
                     } catch (Throwable e) {// NOSONAR
                         // As we really want all error
                         throw new InternalError("Unexpected error "

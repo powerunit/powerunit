@@ -40,9 +40,13 @@ public @interface Test {
     /**
      * Define an alternative name for the test.
      * <p>
-     * If not used, the test name will be based on the method name.
+     * If not used, the test name will be based on the method name. In case of
+     * parameterized test, the name will be formatted in the same way that the
+     * {@link Parameters @Parameters} annotation will be.
      * 
      * @return the name
+     * @see java.text.MessageFormat#format(String, Object...) The formatter used
+     *      for parameterized test.
      */
     String name() default "";
 }

@@ -62,22 +62,28 @@ public class TestResultListenerTests {
         @Override
         public void notifySuccess(TestContext<TestClass> context) {
             counter += 1000000;
+            TestSuite.DSL.assertThat(context.getLocalTestName()).is("success");
         }
 
         @Override
         public void notifyFailure(TestContext<TestClass> context,
                 Throwable cause) {
             counter += 10000000;
+            TestSuite.DSL.assertThat(context.getLocalTestName()).is("failure");
         }
 
         @Override
         public void notifySkipped(TestContext<TestClass> context) {
             counter += 100000000;
+            TestSuite.DSL.assertThat(context.getLocalTestName()).is(
+                    TestSuite.DSL.either(TestSuite.DSL.is("skip")).or(
+                            TestSuite.DSL.is("skipOnAssume")));
         }
 
         @Override
         public void notifyError(TestContext<TestClass> context, Throwable cause) {
             counter += 1000000000;
+            TestSuite.DSL.assertThat(context.getLocalTestName()).is("error");
         }
 
         @Override

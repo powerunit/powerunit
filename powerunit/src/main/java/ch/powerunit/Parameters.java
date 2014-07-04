@@ -80,6 +80,7 @@ public @interface Parameters {
      * parameter.
      * 
      * @return the name.
+     * @see java.text.MessageFormat#format(String, Object...) The formatter used
      */
     String value() default "";
 }

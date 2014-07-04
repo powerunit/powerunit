@@ -45,7 +45,7 @@ public class HelloWorldParameterTest implements TestSuite {
     @Parameter(2)
     public String expectedString;
 
-    @Test
+    @Test(name = "Test substring : Input string is {0}, subString idx is {1}, expected result is {2}")
     public void testSubString() {
         assertThat(inputString.substring(inputIndex)).is(expectedString);
     }
