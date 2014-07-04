@@ -301,6 +301,8 @@ public interface TestSuite extends Assert, Assume, Matchers {
      * @return the function that can be used on the stream (
      *         {@link java.util.stream.Stream#map(Function)}).
      * @since 0.1.0
+     * @param <T>
+     *            The object type to be added.
      */
     default <T> Function<Object[], Object[]> addFieldToEachEntry(T field) {
         return StreamParametersMapFunction.addFieldToEachEntry(field);

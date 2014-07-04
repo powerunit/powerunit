@@ -1,0 +1,13 @@
+import java.io.*;
+
+File file = new File( basedir, "target/surefire-reports/ch.powerunit.demo.FiboTest.txt" );
+if ( !file.isFile() )
+{
+    throw new FileNotFoundException( "Could not find generated test result: " + file );
+}
+
+File file = new File( basedir, "target/surefire-reports/ch.powerunit.demo.FiboUsingFilteringTest.txt" );
+if ( !file.isFile() )
+{
+    throw new FileNotFoundException( "Could not find generated test result: " + file );
+}

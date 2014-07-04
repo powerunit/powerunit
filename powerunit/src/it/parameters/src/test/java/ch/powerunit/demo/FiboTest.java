@@ -17,10 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-package ch.powerunit.examples.demo;
+package ch.powerunit.demo;
 
 import java.util.Arrays;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import ch.powerunit.Categories;
@@ -30,25 +29,35 @@ import ch.powerunit.Test;
 import ch.powerunit.TestSuite;
 
 @Categories({ "example", "demo" })
-public class FunctionParameterTest<T, R> implements TestSuite {
+public class FiboTest implements TestSuite {
 
-    @Parameters("{0} on {1} expecting {2}")
+    @Parameters("{0}->{1} ; Exception = {2}")
     public static Stream<Object[]> getDatas() {
-        return Arrays.stream(new Object[][] { {
-                (Function<String, Integer>) Integer::valueOf, "1", 1 } });
+        return Arrays.stream(new Object[][] { { 0, 0, null }, { 1, 1, null },
+                { 2, 1, null }, { 3, 2, null }, { 4, 3, null },
+                { 10, 55, null }, { -1, -1, IllegalArgumentException.class } });
     }
 
     @Parameter(0)
-    public Function<T, R> function;
+    public int x;
 
     @Parameter(1)
-    public T input;
+    public int y;
 
     @Parameter(2)
-    public R expected;
+    public Class<?> expectedException;
 
-    @Test
-    public void testAFunction() {
-        assertThatFunction(function, input).is(expected);
+    @Test(name = "validate the fib suite - no exception expected")
+    public void testFib() {
+        assumeThat(expectedException).isNull();
+        assertThatFunction(Fibo::fibo, x).is(y);
     }
+
+    @Test(name = "validate the fib suite - exception expected")
+    public void testFibException() {
+        assumeThat(expectedException).isNotNull();
+        assertWhen((p) -> Fibo.fibo(p), x).throwException(
+                instanceOf(expectedException));
+    }
+
 }

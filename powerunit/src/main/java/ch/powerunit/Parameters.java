@@ -67,9 +67,18 @@ import java.lang.annotation.Target;
  * }
  *
  * </pre>
+ * 
+ * It is also possible to indicate that each test parameter set is not
+ * applicable for each test method. This is done by using an additional, with
+ * the attribute <code>filter=true</code>. This field will be a BiFunction
+ * receiving the test method name and the parameters and returning a boolean. (
+ * <code>BiFunction&lt;String,Object[],Boolean&gt;</code>). This method will be
+ * used to check if the test method accept (or not) the parameter.
  *
  * @author borettim
  * @see java.util.stream.Stream
+ * @see TestSuite#addFieldToEachEntry(Object) This is used on the stream to add
+ *      an object at the end of each entry (for instance the BiFunction).
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

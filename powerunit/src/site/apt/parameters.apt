@@ -1,0 +1,125 @@
+Parameterized tests
+
+* Principles
+
+ It is possible to inject several data, that must be used to do different test execution. This functionnality is based
+ on the <<<@Parameters>>> system.
+ 
+* Simple usage
+
+ Let's assume you like to test the <<<valueOf>>> method of the <<<Integer>>> class. It is logical to try to test it with 
+ different parameters. The following code can be used :
+ 
+-----
+import java.util.Arrays;
+import java.util.function.Function;
+import java.util.stream.Stream;
+
+import ch.powerunit.Parameter;
+import ch.powerunit.Parameters;
+import ch.powerunit.Test;
+import ch.powerunit.TestSuite;
+
+public class FunctionParameterTest implements TestSuite {
+
+    @Parameters("{0} expecting {1}")
+    public static Stream<Object[]> getDatas() {
+        return Arrays.stream(new Object[][] { { "1", 1 }, { "2", 2} });
+    }
+
+    @Parameter(0)
+    public String input;
+
+    @Parameter(1)
+    public Integer expected;
+
+    @Test
+    public void testAFunction() {
+        assertThatFunction(Integer::valueOf, input).is(expected);
+    }
+}
+-----
+
+ This will run twice the test method <<<testAFunction>>>, using the different parameters set.
+ 
+* Conditional usage
+
+ In a lot of case, not all test methods must be executed for each test parameter set. For instance a test method may check the 
+ exception case and another one the nominal case. As in JUnit, the <<<assumeThat>>> approach is available, but a more powerfull
+ syntax is also available : It is possible to add one parameter, that will be a function that is used to check if a test method is
+ applicable or not to the test data.
+ 
+ For instance :
+ 
+-----
+import java.util.Arrays;
+import java.util.function.BiFunction;
+import java.util.stream.Stream;
+
+import ch.powerunit.Parameter;
+import ch.powerunit.Parameters;
+import ch.powerunit.Test;
+import ch.powerunit.TestSuite;
+
+public class FiboUsingFilteringTest implements TestSuite {
+
+    @Parameters()
+    public static Stream<Object[]> getDatas() {
+        return Arrays
+                .stream(new Object[][] { { 0, 0, null }, { 1, 1, null },
+                        { 2, 1, null }, { 3, 2, null }, { 4, 3, null },
+                        { 10, 55, null },
+                        { -1, -1, IllegalArgumentException.class } })
+                .map(TestSuite.DSL
+                        .<BiFunction<String, Object[], Boolean>> addFieldToEachEntry(FiboUsingFilteringTest::validateTestMethod));
+    }
+
+    private static boolean validateTestMethod(String name, Object parameters[]) {
+        if (parameters[2] == null) {
+            return "testFib".equals(name);
+        }
+        return "testFibException".equals(name);
+    }
+
+    @Parameter(0)
+    public int x;
+
+    @Parameter(1)
+    public int y;
+
+    @Parameter(2)
+    public Class<?> expectedException;
+
+    @Parameter(value = 3, filter = true)
+    public BiFunction<String, Object[], Boolean> filter;
+
+    @Test(name = "validate the fib suite : {0}->{1}")
+    public void testFib() {
+        assertThatFunction(Fibo::fibo, x).is(y);
+    }
+
+    @Test(name = "Validate exception is {2}")
+    public void testFibException() {
+        assertWhen((p) -> Fibo.fibo(p), x).throwException(
+                instanceOf(expectedException));
+    }
+
+}
+-----
+
+ In this example, the <<<@Parameters>>> method build a stream, without specifying anything special and then use the <<<map>>> method of the 
+ stream using the result of the method <<<addFieldToEachEntry>>>. This will add to each <lines> of the stream the same object. This
+ object is a <<<BiFunction>>> that is constructed by using a lambda expression. This method will check the received parameter and defines
+ which test method are acceptable regarding the context.
+ 
+ The function is injected into a special parameter that is annotated with <<<@Parameter(field = true)>>>.
+ 
+ When executed with surefire, the result will be :
+ 
+-----
+Running ch.powerunit.demo.FiboUsingFilteringTest (of <none>)
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in ch.powerunit.demo.FiboUsingFilteringTest (of <none>)
+-----
+
+ We can see that event if we have seven parameters lines and two test methods, only seven execution are displayed.
+ 

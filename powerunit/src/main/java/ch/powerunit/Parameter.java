@@ -67,7 +67,7 @@ public @interface Parameter {
      * This predicate will receive as parameter the test method name and should
      * return true if and only if the test method should be run.
      * 
-     * @return
+     * @return the filtering status.
      * @since 0.1.0
      * @see java.util.function.BiFunction
      */

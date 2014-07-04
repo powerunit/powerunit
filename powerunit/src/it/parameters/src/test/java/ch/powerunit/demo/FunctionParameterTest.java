@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-package ch.powerunit.examples.demo;
+package ch.powerunit.demo;
 
 import java.util.Arrays;
 import java.util.function.Function;
@@ -29,26 +29,21 @@ import ch.powerunit.Parameters;
 import ch.powerunit.Test;
 import ch.powerunit.TestSuite;
 
-@Categories({ "example", "demo" })
-public class FunctionParameterTest<T, R> implements TestSuite {
+public class FunctionParameterTest implements TestSuite {
 
-    @Parameters("{0} on {1} expecting {2}")
+    @Parameters("{0} expecting {1}")
     public static Stream<Object[]> getDatas() {
-        return Arrays.stream(new Object[][] { {
-                (Function<String, Integer>) Integer::valueOf, "1", 1 } });
+        return Arrays.stream(new Object[][] { { "1", 1 }, { "2", 2} });
     }
 
     @Parameter(0)
-    public Function<T, R> function;
+    public String input;
 
     @Parameter(1)
-    public T input;
-
-    @Parameter(2)
-    public R expected;
+    public Integer expected;
 
     @Test
     public void testAFunction() {
-        assertThatFunction(function, input).is(expected);
+        assertThatFunction(Integer::valueOf, input).is(expected);
     }
 }

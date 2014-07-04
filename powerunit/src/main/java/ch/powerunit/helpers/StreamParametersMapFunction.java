@@ -264,6 +264,8 @@ public final class StreamParametersMapFunction<T> implements
      * @return the function that can be used on the stream (
      *         {@link java.util.stream.Stream#map(Function)}).
      * @since 0.1.0
+     * @param <T>
+     *            The object type to be added.
      */
     public static <T> Function<Object[], Object[]> addFieldToEachEntry(T field) {
         return i -> {
