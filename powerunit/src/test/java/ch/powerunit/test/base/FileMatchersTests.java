@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -35,38 +35,38 @@ import ch.powerunit.rules.TemporaryFolder;
  *
  */
 public class FileMatchersTests {
-	public static void main(String[] args) {
-		DefaultPowerUnitRunnerImpl<FileMatchersTest> runner = new DefaultPowerUnitRunnerImpl<>(
-				FileMatchersTest.class);
-		runner.addListener(new BootstrapTestListener<FileMatchersTest>());
-		runner.run();
+    public static void main(String[] args) {
+        DefaultPowerUnitRunnerImpl<FileMatchersTest> runner = new DefaultPowerUnitRunnerImpl<>(
+                FileMatchersTest.class);
+        runner.addListener(new BootstrapTestListener<FileMatchersTest>());
+        runner.run();
 
-	}
+    }
 
-	@Categories("base")
-	public static class FileMatchersTest implements TestSuite {
+    @Categories("base")
+    public static class FileMatchersTest implements TestSuite {
 
-		private final TemporaryFolder temporaryFolder = temporaryFolder();
+        private final TemporaryFolder temporaryFolder = temporaryFolder();
 
-		@Rule
-		public final TestRule chain = temporaryFolder;
+        @Rule
+        public final TestRule chain = temporaryFolder;
 
-		@Test
-		public void emptyTest() throws IOException {
-			Path p = temporaryFolder.newFile("toto");
-			assertThat(fileExists(true).matches(p.toFile())).is(true);
-			assertThat(fileIsDirectory(false).matches(p.toFile())).is(true);
-			p = temporaryFolder.newFolder("titi");
-			assertThat(fileExists(true).matches(p.toFile())).is(true);
-			assertThat(fileIsDirectory(true).matches(p.toFile())).is(true);
-			assertThat(
-					fileContains("toto").matches(
-							temporaryFolder.getRootFolder().toFile())).is(true);
-			assertThat(fileNamed("titi").matches(p.toFile())).is(true);
-			assertThat(pathMatchedAsFile(fileNamed("titi")).matches(p))
-					.is(true);
-		}
+        @Test
+        public void emptyTest() throws IOException {
+            Path p = temporaryFolder.newFile("toto");
+            assertThat(fileExists(true).matches(p.toFile())).is(true);
+            assertThat(fileIsDirectory(false).matches(p.toFile())).is(true);
+            p = temporaryFolder.newFolder("titi");
+            assertThat(fileExists(true).matches(p.toFile())).is(true);
+            assertThat(fileIsDirectory(true).matches(p.toFile())).is(true);
+            assertThat(
+                    fileContains("toto").matches(
+                            temporaryFolder.getRootFolder().toFile())).is(true);
+            assertThat(fileNamed("titi").matches(p.toFile())).is(true);
+            assertThat(pathMatchedAsFile(fileNamed("titi")).matches(p))
+                    .is(true);
+        }
 
-	}
+    }
 
 }

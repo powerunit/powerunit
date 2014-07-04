@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
  * <p>
  * This marker annotation is for the moment only use to mark the categories. It
  * may be used in the future release to do selective test run.
- * 
+ *
  * @author borettim
  *
  */
@@ -38,10 +38,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE })
 public @interface Categories {
-	/**
-	 * The categories.
-	 * 
-	 * @return the categories
-	 */
-	String[] value();
+    /**
+     * The categories.
+     * 
+     * @return the categories
+     */
+    String[] value();
 }

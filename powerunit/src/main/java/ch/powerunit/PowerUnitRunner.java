@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,18 +21,18 @@ package ch.powerunit;
 
 /**
  * Default interface for the Power unit runner.
- * 
+ *
  * @author borettim
  *
  */
 public interface PowerUnitRunner<T> extends Runnable {
 
-	/**
-	 * Add a test result listener.
-	 * 
-	 * @param listener
-	 *            the listener.
-	 */
-	void addListener(TestResultListener<T> listener);
+    /**
+     * Add a test result listener.
+     * 
+     * @param listener
+     *            the listener.
+     */
+    void addListener(TestResultListener<T> listener);
 
 }

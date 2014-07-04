@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,44 +27,44 @@ import ch.powerunit.TestSuite;
 import ch.powerunit.exception.AssumptionError;
 
 public class AssertThatExceptionImpl<P, T extends Throwable> implements
-		AssertThatException<T>, TestSuite {
+        AssertThatException<T>, TestSuite {
 
-	private final boolean assertion;
+    private final boolean assertion;
 
-	public AssertThatExceptionImpl(boolean assertion, Statement<P, T> runnable,
-			P param, String msg) {
-		this.runnable = runnable;
-		this.msg = msg;
-		this.param = param;
-		this.assertion = assertion;
-	}
+    public AssertThatExceptionImpl(boolean assertion, Statement<P, T> runnable,
+            P param, String msg) {
+        this.runnable = runnable;
+        this.msg = msg;
+        this.param = param;
+        this.assertion = assertion;
+    }
 
-	private final Statement<P, T> runnable;
+    private final Statement<P, T> runnable;
 
-	private final String msg;
+    private final String msg;
 
-	private final P param;
+    private final P param;
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public void throwException(Matcher<T> matching) {
-		try {
-			runnable.run(param);
-		} catch (Throwable t) {// NOSONAR
-			// As we really want all error
-			if (assertion) {
-				assertThat(msg, t).is((Matcher) matching);
-			} else {
-				assumeThat(msg, t).is((Matcher) matching);
-			}
-			return;
-		}
-		if (assertion) {
-			throw new AssertionError((msg == null ? "" : msg + "\n")
-					+ "An exception was expected, but none was thrown");
-		} else {
-			throw new AssumptionError((msg == null ? "" : msg + "\n")
-					+ "An exception was expected, but none was thrown");
-		}
-	}
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public void throwException(Matcher<T> matching) {
+        try {
+            runnable.run(param);
+        } catch (Throwable t) {// NOSONAR
+            // As we really want all error
+            if (assertion) {
+                assertThat(msg, t).is((Matcher) matching);
+            } else {
+                assumeThat(msg, t).is((Matcher) matching);
+            }
+            return;
+        }
+        if (assertion) {
+            throw new AssertionError((msg == null ? "" : msg + "\n")
+                    + "An exception was expected, but none was thrown");
+        } else {
+            throw new AssumptionError((msg == null ? "" : msg + "\n")
+                    + "An exception was expected, but none was thrown");
+        }
+    }
 }

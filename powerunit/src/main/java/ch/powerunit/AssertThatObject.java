@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,73 +27,73 @@ import org.hamcrest.Matchers;
  * <p>
  * This interface is returned by the various methods
  * {@link TestSuite#assertThat(Object) assertThat} exposed by {@link TestSuite}.
- * 
+ *
  * @author borettim
  * @param <T>
  *            the object type.
  */
 public interface AssertThatObject<T> {
 
-	/**
-	 * Check that the object is matching the passed matcher.
-	 * 
-	 * @param matching
-	 *            the matcher.
-	 */
-	void is(Matcher<? super T> matching);
+    /**
+     * Check that the object is matching the passed matcher.
+     * 
+     * @param matching
+     *            the matcher.
+     */
+    void is(Matcher<? super T> matching);
 
-	/**
-	 * Check that the object is the passed one (shortcut to Matcher.equalTo).
-	 * 
-	 * @param compareTo
-	 *            the value.
-	 */
-	default void is(T compareTo) {
-		is(Matchers.equalTo(compareTo));
-	}
+    /**
+     * Check that the object is the passed one (shortcut to Matcher.equalTo).
+     * 
+     * @param compareTo
+     *            the value.
+     */
+    default void is(T compareTo) {
+        is(Matchers.equalTo(compareTo));
+    }
 
-	/**
-	 * Check that the object is not the passed one.
-	 * 
-	 * @param compareTo
-	 *            the value
-	 */
-	default void isNot(T compareTo) {
-		isNot(Matchers.equalTo(compareTo));
-	}
+    /**
+     * Check that the object is not the passed one.
+     * 
+     * @param compareTo
+     *            the value
+     */
+    default void isNot(T compareTo) {
+        isNot(Matchers.equalTo(compareTo));
+    }
 
-	/**
-	 * Check that the object is not matching the passed matcher.
-	 * 
-	 * @param matching
-	 *            the matcher
-	 */
-	default void isNot(Matcher<T> matching) {
-		is(Matchers.not(matching));
-	}
+    /**
+     * Check that the object is not matching the passed matcher.
+     * 
+     * @param matching
+     *            the matcher
+     */
+    default void isNot(Matcher<T> matching) {
+        is(Matchers.not(matching));
+    }
 
-	/**
-	 * Check that the object is null.
-	 */
-	default void isNull() {
-		is(Matchers.nullValue());
-	}
+    /**
+     * Check that the object is null.
+     */
+    default void isNull() {
+        is(Matchers.nullValue());
+    }
 
-	/**
-	 * Check that the object is not null.
-	 */
-	default void isNotNull() {
-		is(Matchers.notNullValue());
-	}
+    /**
+     * Check that the object is not null.
+     */
+    default void isNotNull() {
+        is(Matchers.notNullValue());
+    }
 
-	/**
-	 * Check that the object is of a specific class (or subclasses).
-	 * 
-	 * @param clazz
-	 *            the class
-	 */
-	default void isA(Class<? super T> clazz) {
-		is(Matchers.isA(clazz));
-	}
+    /**
+     * Check that the object is of a specific class (or subclasses).
+     * 
+     * @param clazz
+     *            the class
+     */
+    default void isA(Class<? super T> clazz) {
+        is(Matchers.isA(clazz));
+    }
 
 }

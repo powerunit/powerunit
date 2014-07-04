@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,24 +26,24 @@ import org.hamcrest.Matcher;
 
 /**
  * Support for value check on optional
- * 
+ *
  * @author borettim
  *
  */
 public class OptionalIntMatcher extends FeatureMatcher<OptionalInt, Integer> {
 
-	/**
-	 * Default constructor.
-	 * 
-	 * @param subMatcher
-	 *            the matcher
-	 */
-	public OptionalIntMatcher(Matcher<? super Integer> subMatcher) {
-		super(subMatcher, "has value", "has value");
-	}
+    /**
+     * Default constructor.
+     * 
+     * @param subMatcher
+     *            the matcher
+     */
+    public OptionalIntMatcher(Matcher<? super Integer> subMatcher) {
+        super(subMatcher, "has value", "has value");
+    }
 
-	@Override
-	protected Integer featureValueOf(OptionalInt actual) {
-		return actual.getAsInt();
-	}
+    @Override
+    protected Integer featureValueOf(OptionalInt actual) {
+        return actual.getAsInt();
+    }
 }

@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
  * Mark a method as being a test method.
  * <p>
  * This method must be public, non static, 0-arg, void return.
- * 
+ *
  * @author borettim
  *
  */
@@ -37,12 +37,12 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Test {
-	/**
-	 * Define an alternative name for the test.
-	 * <p>
-	 * If not used, the test name will be based on the method name.
-	 * 
-	 * @return the name
-	 */
-	String name() default "";
+    /**
+     * Define an alternative name for the test.
+     * <p>
+     * If not used, the test name will be based on the method name.
+     * 
+     * @return the name
+     */
+    String name() default "";
 }

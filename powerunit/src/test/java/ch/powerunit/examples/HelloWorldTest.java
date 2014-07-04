@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,20 +25,20 @@ import ch.powerunit.TestSuite;
 
 @Categories({ "example" })
 public class HelloWorldTest implements TestSuite {
-	@Test()
-	public void testHelloWorld1() {
-		assertThat("Hello world").is(containsString(" "));
-	}
+    @Test()
+    public void testHelloWorld1() {
+        assertThat("Hello world").is(containsString(" "));
+    }
 
-	@Test(name = "Test Hello World alternate test name")
-	public void testHelloWorld2() {
-		assertThat("Hello world").is(containsString(" "));
-	}
+    @Test(name = "Test Hello World alternate test name")
+    public void testHelloWorld2() {
+        assertThat("Hello world").is(containsString(" "));
+    }
 
-	@Test(name = "exception Hello world")
-	public void testHelloWorld3() {
-		assertWhen((p) -> {
-			throw new Throwable("tst");
-		}).throwException(exceptionMessage("tst"));
-	}
+    @Test(name = "exception Hello world")
+    public void testHelloWorld3() {
+        assertWhen((p) -> {
+            throw new Throwable("tst");
+        }).throwException(exceptionMessage("tst"));
+    }
 }

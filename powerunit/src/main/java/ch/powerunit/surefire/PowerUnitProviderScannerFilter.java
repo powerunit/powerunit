@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -36,34 +36,34 @@ import ch.powerunit.Test;
  */
 public class PowerUnitProviderScannerFilter implements ScannerFilter {
 
-	private final Set<String> sgroups;
+    private final Set<String> sgroups;
 
-	private final Set<String> sexcludedGroups;
+    private final Set<String> sexcludedGroups;
 
-	public PowerUnitProviderScannerFilter(Properties parameters) {
-		String groups = parameters.getProperty(
-				ProviderParameterNames.TESTNG_GROUPS_PROP, "");
-		String excludedGroups = parameters.getProperty(
-				ProviderParameterNames.TESTNG_EXCLUDEDGROUPS_PROP, "");
-		Set<String> sgroups = new HashSet<String>();
-		Set<String> sexcludedGroups = new HashSet<String>();
-		for (String g : groups.split(",")) {
-			sgroups.add(g);
-		}
-		for (String g : excludedGroups.split(",")) {
-			sexcludedGroups.add(g);
-		}
-		this.sgroups = Collections.unmodifiableSet(sgroups);
-		this.sexcludedGroups = Collections.unmodifiableSet(sexcludedGroups);
-	}
+    public PowerUnitProviderScannerFilter(Properties parameters) {
+        String groups = parameters.getProperty(
+                ProviderParameterNames.TESTNG_GROUPS_PROP, "");
+        String excludedGroups = parameters.getProperty(
+                ProviderParameterNames.TESTNG_EXCLUDEDGROUPS_PROP, "");
+        Set<String> sgroups = new HashSet<String>();
+        Set<String> sexcludedGroups = new HashSet<String>();
+        for (String g : groups.split(",")) {
+            sgroups.add(g);
+        }
+        for (String g : excludedGroups.split(",")) {
+            sexcludedGroups.add(g);
+        }
+        this.sgroups = Collections.unmodifiableSet(sgroups);
+        this.sexcludedGroups = Collections.unmodifiableSet(sexcludedGroups);
+    }
 
-	@Override
-	public boolean accept(@SuppressWarnings("rawtypes") Class testClass) {
-		for (Method m : testClass.getDeclaredMethods()) {
-			if (m.isAnnotationPresent(Test.class)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean accept(@SuppressWarnings("rawtypes") Class testClass) {
+        for (Method m : testClass.getDeclaredMethods()) {
+            if (m.isAnnotationPresent(Test.class)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,59 +28,59 @@ import org.hamcrest.Matchers;
  * <p>
  * This interface is returned by the various methods
  * {@link TestSuite#assertThat(String) assertThat} exposed by {@link TestSuite}.
- * 
+ *
  * @author borettim
  *
  */
 public interface AssertThatString extends AssertThatObject<String> {
-	/**
-	 * Check that a string another string.
-	 * 
-	 * @param substring
-	 *            the other string.
-	 */
-	default void containsString(String substring) {
-		is(Matchers.containsString(substring));
-	}
+    /**
+     * Check that a string another string.
+     * 
+     * @param substring
+     *            the other string.
+     */
+    default void containsString(String substring) {
+        is(Matchers.containsString(substring));
+    }
 
-	/**
-	 * Check that a string starts with another one.
-	 * 
-	 * @param prefix
-	 *            the prefix.
-	 */
-	default void startsWith(String prefix) {
-		is(Matchers.startsWith(prefix));
-	}
+    /**
+     * Check that a string starts with another one.
+     * 
+     * @param prefix
+     *            the prefix.
+     */
+    default void startsWith(String prefix) {
+        is(Matchers.startsWith(prefix));
+    }
 
-	/**
-	 * Check that a string ends with another one.
-	 * 
-	 * @param prefix
-	 *            the prefix.
-	 */
-	default void endsWith(String prefix) {
-		is(Matchers.endsWith(prefix));
-	}
+    /**
+     * Check that a string ends with another one.
+     * 
+     * @param prefix
+     *            the prefix.
+     */
+    default void endsWith(String prefix) {
+        is(Matchers.endsWith(prefix));
+    }
 
-	/**
-	 * Validate a string with a {@link java.util.regex.Pattern}.
-	 * 
-	 * @param pattern
-	 *            the pattern to be used.
-	 */
-	default void matchesRegex(Pattern pattern) {
-		is(TestSuite.DSL.matchesRegex(pattern));
-	}
+    /**
+     * Validate a string with a {@link java.util.regex.Pattern}.
+     * 
+     * @param pattern
+     *            the pattern to be used.
+     */
+    default void matchesRegex(Pattern pattern) {
+        is(TestSuite.DSL.matchesRegex(pattern));
+    }
 
-	/**
-	 * Validate a string with a regex.
-	 * 
-	 * 
-	 * @param regex
-	 *            The regex to be used for the validation.
-	 */
-	default void matchesRegex(String regex) {
-		is(TestSuite.DSL.matchesRegex(regex));
-	}
+    /**
+     * Validate a string with a regex.
+     * 
+     * 
+     * @param regex
+     *            The regex to be used for the validation.
+     */
+    default void matchesRegex(String regex) {
+        is(TestSuite.DSL.matchesRegex(regex));
+    }
 }

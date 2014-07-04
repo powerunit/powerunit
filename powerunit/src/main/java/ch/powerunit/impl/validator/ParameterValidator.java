@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,19 +26,19 @@ import ch.powerunit.Parameter;
 import ch.powerunit.exception.InternalError;
 
 public interface ParameterValidator {
-	default void checkParameterAnnotationForField(Field f) {
-		if (Modifier.isStatic(f.getModifiers())) {
-			throw new InternalError("@Parameter field is static "
-					+ f.toString());
-		}
-		if (!Modifier.isPublic(f.getModifiers())) {
-			throw new InternalError("@Parameter field is not public "
-					+ f.toString());
-		}
-		int position = f.getAnnotation(Parameter.class).value();
-		if (position < 0) {
-			throw new InternalError("@Parameter can'be negative "
-					+ f.toString());
-		}
-	}
+    default void checkParameterAnnotationForField(Field f) {
+        if (Modifier.isStatic(f.getModifiers())) {
+            throw new InternalError("@Parameter field is static "
+                    + f.toString());
+        }
+        if (!Modifier.isPublic(f.getModifiers())) {
+            throw new InternalError("@Parameter field is not public "
+                    + f.toString());
+        }
+        int position = f.getAnnotation(Parameter.class).value();
+        if (position < 0) {
+            throw new InternalError("@Parameter can'be negative "
+                    + f.toString());
+        }
+    }
 }

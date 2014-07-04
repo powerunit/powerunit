@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -36,18 +36,18 @@ import java.lang.annotation.Target;
  * executed around the once of the lower classes.
  * <p>
  * For example :
- * 
+ *
  * <pre>
  * &#064;Rule
  * public final TestRule rule = before(this::prepare).around(after(this::clean));
  * </pre>
- * 
+ *
  * This will define that the method <code>prepare</code> of the test class will
  * be execute before each test and then, the method <code>clean</code> after
  * each test. Of course, thanks to the lambda, it is not required to reference a
  * method of this class, but it is also possible to pass some code directly in
  * line (<code>()-&gt;{}</code>).
- * 
+ *
  * @author borettim
  * @see TestRule
  */

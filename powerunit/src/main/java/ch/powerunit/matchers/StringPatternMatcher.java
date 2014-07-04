@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,35 +26,35 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 /**
  * The matcher on string pattern.
- * 
+ *
  * @author borettim
  *
  */
 public class StringPatternMatcher extends TypeSafeDiagnosingMatcher<String> {
 
-	/**
-	 * @param pattern
-	 */
-	public StringPatternMatcher(Pattern pattern) {
-		this.pattern = pattern;
-	}
+    /**
+     * @param pattern
+     */
+    public StringPatternMatcher(Pattern pattern) {
+        this.pattern = pattern;
+    }
 
-	private Pattern pattern;
+    private final Pattern pattern;
 
-	@Override
-	public void describeTo(Description description) {
-		description.appendText("a string matching the pattern ").appendValue(
-				pattern);
-	}
+    @Override
+    public void describeTo(Description description) {
+        description.appendText("a string matching the pattern ").appendValue(
+                pattern);
+    }
 
-	@Override
-	protected boolean matchesSafely(String item, Description mismatchDescription) {
-		if (!pattern.matcher(item).matches()) {
-			mismatchDescription.appendText("but the string ").appendValue(item)
-					.appendText(" was not matching ").appendValue(pattern);
-			return false;
-		}
-		return true;
-	}
+    @Override
+    protected boolean matchesSafely(String item, Description mismatchDescription) {
+        if (!pattern.matcher(item).matches()) {
+            mismatchDescription.appendText("but the string ").appendValue(item)
+                    .appendText(" was not matching ").appendValue(pattern);
+            return false;
+        }
+        return true;
+    }
 
 }

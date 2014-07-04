@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,25 +26,25 @@ import org.hamcrest.Matcher;
 
 /**
  * Support for presence check on optional
- * 
+ *
  * @author borettim
  *
  */
 public class OptionalLongPresentMatcher extends
-		FeatureMatcher<OptionalLong, Boolean> {
+        FeatureMatcher<OptionalLong, Boolean> {
 
-	/**
-	 * Default constructor.
-	 * 
-	 * @param subMatcher
-	 *            the matcher
-	 */
-	public OptionalLongPresentMatcher(Matcher<? super Boolean> subMatcher) {
-		super(subMatcher, "is present", "is present");
-	}
+    /**
+     * Default constructor.
+     * 
+     * @param subMatcher
+     *            the matcher
+     */
+    public OptionalLongPresentMatcher(Matcher<? super Boolean> subMatcher) {
+        super(subMatcher, "is present", "is present");
+    }
 
-	@Override
-	protected Boolean featureValueOf(OptionalLong actual) {
-		return actual.isPresent();
-	}
+    @Override
+    protected Boolean featureValueOf(OptionalLong actual) {
+        return actual.isPresent();
+    }
 }

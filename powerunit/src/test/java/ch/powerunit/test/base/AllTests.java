@@ -13,28 +13,28 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
 package ch.powerunit.test.base;
 
 public class AllTests {
-	public static void main(String[] args) {
-		PowerUnitProviderListenerTests.main(args);
-		PowerUnitProviderScannerFilterTests.main(args);
-		MockitoRuleTests.main(args);
-		TestContextRuleTests.main(args);
-		ExternalResourceTests.main(args);
-		RuntimeParametersValidatorTests.main(args);
-		RuntimeRuleValidatorTests.main(args);
-		RuntimeTestValidatorTests.main(args);
-		PowerUnitProviderTests.main(args);
-		SystemPropertiesRuleTests.main(args);
-		TemporaryFolderTests.main(args);
-		StreamParametersMapFunctionTests.main(args);
-		MatchersTests.main(args);
-		FileMatchersTests.main(args);
-	}
+    public static void main(String[] args) {
+        PowerUnitProviderListenerTests.main(args);
+        PowerUnitProviderScannerFilterTests.main(args);
+        MockitoRuleTests.main(args);
+        TestContextRuleTests.main(args);
+        ExternalResourceTests.main(args);
+        RuntimeParametersValidatorTests.main(args);
+        RuntimeRuleValidatorTests.main(args);
+        RuntimeTestValidatorTests.main(args);
+        PowerUnitProviderTests.main(args);
+        SystemPropertiesRuleTests.main(args);
+        TemporaryFolderTests.main(args);
+        StreamParametersMapFunctionTests.main(args);
+        MatchersTests.main(args);
+        FileMatchersTests.main(args);
+    }
 
 }

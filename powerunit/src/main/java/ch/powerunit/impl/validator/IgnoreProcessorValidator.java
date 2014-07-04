@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,24 +27,24 @@ import ch.powerunit.Ignore;
 import ch.powerunit.Test;
 
 public interface IgnoreProcessorValidator extends ProcessValidator {
-	default void ignoreAnnotationValidation(RoundEnvironment roundEnv) {
-		roundEnv.getElementsAnnotatedWith(Ignore.class).forEach(
-				this::ignoreOneAnnotationValidation);
+    default void ignoreAnnotationValidation(RoundEnvironment roundEnv) {
+        roundEnv.getElementsAnnotatedWith(Ignore.class).forEach(
+                this::ignoreOneAnnotationValidation);
 
-	}
+    }
 
-	default void ignoreOneAnnotationValidation(Element element) {
-		if (element.getKind() == ElementKind.CLASS) {
-			return;
-		}
-		if (element.getKind() == ElementKind.METHOD) {
-			if (element.getAnnotation(Test.class) == null) {
-				warn("Method "
-						+ elementAsString(element)
-						+ "\n\tis prefixed with @Ignore and is prefixed by @Test\n\tThe ignore annotation can only be used on method that are annotated with @test");
-			}
-			return;
-		}
-		warn("@Ignore on not supported element" + elementAsString(element));
-	}
+    default void ignoreOneAnnotationValidation(Element element) {
+        if (element.getKind() == ElementKind.CLASS) {
+            return;
+        }
+        if (element.getKind() == ElementKind.METHOD) {
+            if (element.getAnnotation(Test.class) == null) {
+                warn("Method "
+                        + elementAsString(element)
+                        + "\n\tis prefixed with @Ignore and is prefixed by @Test\n\tThe ignore annotation can only be used on method that are annotated with @test");
+            }
+            return;
+        }
+        warn("@Ignore on not supported element" + elementAsString(element));
+    }
 }

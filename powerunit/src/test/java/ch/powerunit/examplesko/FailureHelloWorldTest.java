@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,18 +25,18 @@ import ch.powerunit.TestSuite;
 
 @Categories({ "exampleko" })
 public class FailureHelloWorldTest implements TestSuite {
-	@Test
-	public void testDirectFailure() {
-		fail("Expected error");
-	}
+    @Test
+    public void testDirectFailure() {
+        fail("Expected error");
+    }
 
-	@Test
-	public void testAssertionFailure() {
-		assertThat(1).is(2);
-	}
+    @Test
+    public void testAssertionFailure() {
+        assertThat(1).is(2);
+    }
 
-	@Test
-	public void testUnexpectedError() {
-		throw new IllegalArgumentException("unexpected error");
-	}
+    @Test
+    public void testUnexpectedError() {
+        throw new IllegalArgumentException("unexpected error");
+    }
 }

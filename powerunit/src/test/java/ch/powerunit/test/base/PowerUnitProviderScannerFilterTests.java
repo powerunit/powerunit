@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,29 +29,29 @@ import ch.powerunit.surefire.PowerUnitProviderScannerFilter;
 
 public class PowerUnitProviderScannerFilterTests {
 
-	public static void main(String[] args) {
-		DefaultPowerUnitRunnerImpl<PowerUnitProviderScannerFilterTest> runner = new DefaultPowerUnitRunnerImpl<>(
-				PowerUnitProviderScannerFilterTest.class);
-		runner.addListener(new BootstrapTestListener<PowerUnitProviderScannerFilterTest>());
-		runner.run();
-	}
+    public static void main(String[] args) {
+        DefaultPowerUnitRunnerImpl<PowerUnitProviderScannerFilterTest> runner = new DefaultPowerUnitRunnerImpl<>(
+                PowerUnitProviderScannerFilterTest.class);
+        runner.addListener(new BootstrapTestListener<PowerUnitProviderScannerFilterTest>());
+        runner.run();
+    }
 
-	@Categories("base")
-	public static class PowerUnitProviderScannerFilterTest implements TestSuite {
-		@Test
-		public void testRejectedClass() {
-			assertThat(
-					new PowerUnitProviderScannerFilter(new Properties())
-							.accept(Object.class)).is(false);
-		}
+    @Categories("base")
+    public static class PowerUnitProviderScannerFilterTest implements TestSuite {
+        @Test
+        public void testRejectedClass() {
+            assertThat(
+                    new PowerUnitProviderScannerFilter(new Properties())
+                            .accept(Object.class)).is(false);
+        }
 
-		@Test
-		public void testAcceptedClass() {
-			assertThat(
-					new PowerUnitProviderScannerFilter(new Properties())
-							.accept(PowerUnitProviderScannerFilterTest.class))
-					.is(true);
-		}
-	}
+        @Test
+        public void testAcceptedClass() {
+            assertThat(
+                    new PowerUnitProviderScannerFilter(new Properties())
+                            .accept(PowerUnitProviderScannerFilterTest.class))
+                    .is(true);
+        }
+    }
 
 }

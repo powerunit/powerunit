@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,11 +24,11 @@ import java.util.function.Supplier;
 import ch.powerunit.AssertThatIterable;
 
 public class AssertThatIterableImpl<T> extends
-		AssertThatObjectImpl<Iterable<T>> implements AssertThatIterable<T> {
+        AssertThatObjectImpl<Iterable<T>> implements AssertThatIterable<T> {
 
-	public AssertThatIterableImpl(boolean assertion, String msg,
-			Supplier<Iterable<T>> provider) {
-		super(assertion, msg, provider);
-	}
+    public AssertThatIterableImpl(boolean assertion, String msg,
+            Supplier<Iterable<T>> provider) {
+        super(assertion, msg, provider);
+    }
 
 }

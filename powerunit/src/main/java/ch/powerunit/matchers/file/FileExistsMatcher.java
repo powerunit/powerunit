@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,19 +26,19 @@ import org.hamcrest.Matcher;
 
 /**
  * The Mather on exists File
- * 
+ *
  * @author borettim
  *
  */
 public class FileExistsMatcher extends FeatureMatcher<File, Boolean> {
 
-	public FileExistsMatcher(Matcher<? super Boolean> subMatcher) {
-		super(subMatcher, "exists", "exists");
-	}
+    public FileExistsMatcher(Matcher<? super Boolean> subMatcher) {
+        super(subMatcher, "exists", "exists");
+    }
 
-	@Override
-	protected Boolean featureValueOf(File actual) {
-		return actual.exists();
-	}
+    @Override
+    protected Boolean featureValueOf(File actual) {
+        return actual.exists();
+    }
 
 }

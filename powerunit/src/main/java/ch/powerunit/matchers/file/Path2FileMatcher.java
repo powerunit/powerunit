@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,19 +27,19 @@ import org.hamcrest.Matcher;
 
 /**
  * The Matcher to transform path to file
- * 
+ *
  * @author borettim
  *
  */
 public class Path2FileMatcher extends FeatureMatcher<Path, File> {
 
-	public Path2FileMatcher(Matcher<? super File> subMatcher) {
-		super(subMatcher, "as file", "as file");
-	}
+    public Path2FileMatcher(Matcher<? super File> subMatcher) {
+        super(subMatcher, "as file", "as file");
+    }
 
-	@Override
-	protected File featureValueOf(Path actual) {
-		return actual.toFile();
-	}
+    @Override
+    protected File featureValueOf(Path actual) {
+        return actual.toFile();
+    }
 
 }

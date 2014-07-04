@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,21 +25,21 @@ import java.lang.reflect.Modifier;
 import ch.powerunit.exception.InternalError;
 
 public interface TestValidator {
-	default void checkTestAnnotationForMethod(Method m) {
-		if (Modifier.isStatic(m.getModifiers())) {
-			throw new InternalError("@Test method is static " + m.toString());
-		}
-		if (!Modifier.isPublic(m.getModifiers())) {
-			throw new InternalError("@Test method is not public "
-					+ m.toString());
-		}
-		if (!Void.TYPE.equals(m.getReturnType())) {
-			throw new InternalError("@Test method is not void " + m.toString());
-		}
-		if (m.getParameterCount() != 0) {
-			throw new InternalError("@Test method is not 0-parameter "
-					+ m.toString());
-		}
-	}
+    default void checkTestAnnotationForMethod(Method m) {
+        if (Modifier.isStatic(m.getModifiers())) {
+            throw new InternalError("@Test method is static " + m.toString());
+        }
+        if (!Modifier.isPublic(m.getModifiers())) {
+            throw new InternalError("@Test method is not public "
+                    + m.toString());
+        }
+        if (!Void.TYPE.equals(m.getReturnType())) {
+            throw new InternalError("@Test method is not void " + m.toString());
+        }
+        if (m.getParameterCount() != 0) {
+            throw new InternalError("@Test method is not 0-parameter "
+                    + m.toString());
+        }
+    }
 
 }

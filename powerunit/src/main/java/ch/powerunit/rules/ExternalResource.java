@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -37,32 +37,32 @@ import ch.powerunit.TestContext;
  * external resource (destruction of folder, shutdown of server, etc). This
  * method is used even in case the test is in failure or error.</li>
  * </ul>
- * 
+ *
  * @author borettim
  */
 public interface ExternalResource extends TestListenerRule {
 
-	@Override
-	default void onStart(TestContext<Object> context) {
-		before();
-	}
+    @Override
+    default void onStart(TestContext<Object> context) {
+        before();
+    }
 
-	@Override
-	default void onEnd(TestContext<Object> context) {
-		after();
-	}
+    @Override
+    default void onEnd(TestContext<Object> context) {
+        after();
+    }
 
-	/**
-	 * Code to be done before
-	 */
-	default void before() {
-		// Do nothing as default
-	}
+    /**
+     * Code to be done before
+     */
+    default void before() {
+        // Do nothing as default
+    }
 
-	/**
-	 * Code to be done after.
-	 */
-	default void after() {
-		// Do nothing as default
-	}
+    /**
+     * Code to be done after.
+     */
+    default void after() {
+        // Do nothing as default
+    }
 }

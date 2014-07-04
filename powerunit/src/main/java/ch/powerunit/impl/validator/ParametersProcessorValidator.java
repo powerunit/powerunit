@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -36,57 +36,57 @@ import javax.lang.model.type.TypeMirror;
 import ch.powerunit.Parameters;
 
 public interface ParametersProcessorValidator extends ProcessValidator {
-	default void parametersValidation(ProcessingEnvironment processingEnv,
-			RoundEnvironment roundEnv) {
-		Set<Element> exists = new HashSet<>();
-		Set<? extends Element> elements = roundEnv
-				.getElementsAnnotatedWith(Parameters.class);
-		TypeElement stream = processingEnv.getElementUtils().getTypeElement(
-				"java.util.stream.Stream");
-		for (Element element : elements) {
-			if (element.getKind() != ElementKind.METHOD) {
-				error("@Parameters must prefix a method -- " + element
-						+ " is not a method");
-				continue;
-			}
-			Element parent = element.getEnclosingElement();
-			if (exists.contains(parent)) {
-				warn("Class "
-						+ elementAsString(parent)
-						+ "\n\t contains more than one @Parameters method\n\tOnly one @Parameters method is allowed for a test class");
-			}
-			exists.add(parent);
-			ExecutableElement ee = (ExecutableElement) element;
-			if (!ee.getModifiers().contains(Modifier.STATIC)) {
-				warn("Method "
-						+ elementAsString(element)
-						+ "\n\tis prefixed with @Parameters and is not static\n\tThe parameters method must be static");
-			}
-			if (!ee.getModifiers().contains(Modifier.PUBLIC)) {
-				warn("Method "
-						+ elementAsString(element)
-						+ "\n\tis prefixed with @Parameters and is not public\n\tThe parameters method must be public");
-			}
-			TypeMirror rt = ee.getReturnType();
-			if (rt.getKind() != TypeKind.DECLARED) {
-				warn("Method " + elementAsString(element)
-						+ "\n\tis prefixed with @Parameters and return " + rt
-						+ "\n\tThe parameters method must return " + stream);
-			} else {
-				DeclaredType dt = (DeclaredType) rt;
-				if (!processingEnv.getTypeUtils().isSubtype(
-						dt.asElement().asType(), stream.asType())) {
-					warn("Method " + elementAsString(element)
-							+ "\n\tis prefixed with @Parameters and return "
-							+ dt.asElement().asType()
-							+ "\n\tThe parameters method must return " + stream);
-				}
-			}
-			if (ee.getParameters().size() != 0) {
-				warn("Method "
-						+ elementAsString(element)
-						+ "\n\tis prefixed with @Parameters and is not 0-args\n\tThe parameters method must be 0-args");
-			}
-		}
-	}
+    default void parametersValidation(ProcessingEnvironment processingEnv,
+            RoundEnvironment roundEnv) {
+        Set<Element> exists = new HashSet<>();
+        Set<? extends Element> elements = roundEnv
+                .getElementsAnnotatedWith(Parameters.class);
+        TypeElement stream = processingEnv.getElementUtils().getTypeElement(
+                "java.util.stream.Stream");
+        for (Element element : elements) {
+            if (element.getKind() != ElementKind.METHOD) {
+                error("@Parameters must prefix a method -- " + element
+                        + " is not a method");
+                continue;
+            }
+            Element parent = element.getEnclosingElement();
+            if (exists.contains(parent)) {
+                warn("Class "
+                        + elementAsString(parent)
+                        + "\n\t contains more than one @Parameters method\n\tOnly one @Parameters method is allowed for a test class");
+            }
+            exists.add(parent);
+            ExecutableElement ee = (ExecutableElement) element;
+            if (!ee.getModifiers().contains(Modifier.STATIC)) {
+                warn("Method "
+                        + elementAsString(element)
+                        + "\n\tis prefixed with @Parameters and is not static\n\tThe parameters method must be static");
+            }
+            if (!ee.getModifiers().contains(Modifier.PUBLIC)) {
+                warn("Method "
+                        + elementAsString(element)
+                        + "\n\tis prefixed with @Parameters and is not public\n\tThe parameters method must be public");
+            }
+            TypeMirror rt = ee.getReturnType();
+            if (rt.getKind() != TypeKind.DECLARED) {
+                warn("Method " + elementAsString(element)
+                        + "\n\tis prefixed with @Parameters and return " + rt
+                        + "\n\tThe parameters method must return " + stream);
+            } else {
+                DeclaredType dt = (DeclaredType) rt;
+                if (!processingEnv.getTypeUtils().isSubtype(
+                        dt.asElement().asType(), stream.asType())) {
+                    warn("Method " + elementAsString(element)
+                            + "\n\tis prefixed with @Parameters and return "
+                            + dt.asElement().asType()
+                            + "\n\tThe parameters method must return " + stream);
+                }
+            }
+            if (!ee.getParameters().isEmpty()) {
+                warn("Method "
+                        + elementAsString(element)
+                        + "\n\tis prefixed with @Parameters and is not 0-args\n\tThe parameters method must be 0-args");
+            }
+        }
+    }
 }

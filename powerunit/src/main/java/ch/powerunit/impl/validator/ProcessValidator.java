@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,9 +22,9 @@ package ch.powerunit.impl.validator;
 import javax.lang.model.element.Element;
 
 public interface ProcessValidator {
-	String elementAsString(Element ee);
+    String elementAsString(Element ee);
 
-	void error(String msg);
+    void error(String msg);
 
-	void warn(String msg);
+    void warn(String msg);
 }

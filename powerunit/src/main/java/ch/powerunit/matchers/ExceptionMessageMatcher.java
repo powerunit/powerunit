@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,25 +24,25 @@ import org.hamcrest.Matcher;
 
 /**
  * The matcher on exception message.
- * 
+ *
  * @author borettim
  *
  */
 public class ExceptionMessageMatcher extends FeatureMatcher<Throwable, String> {
 
-	/**
-	 * Default builder
-	 * 
-	 * @param subMatcher
-	 *            the matcher to be applied
-	 */
-	public ExceptionMessageMatcher(Matcher<? super String> subMatcher) {
-		super(subMatcher, "message", "message");
-	}
+    /**
+     * Default builder
+     * 
+     * @param subMatcher
+     *            the matcher to be applied
+     */
+    public ExceptionMessageMatcher(Matcher<? super String> subMatcher) {
+        super(subMatcher, "message", "message");
+    }
 
-	@Override
-	protected String featureValueOf(Throwable actual) {
-		return actual.getMessage();
-	}
+    @Override
+    protected String featureValueOf(Throwable actual) {
+        return actual.getMessage();
+    }
 
 }

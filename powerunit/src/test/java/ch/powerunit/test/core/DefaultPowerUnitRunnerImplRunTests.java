@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -35,327 +35,327 @@ import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
 import ch.powerunit.rules.ExternalResource;
 
 public class DefaultPowerUnitRunnerImplRunTests {
-	public static void main(String[] args) {
-		testRun();
-		testRunError();
-		testRunClassIgnore();
-	}
-
-	public static void testRun() {
-		AllTests.testNoException(
-				"testRun",
-				() -> {
-					counter = 0;
-					DefaultPowerUnitRunnerImpl<TestClass1> underTest = new DefaultPowerUnitRunnerImpl<>(
-							TestClass1.class);
-					underTest.addListener(new Listener<TestClass1>());
-					underTest.run();
-					TestSuite.DSL.assertThat(TestClass1.counter1).is(1);
-					TestSuite.DSL.assertThat(TestClass1.counter2).is(1);
-					TestSuite.DSL.assertThat(TestClass1.counter3).is(2);
-					TestSuite.DSL.assertThat(TestClass1.counter4).is(2);
-					TestSuite.DSL.assertThat(TestClass1.counter5).is(4);
-					TestSuite.DSL.assertThat(TestClass1.counter6).is(4);
-					TestSuite.DSL.assertThat(TestClass1.bigCounter).is(0);
-					TestSuite.DSL.assertThat(counter).is(
-							1000l + 10000 + 100000 + 100000 + 1000000 + 1000000
-									+ 10000000000l + 100000000000l);
-
-				});
-		AllTests.testNoException(
-				"testRun2",
-				() -> {
-					counter = 0;
-					DefaultPowerUnitRunnerImpl<TestClass4> underTest = new DefaultPowerUnitRunnerImpl<>(
-							TestClass4.class);
-					underTest.addListener(new Listener<TestClass4>());
-					underTest.run();
-					TestSuite.DSL.assertThat(TestClass1.counter1).is(1);
-					TestSuite.DSL.assertThat(TestClass1.counter2).is(1);
-					TestSuite.DSL.assertThat(TestClass1.counter3).is(2);
-					TestSuite.DSL.assertThat(TestClass1.counter4).is(2);
-					TestSuite.DSL.assertThat(TestClass1.counter5).is(4);
-					TestSuite.DSL.assertThat(TestClass1.counter6).is(4);
-					TestSuite.DSL.assertThat(TestClass1.bigCounter).is(0);
-					TestSuite.DSL.assertThat(counter).is(
-							1000l + 10000 + 100000 + 100000 + 1000000 + 1000000
-									+ 10000000000l + 100000000000l);
-
-				});
-	}
-
-	public static void testRunError() {
-		AllTests.testException("testRunCantBuildTestClass",
-				() -> new DefaultPowerUnitRunnerImpl<TestClass2>(
-						TestClass2.class).run(), "Unexpected error");
-	}
-
-	public static void testRunClassIgnore() {
-		AllTests.testNoException(
-				"testRunClassIgnore",
-				() -> {
-					counter = 0;
-					DefaultPowerUnitRunnerImpl<TestClass3> underTest = new DefaultPowerUnitRunnerImpl<>(
-							TestClass3.class);
-					underTest.addListener(new Listener<TestClass3>());
-					underTest.run();
-					TestSuite.DSL.assertThat(counter).is(
-							1000l + 10000 + 100000 + 100000000);
-				});
-	}
-
-	private static class Listener<T> implements TestResultListener<T> {
-
-		@Override
-		public void notifySetStart(String setName, String parameters) {
-			counter += 1000;
-		}
-
-		@Override
-		public void notifySetEnd(String setName, String parameters) {
-			counter += 10000;
-		}
-
-		@Override
-		public void notifyStart(TestContext<T> context) {
-			counter += 100000;
-		}
-
-		@Override
-		public void notifySuccess(TestContext<T> context) {
-			counter += 1000000;
-		}
-
-		@Override
-		public void notifyFailure(TestContext<T> context, Throwable cause) {
-			counter += 10000000;
-		}
-
-		@Override
-		public void notifySkipped(TestContext<T> context) {
-			counter += 100000000;
-		}
-
-		@Override
-		public void notifyError(TestContext<T> context, Throwable cause) {
-			counter += 1000000000;
-		}
+    public static void main(String[] args) {
+        testRun();
+        testRunError();
+        testRunClassIgnore();
+    }
+
+    public static void testRun() {
+        AllTests.testNoException(
+                "testRun",
+                () -> {
+                    counter = 0;
+                    DefaultPowerUnitRunnerImpl<TestClass1> underTest = new DefaultPowerUnitRunnerImpl<>(
+                            TestClass1.class);
+                    underTest.addListener(new Listener<TestClass1>());
+                    underTest.run();
+                    TestSuite.DSL.assertThat(TestClass1.counter1).is(1);
+                    TestSuite.DSL.assertThat(TestClass1.counter2).is(1);
+                    TestSuite.DSL.assertThat(TestClass1.counter3).is(2);
+                    TestSuite.DSL.assertThat(TestClass1.counter4).is(2);
+                    TestSuite.DSL.assertThat(TestClass1.counter5).is(4);
+                    TestSuite.DSL.assertThat(TestClass1.counter6).is(4);
+                    TestSuite.DSL.assertThat(TestClass1.bigCounter).is(0);
+                    TestSuite.DSL.assertThat(counter).is(
+                            1000l + 10000 + 100000 + 100000 + 1000000 + 1000000
+                                    + 10000000000l + 100000000000l);
+
+                });
+        AllTests.testNoException(
+                "testRun2",
+                () -> {
+                    counter = 0;
+                    DefaultPowerUnitRunnerImpl<TestClass4> underTest = new DefaultPowerUnitRunnerImpl<>(
+                            TestClass4.class);
+                    underTest.addListener(new Listener<TestClass4>());
+                    underTest.run();
+                    TestSuite.DSL.assertThat(TestClass1.counter1).is(1);
+                    TestSuite.DSL.assertThat(TestClass1.counter2).is(1);
+                    TestSuite.DSL.assertThat(TestClass1.counter3).is(2);
+                    TestSuite.DSL.assertThat(TestClass1.counter4).is(2);
+                    TestSuite.DSL.assertThat(TestClass1.counter5).is(4);
+                    TestSuite.DSL.assertThat(TestClass1.counter6).is(4);
+                    TestSuite.DSL.assertThat(TestClass1.bigCounter).is(0);
+                    TestSuite.DSL.assertThat(counter).is(
+                            1000l + 10000 + 100000 + 100000 + 1000000 + 1000000
+                                    + 10000000000l + 100000000000l);
+
+                });
+    }
+
+    public static void testRunError() {
+        AllTests.testException("testRunCantBuildTestClass",
+                () -> new DefaultPowerUnitRunnerImpl<TestClass2>(
+                        TestClass2.class).run(), "Unexpected error");
+    }
+
+    public static void testRunClassIgnore() {
+        AllTests.testNoException(
+                "testRunClassIgnore",
+                () -> {
+                    counter = 0;
+                    DefaultPowerUnitRunnerImpl<TestClass3> underTest = new DefaultPowerUnitRunnerImpl<>(
+                            TestClass3.class);
+                    underTest.addListener(new Listener<TestClass3>());
+                    underTest.run();
+                    TestSuite.DSL.assertThat(counter).is(
+                            1000l + 10000 + 100000 + 100000000);
+                });
+    }
+
+    private static class Listener<T> implements TestResultListener<T> {
+
+        @Override
+        public void notifySetStart(String setName, String parameters) {
+            counter += 1000;
+        }
+
+        @Override
+        public void notifySetEnd(String setName, String parameters) {
+            counter += 10000;
+        }
+
+        @Override
+        public void notifyStart(TestContext<T> context) {
+            counter += 100000;
+        }
+
+        @Override
+        public void notifySuccess(TestContext<T> context) {
+            counter += 1000000;
+        }
+
+        @Override
+        public void notifyFailure(TestContext<T> context, Throwable cause) {
+            counter += 10000000;
+        }
+
+        @Override
+        public void notifySkipped(TestContext<T> context) {
+            counter += 100000000;
+        }
+
+        @Override
+        public void notifyError(TestContext<T> context, Throwable cause) {
+            counter += 1000000000;
+        }
 
-		@Override
-		public void notifyParameterStart(String setName, String parameterName) {
-			counter += 10000000000l;
-		}
+        @Override
+        public void notifyParameterStart(String setName, String parameterName) {
+            counter += 10000000000l;
+        }
 
-		@Override
-		public void notifyParameterEnd(String setName, String parameterName) {
-			counter += 100000000000l;
-		}
-
-	}
-
-	private static long counter = 0;
+        @Override
+        public void notifyParameterEnd(String setName, String parameterName) {
+            counter += 100000000000l;
+        }
+
+    }
+
+    private static long counter = 0;
 
-	public static class TestClass1 implements TestSuite {
-
-		public static int counter1 = 0;
+    public static class TestClass1 implements TestSuite {
+
+        public static int counter1 = 0;
 
-		public static int counter2 = 0;
-
-		public static int counter3 = 0;
+        public static int counter2 = 0;
+
+        public static int counter3 = 0;
 
-		public static int counter4 = 0;
+        public static int counter4 = 0;
 
-		public static int counter5 = 0;
+        public static int counter5 = 0;
 
-		public static int counter6 = 0;
+        public static int counter6 = 0;
 
-		public static int bigCounter = 0;
+        public static int bigCounter = 0;
 
-		@Parameters
-		public static Stream<Object[]> getParameters() {
-			return Arrays.stream(new Object[][] { { "name1" } });
-		}
+        @Parameters
+        public static Stream<Object[]> getParameters() {
+            return Arrays.stream(new Object[][] { { "name1" } });
+        }
 
-		@Parameter(0)
-		public String name1;
+        @Parameter(0)
+        public String name1;
 
-		public void nonAnnotatedMethod() {
-		}
+        public void nonAnnotatedMethod() {
+        }
 
-		@Rule
-		public final TestRule rule = before(() -> {
-			assertThat(bigCounter).is(0);
-			bigCounter++;
-		}).around(new ExternalResource() {
+        @Rule
+        public final TestRule rule = before(() -> {
+            assertThat(bigCounter).is(0);
+            bigCounter++;
+        }).around(new ExternalResource() {
 
-			@Override
-			public void before() {
-				assertThat(bigCounter).is(1);
-				bigCounter++;
-				counter5++;
-			}
+            @Override
+            public void before() {
+                assertThat(bigCounter).is(1);
+                bigCounter++;
+                counter5++;
+            }
 
-			@Override
-			public void after() {
-				assertThat(bigCounter).is(8);
-				counter6++;
-				bigCounter = 0;
+            @Override
+            public void after() {
+                assertThat(bigCounter).is(8);
+                counter6++;
+                bigCounter = 0;
 
-			}
+            }
 
-		}).around(() -> {
-			assertThat(bigCounter).is(2);
-			bigCounter++;
-			return new ExternalResource() {
+        }).around(() -> {
+            assertThat(bigCounter).is(2);
+            bigCounter++;
+            return new ExternalResource() {
 
-				@Override
-				public void before() {
-					assertThat(bigCounter).is(3);
-					bigCounter++;
-					counter5++;
-				}
+                @Override
+                public void before() {
+                    assertThat(bigCounter).is(3);
+                    bigCounter++;
+                    counter5++;
+                }
 
-				@Override
-				public void after() {
-					assertThat(bigCounter).is(7);
-					bigCounter++;
-					counter6++;
-				}
+                @Override
+                public void after() {
+                    assertThat(bigCounter).is(7);
+                    bigCounter++;
+                    counter6++;
+                }
 
-			};
-		}).around(before(this::beforeMethod)).around(after(this::afterMethod));
+            };
+        }).around(before(this::beforeMethod)).around(after(this::afterMethod));
 
-		@Test
-		public void testMethod() {
-			assertThat(bigCounter).is(5);
-			bigCounter++;
-			counter1++;
-		}
+        @Test
+        public void testMethod() {
+            assertThat(bigCounter).is(5);
+            bigCounter++;
+            counter1++;
+        }
 
-		@Test(name = "otherName")
-		public void testMethod2() {
-			assertThat(bigCounter).is(5);
-			bigCounter++;
-			counter2++;
-		}
+        @Test(name = "otherName")
+        public void testMethod2() {
+            assertThat(bigCounter).is(5);
+            bigCounter++;
+            counter2++;
+        }
 
-		public void beforeMethod() {
-			assertThat(bigCounter).is(4);
-			bigCounter++;
-			counter3++;
-		}
-
-		public void afterMethod() {
-			counter4++;
-			assertThat(bigCounter).is(6);
-			bigCounter++;
-		}
-
-	}
-
-	public static class TestClass2 {
-		private TestClass2(int a) {
-		}
-	}
-
-	@Ignore
-	public static class TestClass3 {
-
-	}
-
-	public static class TestClass4 implements TestSuite {
-
-		public static int counter1 = 0;
-
-		public static int counter2 = 0;
-
-		public static int counter3 = 0;
-
-		public static int counter4 = 0;
-
-		public static int counter5 = 0;
-
-		public static int counter6 = 0;
-
-		public static int bigCounter = 0;
-
-		@Parameters
-		public static Stream<Object[]> getParameters() {
-			return Arrays.stream(new Object[][] { { "name1" } });
-		}
-
-		@Parameter(0)
-		public String name1;
-
-		public void nonAnnotatedMethod() {
-		}
-
-		public void before1() {
-			assertThat(bigCounter).is(1);
-			bigCounter++;
-			counter5++;
-		}
-
-		public void after1() {
-			assertThat(bigCounter).is(8);
-			counter6++;
-			bigCounter = 0;
-		}
-
-		@Rule
-		public final TestRule rule = before(() -> {
-			assertThat(bigCounter).is(0);
-			bigCounter++;
-		}).around(before(this::before1)).around(after(this::after1))
-				.around(() -> {
-					assertThat(bigCounter).is(2);
-					bigCounter++;
-					return new ExternalResource() {
-
-						@Override
-						public void before() {
-							assertThat(bigCounter).is(3);
-							bigCounter++;
-							counter5++;
-						}
-
-						@Override
-						public void after() {
-							assertThat(bigCounter).is(7);
-							bigCounter++;
-							counter6++;
-						}
-
-					};
-				}).around(before(this::beforeMethod))
-				.around(after(this::afterMethod));
-
-		@Test
-		public void testMethod() {
-			assertThat(bigCounter).is(5);
-			bigCounter++;
-			counter1++;
-		}
-
-		@Test(name = "otherName")
-		public void testMethod2() {
-			assertThat(bigCounter).is(5);
-			bigCounter++;
-			counter2++;
-		}
-
-		public void beforeMethod() {
-			assertThat(bigCounter).is(4);
-			bigCounter++;
-			counter3++;
-		}
-
-		public void afterMethod() {
-			counter4++;
-			assertThat(bigCounter).is(6);
-			bigCounter++;
-		}
-
-	}
+        public void beforeMethod() {
+            assertThat(bigCounter).is(4);
+            bigCounter++;
+            counter3++;
+        }
+
+        public void afterMethod() {
+            counter4++;
+            assertThat(bigCounter).is(6);
+            bigCounter++;
+        }
+
+    }
+
+    public static class TestClass2 {
+        private TestClass2(int a) {
+        }
+    }
+
+    @Ignore
+    public static class TestClass3 {
+
+    }
+
+    public static class TestClass4 implements TestSuite {
+
+        public static int counter1 = 0;
+
+        public static int counter2 = 0;
+
+        public static int counter3 = 0;
+
+        public static int counter4 = 0;
+
+        public static int counter5 = 0;
+
+        public static int counter6 = 0;
+
+        public static int bigCounter = 0;
+
+        @Parameters
+        public static Stream<Object[]> getParameters() {
+            return Arrays.stream(new Object[][] { { "name1" } });
+        }
+
+        @Parameter(0)
+        public String name1;
+
+        public void nonAnnotatedMethod() {
+        }
+
+        public void before1() {
+            assertThat(bigCounter).is(1);
+            bigCounter++;
+            counter5++;
+        }
+
+        public void after1() {
+            assertThat(bigCounter).is(8);
+            counter6++;
+            bigCounter = 0;
+        }
+
+        @Rule
+        public final TestRule rule = before(() -> {
+            assertThat(bigCounter).is(0);
+            bigCounter++;
+        }).around(before(this::before1)).around(after(this::after1))
+                .around(() -> {
+                    assertThat(bigCounter).is(2);
+                    bigCounter++;
+                    return new ExternalResource() {
+
+                        @Override
+                        public void before() {
+                            assertThat(bigCounter).is(3);
+                            bigCounter++;
+                            counter5++;
+                        }
+
+                        @Override
+                        public void after() {
+                            assertThat(bigCounter).is(7);
+                            bigCounter++;
+                            counter6++;
+                        }
+
+                    };
+                }).around(before(this::beforeMethod))
+                .around(after(this::afterMethod));
+
+        @Test
+        public void testMethod() {
+            assertThat(bigCounter).is(5);
+            bigCounter++;
+            counter1++;
+        }
+
+        @Test(name = "otherName")
+        public void testMethod2() {
+            assertThat(bigCounter).is(5);
+            bigCounter++;
+            counter2++;
+        }
+
+        public void beforeMethod() {
+            assertThat(bigCounter).is(4);
+            bigCounter++;
+            counter3++;
+        }
+
+        public void afterMethod() {
+            counter4++;
+            assertThat(bigCounter).is(6);
+            bigCounter++;
+        }
+
+    }
 
 }

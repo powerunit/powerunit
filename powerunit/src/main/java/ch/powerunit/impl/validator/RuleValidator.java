@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,19 +26,19 @@ import ch.powerunit.TestRule;
 import ch.powerunit.exception.InternalError;
 
 public interface RuleValidator {
-	default void checkRuleAnnotationForField(Field f) {
-		if (Modifier.isStatic(f.getModifiers())) {
-			throw new InternalError("@Rule field is static " + f.toString());
-		}
-		if (!Modifier.isPublic(f.getModifiers())) {
-			throw new InternalError("@Rule field is not public " + f.toString());
-		}
-		if (!Modifier.isFinal(f.getModifiers())) {
-			throw new InternalError("@Rule field is not final " + f.toString());
-		}
-		if (!TestRule.class.isAssignableFrom(f.getType())) {
-			throw new InternalError("@Rule field is not TestRule "
-					+ f.toString());
-		}
-	}
+    default void checkRuleAnnotationForField(Field f) {
+        if (Modifier.isStatic(f.getModifiers())) {
+            throw new InternalError("@Rule field is static " + f.toString());
+        }
+        if (!Modifier.isPublic(f.getModifiers())) {
+            throw new InternalError("@Rule field is not public " + f.toString());
+        }
+        if (!Modifier.isFinal(f.getModifiers())) {
+            throw new InternalError("@Rule field is not final " + f.toString());
+        }
+        if (!TestRule.class.isAssignableFrom(f.getType())) {
+            throw new InternalError("@Rule field is not TestRule "
+                    + f.toString());
+        }
+    }
 }

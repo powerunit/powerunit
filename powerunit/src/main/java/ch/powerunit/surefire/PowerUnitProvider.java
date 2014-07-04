@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -44,77 +44,77 @@ import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
  */
 public class PowerUnitProvider<T> extends AbstractProvider {
 
-	private final ClassLoader testClassLoader;
+    private final ClassLoader testClassLoader;
 
-	private final ProviderParameters providerParameters;
+    private final ProviderParameters providerParameters;
 
-	private RunOrderCalculator runOrderCalculator;
+    private final RunOrderCalculator runOrderCalculator;
 
-	private final ScanResult scanResult;
+    private final ScanResult scanResult;
 
-	private final Properties parameters;
+    private final Properties parameters;
 
-	public PowerUnitProvider(ProviderParameters providerParameters) {
-		this.providerParameters = providerParameters;
-		this.testClassLoader = providerParameters.getTestClassLoader();
-		this.scanResult = providerParameters.getScanResult();
-		this.runOrderCalculator = providerParameters.getRunOrderCalculator();
-		this.parameters = providerParameters.getProviderProperties();
-	}
+    public PowerUnitProvider(ProviderParameters providerParameters) {
+        this.providerParameters = providerParameters;
+        this.testClassLoader = providerParameters.getTestClassLoader();
+        this.scanResult = providerParameters.getScanResult();
+        this.runOrderCalculator = providerParameters.getRunOrderCalculator();
+        this.parameters = providerParameters.getProviderProperties();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.maven.surefire.providerapi.SurefireProvider#getSuites()
-	 */
-	@SuppressWarnings("rawtypes")
-	@Override
-	public Iterator<Class> getSuites() {
-		TestsToRun scanned = scanResult
-				.applyFilter(new PowerUnitProviderScannerFilter(parameters),
-						testClassLoader);
-		return runOrderCalculator.orderTestClasses(scanned).iterator();
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.maven.surefire.providerapi.SurefireProvider#getSuites()
+     */
+    @SuppressWarnings("rawtypes")
+    @Override
+    public Iterator<Class> getSuites() {
+        TestsToRun scanned = scanResult
+                .applyFilter(new PowerUnitProviderScannerFilter(parameters),
+                        testClassLoader);
+        return runOrderCalculator.orderTestClasses(scanned).iterator();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.apache.maven.surefire.providerapi.SurefireProvider#invoke(java.lang
-	 * .Object)
-	 */
-	@Override
-	public RunResult invoke(Object forkTestSet) throws TestSetFailedException,
-			ReporterException, InvocationTargetException {
-		if (forkTestSet == null) {
-			RunResult r = RunResult.noTestsRun();
-			@SuppressWarnings("rawtypes")
-			Iterator<Class> i = getSuites();
-			while (i.hasNext()) {
-				r = r.aggregate(invoke(i.next()));
-			}
-			return r;
-		}
-		ReporterFactory reporterFactory = providerParameters
-				.getReporterFactory();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.apache.maven.surefire.providerapi.SurefireProvider#invoke(java.lang
+     * .Object)
+     */
+    @Override
+    public RunResult invoke(Object forkTestSet) throws TestSetFailedException,
+            ReporterException, InvocationTargetException {
+        if (forkTestSet == null) {
+            RunResult r = RunResult.noTestsRun();
+            @SuppressWarnings("rawtypes")
+            Iterator<Class> i = getSuites();
+            while (i.hasNext()) {
+                r = r.aggregate(invoke(i.next()));
+            }
+            return r;
+        }
+        ReporterFactory reporterFactory = providerParameters
+                .getReporterFactory();
 
-		ConsoleLogger consoleLogger = providerParameters.getConsoleLogger();
-		RunListener rl = reporterFactory.createReporter();
+        ConsoleLogger consoleLogger = providerParameters.getConsoleLogger();
+        RunListener rl = reporterFactory.createReporter();
 
-		if (!(forkTestSet instanceof Class)) {
-			throw new TestSetFailedException(
-					"Unexpected error. Received parameter is not a class");
-		}
-		@SuppressWarnings("unchecked")
-		Class<T> underTest = (Class<T>) forkTestSet;
-		TestResultListener<T> listener = new PowerUnitProviderListener<>(
-				consoleLogger, rl, underTest);
+        if (!(forkTestSet instanceof Class)) {
+            throw new TestSetFailedException(
+                    "Unexpected error. Received parameter is not a class");
+        }
+        @SuppressWarnings("unchecked")
+        Class<T> underTest = (Class<T>) forkTestSet;
+        TestResultListener<T> listener = new PowerUnitProviderListener<>(
+                consoleLogger, rl, underTest);
 
-		DefaultPowerUnitRunnerImpl<T> runner = new DefaultPowerUnitRunnerImpl<>(
-				underTest);
-		runner.addListener(listener);
-		runner.run();
-		return reporterFactory.close();
+        DefaultPowerUnitRunnerImpl<T> runner = new DefaultPowerUnitRunnerImpl<>(
+                underTest);
+        runner.addListener(listener);
+        runner.run();
+        return reporterFactory.close();
 
-	}
+    }
 }

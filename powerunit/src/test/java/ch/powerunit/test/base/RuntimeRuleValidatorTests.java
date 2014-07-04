@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -34,72 +34,72 @@ import ch.powerunit.impl.validator.ParameterValidator;
 import ch.powerunit.impl.validator.ParametersValidator;
 
 public class RuntimeRuleValidatorTests {
-	public static void main(String[] args) {
-		DefaultPowerUnitRunnerImpl<Tester> runner = new DefaultPowerUnitRunnerImpl<>(
-				Tester.class);
-		runner.addListener(new BootstrapTestListener<Tester>());
-		runner.run();
-	}
+    public static void main(String[] args) {
+        DefaultPowerUnitRunnerImpl<Tester> runner = new DefaultPowerUnitRunnerImpl<>(
+                Tester.class);
+        runner.addListener(new BootstrapTestListener<Tester>());
+        runner.run();
+    }
 
-	@Categories("base")
-	public static class Tester<T> implements TestSuite, ParametersValidator,
-			ParameterValidator {
-		@Parameters
-		public static Stream<Object> getDatas() {
-			return Arrays.stream(new Object[] { TestClass1.class,
-					TestClass2.class, TestClass3.class, TestClass4.class,
-					TestClass5.class, TestClass6.class });
-		}
+    @Categories("base")
+    public static class Tester<T> implements TestSuite, ParametersValidator,
+            ParameterValidator {
+        @Parameters
+        public static Stream<Object> getDatas() {
+            return Arrays.stream(new Object[] { TestClass1.class,
+                    TestClass2.class, TestClass3.class, TestClass4.class,
+                    TestClass5.class, TestClass6.class });
+        }
 
-		@Parameter(0)
-		public Class<T> clazz;
+        @Parameter(0)
+        public Class<T> clazz;
 
-		@Test
-		public void testExpectedError() {
-			assertWhen(this::executeWithError).throwException(
-					exceptionMessage(containsString("@Rule")));
-		}
+        @Test
+        public void testExpectedError() {
+            assertWhen(this::executeWithError).throwException(
+                    exceptionMessage(containsString("@Rule")));
+        }
 
-		public void executeWithError(Object anyParameter) throws Throwable {
-			new DefaultPowerUnitRunnerImpl<T>(clazz);
-		}
-	}
+        public void executeWithError(Object anyParameter) throws Throwable {
+            new DefaultPowerUnitRunnerImpl<T>(clazz);
+        }
+    }
 
-	public static class TestClass1 implements TestSuite {
-		@Rule
-		public static final TestRule field1 = TestRule.before(() -> {
-		});
-	}
+    public static class TestClass1 implements TestSuite {
+        @Rule
+        public static final TestRule field1 = TestRule.before(() -> {
+        });
+    }
 
-	public static class TestClass2 implements TestSuite {
-		@Rule
-		public TestRule field1 = before(() -> {
-		});
-	}
+    public static class TestClass2 implements TestSuite {
+        @Rule
+        public TestRule field1 = before(() -> {
+        });
+    }
 
-	public static class TestClass3 implements TestSuite {
-		@Rule
-		public final int field1 = 0;
-	}
+    public static class TestClass3 implements TestSuite {
+        @Rule
+        public final int field1 = 0;
+    }
 
-	public static class TestClass4 implements TestSuite {
-		@Rule
-		private final TestRule field1 = before(() -> {
-		});
-	}
+    public static class TestClass4 implements TestSuite {
+        @Rule
+        private final TestRule field1 = before(() -> {
+        });
+    }
 
-	public static class TestClass5 implements TestSuite {
-		@Rule
-		public final TestRule field1 = before(() -> {
-		});
+    public static class TestClass5 implements TestSuite {
+        @Rule
+        public final TestRule field1 = before(() -> {
+        });
 
-		@Rule
-		public final TestRule field2 = before(() -> {
-		});
-	}
+        @Rule
+        public final TestRule field2 = before(() -> {
+        });
+    }
 
-	public static class TestClass6 implements TestSuite {
-		@Rule
-		public final TestRule field1 = null;
-	}
+    public static class TestClass6 implements TestSuite {
+        @Rule
+        public final TestRule field1 = null;
+    }
 }

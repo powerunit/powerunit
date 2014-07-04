@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,26 +27,26 @@ import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
 import ch.powerunit.rules.TestContextRule;
 
 public class TestContextRuleTests {
-	public static void main(String[] args) {
-		DefaultPowerUnitRunnerImpl<TestContextRuleTest> runner = new DefaultPowerUnitRunnerImpl<>(
-				TestContextRuleTest.class);
-		runner.addListener(new BootstrapTestListener<TestContextRuleTest>());
-		runner.run();
+    public static void main(String[] args) {
+        DefaultPowerUnitRunnerImpl<TestContextRuleTest> runner = new DefaultPowerUnitRunnerImpl<>(
+                TestContextRuleTest.class);
+        runner.addListener(new BootstrapTestListener<TestContextRuleTest>());
+        runner.run();
 
-	}
+    }
 
-	@Categories("base")
-	public static class TestContextRuleTest implements TestSuite {
+    @Categories("base")
+    public static class TestContextRuleTest implements TestSuite {
 
-		@Rule
-		public final TestContextRule rule = new TestContextRule();
+        @Rule
+        public final TestContextRule rule = new TestContextRule();
 
-		@Test
-		public void test() {
-			assertThat(rule).isNotNull();
-			assertThat(rule.getTestContext()).isNotNull();
-			assertThat(rule.getTestContext().getFullTestName())
-					.is("ch.powerunit.test.base.TestContextRuleTests$TestContextRuleTest:test");
-		}
-	}
+        @Test
+        public void test() {
+            assertThat(rule).isNotNull();
+            assertThat(rule.getTestContext()).isNotNull();
+            assertThat(rule.getTestContext().getFullTestName())
+                    .is("ch.powerunit.test.base.TestContextRuleTests$TestContextRuleTest:test");
+        }
+    }
 }

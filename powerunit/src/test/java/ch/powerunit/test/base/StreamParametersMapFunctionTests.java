@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -36,56 +36,56 @@ import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
  *
  */
 public class StreamParametersMapFunctionTests {
-	public static void main(String[] args) {
-		DefaultPowerUnitRunnerImpl<StreamParametersMapFunctionTest> runner = new DefaultPowerUnitRunnerImpl<>(
-				StreamParametersMapFunctionTest.class);
-		runner.addListener(new BootstrapTestListener<StreamParametersMapFunctionTest>());
-		runner.run();
+    public static void main(String[] args) {
+        DefaultPowerUnitRunnerImpl<StreamParametersMapFunctionTest> runner = new DefaultPowerUnitRunnerImpl<>(
+                StreamParametersMapFunctionTest.class);
+        runner.addListener(new BootstrapTestListener<StreamParametersMapFunctionTest>());
+        runner.run();
 
-	}
+    }
 
-	@Categories("base")
-	public static class StreamParametersMapFunctionTest implements TestSuite {
-		@Parameters
-		public static Stream<Object[]> getDatas() {
-			return Arrays
-					.stream(new String[][] { { "a", "1", "java.lang.String",
-							"3,4", "true,false", "1,2", "x" } })
-					.map(DSL.stringToParameterMap(StreamParametersMapFunctionTest.class))
-					.filter(DSL.parametersFilterUsingMatcher(DSL
-							.arrayWithSize(7)));
-		}
+    @Categories("base")
+    public static class StreamParametersMapFunctionTest implements TestSuite {
+        @Parameters
+        public static Stream<Object[]> getDatas() {
+            return Arrays
+                    .stream(new String[][] { { "a", "1", "java.lang.String",
+                            "3,4", "true,false", "1,2", "x" } })
+                    .map(DSL.stringToParameterMap(StreamParametersMapFunctionTest.class))
+                    .filter(DSL.parametersFilterUsingMatcher(DSL
+                            .arrayWithSize(7)));
+        }
 
-		@Parameter(0)
-		public String field1;
+        @Parameter(0)
+        public String field1;
 
-		@Parameter(1)
-		public int field2;
+        @Parameter(1)
+        public int field2;
 
-		@Parameter(2)
-		public Class<?> field3;
+        @Parameter(2)
+        public Class<?> field3;
 
-		@Parameter(3)
-		public String field4[];
+        @Parameter(3)
+        public String field4[];
 
-		@Parameter(4)
-		public Collection<Boolean> field5;
+        @Parameter(4)
+        public Collection<Boolean> field5;
 
-		@Parameter(5)
-		public Set<Long> field6;
+        @Parameter(5)
+        public Set<Long> field6;
 
-		@Parameter(6)
-		public char field7;
+        @Parameter(6)
+        public char field7;
 
-		@Test
-		public void test() {
-			assertThat(field1).is("a");
-			assertThat(field2).is(1);
-			assertThat(field3).is(equalTo(String.class));
-			assertThat(field4).is(new String[] { "3", "4" });
-			assertThatIterable(field5).contains(true, false);
-			assertThatIterable(field6).containsInAnyOrder(1l, 2l);
-			assertThat(field7).is('x');
-		}
-	}
+        @Test
+        public void test() {
+            assertThat(field1).is("a");
+            assertThat(field2).is(1);
+            assertThat(field3).is(equalTo(String.class));
+            assertThat(field4).is(new String[] { "3", "4" });
+            assertThatIterable(field5).contains(true, false);
+            assertThatIterable(field6).containsInAnyOrder(1l, 2l);
+            assertThat(field7).is('x');
+        }
+    }
 }

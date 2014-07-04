@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,66 +32,66 @@ import ch.powerunit.impl.validator.ParameterValidator;
 import ch.powerunit.impl.validator.ParametersValidator;
 
 public class RuntimeTestValidatorTests {
-	public static void main(String[] args) {
-		DefaultPowerUnitRunnerImpl<Tester> runner = new DefaultPowerUnitRunnerImpl<>(
-				Tester.class);
-		runner.addListener(new BootstrapTestListener<Tester>());
-		runner.run();
-	}
+    public static void main(String[] args) {
+        DefaultPowerUnitRunnerImpl<Tester> runner = new DefaultPowerUnitRunnerImpl<>(
+                Tester.class);
+        runner.addListener(new BootstrapTestListener<Tester>());
+        runner.run();
+    }
 
-	@Categories("base")
-	public static class Tester<T> implements TestSuite, ParametersValidator,
-			ParameterValidator {
-		@Parameters
-		public static Stream<Object> getDatas() {
-			return Arrays.stream(new Object[] { TestClass2.class,
-					TestClass3.class, TestClass4.class, TestClass5.class, });
-		}
+    @Categories("base")
+    public static class Tester<T> implements TestSuite, ParametersValidator,
+            ParameterValidator {
+        @Parameters
+        public static Stream<Object> getDatas() {
+            return Arrays.stream(new Object[] { TestClass2.class,
+                    TestClass3.class, TestClass4.class, TestClass5.class, });
+        }
 
-		@Parameter(0)
-		public Class<T> clazz;
+        @Parameter(0)
+        public Class<T> clazz;
 
-		@Test
-		public void testExpectedError() {
-			assertWhen(this::executeWithError).throwException(
-					exceptionMessage(containsString("@Test")));
-		}
+        @Test
+        public void testExpectedError() {
+            assertWhen(this::executeWithError).throwException(
+                    exceptionMessage(containsString("@Test")));
+        }
 
-		public void executeWithError(Object anyParameter) throws Throwable {
-			new DefaultPowerUnitRunnerImpl<T>(clazz);
-		}
-	}
+        public void executeWithError(Object anyParameter) throws Throwable {
+            new DefaultPowerUnitRunnerImpl<T>(clazz);
+        }
+    }
 
-	public static class TestClass2 {
+    public static class TestClass2 {
 
-		@Test
-		public static void staticAnnotatedMethod() {
-		}
+        @Test
+        public static void staticAnnotatedMethod() {
+        }
 
-	}
+    }
 
-	public static class TestClass3 {
+    public static class TestClass3 {
 
-		@Test
-		public int returningMethod() {
-			return 1;
-		}
+        @Test
+        public int returningMethod() {
+            return 1;
+        }
 
-	}
+    }
 
-	public static class TestClass4 {
+    public static class TestClass4 {
 
-		@Test
-		public void parameterMethod(String argv) {
-		}
+        @Test
+        public void parameterMethod(String argv) {
+        }
 
-	}
+    }
 
-	public static class TestClass5 {
+    public static class TestClass5 {
 
-		@Test
-		private void testPrivateMethod() {
-		}
+        @Test
+        private void testPrivateMethod() {
+        }
 
-	}
+    }
 }

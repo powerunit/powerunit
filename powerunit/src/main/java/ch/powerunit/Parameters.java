@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
  * This method will be run once only.
  * <p>
  * For instance, we may wrote this code
- * 
+ *
  * <pre>
  * import java.util.Arrays;
  * import java.util.function.Function;
@@ -45,29 +45,29 @@ import java.lang.annotation.Target;
  * 
  * public class FunctionParameterTest&lt;T, R&gt; implements TestSuite {
  * 
- * 	&#064;Parameters(&quot;{0} on {1} expecting {2}&quot;)
- * 	public static Stream&lt;Object[]&gt; getDatas() {
- * 		return Arrays.stream(new Object[][] { {
- * 				(Function&lt;String, Integer&gt;) Integer::valueOf, &quot;1&quot;, 1 } });
- * 	}
+ *     &#064;Parameters(&quot;{0} on {1} expecting {2}&quot;)
+ *     public static Stream&lt;Object[]&gt; getDatas() {
+ *         return Arrays.stream(new Object[][] { {
+ *                 (Function&lt;String, Integer&gt;) Integer::valueOf, &quot;1&quot;, 1 } });
+ *     }
  * 
- * 	&#064;Parameter(0)
- * 	public Function&lt;T, R&gt; function;
+ *     &#064;Parameter(0)
+ *     public Function&lt;T, R&gt; function;
  * 
- * 	&#064;Parameter(1)
- * 	public T input;
+ *     &#064;Parameter(1)
+ *     public T input;
  * 
- * 	&#064;Parameter(2)
- * 	public R expected;
+ *     &#064;Parameter(2)
+ *     public R expected;
  * 
- * 	&#064;Test
- * 	public void testAFunction() {
- * 		assertThatFunction(function, input).is(expected);
- * 	}
+ *     &#064;Test
+ *     public void testAFunction() {
+ *         assertThatFunction(function, input).is(expected);
+ *     }
  * }
- * 
+ *
  * </pre>
- * 
+ *
  * @author borettim
  * @see java.util.stream.Stream
  */
@@ -75,11 +75,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Parameters {
-	/**
-	 * Define an optional name of the test parameters. use {n} to refer to the
-	 * parameter.
-	 * 
-	 * @return the name.
-	 */
-	String value() default "";
+    /**
+     * Define an optional name of the test parameters. use {n} to refer to the
+     * parameter.
+     * 
+     * @return the name.
+     */
+    String value() default "";
 }

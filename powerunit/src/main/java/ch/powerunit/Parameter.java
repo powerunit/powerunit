@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,12 +32,12 @@ import java.lang.annotation.Target;
  * continuous way.
  * <p>
  * For example, a parameter field can be defined in the following way:
- * 
+ *
  * <pre>
  * &#064;Parameter(0)
  * public String fieldName;
  * </pre>
- * 
+ *
  * @author borettim
  * @see Parameters
  */
@@ -45,10 +45,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Parameter {
-	/**
-	 * Define the parameter position.
-	 * 
-	 * @return the parameter position (0-based).
-	 */
-	int value();
+    /**
+     * Define the parameter position.
+     * 
+     * @return the parameter position (0-based).
+     */
+    int value();
 }

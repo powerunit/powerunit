@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -30,36 +30,36 @@ import ch.powerunit.exception.AssumptionError;
 
 public class AssertThatObjectImpl<T> implements AssertThatObject<T> {
 
-	private final boolean assertion;
+    private final boolean assertion;
 
-	public AssertThatObjectImpl(boolean assertion, String msg,
-			Supplier<T> provider) {
-		this.provider = provider;
-		this.msg = msg;
-		this.assertion = assertion;
-	}
+    public AssertThatObjectImpl(boolean assertion, String msg,
+            Supplier<T> provider) {
+        this.provider = provider;
+        this.msg = msg;
+        this.assertion = assertion;
+    }
 
-	private final Supplier<T> provider;
+    private final Supplier<T> provider;
 
-	private final String msg;
+    private final String msg;
 
-	@Override
-	public void is(Matcher<? super T> matching) {
-		Description message = new StringDescription();
-		message.appendText("expecting ");
-		matching.describeTo(message);
-		message.appendText(" but ");
-		T obj = provider.get();
-		if (!matching.matches(obj)) {
-			matching.describeMismatch(obj, message);
-			if (assertion) {
-				throw new AssertionError((msg == null ? "" : msg + "\n")
-						+ message.toString());
-			} else {
-				throw new AssumptionError((msg == null ? "" : msg + "\n")
-						+ message.toString());
-			}
-		}
-	}
+    @Override
+    public void is(Matcher<? super T> matching) {
+        Description message = new StringDescription();
+        message.appendText("expecting ");
+        matching.describeTo(message);
+        message.appendText(" but ");
+        T obj = provider.get();
+        if (!matching.matches(obj)) {
+            matching.describeMismatch(obj, message);
+            if (assertion) {
+                throw new AssertionError((msg == null ? "" : msg + "\n")
+                        + message.toString());
+            } else {
+                throw new AssumptionError((msg == null ? "" : msg + "\n")
+                        + message.toString());
+            }
+        }
+    }
 
 }

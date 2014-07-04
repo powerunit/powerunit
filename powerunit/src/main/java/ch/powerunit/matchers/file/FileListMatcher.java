@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,19 +26,19 @@ import org.hamcrest.Matcher;
 
 /**
  * The Mather on the result of list on a File
- * 
+ *
  * @author borettim
  *
  */
 public class FileListMatcher extends FeatureMatcher<File, String[]> {
 
-	public FileListMatcher(Matcher<String[]> subMatcher) {
-		super(subMatcher, "contains", "contains");
-	}
+    public FileListMatcher(Matcher<String[]> subMatcher) {
+        super(subMatcher, "contains", "contains");
+    }
 
-	@Override
-	protected String[] featureValueOf(File actual) {
-		return actual.list();
-	}
+    @Override
+    protected String[] featureValueOf(File actual) {
+        return actual.list();
+    }
 
 }

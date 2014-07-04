@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,19 +24,19 @@ package ch.powerunit.exception;
  *
  */
 public class AssumptionError extends RuntimeException {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4819860004880388771L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4819860004880388771L;
 
-	/**
-	 * Default constructor.
-	 * 
-	 * @param msg
-	 *            the message
-	 */
-	public AssumptionError(String msg) {
-		super(msg);
-	}
+    /**
+     * Default constructor.
+     * 
+     * @param msg
+     *            the message
+     */
+    public AssumptionError(String msg) {
+        super(msg);
+    }
 
 }

@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,37 +21,37 @@ package ch.powerunit.exception;
 
 /**
  * Internal error.
- * 
+ *
  * @author borettim
  *
  */
 public class InternalError extends RuntimeException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1399053409958048208L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -1399053409958048208L;
 
-	/**
-	 * Default constructor.
-	 * 
-	 * @param message
-	 *            the message
-	 * @param cause
-	 *            the cause
-	 */
-	public InternalError(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * Default constructor.
+     * 
+     * @param message
+     *            the message
+     * @param cause
+     *            the cause
+     */
+    public InternalError(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	/**
-	 * Default constructor.
-	 * 
-	 * @param message
-	 *            the message
-	 */
-	public InternalError(String message) {
-		super(message);
-	}
+    /**
+     * Default constructor.
+     * 
+     * @param message
+     *            the message
+     */
+    public InternalError(String message) {
+        super(message);
+    }
 
 }

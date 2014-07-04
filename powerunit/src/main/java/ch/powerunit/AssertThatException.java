@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,7 +27,7 @@ import org.hamcrest.Matcher;
  * This interface is returned by the various methods
  * {@link TestSuite#assertWhen(Statement) assertWhen} exposed by
  * {@link TestSuite}.
- * 
+ *
  * @author borettim
  *
  * @param <T>
@@ -35,11 +35,11 @@ import org.hamcrest.Matcher;
  */
 public interface AssertThatException<T extends Throwable> {
 
-	/**
-	 * Define the matcher on the exception and execute the matcher validation.
-	 * 
-	 * @param matching
-	 *            the matcher.
-	 */
-	void throwException(Matcher<T> matching);
+    /**
+     * Define the matcher on the exception and execute the matcher validation.
+     * 
+     * @param matching
+     *            the matcher.
+     */
+    void throwException(Matcher<T> matching);
 }

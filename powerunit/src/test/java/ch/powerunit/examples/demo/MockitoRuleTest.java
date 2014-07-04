@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -31,30 +31,30 @@ import ch.powerunit.TestSuite;
 
 @Categories({ "example", "demo" })
 public class MockitoRuleTest implements TestSuite {
-	public interface Mockable {
-		void run();
-	}
+    public interface Mockable {
+        void run();
+    }
 
-	@Mock
-	private Mockable mock;
+    @Mock
+    private Mockable mock;
 
-	@Rule
-	public final TestRule testRule = mockitoRule()
-			.around(before(this::prepare));
+    @Rule
+    public final TestRule testRule = mockitoRule()
+            .around(before(this::prepare));
 
-	public void prepare() {
-		Mockito.doThrow(new RuntimeException("test")).when(mock).run();
-	}
+    public void prepare() {
+        Mockito.doThrow(new RuntimeException("test")).when(mock).run();
+    }
 
-	@Test
-	public void testException() {
-		assertWhen((p) -> mock.run()).throwException(
-				instanceOf(RuntimeException.class));
-	}
+    @Test
+    public void testException() {
+        assertWhen((p) -> mock.run()).throwException(
+                instanceOf(RuntimeException.class));
+    }
 
-	@Test
-	@Ignore
-	public void testIgnore() {
+    @Test
+    @Ignore
+    public void testIgnore() {
 
-	}
+    }
 }

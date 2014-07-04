@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,25 +29,25 @@ import ch.powerunit.TestSuite;
 import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
 
 public class MockitoRuleTests {
-	public static void main(String[] args) {
-		DefaultPowerUnitRunnerImpl<TestMockito> runner = new DefaultPowerUnitRunnerImpl<>(
-				TestMockito.class);
-		runner.addListener(new BootstrapTestListener<TestMockito>());
-		runner.run();
+    public static void main(String[] args) {
+        DefaultPowerUnitRunnerImpl<TestMockito> runner = new DefaultPowerUnitRunnerImpl<>(
+                TestMockito.class);
+        runner.addListener(new BootstrapTestListener<TestMockito>());
+        runner.run();
 
-	}
+    }
 
-	@Categories("base")
-	public static class TestMockito implements TestSuite {
-		@Mock
-		private Object mock;
+    @Categories("base")
+    public static class TestMockito implements TestSuite {
+        @Mock
+        private Object mock;
 
-		@Rule
-		public final TestRule rule = mockitoRule();
+        @Rule
+        public final TestRule rule = mockitoRule();
 
-		@Test
-		public void test() {
-			assertThat(mock).isNotNull();
-		}
-	}
+        @Test
+        public void test() {
+            assertThat(mock).isNotNull();
+        }
+    }
 }

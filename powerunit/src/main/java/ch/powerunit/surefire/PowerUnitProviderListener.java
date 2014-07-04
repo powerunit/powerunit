@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,72 +32,72 @@ import ch.powerunit.TestResultListener;
  *
  */
 public class PowerUnitProviderListener<T> implements TestResultListener<T> {
-	private final RunListener rl;
-	private final Class<?> underTest;
-	private final ConsoleLogger consoleLogger;
+    private final RunListener rl;
+    private final Class<?> underTest;
+    private final ConsoleLogger consoleLogger;
 
-	public PowerUnitProviderListener(ConsoleLogger consoleLogger,
-			RunListener rl, Class<?> underTest) {
-		this.rl = rl;
-		this.underTest = underTest;
-		this.consoleLogger = consoleLogger;
-	}
+    public PowerUnitProviderListener(ConsoleLogger consoleLogger,
+            RunListener rl, Class<?> underTest) {
+        this.rl = rl;
+        this.underTest = underTest;
+        this.consoleLogger = consoleLogger;
+    }
 
-	@Override
-	public void notifyStart(TestContext<T> context) {
-		rl.testStarting(new CategorizedReportEntry(
-				underTest.getCanonicalName(), context.getFullTestName(),
-				context.getTestCategories()));
-	}
+    @Override
+    public void notifyStart(TestContext<T> context) {
+        rl.testStarting(new CategorizedReportEntry(
+                underTest.getCanonicalName(), context.getFullTestName(),
+                context.getTestCategories()));
+    }
 
-	@Override
-	public void notifySuccess(TestContext<T> context) {
-		rl.testSucceeded(new CategorizedReportEntry(underTest
-				.getCanonicalName(), context.getFullTestName(), context
-				.getTestCategories()));
-	}
+    @Override
+    public void notifySuccess(TestContext<T> context) {
+        rl.testSucceeded(new CategorizedReportEntry(underTest
+                .getCanonicalName(), context.getFullTestName(), context
+                .getTestCategories()));
+    }
 
-	@Override
-	public void notifyFailure(TestContext<T> context, Throwable cause) {
-		rl.testFailed(new CategorizedReportEntry(underTest.getCanonicalName(),
-				context.getFullTestName(), context.getTestCategories(),
-				new LegacyPojoStackTraceWriter(underTest.getCanonicalName(),
-						context.getFullTestName(), cause), null));
-	}
+    @Override
+    public void notifyFailure(TestContext<T> context, Throwable cause) {
+        rl.testFailed(new CategorizedReportEntry(underTest.getCanonicalName(),
+                context.getFullTestName(), context.getTestCategories(),
+                new LegacyPojoStackTraceWriter(underTest.getCanonicalName(),
+                        context.getFullTestName(), cause), null));
+    }
 
-	@Override
-	public void notifySetStart(String setName, String groups) {
-		rl.testSetStarting(new CategorizedReportEntry(underTest
-				.getCanonicalName(), setName, groups));
-	}
+    @Override
+    public void notifySetStart(String setName, String groups) {
+        rl.testSetStarting(new CategorizedReportEntry(underTest
+                .getCanonicalName(), setName, groups));
+    }
 
-	@Override
-	public void notifySetEnd(String setName, String groups) {
-		rl.testSetCompleted(new CategorizedReportEntry(underTest
-				.getCanonicalName(), setName, groups));
-	}
+    @Override
+    public void notifySetEnd(String setName, String groups) {
+        rl.testSetCompleted(new CategorizedReportEntry(underTest
+                .getCanonicalName(), setName, groups));
+    }
 
-	@Override
-	public void notifySkipped(TestContext<T> context) {
-		rl.testSkipped(new CategorizedReportEntry(underTest.getCanonicalName(),
-				context.getFullTestName(), context.getTestCategories()));
-	}
+    @Override
+    public void notifySkipped(TestContext<T> context) {
+        rl.testSkipped(new CategorizedReportEntry(underTest.getCanonicalName(),
+                context.getFullTestName(), context.getTestCategories()));
+    }
 
-	@Override
-	public void notifyError(TestContext<T> context, Throwable cause) {
-		rl.testError(new CategorizedReportEntry(underTest.getCanonicalName(),
-				context.getFullTestName(), context.getTestCategories(),
-				new LegacyPojoStackTraceWriter(underTest.getCanonicalName(),
-						context.getFullTestName(), cause), null));
-	}
+    @Override
+    public void notifyError(TestContext<T> context, Throwable cause) {
+        rl.testError(new CategorizedReportEntry(underTest.getCanonicalName(),
+                context.getFullTestName(), context.getTestCategories(),
+                new LegacyPojoStackTraceWriter(underTest.getCanonicalName(),
+                        context.getFullTestName(), cause), null));
+    }
 
-	@Override
-	public void notifyParameterStart(String setName, String parameterName) {
-		// Do nothing
-	}
+    @Override
+    public void notifyParameterStart(String setName, String parameterName) {
+        // Do nothing
+    }
 
-	@Override
-	public void notifyParameterEnd(String setName, String parameterName) {
-		// Do nothing
-	}
+    @Override
+    public void notifyParameterEnd(String setName, String parameterName) {
+        // Do nothing
+    }
 }

@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,26 +23,26 @@ import ch.powerunit.TestSuite;
 
 public class AssertThatFunctionTests {
 
-	public static void main(String[] args) {
-		AllTests.testNoException(
-				"testAssertThatFunctionOKWithoutMessage",
-				() -> TestSuite.DSL.assertThatFunction((a) -> a + "x", "").is(
-						"x"));
+    public static void main(String[] args) {
+        AllTests.testNoException(
+                "testAssertThatFunctionOKWithoutMessage",
+                () -> TestSuite.DSL.assertThatFunction((a) -> a + "x", "").is(
+                        "x"));
 
-		AllTests.testException(
-				"testAssertThatFunctionKOWithoutMessage",
-				() -> TestSuite.DSL.assertThatFunction((a) -> a + "x", "").is(
-						"xy"), "expecting \"xy\" but was \"x\"");
+        AllTests.testException(
+                "testAssertThatFunctionKOWithoutMessage",
+                () -> TestSuite.DSL.assertThatFunction((a) -> a + "x", "").is(
+                        "xy"), "expecting \"xy\" but was \"x\"");
 
-		AllTests.testNoException(
-				"testAssertThatFunctionOKWithMessage",
-				() -> TestSuite.DSL.assertThatFunction("msg", (a) -> a + "x",
-						"").is("x"));
+        AllTests.testNoException(
+                "testAssertThatFunctionOKWithMessage",
+                () -> TestSuite.DSL.assertThatFunction("msg", (a) -> a + "x",
+                        "").is("x"));
 
-		AllTests.testException(
-				"testAssertThatFunctionKOWithMessage",
-				() -> TestSuite.DSL.assertThatFunction("msg", (a) -> a + "x",
-						"").is("xy"), "msg\nexpecting \"xy\" but was \"x\"");
-	}
+        AllTests.testException(
+                "testAssertThatFunctionKOWithMessage",
+                () -> TestSuite.DSL.assertThatFunction("msg", (a) -> a + "x",
+                        "").is("xy"), "msg\nexpecting \"xy\" but was \"x\"");
+    }
 
 }

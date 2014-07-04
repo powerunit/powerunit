@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -37,82 +37,82 @@ import ch.powerunit.rules.TemporaryFolder;
  *
  */
 public class TemporaryFolderTests {
-	public static void main(String[] args) {
-		DefaultPowerUnitRunnerImpl<TemporaryFolderTest> runner = new DefaultPowerUnitRunnerImpl<>(
-				TemporaryFolderTest.class);
-		runner.addListener(new BootstrapTestListener<TemporaryFolderTest>());
-		runner.run();
+    public static void main(String[] args) {
+        DefaultPowerUnitRunnerImpl<TemporaryFolderTest> runner = new DefaultPowerUnitRunnerImpl<>(
+                TemporaryFolderTest.class);
+        runner.addListener(new BootstrapTestListener<TemporaryFolderTest>());
+        runner.run();
 
-	}
+    }
 
-	@Categories("base")
-	public static class TemporaryFolderTest implements TestSuite {
+    @Categories("base")
+    public static class TemporaryFolderTest implements TestSuite {
 
-		private final TemporaryFolder temporaryFolder = temporaryFolderBuilder()
-				.file("toto").folder("tito").file("pipo").end()
-				.file("tata", new byte[] { 'x' }).build();
+        private final TemporaryFolder temporaryFolder = temporaryFolderBuilder()
+                .file("toto").folder("tito").file("pipo").end()
+                .file("tata", new byte[] { 'x' }).build();
 
-		private Path f;
+        private Path f;
 
-		private Path f2;
+        private Path f2;
 
-		private Path f3;
+        private Path f3;
 
-		private Path d1;
+        private Path d1;
 
-		@Rule
-		public final TestRule chain = after(this::postCheck).around(
-				temporaryFolder).around(before(this::createOther));
+        @Rule
+        public final TestRule chain = after(this::postCheck).around(
+                temporaryFolder).around(before(this::createOther));
 
-		@Test
-		public void emptyTest() throws IOException {
-			assertThat(temporaryFolder.getRootFolder().toFile().exists()).is(
-					true);
-			f = temporaryFolder.newFile();
-			assertThat(Files.exists(f)).is(true);
-			assertThat(Files.exists(f2)).is(true);
-			assertThat(Files.exists(f3)).is(true);
-			assertThat(f3.toFile().isDirectory()).is(true);
-			assertThat(Files.exists(d1)).is(true);
-			assertThat(Files.readAllBytes(d1)).is(new byte[] { 'a' });
-			assertThat(
-					new File(temporaryFolder.getRootFolder().toFile(), "toto")
-							.exists()).is(true);
-			assertThat(
-					new File(temporaryFolder.getRootFolder().toFile(), "tito")
-							.exists()).is(true);
-			assertThat(
-					new File(temporaryFolder.getRootFolder().toFile(),
-							"tito/pipo").exists()).is(true);
-			assertThat(
-					new File(temporaryFolder.getRootFolder().toFile(), "tata")
-							.exists()).is(true);
-			assertThat(
-					Files.readAllBytes(new File(temporaryFolder.getRootFolder()
-							.toFile(), "tata").toPath()))
-					.is(new byte[] { 'x' });
-		}
+        @Test
+        public void emptyTest() throws IOException {
+            assertThat(temporaryFolder.getRootFolder().toFile().exists()).is(
+                    true);
+            f = temporaryFolder.newFile();
+            assertThat(Files.exists(f)).is(true);
+            assertThat(Files.exists(f2)).is(true);
+            assertThat(Files.exists(f3)).is(true);
+            assertThat(f3.toFile().isDirectory()).is(true);
+            assertThat(Files.exists(d1)).is(true);
+            assertThat(Files.readAllBytes(d1)).is(new byte[] { 'a' });
+            assertThat(
+                    new File(temporaryFolder.getRootFolder().toFile(), "toto")
+                            .exists()).is(true);
+            assertThat(
+                    new File(temporaryFolder.getRootFolder().toFile(), "tito")
+                            .exists()).is(true);
+            assertThat(
+                    new File(temporaryFolder.getRootFolder().toFile(),
+                            "tito/pipo").exists()).is(true);
+            assertThat(
+                    new File(temporaryFolder.getRootFolder().toFile(), "tata")
+                            .exists()).is(true);
+            assertThat(
+                    Files.readAllBytes(new File(temporaryFolder.getRootFolder()
+                            .toFile(), "tata").toPath()))
+                    .is(new byte[] { 'x' });
+        }
 
-		public void postCheck() {
-			assertThat(Files.exists(f)).is(false);
-			assertThat(Files.exists(f2)).is(false);
-			assertThat(Files.exists(f3)).is(false);
-			assertThat(Files.exists(d1)).is(false);
-			assertThat(f2.toFile().getName()).is("myName");
-			assertThat(temporaryFolder.getRootFolder().toFile().exists()).is(
-					false);
-		}
+        public void postCheck() {
+            assertThat(Files.exists(f)).is(false);
+            assertThat(Files.exists(f2)).is(false);
+            assertThat(Files.exists(f3)).is(false);
+            assertThat(Files.exists(d1)).is(false);
+            assertThat(f2.toFile().getName()).is("myName");
+            assertThat(temporaryFolder.getRootFolder().toFile().exists()).is(
+                    false);
+        }
 
-		public void createOther() {
-			try {
-				f2 = temporaryFolder.newFile("myName");
-				f3 = temporaryFolder.newFolder("myFolder");
-				d1 = temporaryFolder.newFile("myName2", new byte[] { 'a' });
-			} catch (IOException e) {
-				fail("Unable to create the new file/folder name "
-						+ e.getMessage(), e);
-			}
-		}
-	}
+        public void createOther() {
+            try {
+                f2 = temporaryFolder.newFile("myName");
+                f3 = temporaryFolder.newFolder("myFolder");
+                d1 = temporaryFolder.newFile("myName2", new byte[] { 'a' });
+            } catch (IOException e) {
+                fail("Unable to create the new file/folder name "
+                        + e.getMessage(), e);
+            }
+        }
+    }
 
 }

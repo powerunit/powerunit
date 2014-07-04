@@ -13,20 +13,20 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
 package ch.powerunit.examples.demo;
 
 public class Fibo {
-	public static int fibo(int n) {
-		if (n < 0) {
-			throw new IllegalArgumentException("n must be positive");
-		}
-		if (n <= 1) {
-			return n;
-		}
-		return fibo(n - 1) + fibo(n - 2);
-	}
+    public static int fibo(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("n must be positive");
+        }
+        if (n <= 1) {
+            return n;
+        }
+        return fibo(n - 1) + fibo(n - 2);
+    }
 }

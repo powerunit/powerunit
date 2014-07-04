@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -30,23 +30,23 @@ import ch.powerunit.TestSuite;
 
 @Categories({ "example" })
 public class HelloWorldParameterTest implements TestSuite {
-	@Parameters("Input string is {0}, subString idx is {1}, expected result is {2}")
-	public static Stream<Object[]> getDatas() {
-		return Arrays.stream(new Object[][] { { "ab", 0, "ab" },
-				{ "ab", 1, "b" } });
-	}
+    @Parameters("Input string is {0}, subString idx is {1}, expected result is {2}")
+    public static Stream<Object[]> getDatas() {
+        return Arrays.stream(new Object[][] { { "ab", 0, "ab" },
+                { "ab", 1, "b" } });
+    }
 
-	@Parameter(0)
-	public String inputString;
+    @Parameter(0)
+    public String inputString;
 
-	@Parameter(1)
-	public int inputIndex;
+    @Parameter(1)
+    public int inputIndex;
 
-	@Parameter(2)
-	public String expectedString;
+    @Parameter(2)
+    public String expectedString;
 
-	@Test
-	public void testSubString() {
-		assertThat(inputString.substring(inputIndex)).is(expectedString);
-	}
+    @Test
+    public void testSubString() {
+        assertThat(inputString.substring(inputIndex)).is(expectedString);
+    }
 }
