@@ -309,37 +309,39 @@
 <a class="jxr_linenumber" name="L301" href="#L301">301</a> <em class="jxr_javadoccomment">     * @return the function that can be used on the stream (</em>
 <a class="jxr_linenumber" name="L302" href="#L302">302</a> <em class="jxr_javadoccomment">     *         {@link java.util.stream.Stream#map(Function)}).</em>
 <a class="jxr_linenumber" name="L303" href="#L303">303</a> <em class="jxr_javadoccomment">     * @since 0.1.0</em>
-<a class="jxr_linenumber" name="L304" href="#L304">304</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L305" href="#L305">305</a>     <strong class="jxr_keyword">default</strong> &lt;T&gt; Function&lt;Object[], Object[]&gt; addFieldToEachEntry(T field) {
-<a class="jxr_linenumber" name="L306" href="#L306">306</a>         <strong class="jxr_keyword">return</strong> StreamParametersMapFunction.addFieldToEachEntry(field);
-<a class="jxr_linenumber" name="L307" href="#L307">307</a>     }
-<a class="jxr_linenumber" name="L308" href="#L308">308</a> 
-<a class="jxr_linenumber" name="L309" href="#L309">309</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L310" href="#L310">310</a> <em class="jxr_javadoccomment">     * Provide a filter for stream parameters, to keep only parameters accepted</em>
-<a class="jxr_linenumber" name="L311" href="#L311">311</a> <em class="jxr_javadoccomment">     * by a matcher.</em>
-<a class="jxr_linenumber" name="L312" href="#L312">312</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="L313" href="#L313">313</a> <em class="jxr_javadoccomment">     * @param matcher</em>
-<a class="jxr_linenumber" name="L314" href="#L314">314</a> <em class="jxr_javadoccomment">     *            the matcher</em>
-<a class="jxr_linenumber" name="L315" href="#L315">315</a> <em class="jxr_javadoccomment">     * @return the stream filter</em>
-<a class="jxr_linenumber" name="L316" href="#L316">316</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L317" href="#L317">317</a>     <strong class="jxr_keyword">default</strong> Predicate&lt;Object[]&gt; parametersFilterUsingMatcher(
-<a class="jxr_linenumber" name="L318" href="#L318">318</a>             Matcher&lt;Object[]&gt; matcher) {
-<a class="jxr_linenumber" name="L319" href="#L319">319</a>         <strong class="jxr_keyword">return</strong> matcherPredicate(matcher);
-<a class="jxr_linenumber" name="L320" href="#L320">320</a>     }
-<a class="jxr_linenumber" name="L321" href="#L321">321</a> 
-<a class="jxr_linenumber" name="L322" href="#L322">322</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L323" href="#L323">323</a> <em class="jxr_javadoccomment">     * Expose a matcher as a predicate.</em>
-<a class="jxr_linenumber" name="L324" href="#L324">324</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="L325" href="#L325">325</a> <em class="jxr_javadoccomment">     * @param matcher</em>
-<a class="jxr_linenumber" name="L326" href="#L326">326</a> <em class="jxr_javadoccomment">     *            the matcher.</em>
-<a class="jxr_linenumber" name="L327" href="#L327">327</a> <em class="jxr_javadoccomment">     * @return the predicate</em>
-<a class="jxr_linenumber" name="L328" href="#L328">328</a> <em class="jxr_javadoccomment">     * @param &lt;T&gt;</em>
-<a class="jxr_linenumber" name="L329" href="#L329">329</a> <em class="jxr_javadoccomment">     *            The target object type</em>
-<a class="jxr_linenumber" name="L330" href="#L330">330</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L331" href="#L331">331</a>     <strong class="jxr_keyword">default</strong> &lt;T&gt; Predicate&lt;T&gt; matcherPredicate(Matcher&lt;T&gt; matcher) {
-<a class="jxr_linenumber" name="L332" href="#L332">332</a>         <strong class="jxr_keyword">return</strong> matcher::matches;
-<a class="jxr_linenumber" name="L333" href="#L333">333</a>     }
-<a class="jxr_linenumber" name="L334" href="#L334">334</a> }
+<a class="jxr_linenumber" name="L304" href="#L304">304</a> <em class="jxr_javadoccomment">     * @param &lt;T&gt;</em>
+<a class="jxr_linenumber" name="L305" href="#L305">305</a> <em class="jxr_javadoccomment">     *            The object type to be added.</em>
+<a class="jxr_linenumber" name="L306" href="#L306">306</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L307" href="#L307">307</a>     <strong class="jxr_keyword">default</strong> &lt;T&gt; Function&lt;Object[], Object[]&gt; addFieldToEachEntry(T field) {
+<a class="jxr_linenumber" name="L308" href="#L308">308</a>         <strong class="jxr_keyword">return</strong> StreamParametersMapFunction.addFieldToEachEntry(field);
+<a class="jxr_linenumber" name="L309" href="#L309">309</a>     }
+<a class="jxr_linenumber" name="L310" href="#L310">310</a> 
+<a class="jxr_linenumber" name="L311" href="#L311">311</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L312" href="#L312">312</a> <em class="jxr_javadoccomment">     * Provide a filter for stream parameters, to keep only parameters accepted</em>
+<a class="jxr_linenumber" name="L313" href="#L313">313</a> <em class="jxr_javadoccomment">     * by a matcher.</em>
+<a class="jxr_linenumber" name="L314" href="#L314">314</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="L315" href="#L315">315</a> <em class="jxr_javadoccomment">     * @param matcher</em>
+<a class="jxr_linenumber" name="L316" href="#L316">316</a> <em class="jxr_javadoccomment">     *            the matcher</em>
+<a class="jxr_linenumber" name="L317" href="#L317">317</a> <em class="jxr_javadoccomment">     * @return the stream filter</em>
+<a class="jxr_linenumber" name="L318" href="#L318">318</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L319" href="#L319">319</a>     <strong class="jxr_keyword">default</strong> Predicate&lt;Object[]&gt; parametersFilterUsingMatcher(
+<a class="jxr_linenumber" name="L320" href="#L320">320</a>             Matcher&lt;Object[]&gt; matcher) {
+<a class="jxr_linenumber" name="L321" href="#L321">321</a>         <strong class="jxr_keyword">return</strong> matcherPredicate(matcher);
+<a class="jxr_linenumber" name="L322" href="#L322">322</a>     }
+<a class="jxr_linenumber" name="L323" href="#L323">323</a> 
+<a class="jxr_linenumber" name="L324" href="#L324">324</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L325" href="#L325">325</a> <em class="jxr_javadoccomment">     * Expose a matcher as a predicate.</em>
+<a class="jxr_linenumber" name="L326" href="#L326">326</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="L327" href="#L327">327</a> <em class="jxr_javadoccomment">     * @param matcher</em>
+<a class="jxr_linenumber" name="L328" href="#L328">328</a> <em class="jxr_javadoccomment">     *            the matcher.</em>
+<a class="jxr_linenumber" name="L329" href="#L329">329</a> <em class="jxr_javadoccomment">     * @return the predicate</em>
+<a class="jxr_linenumber" name="L330" href="#L330">330</a> <em class="jxr_javadoccomment">     * @param &lt;T&gt;</em>
+<a class="jxr_linenumber" name="L331" href="#L331">331</a> <em class="jxr_javadoccomment">     *            The target object type</em>
+<a class="jxr_linenumber" name="L332" href="#L332">332</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L333" href="#L333">333</a>     <strong class="jxr_keyword">default</strong> &lt;T&gt; Predicate&lt;T&gt; matcherPredicate(Matcher&lt;T&gt; matcher) {
+<a class="jxr_linenumber" name="L334" href="#L334">334</a>         <strong class="jxr_keyword">return</strong> matcher::matches;
+<a class="jxr_linenumber" name="L335" href="#L335">335</a>     }
+<a class="jxr_linenumber" name="L336" href="#L336">336</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2014. All rights reserved.</div>

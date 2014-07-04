@@ -301,9 +301,11 @@ public interface TestSuite extends Assert, Assume, Matchers {
      * @return the function that can be used on the stream (
      *         {@link java.util.stream.Stream#map(Function)}).
      * @since 0.1.0
+     * @param &lt;T&gt;
+     *            The object type to be added.
      */
     default &lt;T&gt; Function&lt;Object[], Object[]&gt; addFieldToEachEntry(T field) {
-<span class="fc" id="L306">        return StreamParametersMapFunction.addFieldToEachEntry(field);</span>
+<span class="fc" id="L308">        return StreamParametersMapFunction.addFieldToEachEntry(field);</span>
     }
 
     /**
@@ -316,7 +318,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
      */
     default Predicate&lt;Object[]&gt; parametersFilterUsingMatcher(
             Matcher&lt;Object[]&gt; matcher) {
-<span class="fc" id="L319">        return matcherPredicate(matcher);</span>
+<span class="fc" id="L321">        return matcherPredicate(matcher);</span>
     }
 
     /**
@@ -329,7 +331,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
      *            The target object type
      */
     default &lt;T&gt; Predicate&lt;T&gt; matcherPredicate(Matcher&lt;T&gt; matcher) {
-<span class="fc" id="L332">        return matcher::matches;</span>
+<span class="fc" id="L334">        return matcher::matches;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
