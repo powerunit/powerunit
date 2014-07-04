@@ -255,4 +255,26 @@ public final class StreamParametersMapFunction<T> implements
         mapper.put(idx, (Function) mapFunction);
         return this;
     }
+
+    /**
+     * Provide a way to add a field to head parameter line.
+     * 
+     * @param field
+     *            The field to be added.
+     * @return the function that can be used on the stream (
+     *         {@link java.util.stream.Stream#map(Function)}).
+     * @since 0.1.0
+     */
+    public static <T> Function<Object[], Object[]> addFieldToEachEntry(T field) {
+        return i -> {
+            if (i == null) {
+                return new Object[] { field };
+            } else {
+                Object o[] = new Object[i.length + 1];
+                System.arraycopy(i, 0, o, 0, i.length);
+                o[i.length] = field;
+                return o;
+            }
+        };
+    }
 }

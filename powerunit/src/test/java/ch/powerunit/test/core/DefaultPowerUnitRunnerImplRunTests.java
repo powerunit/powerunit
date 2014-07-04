@@ -20,6 +20,7 @@
 package ch.powerunit.test.core;
 
 import java.util.Arrays;
+import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 import ch.powerunit.Ignore;
@@ -70,17 +71,28 @@ public class DefaultPowerUnitRunnerImplRunTests {
                             TestClass4.class);
                     underTest.addListener(new Listener<TestClass4>());
                     underTest.run();
-                    TestSuite.DSL.assertThat(TestClass1.counter1).is(1);
-                    TestSuite.DSL.assertThat(TestClass1.counter2).is(1);
-                    TestSuite.DSL.assertThat(TestClass1.counter3).is(2);
-                    TestSuite.DSL.assertThat(TestClass1.counter4).is(2);
-                    TestSuite.DSL.assertThat(TestClass1.counter5).is(4);
-                    TestSuite.DSL.assertThat(TestClass1.counter6).is(4);
-                    TestSuite.DSL.assertThat(TestClass1.bigCounter).is(0);
+                    TestSuite.DSL.assertThat(TestClass4.counter1).is(1);
+                    TestSuite.DSL.assertThat(TestClass4.counter2).is(1);
+                    TestSuite.DSL.assertThat(TestClass4.counter3).is(2);
+                    TestSuite.DSL.assertThat(TestClass4.counter4).is(2);
+                    TestSuite.DSL.assertThat(TestClass4.counter5).is(4);
+                    TestSuite.DSL.assertThat(TestClass4.counter6).is(4);
+                    TestSuite.DSL.assertThat(TestClass4.bigCounter).is(0);
                     TestSuite.DSL.assertThat(counter).is(
                             1000l + 10000 + 100000 + 100000 + 1000000 + 1000000
                                     + 10000000000l + 100000000000l);
 
+                });
+
+        AllTests.testNoException(
+                "testRun3",
+                () -> {
+                    counter = 0;
+                    DefaultPowerUnitRunnerImpl<TestClass5> underTest = new DefaultPowerUnitRunnerImpl<>(
+                            TestClass5.class);
+                    underTest.addListener(new Listener<TestClass5>());
+                    underTest.run();
+                    TestSuite.DSL.assertThat(TestClass5.counter1).is(1);
                 });
     }
 
@@ -354,6 +366,40 @@ public class DefaultPowerUnitRunnerImplRunTests {
             counter4++;
             assertThat(bigCounter).is(6);
             bigCounter++;
+        }
+
+    }
+
+    public static class TestClass5 implements TestSuite {
+
+        public static int counter1 = 0;
+
+        @Parameters
+        public static Stream<Object[]> getParameters() {
+            return Arrays
+                    .stream(new Object[][] { {
+                            "name1",
+                            (BiFunction<String, Object[], Boolean>) TestClass5::checkMethod } });
+        }
+
+        @Parameter(0)
+        public String name1;
+
+        @Parameter(value = 1, filter = true)
+        public BiFunction<String, Object[], Boolean> testFilter;
+
+        private static boolean checkMethod(String name, Object parameters[]) {
+            return name.equals("testMethod1");
+        }
+
+        @Test
+        public void testMethod1() {
+            counter1++;
+        }
+
+        @Test
+        public void testMethod2() {
+            fail("Should not pass here");
         }
 
     }

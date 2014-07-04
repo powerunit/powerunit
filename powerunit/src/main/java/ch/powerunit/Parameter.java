@@ -51,4 +51,25 @@ public @interface Parameter {
      * @return the parameter position (0-based).
      */
     int value();
+
+    /**
+     * This attribute can be used to indicate that this parameter is to be used
+     * as a predicate to accept (or not) a test for execution with this
+     * parameter set.
+     * <p>
+     * This is false by default and when set to true, only one field can it.
+     * This can only be used on field of type :
+     * 
+     * <pre>
+     * BiFunction&lt;String,Object[],Boolean&gt;
+     * </pre>
+     * 
+     * This predicate will receive as parameter the test method name and should
+     * return true if and only if the test method should be run.
+     * 
+     * @return
+     * @since 0.1.0
+     * @see java.util.function.BiFunction
+     */
+    boolean filter() default false;
 }

@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -168,23 +169,37 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void runOne(String name, Object... parameters) {
-        executableTests.entrySet().forEach(
-                singleTest -> {
-                    try {
-                        String tname = singleTest.getKey();
-                        if (parameters.length > 0) {
-                            tname = MessageFormat.format(tname, parameters);
-                        }
-                        singleTest.getValue().run(
-                                new TestContextImpl<Object>(targetObject,
-                                        setName, tname, name, parentGroups));
-                    } catch (Throwable e) {// NOSONAR
-                        // As we really want all error
-                        throw new InternalError("Unexpected error "
-                                + e.getMessage(), e);
-                    }
-                });
+        executableTests
+                .entrySet()
+                .forEach(
+                        singleTest -> {
+                            try {
+                                boolean run = true;
+                                String tname = singleTest.getKey();
+                                if (filterParameterField != null) {
+                                    run = ((BiFunction<String, Object, Boolean>) filterParameterField
+                                            .get(targetObject)).apply(
+                                            testMethods.get(tname).getName(),
+                                            parameters);
+                                }
+                                if (run) {
+                                    if (parameters.length > 0) {
+                                        tname = MessageFormat.format(tname,
+                                                parameters);
+                                    }
+                                    singleTest.getValue().run(
+                                            new TestContextImpl<Object>(
+                                                    targetObject, setName,
+                                                    tname, name, parentGroups));
+                                }
+                            } catch (Throwable e) {// NOSONAR
+                                // As we really want all error
+                                throw new InternalError("Unexpected error "
+                                        + e.getMessage(), e);
+                            }
+                        });
     }
 
     private final Map<String, Method> testMethods = new HashMap<>();
@@ -196,6 +211,8 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
     private Method parameters = null;
 
     private Map<Integer, Field> parameterFields;
+
+    private Field filterParameterField = null;
 
     private void findParametersMethod(T targetObject, Class<T> testClass) {
         parameters = Arrays
@@ -238,6 +255,26 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
                 throw new InternalError(
                         "@Parameter field number aren't continuus");
             }
+            parameterFields
+                    .values()
+                    .stream()
+                    .forEach(
+                            f -> {
+                                Parameter p = f.getAnnotation(Parameter.class);
+                                if (p.filter()) {
+                                    if (filterParameterField != null) {
+                                        throw new InternalError(
+                                                "@Parameter filter attribute can only be used once per test class.");
+                                    }
+                                    if (!BiFunction.class.isAssignableFrom(f
+                                            .getType())) {
+                                        throw new InternalError(
+                                                "@Parameter filter attribute can only be use on BiFunction.");
+                                    }
+                                    filterParameterField = f;
+
+                                }
+                            });
         }
     }
 

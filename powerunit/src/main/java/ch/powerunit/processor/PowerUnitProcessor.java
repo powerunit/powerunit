@@ -65,7 +65,7 @@ public class PowerUnitProcessor extends AbstractProcessor implements
             testAnnotationValidation(roundEnv);
             ruleAnnotationValidation(processingEnv, roundEnv);
             parametersValidation(processingEnv, roundEnv);
-            parameterAnnotationValidation(roundEnv);
+            parameterAnnotationValidation(processingEnv, roundEnv);
             ignoreAnnotationValidation(roundEnv);
             try {
                 if (!categoryDone) {

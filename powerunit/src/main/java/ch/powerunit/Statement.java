@@ -53,6 +53,16 @@ public interface Statement<P, T extends Throwable> {
                                            // a bug in the compiler
 
     /**
+     * Used to provide a name (for internal use purpose).
+     * 
+     * @return the string, by default null.
+     * @since 0.1.0
+     */
+    default String getName() {
+        return null;
+    }
+
+    /**
      * Aggregate this statement and then the following. The second statement is
      * done, even in case of exception in the first one.
      * 
@@ -129,13 +139,23 @@ public interface Statement<P, T extends Throwable> {
             Object target, Method method) {
         Objects.requireNonNull(target);
         Objects.requireNonNull(method);
-        return (p) -> {
-            try {
-                method.invoke(target);
-            } catch (InvocationTargetException e) {
-                throw e.getCause();
-            } catch (IllegalAccessException | IllegalArgumentException e) {
-                throw new InternalError("Unexpected error " + e.getMessage(), e);
+        return new Statement<P, T>() {
+
+            @Override
+            public void run(P parameter) throws Throwable {
+                try {
+                    method.invoke(target);
+                } catch (InvocationTargetException e) {
+                    throw e.getCause();
+                } catch (IllegalAccessException | IllegalArgumentException e) {
+                    throw new InternalError("Unexpected error "
+                            + e.getMessage(), e);
+                }
+            }
+
+            @Override
+            public String getName() {
+                return method.getName();
             }
         };
     }

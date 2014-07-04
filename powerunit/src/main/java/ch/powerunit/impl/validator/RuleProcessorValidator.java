@@ -27,6 +27,7 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
@@ -37,7 +38,7 @@ import ch.powerunit.Rule;
 public interface RuleProcessorValidator extends ProcessValidator {
     default void ruleAnnotationValidation(ProcessingEnvironment processingEnv,
             RoundEnvironment roundEnv) {
-        Set<Element> exists = new HashSet<>();
+        Set<Name> exists = new HashSet<>();
         Set<? extends Element> elements = roundEnv
                 .getElementsAnnotatedWith(Rule.class);
         TypeElement testRule = processingEnv.getElementUtils().getTypeElement(
@@ -49,12 +50,12 @@ public interface RuleProcessorValidator extends ProcessValidator {
                 continue;
             }
             Element parent = element.getEnclosingElement();
-            if (exists.contains(parent)) {
+            if (exists.contains(parent.getSimpleName())) {
                 warn("Class "
                         + elementAsString(parent)
                         + "\n\t contains more than one @Rule field\n\tOnly one @Run method is field for a test class");
             }
-            exists.add(parent);
+            exists.add(parent.getSimpleName());
             if (element.getModifiers().contains(Modifier.STATIC)) {
                 warn("Field "
                         + elementAsString(element)

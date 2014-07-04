@@ -294,6 +294,19 @@ public interface TestSuite extends Assert, Assume, Matchers {
     }
 
     /**
+     * Provide a way to add a field to head parameter line.
+     * 
+     * @param field
+     *            The field to be added.
+     * @return the function that can be used on the stream (
+     *         {@link java.util.stream.Stream#map(Function)}).
+     * @since 0.1.0
+     */
+    default <T> Function<Object[], Object[]> addFieldToEachEntry(T field) {
+        return StreamParametersMapFunction.addFieldToEachEntry(field);
+    }
+
+    /**
      * Provide a filter for stream parameters, to keep only parameters accepted
      * by a matcher.
      * 

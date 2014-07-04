@@ -20,6 +20,7 @@
 package ch.powerunit.test.base;
 
 import java.util.Arrays;
+import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 import ch.powerunit.Categories;
@@ -48,7 +49,8 @@ public class RuntimeParametersValidatorTests {
                     TestClass3.class, TestClass4.class, TestClass5.class,
                     TestClass6.class, TestClass7.class, TestClass8.class,
                     TestClass9.class, TestClass10.class, TestClass11.class,
-                    TestClass12.class, TestClass13.class });
+                    TestClass12.class, TestClass13.class, TestClass14.class,
+                    TestClass15.class });
         }
 
         @Parameter(0)
@@ -186,4 +188,31 @@ public class RuntimeParametersValidatorTests {
         @Parameter(0)
         public String p2;
     }
+
+    public static class TestClass14 {
+        @Parameters
+        public static Stream<Object[]> getDatas() {
+            return null;
+        }
+
+        @Parameter(0)
+        public String p1;
+
+        @Parameter(value = 1, filter = true)
+        public String p2;
+    }
+
+    public static class TestClass15 {
+        @Parameters
+        public static Stream<Object[]> getDatas() {
+            return null;
+        }
+
+        @Parameter(value = 0, filter = true)
+        public BiFunction<String, Object[], Boolean> p1;
+
+        @Parameter(value = 1, filter = true)
+        public BiFunction<String, Object[], Boolean> p2;
+    }
+
 }
