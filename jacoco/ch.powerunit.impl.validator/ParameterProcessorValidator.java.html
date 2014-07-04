@@ -19,41 +19,89 @@
  */
 package ch.powerunit.impl.validator;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.Name;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeKind;
+import javax.lang.model.type.TypeMirror;
 
 import ch.powerunit.Parameter;
 
 public interface ParameterProcessorValidator extends ProcessValidator {
-    default void parameterAnnotationValidation(RoundEnvironment roundEnv) {
-<span class="nc" id="L31">        roundEnv.getElementsAnnotatedWith(Parameter.class).forEach(</span>
-                this::parameterOneAnnotationValidation);
-<span class="nc" id="L33">    }</span>
+    default void parameterAnnotationValidation(
+            ProcessingEnvironment processingEnv, RoundEnvironment roundEnv) {
+<span class="nc" id="L41">        TypeElement predicate = processingEnv.getElementUtils().getTypeElement(</span>
+                &quot;java.util.function.BiFunction&quot;);
+<span class="nc" id="L43">        Set&lt;Name&gt; exists = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L44">        roundEnv.getElementsAnnotatedWith(Parameter.class)</span>
+<span class="nc" id="L45">                .forEach(</span>
+                        (Element element) -&gt; {
+                            if (element.getKind() != ElementKind.FIELD) {
+                                error(&quot;@Parameter must prefix a field -- &quot;
+                                        + element + &quot; is not a field&quot;);
+                                return;
+                            }
 
-    default void parameterOneAnnotationValidation(Element element) {
-<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (element.getKind() != ElementKind.FIELD) {</span>
-<span class="nc" id="L37">            error(&quot;@Parameter must prefix a field -- &quot; + element</span>
-                    + &quot; is not a field&quot;);
-<span class="nc" id="L39">            return;</span>
-        }
-<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (element.getModifiers().contains(Modifier.STATIC)) {</span>
-<span class="nc" id="L42">            warn(&quot;Field &quot;</span>
-<span class="nc" id="L43">                    + elementAsString(element)</span>
-                    + &quot;\n\tis prefixed with @Parameter and is static\n\tA parameter field can't be static&quot;);
-        }
-<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (!element.getModifiers().contains(Modifier.PUBLIC)) {</span>
-<span class="nc" id="L47">            warn(&quot;Field &quot;</span>
-<span class="nc" id="L48">                    + elementAsString(element)</span>
-                    + &quot;\n\tis prefixed with @Parameter and is not public\n\tA parameter field must be public&quot;);
-        }
-<span class="nc bnc" id="L51" title="All 2 branches missed.">        if (element.getAnnotation(Parameter.class).value() &lt; 0) {</span>
-<span class="nc" id="L52">            warn(&quot;Field &quot; + elementAsString(element)</span>
-                    + &quot;\n\tis prefixed with @Parameter and value is &quot;
-<span class="nc" id="L54">                    + element.getAnnotation(Parameter.class).value()</span>
-                    + &quot;\n\tA parameter field value must be &gt;=0&quot;);
-        }
-<span class="nc" id="L57">    }</span>
+                            Element parent = element.getEnclosingElement();
+                            if (element.getAnnotation(Parameter.class).filter()) {
+                                if (exists.contains(parent.getSimpleName())) {
+                                    warn(&quot;Class &quot;
+                                            + elementAsString(parent)
+                                            + &quot;\n\t contains more than one @Parameter field with filter = true\n\tOnly one @Parameter field can use the filter attribute with true value.&quot;);
+                                }
+                                exists.add(parent.getSimpleName());
+                                TypeMirror rt = element.asType();
+                                if (rt.getKind() != TypeKind.DECLARED) {
+                                    warn(&quot;Field &quot;
+                                            + elementAsString(element)
+                                            + &quot;\n\tis prefixed with @Parameter(filter=true) and is &quot;
+                                            + element
+                                            + &quot;\n\tA predicate field must be &quot;
+                                            + predicate);
+                                } else {
+                                    DeclaredType dt = (DeclaredType) rt;
+                                    if (!processingEnv.getTypeUtils()
+                                            .isSubtype(dt.asElement().asType(),
+                                                    predicate.asType())) {
+                                        warn(&quot;Field &quot;
+                                                + elementAsString(element)
+                                                + &quot;\n\tis prefixed with @Parameter(filter=true) and is &quot;
+                                                + dt.asElement().asType()
+                                                + &quot;\n\tA predicate field must be &quot;
+                                                + predicate);
+                                    }
+                                }
+                            }
+                            if (element.getModifiers()
+                                    .contains(Modifier.STATIC)) {
+                                warn(&quot;Field &quot;
+                                        + elementAsString(element)
+                                        + &quot;\n\tis prefixed with @Parameter and is static\n\tA parameter field can't be static&quot;);
+                            }
+                            if (!element.getModifiers().contains(
+                                    Modifier.PUBLIC)) {
+                                warn(&quot;Field &quot;
+                                        + elementAsString(element)
+                                        + &quot;\n\tis prefixed with @Parameter and is not public\n\tA parameter field must be public&quot;);
+                            }
+                            if (element.getAnnotation(Parameter.class).value() &lt; 0) {
+                                warn(&quot;Field &quot;
+                                        + elementAsString(element)
+                                        + &quot;\n\tis prefixed with @Parameter and value is &quot;
+                                        + element
+                                                .getAnnotation(Parameter.class)
+                                                .value()
+                                        + &quot;\n\tA parameter field value must be &gt;=0&quot;);
+                            }
+                        });
+<span class="nc" id="L105">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

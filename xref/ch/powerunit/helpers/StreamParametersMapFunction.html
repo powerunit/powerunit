@@ -263,7 +263,29 @@
 <a class="jxr_linenumber" name="L255" href="#L255">255</a>         mapper.put(idx, (Function) mapFunction);
 <a class="jxr_linenumber" name="L256" href="#L256">256</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L257" href="#L257">257</a>     }
-<a class="jxr_linenumber" name="L258" href="#L258">258</a> }
+<a class="jxr_linenumber" name="L258" href="#L258">258</a> 
+<a class="jxr_linenumber" name="L259" href="#L259">259</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L260" href="#L260">260</a> <em class="jxr_javadoccomment">     * Provide a way to add a field to head parameter line.</em>
+<a class="jxr_linenumber" name="L261" href="#L261">261</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="L262" href="#L262">262</a> <em class="jxr_javadoccomment">     * @param field</em>
+<a class="jxr_linenumber" name="L263" href="#L263">263</a> <em class="jxr_javadoccomment">     *            The field to be added.</em>
+<a class="jxr_linenumber" name="L264" href="#L264">264</a> <em class="jxr_javadoccomment">     * @return the function that can be used on the stream (</em>
+<a class="jxr_linenumber" name="L265" href="#L265">265</a> <em class="jxr_javadoccomment">     *         {@link java.util.stream.Stream#map(Function)}).</em>
+<a class="jxr_linenumber" name="L266" href="#L266">266</a> <em class="jxr_javadoccomment">     * @since 0.1.0</em>
+<a class="jxr_linenumber" name="L267" href="#L267">267</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L268" href="#L268">268</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> &lt;T&gt; Function&lt;Object[], Object[]&gt; addFieldToEachEntry(T field) {
+<a class="jxr_linenumber" name="L269" href="#L269">269</a>         <strong class="jxr_keyword">return</strong> i -&gt; {
+<a class="jxr_linenumber" name="L270" href="#L270">270</a>             <strong class="jxr_keyword">if</strong> (i == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L271" href="#L271">271</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[] { field };
+<a class="jxr_linenumber" name="L272" href="#L272">272</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L273" href="#L273">273</a>                 Object o[] = <strong class="jxr_keyword">new</strong> Object[i.length + 1];
+<a class="jxr_linenumber" name="L274" href="#L274">274</a>                 System.arraycopy(i, 0, o, 0, i.length);
+<a class="jxr_linenumber" name="L275" href="#L275">275</a>                 o[i.length] = field;
+<a class="jxr_linenumber" name="L276" href="#L276">276</a>                 <strong class="jxr_keyword">return</strong> o;
+<a class="jxr_linenumber" name="L277" href="#L277">277</a>             }
+<a class="jxr_linenumber" name="L278" href="#L278">278</a>         };
+<a class="jxr_linenumber" name="L279" href="#L279">279</a>     }
+<a class="jxr_linenumber" name="L280" href="#L280">280</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2014. All rights reserved.</div>
