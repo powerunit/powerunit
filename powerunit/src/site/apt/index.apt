@@ -50,6 +50,9 @@ The Powerunit framework
 </plugin>
 +--
 
+ An artifact <<<powerunit-with-dependencies>>> is also available (not in the version 0.0.1); This one provides the same 
+ functionnalities, but with all the dependencies included inside the jar. This can be used in non-maven context.
+
 * Roadmap
 
  The version 0.0.1 of this library is the first release. Please refer to {{{./release.html}the release principles page}} for more 

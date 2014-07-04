@@ -242,6 +242,14 @@
 					<artifactId>xml-maven-plugin</artifactId>
 					<version>1.0</version>
 				</plugin>
+				<plugin>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.5.1</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -512,15 +520,34 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<artifactId>maven-install-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>with-dependencies-deploy</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+						<configuration>
+							<url>file://${project.build.directory}/local-repo</url>
+							<file>${project.build.directory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</file>
+							<artifactId>${project.artifactId}-with-dependencies</artifactId>
+							<groupId>${project.groupId}</groupId>
+							<pomFile>${project.build.directory}/pom-jar-with-dependencies.xml</pomFile>
+							<javadoc>${project.build.directory}/${project.artifactId}-${project.version}-javadoc.jar</javadoc>
+							<sources>${project.build.directory}/${project.artifactId}-${project.version}-sources.jar</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<artifactId>maven-invoker-plugin</artifactId>
 				<configuration>
 					<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
 					<localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
+					<preBuildHookScript>prepare.bsh</preBuildHookScript>
 					<postBuildHookScript>verify.bsh</postBuildHookScript>
 					<settingsFile>src/it/settings.xml</settingsFile>
-					<extraArtifacts>
-						<extraArtifact>nl.jqno.equalsverifier:equalsverifier:1.4.1:jar</extraArtifact>
-					</extraArtifacts>
 					<invokerPropertiesFile>params.properties</invokerPropertiesFile>
 				</configuration>
 				<executions>
