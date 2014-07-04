@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -23,57 +23,57 @@ import ch.powerunit.TestContext;
 
 public final class TestContextImpl&lt;T&gt; implements TestContext&lt;T&gt; {
 
-	public TestContextImpl(T testObject, String setName, String localName,
-<span class="fc" id="L27">			String parameterName, String categories) {</span>
-<span class="fc" id="L28">		this.setName = setName;</span>
-<span class="fc" id="L29">		this.localName = localName;</span>
-<span class="fc" id="L30">		this.parameterName = parameterName;</span>
-<span class="fc" id="L31">		this.categories = categories;</span>
-<span class="fc" id="L32">		this.testObject = testObject;</span>
-<span class="fc" id="L33">	}</span>
+    public TestContextImpl(T testObject, String setName, String localName,
+<span class="fc" id="L27">            String parameterName, String categories) {</span>
+<span class="fc" id="L28">        this.setName = setName;</span>
+<span class="fc" id="L29">        this.localName = localName;</span>
+<span class="fc" id="L30">        this.parameterName = parameterName;</span>
+<span class="fc" id="L31">        this.categories = categories;</span>
+<span class="fc" id="L32">        this.testObject = testObject;</span>
+<span class="fc" id="L33">    }</span>
 
-	private final String setName;
+    private final String setName;
 
-	private final String localName;
+    private final String localName;
 
-	private final String parameterName;
+    private final String parameterName;
 
-	private final String categories;
+    private final String categories;
 
-	private final T testObject;
+    private final T testObject;
 
-	@Override
-	public String getFullTestName() {
-<span class="fc bfc" id="L47" title="All 2 branches covered.">		if (parameterName == null) {</span>
-<span class="fc" id="L48">			return setName + &quot;:&quot; + localName;</span>
-		} else {
-<span class="fc" id="L50">			return setName + &quot;:&quot; + localName + &quot;[&quot; + parameterName + &quot;]&quot;;</span>
-		}
-	}
+    @Override
+    public String getFullTestName() {
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (parameterName == null) {</span>
+<span class="fc" id="L48">            return setName + &quot;:&quot; + localName;</span>
+        } else {
+<span class="fc" id="L50">            return setName + &quot;:&quot; + localName + &quot;[&quot; + parameterName + &quot;]&quot;;</span>
+        }
+    }
 
-	@Override
-	public String getSetName() {
-<span class="fc" id="L56">		return setName;</span>
-	}
+    @Override
+    public String getSetName() {
+<span class="fc" id="L56">        return setName;</span>
+    }
 
-	@Override
-	public String getLocalTestName() {
-<span class="fc" id="L61">		return localName;</span>
-	}
+    @Override
+    public String getLocalTestName() {
+<span class="fc" id="L61">        return localName;</span>
+    }
 
-	@Override
-	public String getParameterName() {
-<span class="fc" id="L66">		return parameterName;</span>
-	}
+    @Override
+    public String getParameterName() {
+<span class="fc" id="L66">        return parameterName;</span>
+    }
 
-	@Override
-	public String getTestCategories() {
-<span class="fc" id="L71">		return categories;</span>
-	}
+    @Override
+    public String getTestCategories() {
+<span class="fc" id="L71">        return categories;</span>
+    }
 
-	@Override
-	public T getTestSuiteObject() {
-<span class="fc" id="L76">		return testObject;</span>
-	}
+    @Override
+    public T getTestSuiteObject() {
+<span class="fc" id="L76">        return testObject;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

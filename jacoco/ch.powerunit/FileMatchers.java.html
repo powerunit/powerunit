@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -40,280 +40,280 @@ import ch.powerunit.matchers.file.Path2FileMatcher;
  *
  */
 interface FileMatchers {
-	/**
-	 * Validate that a file can execute.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileCanExecute(is(true)));
-	 * &lt;/pre&gt;
-	 * 
-	 * @param matcher
-	 *            the matcher on the can execute flag.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileCanExecute(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="nc" id="L57">		return new FileCanExecuteMatcher(matcher);</span>
-	}
+    /**
+     * Validate that a file can execute.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileCanExecute(is(true)));
+     * &lt;/pre&gt;
+     * 
+     * @param matcher
+     *            the matcher on the can execute flag.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileCanExecute(Matcher&lt;? super Boolean&gt; matcher) {
+<span class="nc" id="L57">        return new FileCanExecuteMatcher(matcher);</span>
+    }
 
-	/**
-	 * Validate that a file can execute.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileCanExecute(true);
-	 * &lt;/pre&gt;
-	 * 
-	 * @param canExecute
-	 *            the expected value for the can execute flag.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileCanExecute(boolean canExecute) {
-<span class="nc" id="L74">		return fileCanExecute(CoreMatchers.is(canExecute));</span>
-	}
+    /**
+     * Validate that a file can execute.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileCanExecute(true);
+     * &lt;/pre&gt;
+     * 
+     * @param canExecute
+     *            the expected value for the can execute flag.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileCanExecute(boolean canExecute) {
+<span class="nc" id="L74">        return fileCanExecute(CoreMatchers.is(canExecute));</span>
+    }
 
-	/**
-	 * Validate that a file can read.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileCanRead(is(true)));
-	 * &lt;/pre&gt;
-	 * 
-	 * @param matcher
-	 *            the matcher on the can read flag.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileCanRead(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="nc" id="L91">		return new FileCanReadMatcher(matcher);</span>
-	}
+    /**
+     * Validate that a file can read.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileCanRead(is(true)));
+     * &lt;/pre&gt;
+     * 
+     * @param matcher
+     *            the matcher on the can read flag.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileCanRead(Matcher&lt;? super Boolean&gt; matcher) {
+<span class="nc" id="L91">        return new FileCanReadMatcher(matcher);</span>
+    }
 
-	/**
-	 * Validate that a file can read.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileCanRead(true);
-	 * &lt;/pre&gt;
-	 * 
-	 * @param canRead
-	 *            the expected value for the can read flag.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileCanRead(boolean canRead) {
-<span class="nc" id="L108">		return fileCanRead(CoreMatchers.is(canRead));</span>
-	}
+    /**
+     * Validate that a file can read.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileCanRead(true);
+     * &lt;/pre&gt;
+     * 
+     * @param canRead
+     *            the expected value for the can read flag.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileCanRead(boolean canRead) {
+<span class="nc" id="L108">        return fileCanRead(CoreMatchers.is(canRead));</span>
+    }
 
-	/**
-	 * Validate that a file can write.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileCanWrite(is(true)));
-	 * &lt;/pre&gt;
-	 * 
-	 * @param matcher
-	 *            the matcher on the can write flag.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileCanWrite(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="nc" id="L125">		return new FileCanWriteMatcher(matcher);</span>
-	}
+    /**
+     * Validate that a file can write.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileCanWrite(is(true)));
+     * &lt;/pre&gt;
+     * 
+     * @param matcher
+     *            the matcher on the can write flag.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileCanWrite(Matcher&lt;? super Boolean&gt; matcher) {
+<span class="nc" id="L125">        return new FileCanWriteMatcher(matcher);</span>
+    }
 
-	/**
-	 * Validate that a file can write.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileCanWrite(true);
-	 * &lt;/pre&gt;
-	 * 
-	 * @param canWrite
-	 *            the expected value for the can write flag.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileCanWrite(boolean canWrite) {
-<span class="nc" id="L142">		return fileCanWrite(CoreMatchers.is(canWrite));</span>
-	}
+    /**
+     * Validate that a file can write.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileCanWrite(true);
+     * &lt;/pre&gt;
+     * 
+     * @param canWrite
+     *            the expected value for the can write flag.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileCanWrite(boolean canWrite) {
+<span class="nc" id="L142">        return fileCanWrite(CoreMatchers.is(canWrite));</span>
+    }
 
-	/**
-	 * Validate that a file is a directory.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileIsDirectory(is(true)));
-	 * &lt;/pre&gt;
-	 * 
-	 * @param matcher
-	 *            the matcher on the is directory flag.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileIsDirectory(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="fc" id="L159">		return new FileIsDirectoryMatcher(matcher);</span>
-	}
+    /**
+     * Validate that a file is a directory.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileIsDirectory(is(true)));
+     * &lt;/pre&gt;
+     * 
+     * @param matcher
+     *            the matcher on the is directory flag.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileIsDirectory(Matcher&lt;? super Boolean&gt; matcher) {
+<span class="fc" id="L159">        return new FileIsDirectoryMatcher(matcher);</span>
+    }
 
-	/**
-	 * Validate that a file is a directory.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileIsDirectory(true);
-	 * &lt;/pre&gt;
-	 * 
-	 * @param isDirectory
-	 *            the expected value for the is directory flag.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileIsDirectory(boolean isDirectory) {
-<span class="fc" id="L176">		return fileIsDirectory(CoreMatchers.is(isDirectory));</span>
-	}
+    /**
+     * Validate that a file is a directory.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileIsDirectory(true);
+     * &lt;/pre&gt;
+     * 
+     * @param isDirectory
+     *            the expected value for the is directory flag.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileIsDirectory(boolean isDirectory) {
+<span class="fc" id="L176">        return fileIsDirectory(CoreMatchers.is(isDirectory));</span>
+    }
 
-	/**
-	 * Validate that a file exists.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileExists(is(true)));
-	 * &lt;/pre&gt;
-	 * 
-	 * @param matcher
-	 *            the matcher on the exists flag.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileExists(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="fc" id="L193">		return new FileExistsMatcher(matcher);</span>
-	}
+    /**
+     * Validate that a file exists.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileExists(is(true)));
+     * &lt;/pre&gt;
+     * 
+     * @param matcher
+     *            the matcher on the exists flag.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileExists(Matcher&lt;? super Boolean&gt; matcher) {
+<span class="fc" id="L193">        return new FileExistsMatcher(matcher);</span>
+    }
 
-	/**
-	 * Validate that a file exists.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileExists(true);
-	 * &lt;/pre&gt;
-	 * 
-	 * @param exists
-	 *            the expected value for the exists flag.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileExists(boolean exists) {
-<span class="fc" id="L210">		return fileExists(CoreMatchers.is(exists));</span>
-	}
+    /**
+     * Validate that a file exists.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileExists(true);
+     * &lt;/pre&gt;
+     * 
+     * @param exists
+     *            the expected value for the exists flag.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileExists(boolean exists) {
+<span class="fc" id="L210">        return fileExists(CoreMatchers.is(exists));</span>
+    }
 
-	/**
-	 * Validate that a file is absolute.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileIsAbsolute(is(true)));
-	 * &lt;/pre&gt;
-	 * 
-	 * @param matcher
-	 *            the matcher on the absolute flag.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileIsAbsolute(Matcher&lt;? super Boolean&gt; matcher) {
-<span class="nc" id="L227">		return new FileIsAbsoluteMatcher(matcher);</span>
-	}
+    /**
+     * Validate that a file is absolute.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileIsAbsolute(is(true)));
+     * &lt;/pre&gt;
+     * 
+     * @param matcher
+     *            the matcher on the absolute flag.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileIsAbsolute(Matcher&lt;? super Boolean&gt; matcher) {
+<span class="nc" id="L227">        return new FileIsAbsoluteMatcher(matcher);</span>
+    }
 
-	/**
-	 * Validate that a file is absolute.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileIsAbsolute(true);
-	 * &lt;/pre&gt;
-	 * 
-	 * @param absolute
-	 *            the expected value for the absolute flag.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileIsAbsolute(boolean absolute) {
-<span class="nc" id="L244">		return fileIsAbsolute(CoreMatchers.is(absolute));</span>
-	}
+    /**
+     * Validate that a file is absolute.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileIsAbsolute(true);
+     * &lt;/pre&gt;
+     * 
+     * @param absolute
+     *            the expected value for the absolute flag.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileIsAbsolute(boolean absolute) {
+<span class="nc" id="L244">        return fileIsAbsolute(CoreMatchers.is(absolute));</span>
+    }
 
-	/**
-	 * Validate that a file contains something.
-	 * &lt;p&gt;
-	 * The returned String[] is the one produced by list().
-	 * 
-	 * @param matcher
-	 *            the matcher on the list() result.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileContains(Matcher&lt;String[]&gt; matcher) {
-<span class="fc" id="L257">		return new FileListMatcher(matcher);</span>
-	}
+    /**
+     * Validate that a file contains something.
+     * &lt;p&gt;
+     * The returned String[] is the one produced by list().
+     * 
+     * @param matcher
+     *            the matcher on the list() result.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileContains(Matcher&lt;String[]&gt; matcher) {
+<span class="fc" id="L257">        return new FileListMatcher(matcher);</span>
+    }
 
-	/**
-	 * Validate that a file contains some other file name.
-	 * 
-	 * @param atLeastThisName
-	 *            the file name.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileContains(String atLeastThisName) {
-<span class="fc" id="L268">		return fileContains(org.hamcrest.Matchers</span>
-<span class="fc" id="L269">				.hasItemInArray(atLeastThisName));</span>
-	}
+    /**
+     * Validate that a file contains some other file name.
+     * 
+     * @param atLeastThisName
+     *            the file name.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileContains(String atLeastThisName) {
+<span class="fc" id="L268">        return fileContains(org.hamcrest.Matchers</span>
+<span class="fc" id="L269">                .hasItemInArray(atLeastThisName));</span>
+    }
 
-	/**
-	 * Validate that a file has some name.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileNamed(is(&amp;quot;x&amp;quot;)));
-	 * &lt;/pre&gt;
-	 * 
-	 * @param matcher
-	 *            the matcher on the name.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileNamed(Matcher&lt;? super String&gt; matcher) {
-<span class="fc" id="L286">		return new FileNameMatcher(matcher);</span>
-	}
+    /**
+     * Validate that a file has some name.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileNamed(is(&amp;quot;x&amp;quot;)));
+     * &lt;/pre&gt;
+     * 
+     * @param matcher
+     *            the matcher on the name.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileNamed(Matcher&lt;? super String&gt; matcher) {
+<span class="fc" id="L286">        return new FileNameMatcher(matcher);</span>
+    }
 
-	/**
-	 * Validate that a file has some name.
-	 * &lt;p&gt;
-	 * For example :
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myFile).is(fileNamed(&amp;quot;x&amp;quot;));
-	 * &lt;/pre&gt;
-	 * 
-	 * @param name
-	 *            the expected value for the name.
-	 * @return the matcher on the file.
-	 */
-	default Matcher&lt;File&gt; fileNamed(String name) {
-<span class="fc" id="L303">		return fileNamed(CoreMatchers.is(name));</span>
-	}
+    /**
+     * Validate that a file has some name.
+     * &lt;p&gt;
+     * For example :
+     * 
+     * &lt;pre&gt;
+     * assertThat(myFile).is(fileNamed(&amp;quot;x&amp;quot;));
+     * &lt;/pre&gt;
+     * 
+     * @param name
+     *            the expected value for the name.
+     * @return the matcher on the file.
+     */
+    default Matcher&lt;File&gt; fileNamed(String name) {
+<span class="fc" id="L303">        return fileNamed(CoreMatchers.is(name));</span>
+    }
 
-	/**
-	 * This is a special matcher that apply the toFile() method to the in
-	 * matching path, and then apply the specified matcher.
-	 * 
-	 * @param matcher
-	 *            the matcher on File.
-	 * @return the matcher on Path.
-	 */
-	default Matcher&lt;Path&gt; pathMatchedAsFile(Matcher&lt;? super File&gt; matcher) {
-<span class="fc" id="L315">		return new Path2FileMatcher(matcher);</span>
-	}
+    /**
+     * This is a special matcher that apply the toFile() method to the in
+     * matching path, and then apply the specified matcher.
+     * 
+     * @param matcher
+     *            the matcher on File.
+     * @return the matcher on Path.
+     */
+    default Matcher&lt;Path&gt; pathMatchedAsFile(Matcher&lt;? super File&gt; matcher) {
+<span class="fc" id="L315">        return new Path2FileMatcher(matcher);</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

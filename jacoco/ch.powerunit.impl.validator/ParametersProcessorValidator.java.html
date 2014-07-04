@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -36,58 +36,58 @@ import javax.lang.model.type.TypeMirror;
 import ch.powerunit.Parameters;
 
 public interface ParametersProcessorValidator extends ProcessValidator {
-	default void parametersValidation(ProcessingEnvironment processingEnv,
-			RoundEnvironment roundEnv) {
-<span class="nc" id="L41">		Set&lt;Element&gt; exists = new HashSet&lt;&gt;();</span>
-<span class="nc" id="L42">		Set&lt;? extends Element&gt; elements = roundEnv</span>
-<span class="nc" id="L43">				.getElementsAnnotatedWith(Parameters.class);</span>
-<span class="nc" id="L44">		TypeElement stream = processingEnv.getElementUtils().getTypeElement(</span>
-				&quot;java.util.stream.Stream&quot;);
-<span class="nc bnc" id="L46" title="All 2 branches missed.">		for (Element element : elements) {</span>
-<span class="nc bnc" id="L47" title="All 2 branches missed.">			if (element.getKind() != ElementKind.METHOD) {</span>
-<span class="nc" id="L48">				error(&quot;@Parameters must prefix a method -- &quot; + element</span>
-						+ &quot; is not a method&quot;);
-<span class="nc" id="L50">				continue;</span>
-			}
-<span class="nc" id="L52">			Element parent = element.getEnclosingElement();</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">			if (exists.contains(parent)) {</span>
-<span class="nc" id="L54">				warn(&quot;Class &quot;</span>
-<span class="nc" id="L55">						+ elementAsString(parent)</span>
-						+ &quot;\n\t contains more than one @Parameters method\n\tOnly one @Parameters method is allowed for a test class&quot;);
-			}
-<span class="nc" id="L58">			exists.add(parent);</span>
-<span class="nc" id="L59">			ExecutableElement ee = (ExecutableElement) element;</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (!ee.getModifiers().contains(Modifier.STATIC)) {</span>
-<span class="nc" id="L61">				warn(&quot;Method &quot;</span>
-<span class="nc" id="L62">						+ elementAsString(element)</span>
-						+ &quot;\n\tis prefixed with @Parameters and is not static\n\tThe parameters method must be static&quot;);
-			}
-<span class="nc bnc" id="L65" title="All 2 branches missed.">			if (!ee.getModifiers().contains(Modifier.PUBLIC)) {</span>
-<span class="nc" id="L66">				warn(&quot;Method &quot;</span>
-<span class="nc" id="L67">						+ elementAsString(element)</span>
-						+ &quot;\n\tis prefixed with @Parameters and is not public\n\tThe parameters method must be public&quot;);
-			}
-<span class="nc" id="L70">			TypeMirror rt = ee.getReturnType();</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">			if (rt.getKind() != TypeKind.DECLARED) {</span>
-<span class="nc" id="L72">				warn(&quot;Method &quot; + elementAsString(element)</span>
-						+ &quot;\n\tis prefixed with @Parameters and return &quot; + rt
-						+ &quot;\n\tThe parameters method must return &quot; + stream);
-			} else {
-<span class="nc" id="L76">				DeclaredType dt = (DeclaredType) rt;</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">				if (!processingEnv.getTypeUtils().isSubtype(</span>
-<span class="nc" id="L78">						dt.asElement().asType(), stream.asType())) {</span>
-<span class="nc" id="L79">					warn(&quot;Method &quot; + elementAsString(element)</span>
-							+ &quot;\n\tis prefixed with @Parameters and return &quot;
-<span class="nc" id="L81">							+ dt.asElement().asType()</span>
-							+ &quot;\n\tThe parameters method must return &quot; + stream);
-				}
-			}
-<span class="nc bnc" id="L85" title="All 2 branches missed.">			if (ee.getParameters().size() != 0) {</span>
-<span class="nc" id="L86">				warn(&quot;Method &quot;</span>
-<span class="nc" id="L87">						+ elementAsString(element)</span>
-						+ &quot;\n\tis prefixed with @Parameters and is not 0-args\n\tThe parameters method must be 0-args&quot;);
-			}
-<span class="nc" id="L90">		}</span>
-<span class="nc" id="L91">	}</span>
+    default void parametersValidation(ProcessingEnvironment processingEnv,
+            RoundEnvironment roundEnv) {
+<span class="nc" id="L41">        Set&lt;Element&gt; exists = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L42">        Set&lt;? extends Element&gt; elements = roundEnv</span>
+<span class="nc" id="L43">                .getElementsAnnotatedWith(Parameters.class);</span>
+<span class="nc" id="L44">        TypeElement stream = processingEnv.getElementUtils().getTypeElement(</span>
+                &quot;java.util.stream.Stream&quot;);
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        for (Element element : elements) {</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">            if (element.getKind() != ElementKind.METHOD) {</span>
+<span class="nc" id="L48">                error(&quot;@Parameters must prefix a method -- &quot; + element</span>
+                        + &quot; is not a method&quot;);
+<span class="nc" id="L50">                continue;</span>
+            }
+<span class="nc" id="L52">            Element parent = element.getEnclosingElement();</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">            if (exists.contains(parent)) {</span>
+<span class="nc" id="L54">                warn(&quot;Class &quot;</span>
+<span class="nc" id="L55">                        + elementAsString(parent)</span>
+                        + &quot;\n\t contains more than one @Parameters method\n\tOnly one @Parameters method is allowed for a test class&quot;);
+            }
+<span class="nc" id="L58">            exists.add(parent);</span>
+<span class="nc" id="L59">            ExecutableElement ee = (ExecutableElement) element;</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">            if (!ee.getModifiers().contains(Modifier.STATIC)) {</span>
+<span class="nc" id="L61">                warn(&quot;Method &quot;</span>
+<span class="nc" id="L62">                        + elementAsString(element)</span>
+                        + &quot;\n\tis prefixed with @Parameters and is not static\n\tThe parameters method must be static&quot;);
+            }
+<span class="nc bnc" id="L65" title="All 2 branches missed.">            if (!ee.getModifiers().contains(Modifier.PUBLIC)) {</span>
+<span class="nc" id="L66">                warn(&quot;Method &quot;</span>
+<span class="nc" id="L67">                        + elementAsString(element)</span>
+                        + &quot;\n\tis prefixed with @Parameters and is not public\n\tThe parameters method must be public&quot;);
+            }
+<span class="nc" id="L70">            TypeMirror rt = ee.getReturnType();</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            if (rt.getKind() != TypeKind.DECLARED) {</span>
+<span class="nc" id="L72">                warn(&quot;Method &quot; + elementAsString(element)</span>
+                        + &quot;\n\tis prefixed with @Parameters and return &quot; + rt
+                        + &quot;\n\tThe parameters method must return &quot; + stream);
+            } else {
+<span class="nc" id="L76">                DeclaredType dt = (DeclaredType) rt;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">                if (!processingEnv.getTypeUtils().isSubtype(</span>
+<span class="nc" id="L78">                        dt.asElement().asType(), stream.asType())) {</span>
+<span class="nc" id="L79">                    warn(&quot;Method &quot; + elementAsString(element)</span>
+                            + &quot;\n\tis prefixed with @Parameters and return &quot;
+<span class="nc" id="L81">                            + dt.asElement().asType()</span>
+                            + &quot;\n\tThe parameters method must return &quot; + stream);
+                }
+            }
+<span class="nc bnc" id="L85" title="All 2 branches missed.">            if (!ee.getParameters().isEmpty()) {</span>
+<span class="nc" id="L86">                warn(&quot;Method &quot;</span>
+<span class="nc" id="L87">                        + elementAsString(element)</span>
+                        + &quot;\n\tis prefixed with @Parameters and is not 0-args\n\tThe parameters method must be 0-args&quot;);
+            }
+<span class="nc" id="L90">        }</span>
+<span class="nc" id="L91">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

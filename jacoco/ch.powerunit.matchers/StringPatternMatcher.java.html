@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -26,36 +26,36 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 /**
  * The matcher on string pattern.
- * 
+ *
  * @author borettim
  *
  */
 public class StringPatternMatcher extends TypeSafeDiagnosingMatcher&lt;String&gt; {
 
-	/**
-	 * @param pattern
-	 */
-<span class="nc" id="L38">	public StringPatternMatcher(Pattern pattern) {</span>
-<span class="nc" id="L39">		this.pattern = pattern;</span>
-<span class="nc" id="L40">	}</span>
+    /**
+     * @param pattern
+     */
+<span class="nc" id="L38">    public StringPatternMatcher(Pattern pattern) {</span>
+<span class="nc" id="L39">        this.pattern = pattern;</span>
+<span class="nc" id="L40">    }</span>
 
-	private Pattern pattern;
+    private final Pattern pattern;
 
-	@Override
-	public void describeTo(Description description) {
-<span class="nc" id="L46">		description.appendText(&quot;a string matching the pattern &quot;).appendValue(</span>
-				pattern);
-<span class="nc" id="L48">	}</span>
+    @Override
+    public void describeTo(Description description) {
+<span class="nc" id="L46">        description.appendText(&quot;a string matching the pattern &quot;).appendValue(</span>
+                pattern);
+<span class="nc" id="L48">    }</span>
 
-	@Override
-	protected boolean matchesSafely(String item, Description mismatchDescription) {
-<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (!pattern.matcher(item).matches()) {</span>
-<span class="nc" id="L53">			mismatchDescription.appendText(&quot;but the string &quot;).appendValue(item)</span>
-<span class="nc" id="L54">					.appendText(&quot; was not matching &quot;).appendValue(pattern);</span>
-<span class="nc" id="L55">			return false;</span>
-		}
-<span class="nc" id="L57">		return true;</span>
-	}
+    @Override
+    protected boolean matchesSafely(String item, Description mismatchDescription) {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (!pattern.matcher(item).matches()) {</span>
+<span class="nc" id="L53">            mismatchDescription.appendText(&quot;but the string &quot;).appendValue(item)</span>
+<span class="nc" id="L54">                    .appendText(&quot; was not matching &quot;).appendValue(pattern);</span>
+<span class="nc" id="L55">            return false;</span>
+        }
+<span class="nc" id="L57">        return true;</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

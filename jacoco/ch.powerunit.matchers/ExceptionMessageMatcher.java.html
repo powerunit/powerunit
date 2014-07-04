@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -24,26 +24,26 @@ import org.hamcrest.Matcher;
 
 /**
  * The matcher on exception message.
- * 
+ *
  * @author borettim
  *
  */
 public class ExceptionMessageMatcher extends FeatureMatcher&lt;Throwable, String&gt; {
 
-	/**
-	 * Default builder
-	 * 
-	 * @param subMatcher
-	 *            the matcher to be applied
-	 */
-	public ExceptionMessageMatcher(Matcher&lt;? super String&gt; subMatcher) {
-<span class="fc" id="L40">		super(subMatcher, &quot;message&quot;, &quot;message&quot;);</span>
-<span class="fc" id="L41">	}</span>
+    /**
+     * Default builder
+     * 
+     * @param subMatcher
+     *            the matcher to be applied
+     */
+    public ExceptionMessageMatcher(Matcher&lt;? super String&gt; subMatcher) {
+<span class="fc" id="L40">        super(subMatcher, &quot;message&quot;, &quot;message&quot;);</span>
+<span class="fc" id="L41">    }</span>
 
-	@Override
-	protected String featureValueOf(Throwable actual) {
-<span class="fc" id="L45">		return actual.getMessage();</span>
-	}
+    @Override
+    protected String featureValueOf(Throwable actual) {
+<span class="fc" id="L45">        return actual.getMessage();</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

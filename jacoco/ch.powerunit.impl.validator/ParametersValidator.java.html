@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -26,23 +26,23 @@ import java.util.stream.Stream;
 import ch.powerunit.exception.InternalError;
 
 public interface ParametersValidator {
-	default void checkParametersAnnotationForMethod(Method m) {
-<span class="fc bfc" id="L30" title="All 2 branches covered.">		if (!Modifier.isStatic(m.getModifiers())) {</span>
-<span class="fc" id="L31">			throw new InternalError(&quot;@Parameters method is not static &quot;</span>
-<span class="fc" id="L32">					+ m.toString());</span>
-		}
-<span class="fc bfc" id="L34" title="All 2 branches covered.">		if (!Modifier.isPublic(m.getModifiers())) {</span>
-<span class="fc" id="L35">			throw new InternalError(&quot;@Parameters method is not public &quot;</span>
-<span class="fc" id="L36">					+ m.toString());</span>
-		}
-<span class="fc bfc" id="L38" title="All 2 branches covered.">		if (!Stream.class.isAssignableFrom(m.getReturnType())) {</span>
-<span class="fc" id="L39">			throw new InternalError(&quot;@Parameters method is not Stream&lt;...&gt; &quot;</span>
-<span class="fc" id="L40">					+ m.toString());</span>
-		}
-<span class="fc bfc" id="L42" title="All 2 branches covered.">		if (m.getParameterCount() != 0) {</span>
-<span class="fc" id="L43">			throw new InternalError(&quot;@Parameters method is not 0-parameter &quot;</span>
-<span class="fc" id="L44">					+ m.toString());</span>
-		}
-<span class="fc" id="L46">	}</span>
+    default void checkParametersAnnotationForMethod(Method m) {
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (!Modifier.isStatic(m.getModifiers())) {</span>
+<span class="fc" id="L31">            throw new InternalError(&quot;@Parameters method is not static &quot;</span>
+<span class="fc" id="L32">                    + m.toString());</span>
+        }
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (!Modifier.isPublic(m.getModifiers())) {</span>
+<span class="fc" id="L35">            throw new InternalError(&quot;@Parameters method is not public &quot;</span>
+<span class="fc" id="L36">                    + m.toString());</span>
+        }
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (!Stream.class.isAssignableFrom(m.getReturnType())) {</span>
+<span class="fc" id="L39">            throw new InternalError(&quot;@Parameters method is not Stream&lt;...&gt; &quot;</span>
+<span class="fc" id="L40">                    + m.toString());</span>
+        }
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (m.getParameterCount() != 0) {</span>
+<span class="fc" id="L43">            throw new InternalError(&quot;@Parameters method is not 0-parameter &quot;</span>
+<span class="fc" id="L44">                    + m.toString());</span>
+        }
+<span class="fc" id="L46">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

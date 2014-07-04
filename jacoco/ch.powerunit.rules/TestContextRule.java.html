@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -24,33 +24,33 @@ import ch.powerunit.TestContext;
 /**
  * This rule can be used to have access to the {@link TestContext test execution
  * context} from inside a test.
- * 
+ *
  * @author borettim
  *
  */
 <span class="fc" id="L31">public final class TestContextRule implements TestListenerRule {</span>
 
-	private TestContext&lt;Object&gt; testContext;
+    private TestContext&lt;Object&gt; testContext;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ch.powerunit.rules.ExternalResource#onStart(ch.powerunit.TestContext)
-	 */
-	@Override
-	public void onStart(TestContext&lt;Object&gt; context) {
-<span class="fc" id="L43">		this.testContext = context;</span>
-<span class="fc" id="L44">	}</span>
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * ch.powerunit.rules.ExternalResource#onStart(ch.powerunit.TestContext)
+     */
+    @Override
+    public void onStart(TestContext&lt;Object&gt; context) {
+<span class="fc" id="L43">        this.testContext = context;</span>
+<span class="fc" id="L44">    }</span>
 
-	/**
-	 * Retrieve the test context object.
-	 * 
-	 * @return the testContext.
-	 */
-	public TestContext&lt;Object&gt; getTestContext() {
-<span class="fc" id="L52">		return testContext;</span>
-	}
+    /**
+     * Retrieve the test context object.
+     * 
+     * @return the testContext.
+     */
+    public TestContext&lt;Object&gt; getTestContext() {
+<span class="fc" id="L52">        return testContext;</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

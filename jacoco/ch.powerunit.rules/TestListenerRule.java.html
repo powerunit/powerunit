@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -32,7 +32,7 @@ import ch.powerunit.exception.AssumptionError;
  * &lt;p&gt;
  * Rule implementer should implements this interface and then implement the
  * required methods (which are do-nothing method by default).
- * 
+ *
  * The order of execution is the following :
  * &lt;ul&gt;
  * &lt;li&gt;Before the test, the method {@link #onStart(TestContext)} is executed.&lt;/li&gt;
@@ -49,105 +49,105 @@ import ch.powerunit.exception.AssumptionError;
  * &lt;li&gt;In all case, after the test, and after the previous method in case of
  * error/failure, the method {@link #onEnd(TestContext)} is executed.&lt;/li&gt;
  * &lt;/ul&gt;
- * 
+ *
  * The {@link ExternalResource} rule implements this interface to provide simple
  * use case (action before and always after test).
- * 
+ *
  * @author borettim
  * @see ExternalResource
  */
 public interface TestListenerRule extends TestRule {
 
-	/**
-	 * Method used at the start of the test.
-	 * &lt;p&gt;
-	 * Default implementation is to do nothing.
-	 * 
-	 * @param context
-	 *            the test context
-	 */
-	default void onStart(TestContext&lt;Object&gt; context) {
-		// Do nothing as default
-<span class="nc" id="L71">	}</span>
+    /**
+     * Method used at the start of the test.
+     * &lt;p&gt;
+     * Default implementation is to do nothing.
+     * 
+     * @param context
+     *            the test context
+     */
+    default void onStart(TestContext&lt;Object&gt; context) {
+        // Do nothing as default
+<span class="nc" id="L71">    }</span>
 
-	/**
-	 * Method used when a failure happened.
-	 * &lt;p&gt;
-	 * Default implementation is to do nothing.
-	 * 
-	 * @param context
-	 *            the test context
-	 * @param af
-	 *            the failure
-	 */
-	default void onFailure(TestContext&lt;Object&gt; context, AssertionError af) {
-		// Do nothing as default
-<span class="nc" id="L85">	}</span>
+    /**
+     * Method used when a failure happened.
+     * &lt;p&gt;
+     * Default implementation is to do nothing.
+     * 
+     * @param context
+     *            the test context
+     * @param af
+     *            the failure
+     */
+    default void onFailure(TestContext&lt;Object&gt; context, AssertionError af) {
+        // Do nothing as default
+<span class="nc" id="L85">    }</span>
 
-	/**
-	 * Method used when an error happened.
-	 * &lt;p&gt;
-	 * Default implementation is to do nothing.
-	 * 
-	 * @param context
-	 *            the test context
-	 * @param error
-	 *            the error
-	 */
-	default void onError(TestContext&lt;Object&gt; context, Throwable error) {
-		// Do nothing as default
-<span class="nc" id="L99">	}</span>
+    /**
+     * Method used when an error happened.
+     * &lt;p&gt;
+     * Default implementation is to do nothing.
+     * 
+     * @param context
+     *            the test context
+     * @param error
+     *            the error
+     */
+    default void onError(TestContext&lt;Object&gt; context, Throwable error) {
+        // Do nothing as default
+<span class="nc" id="L99">    }</span>
 
-	/**
-	 * Method used when an assumption error happened.
-	 * &lt;p&gt;
-	 * Default implementation is to do nothing.
-	 * 
-	 * @param context
-	 *            the test context
-	 * @param error
-	 *            the assumption error
-	 */
-	default void onAssumptionSkip(TestContext&lt;Object&gt; context,
-			AssumptionError error) {
-		// Do nothing as default
-<span class="nc" id="L114">	}</span>
+    /**
+     * Method used when an assumption error happened.
+     * &lt;p&gt;
+     * Default implementation is to do nothing.
+     * 
+     * @param context
+     *            the test context
+     * @param error
+     *            the assumption error
+     */
+    default void onAssumptionSkip(TestContext&lt;Object&gt; context,
+            AssumptionError error) {
+        // Do nothing as default
+<span class="nc" id="L114">    }</span>
 
-	/**
-	 * Method used at the end of the test.
-	 * &lt;p&gt;
-	 * Default implementation is to do nothing.
-	 * 
-	 * @param context
-	 *            the test context
-	 */
-	default void onEnd(TestContext&lt;Object&gt; context) {
-		// Do nothing as default
-<span class="fc" id="L126">	}</span>
+    /**
+     * Method used at the end of the test.
+     * &lt;p&gt;
+     * Default implementation is to do nothing.
+     * 
+     * @param context
+     *            the test context
+     */
+    default void onEnd(TestContext&lt;Object&gt; context) {
+        // Do nothing as default
+<span class="fc" id="L126">    }</span>
 
-	@Override
-	default Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; computeStatement(
-			Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; inner) {
-<span class="fc" id="L131">		return (p) -&gt; {</span>
-			try {
-				onStart(p);
-				inner.run(p);
-			} catch (AssertionError af) {
-				onFailure(p, af);
-				throw af;
-			} catch (InternalError ie) {
-				onError(p, ie);
-				throw ie;
-			} catch (AssumptionError ie) {
-				onAssumptionSkip(p, ie);
-				throw ie;
-			} catch (Throwable t) {
-				onError(p, t);
-				throw t;
-			} finally {
-				onEnd(p);
-			}
-		};
-	}
+    @Override
+    default Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; computeStatement(
+            Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; inner) {
+<span class="fc" id="L131">        return (p) -&gt; {</span>
+            try {
+                onStart(p);
+                inner.run(p);
+            } catch (AssertionError af) {
+                onFailure(p, af);
+                throw af;
+            } catch (InternalError ie) {
+                onError(p, ie);
+                throw ie;
+            } catch (AssumptionError ie) {
+                onAssumptionSkip(p, ie);
+                throw ie;
+            } catch (Throwable t) {
+                onError(p, t);
+                throw t;
+            } finally {
+                onEnd(p);
+            }
+        };
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -26,20 +26,20 @@ import org.hamcrest.Matcher;
 
 /**
  * The Mather on the result of list on a File
- * 
+ *
  * @author borettim
  *
  */
 public class FileListMatcher extends FeatureMatcher&lt;File, String[]&gt; {
 
-	public FileListMatcher(Matcher&lt;String[]&gt; subMatcher) {
-<span class="fc" id="L36">		super(subMatcher, &quot;contains&quot;, &quot;contains&quot;);</span>
-<span class="fc" id="L37">	}</span>
+    public FileListMatcher(Matcher&lt;String[]&gt; subMatcher) {
+<span class="fc" id="L36">        super(subMatcher, &quot;contains&quot;, &quot;contains&quot;);</span>
+<span class="fc" id="L37">    }</span>
 
-	@Override
-	protected String[] featureValueOf(File actual) {
-<span class="fc" id="L41">		return actual.list();</span>
-	}
+    @Override
+    protected String[] featureValueOf(File actual) {
+<span class="fc" id="L41">        return actual.list();</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

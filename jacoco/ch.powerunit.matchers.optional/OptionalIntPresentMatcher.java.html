@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -26,26 +26,26 @@ import org.hamcrest.Matcher;
 
 /**
  * Support for presence check on optional
- * 
+ *
  * @author borettim
  *
  */
 public class OptionalIntPresentMatcher extends
-		FeatureMatcher&lt;OptionalInt, Boolean&gt; {
+        FeatureMatcher&lt;OptionalInt, Boolean&gt; {
 
-	/**
-	 * Default constructor.
-	 * 
-	 * @param subMatcher
-	 *            the matcher
-	 */
-	public OptionalIntPresentMatcher(Matcher&lt;? super Boolean&gt; subMatcher) {
-<span class="fc" id="L43">		super(subMatcher, &quot;is present&quot;, &quot;is present&quot;);</span>
-<span class="fc" id="L44">	}</span>
+    /**
+     * Default constructor.
+     * 
+     * @param subMatcher
+     *            the matcher
+     */
+    public OptionalIntPresentMatcher(Matcher&lt;? super Boolean&gt; subMatcher) {
+<span class="fc" id="L43">        super(subMatcher, &quot;is present&quot;, &quot;is present&quot;);</span>
+<span class="fc" id="L44">    }</span>
 
-	@Override
-	protected Boolean featureValueOf(OptionalInt actual) {
-<span class="fc" id="L48">		return actual.isPresent();</span>
-	}
+    @Override
+    protected Boolean featureValueOf(OptionalInt actual) {
+<span class="fc" id="L48">        return actual.isPresent();</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

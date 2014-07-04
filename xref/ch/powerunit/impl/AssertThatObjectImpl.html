@@ -21,7 +21,7 @@
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> * but WITHOUT ANY WARRANTY; without even the implied warranty of</em>
 <a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</em>
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> * GNU General Public License for more details.</em>
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment"> * You should have received a copy of the GNU General Public License</em>
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment"> * along with Powerunit. If not, see &lt;<a href="http://www.gnu.org/licenses/&gt;" target="alexandria_uri">http://www.gnu.org/licenses/&gt;</a>.</em>
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment"> */</em>
@@ -38,37 +38,37 @@
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> AssertThatObjectImpl&lt;T&gt; <strong class="jxr_keyword">implements</strong> AssertThatObject&lt;T&gt; {
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> assertion;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> assertion;
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  	<strong class="jxr_keyword">public</strong> <a href="../../../ch/powerunit/impl/AssertThatObjectImpl.html">AssertThatObjectImpl</a>(<strong class="jxr_keyword">boolean</strong> assertion, String msg,
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  			Supplier&lt;T&gt; provider) {
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  		<strong class="jxr_keyword">this</strong>.provider = provider;
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  		<strong class="jxr_keyword">this</strong>.msg = msg;
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  		<strong class="jxr_keyword">this</strong>.assertion = assertion;
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  	}
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">public</strong> <a href="../../../ch/powerunit/impl/AssertThatObjectImpl.html">AssertThatObjectImpl</a>(<strong class="jxr_keyword">boolean</strong> assertion, String msg,
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>              Supplier&lt;T&gt; provider) {
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>          <strong class="jxr_keyword">this</strong>.provider = provider;
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>          <strong class="jxr_keyword">this</strong>.msg = msg;
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          <strong class="jxr_keyword">this</strong>.assertion = assertion;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>      }
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Supplier&lt;T&gt; provider;
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Supplier&lt;T&gt; provider;
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String msg;
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String msg;
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>  	@Override
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> is(Matcher&lt;? <strong class="jxr_keyword">super</strong> T&gt; matching) {
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>  		Description message = <strong class="jxr_keyword">new</strong> StringDescription();
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  		message.appendText(<span class="jxr_string">"expecting "</span>);
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>  		matching.describeTo(message);
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>  		message.appendText(<span class="jxr_string">" but "</span>);
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>  		T obj = provider.get();
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>  		<strong class="jxr_keyword">if</strong> (!matching.matches(obj)) {
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>  			matching.describeMismatch(obj, message);
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>  			<strong class="jxr_keyword">if</strong> (assertion) {
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>  				<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> AssertionError((msg == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">""</span> : msg + <span class="jxr_string">"\n"</span>)
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>  						+ message.toString());
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>  			} <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>  				<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../ch/powerunit/exception/AssumptionError.html">AssumptionError</a>((msg == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">""</span> : msg + <span class="jxr_string">"\n"</span>)
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>  						+ message.toString());
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>  			}
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>  		}
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>  	}
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>      @Override
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> is(Matcher&lt;? <strong class="jxr_keyword">super</strong> T&gt; matching) {
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>          Description message = <strong class="jxr_keyword">new</strong> StringDescription();
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          message.appendText(<span class="jxr_string">"expecting "</span>);
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          matching.describeTo(message);
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          message.appendText(<span class="jxr_string">" but "</span>);
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>          T obj = provider.get();
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          <strong class="jxr_keyword">if</strong> (!matching.matches(obj)) {
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>              matching.describeMismatch(obj, message);
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>              <strong class="jxr_keyword">if</strong> (assertion) {
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>                  <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> AssertionError((msg == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">""</span> : msg + <span class="jxr_string">"\n"</span>)
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>                          + message.toString());
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>              } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>                  <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../ch/powerunit/exception/AssumptionError.html">AssumptionError</a>((msg == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">""</span> : msg + <span class="jxr_string">"\n"</span>)
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>                          + message.toString());
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>              }
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          }
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      }
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  }
 </pre>

@@ -21,7 +21,7 @@
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> * but WITHOUT ANY WARRANTY; without even the implied warranty of</em>
 <a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</em>
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> * GNU General Public License for more details.</em>
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment"> * You should have received a copy of the GNU General Public License</em>
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment"> * along with Powerunit. If not, see &lt;<a href="http://www.gnu.org/licenses/&gt;" target="alexandria_uri">http://www.gnu.org/licenses/&gt;</a>.</em>
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment"> */</em>
@@ -33,21 +33,21 @@
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> ch.powerunit.rules.TestContextRule;
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">class</strong> <a href="../../../ch/powerunit/examples/ParentTest.html">ParentTest</a> <strong class="jxr_keyword">implements</strong> TestSuite {
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  	<strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> TestContextRule context = <strong class="jxr_keyword">new</strong> TestContextRule();
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> TestContextRule context = <strong class="jxr_keyword">new</strong> TestContextRule();
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  	@Rule
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> TestRule level1 = context.around(before(<strong class="jxr_keyword">this</strong>::prepare1)
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  			.around(after(<strong class="jxr_keyword">this</strong>::clean1)));
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>      @Rule
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> TestRule level1 = context.around(before(<strong class="jxr_keyword">this</strong>::prepare1)
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>              .around(after(<strong class="jxr_keyword">this</strong>::clean1)));
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> prepare1() {
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  		System.out.println(context.getTestContext().getFullTestName()
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  				+ <span class="jxr_string">":prepare1"</span>);
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  	}
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> prepare1() {
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>          System.out.println(context.getTestContext().getFullTestName()
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>                  + <span class="jxr_string">":prepare1"</span>);
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      }
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> clean1() {
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  		System.out.println(context.getTestContext().getFullTestName()
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  				+ <span class="jxr_string">":clean1"</span>);
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  	}
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> clean1() {
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          System.out.println(context.getTestContext().getFullTestName()
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>                  + <span class="jxr_string">":clean1"</span>);
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      }
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  }
 </pre>
 <hr/>

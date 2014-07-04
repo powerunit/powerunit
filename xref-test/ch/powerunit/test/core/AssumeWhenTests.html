@@ -21,7 +21,7 @@
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> * but WITHOUT ANY WARRANTY; without even the implied warranty of</em>
 <a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</em>
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> * GNU General Public License for more details.</em>
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment"> * You should have received a copy of the GNU General Public License</em>
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment"> * along with Powerunit. If not, see &lt;<a href="http://www.gnu.org/licenses/&gt;" target="alexandria_uri">http://www.gnu.org/licenses/&gt;</a>.</em>
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment"> */</em>
@@ -32,57 +32,57 @@
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> ch.powerunit.TestSuite;
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../ch/powerunit/test/core/AssumeWhenTests.html">AssumeWhenTests</a> {
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> main(String[] args) {
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  		AllTests.testNoException(
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  				<span class="jxr_string">"testAssumeWhenOKWithoutMessage"</span>,
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  				() -&gt; TestSuite.DSL.assumeWhen((p) -&gt; {
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  					<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> Exception(<span class="jxr_string">"test"</span>);
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  				}).throwException(
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  						Matchers.hasProperty(<span class="jxr_string">"message"</span>,
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  								Matchers.equalTo(<span class="jxr_string">"test"</span>))));
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> main(String[] args) {
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>          AllTests.testNoException(
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>                  <span class="jxr_string">"testAssumeWhenOKWithoutMessage"</span>,
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>                  () -&gt; TestSuite.DSL.assumeWhen((p) -&gt; {
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>                      <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> Exception(<span class="jxr_string">"test"</span>);
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>                  }).throwException(
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>                          Matchers.hasProperty(<span class="jxr_string">"message"</span>,
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>                                  Matchers.equalTo(<span class="jxr_string">"test"</span>))));
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  		AllTests.testException(
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  				<span class="jxr_string">"testAssumeWhenKONoExceptionWithoutMessage"</span>,
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  				() -&gt; TestSuite.DSL.assumeWhen((p) -&gt; {
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  				}).throwException(
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  						Matchers.hasProperty(<span class="jxr_string">"message"</span>,
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  								Matchers.equalTo(<span class="jxr_string">"test"</span>))),
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  				<span class="jxr_string">"An exception was expected, but none was thrown"</span>);
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>          AllTests.testException(
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>                  <span class="jxr_string">"testAssumeWhenKONoExceptionWithoutMessage"</span>,
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>                  () -&gt; TestSuite.DSL.assumeWhen((p) -&gt; {
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>                  }).throwException(
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>                          Matchers.hasProperty(<span class="jxr_string">"message"</span>,
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>                                  Matchers.equalTo(<span class="jxr_string">"test"</span>))),
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>                  <span class="jxr_string">"An exception was expected, but none was thrown"</span>);
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  		AllTests.testException(
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  				<span class="jxr_string">"testAssumeWhenKOExceptionWithoutMessage"</span>,
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>  				() -&gt; TestSuite.DSL.assumeWhen((p) -&gt; {
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  					<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> Exception(<span class="jxr_string">"test"</span>);
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>  				}).throwException(
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  						Matchers.hasProperty(<span class="jxr_string">"message"</span>,
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>  								Matchers.equalTo(<span class="jxr_string">"other"</span>))),
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>  				<span class="jxr_string">"expecting hasProperty(\&quot;message\&quot;, \&quot;other\&quot;) but property 'message' was \&quot;test\&quot;"</span>);
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          AllTests.testException(
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>                  <span class="jxr_string">"testAssumeWhenKOExceptionWithoutMessage"</span>,
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>                  () -&gt; TestSuite.DSL.assumeWhen((p) -&gt; {
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>                      <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> Exception(<span class="jxr_string">"test"</span>);
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>                  }).throwException(
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>                          Matchers.hasProperty(<span class="jxr_string">"message"</span>,
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>                                  Matchers.equalTo(<span class="jxr_string">"other"</span>))),
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>                  <span class="jxr_string">"expecting hasProperty(\&quot;message\&quot;, \&quot;other\&quot;) but property 'message' was \&quot;test\&quot;"</span>);
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>  		AllTests.testNoException(
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>  				<span class="jxr_string">"testAssumeWhenOKWithMessage"</span>,
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>  				() -&gt; TestSuite.DSL.assumeWhen(<span class="jxr_string">"msg"</span>, (p) -&gt; {
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>  					<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> Exception(<span class="jxr_string">"test"</span>);
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>  				}).throwException(
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>  						Matchers.hasProperty(<span class="jxr_string">"message"</span>,
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>  								Matchers.equalTo(<span class="jxr_string">"test"</span>))));
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          AllTests.testNoException(
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>                  <span class="jxr_string">"testAssumeWhenOKWithMessage"</span>,
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>                  () -&gt; TestSuite.DSL.assumeWhen(<span class="jxr_string">"msg"</span>, (p) -&gt; {
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>                      <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> Exception(<span class="jxr_string">"test"</span>);
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>                  }).throwException(
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>                          Matchers.hasProperty(<span class="jxr_string">"message"</span>,
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>                                  Matchers.equalTo(<span class="jxr_string">"test"</span>))));
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>  
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>  		AllTests.testException(
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>  				<span class="jxr_string">"testAssumeWhenKONoExceptionWithMessage"</span>,
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>  				() -&gt; TestSuite.DSL.assumeWhen(<span class="jxr_string">"msg"</span>, (p) -&gt; {
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>  				}).throwException(
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>  						Matchers.hasProperty(<span class="jxr_string">"message"</span>,
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>  								Matchers.equalTo(<span class="jxr_string">"test"</span>))),
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>  				<span class="jxr_string">"msg\nAn exception was expected, but none was thrown"</span>);
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          AllTests.testException(
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>                  <span class="jxr_string">"testAssumeWhenKONoExceptionWithMessage"</span>,
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>                  () -&gt; TestSuite.DSL.assumeWhen(<span class="jxr_string">"msg"</span>, (p) -&gt; {
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>                  }).throwException(
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>                          Matchers.hasProperty(<span class="jxr_string">"message"</span>,
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>                                  Matchers.equalTo(<span class="jxr_string">"test"</span>))),
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>                  <span class="jxr_string">"msg\nAn exception was expected, but none was thrown"</span>);
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>  		AllTests.testException(
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  				<span class="jxr_string">"testAssumeWhenKOExceptionWithMessage"</span>,
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>  				() -&gt; TestSuite.DSL.assumeWhen(<span class="jxr_string">"msg"</span>, (p) -&gt; {
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>  					<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> Exception(<span class="jxr_string">"test"</span>);
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>  				}).throwException(
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>  						Matchers.hasProperty(<span class="jxr_string">"message"</span>,
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>  								Matchers.equalTo(<span class="jxr_string">"other"</span>))),
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>  				<span class="jxr_string">"msg\nexpecting hasProperty(\&quot;message\&quot;, \&quot;other\&quot;) but property 'message' was \&quot;test\&quot;"</span>);
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>  	}
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>          AllTests.testException(
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>                  <span class="jxr_string">"testAssumeWhenKOExceptionWithMessage"</span>,
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>                  () -&gt; TestSuite.DSL.assumeWhen(<span class="jxr_string">"msg"</span>, (p) -&gt; {
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>                      <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> Exception(<span class="jxr_string">"test"</span>);
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>                  }).throwException(
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>                          Matchers.hasProperty(<span class="jxr_string">"message"</span>,
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>                                  Matchers.equalTo(<span class="jxr_string">"other"</span>))),
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>                  <span class="jxr_string">"msg\nexpecting hasProperty(\&quot;message\&quot;, \&quot;other\&quot;) but property 'message' was \&quot;test\&quot;"</span>);
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>      }
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>  }
 </pre>

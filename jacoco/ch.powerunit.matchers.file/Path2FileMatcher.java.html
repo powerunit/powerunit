@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -27,20 +27,20 @@ import org.hamcrest.Matcher;
 
 /**
  * The Matcher to transform path to file
- * 
+ *
  * @author borettim
  *
  */
 public class Path2FileMatcher extends FeatureMatcher&lt;Path, File&gt; {
 
-	public Path2FileMatcher(Matcher&lt;? super File&gt; subMatcher) {
-<span class="fc" id="L37">		super(subMatcher, &quot;as file&quot;, &quot;as file&quot;);</span>
-<span class="fc" id="L38">	}</span>
+    public Path2FileMatcher(Matcher&lt;? super File&gt; subMatcher) {
+<span class="fc" id="L37">        super(subMatcher, &quot;as file&quot;, &quot;as file&quot;);</span>
+<span class="fc" id="L38">    }</span>
 
-	@Override
-	protected File featureValueOf(Path actual) {
-<span class="fc" id="L42">		return actual.toFile();</span>
-	}
+    @Override
+    protected File featureValueOf(Path actual) {
+<span class="fc" id="L42">        return actual.toFile();</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

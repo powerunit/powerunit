@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -26,25 +26,25 @@ import org.hamcrest.Matcher;
 
 /**
  * Support for value check on optional
- * 
+ *
  * @author borettim
  *
  */
 public class OptionalMatcher&lt;T&gt; extends FeatureMatcher&lt;Optional&lt;T&gt;, T&gt; {
 
-	/**
-	 * Default constructor.
-	 * 
-	 * @param subMatcher
-	 *            the matcher
-	 */
-	public OptionalMatcher(Matcher&lt;? super T&gt; subMatcher) {
-<span class="fc" id="L42">		super(subMatcher, &quot;has value&quot;, &quot;has value&quot;);</span>
-<span class="fc" id="L43">	}</span>
+    /**
+     * Default constructor.
+     * 
+     * @param subMatcher
+     *            the matcher
+     */
+    public OptionalMatcher(Matcher&lt;? super T&gt; subMatcher) {
+<span class="fc" id="L42">        super(subMatcher, &quot;has value&quot;, &quot;has value&quot;);</span>
+<span class="fc" id="L43">    }</span>
 
-	@Override
-	protected T featureValueOf(Optional&lt;T&gt; actual) {
-<span class="fc" id="L47">		return actual.get();</span>
-	}
+    @Override
+    protected T featureValueOf(Optional&lt;T&gt; actual) {
+<span class="fc" id="L47">        return actual.get();</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

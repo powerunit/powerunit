@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -26,26 +26,26 @@ import org.hamcrest.Matcher;
 
 /**
  * Support for value check on optional
- * 
+ *
  * @author borettim
  *
  */
 public class OptionalDoubleMatcher extends
-		FeatureMatcher&lt;OptionalDouble, Double&gt; {
+        FeatureMatcher&lt;OptionalDouble, Double&gt; {
 
-	/**
-	 * Default constructor.
-	 * 
-	 * @param subMatcher
-	 *            the matcher
-	 */
-	public OptionalDoubleMatcher(Matcher&lt;? super Double&gt; subMatcher) {
-<span class="fc" id="L43">		super(subMatcher, &quot;has value&quot;, &quot;has value&quot;);</span>
-<span class="fc" id="L44">	}</span>
+    /**
+     * Default constructor.
+     * 
+     * @param subMatcher
+     *            the matcher
+     */
+    public OptionalDoubleMatcher(Matcher&lt;? super Double&gt; subMatcher) {
+<span class="fc" id="L43">        super(subMatcher, &quot;has value&quot;, &quot;has value&quot;);</span>
+<span class="fc" id="L44">    }</span>
 
-	@Override
-	protected Double featureValueOf(OptionalDouble actual) {
-<span class="fc" id="L48">		return actual.getAsDouble();</span>
-	}
+    @Override
+    protected Double featureValueOf(OptionalDouble actual) {
+<span class="fc" id="L48">        return actual.getAsDouble();</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

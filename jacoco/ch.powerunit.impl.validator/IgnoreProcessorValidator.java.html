@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -27,25 +27,25 @@ import ch.powerunit.Ignore;
 import ch.powerunit.Test;
 
 public interface IgnoreProcessorValidator extends ProcessValidator {
-	default void ignoreAnnotationValidation(RoundEnvironment roundEnv) {
-<span class="nc" id="L31">		roundEnv.getElementsAnnotatedWith(Ignore.class).forEach(</span>
-				this::ignoreOneAnnotationValidation);
+    default void ignoreAnnotationValidation(RoundEnvironment roundEnv) {
+<span class="nc" id="L31">        roundEnv.getElementsAnnotatedWith(Ignore.class).forEach(</span>
+                this::ignoreOneAnnotationValidation);
 
-<span class="nc" id="L34">	}</span>
+<span class="nc" id="L34">    }</span>
 
-	default void ignoreOneAnnotationValidation(Element element) {
-<span class="nc bnc" id="L37" title="All 2 branches missed.">		if (element.getKind() == ElementKind.CLASS) {</span>
-<span class="nc" id="L38">			return;</span>
-		}
-<span class="nc bnc" id="L40" title="All 2 branches missed.">		if (element.getKind() == ElementKind.METHOD) {</span>
-<span class="nc bnc" id="L41" title="All 2 branches missed.">			if (element.getAnnotation(Test.class) == null) {</span>
-<span class="nc" id="L42">				warn(&quot;Method &quot;</span>
-<span class="nc" id="L43">						+ elementAsString(element)</span>
-						+ &quot;\n\tis prefixed with @Ignore and is prefixed by @Test\n\tThe ignore annotation can only be used on method that are annotated with @test&quot;);
-			}
-<span class="nc" id="L46">			return;</span>
-		}
-<span class="nc" id="L48">		warn(&quot;@Ignore on not supported element&quot; + elementAsString(element));</span>
-<span class="nc" id="L49">	}</span>
+    default void ignoreOneAnnotationValidation(Element element) {
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        if (element.getKind() == ElementKind.CLASS) {</span>
+<span class="nc" id="L38">            return;</span>
+        }
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (element.getKind() == ElementKind.METHOD) {</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">            if (element.getAnnotation(Test.class) == null) {</span>
+<span class="nc" id="L42">                warn(&quot;Method &quot;</span>
+<span class="nc" id="L43">                        + elementAsString(element)</span>
+                        + &quot;\n\tis prefixed with @Ignore and is prefixed by @Test\n\tThe ignore annotation can only be used on method that are annotated with @test&quot;);
+            }
+<span class="nc" id="L46">            return;</span>
+        }
+<span class="nc" id="L48">        warn(&quot;@Ignore on not supported element&quot; + elementAsString(element));</span>
+<span class="nc" id="L49">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

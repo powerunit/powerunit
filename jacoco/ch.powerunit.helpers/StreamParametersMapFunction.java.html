@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -39,221 +39,221 @@ import ch.powerunit.Parameter;
  * &lt;p&gt;
  * Access to this class is available from the {@link ch.powerunit.TestSuite
  * TestSuite} interface.
- * 
+ *
  * @author borettim
  * @param &lt;T&gt;
  *            the input type
  */
 public final class StreamParametersMapFunction&lt;T&gt; implements
-		Function&lt;T[], Object[]&gt; {
+        Function&lt;T[], Object[]&gt; {
 
-<span class="fc" id="L50">	private StreamParametersMapFunction() {</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L50">    private StreamParametersMapFunction() {</span>
+<span class="fc" id="L51">    }</span>
 
-	/**
-	 * This is the regex used to support the split in case the input is an
-	 * array.
-	 */
-	public static final String DEFAULT_REGEX_FOR_ARRAY = &quot;\\s*,\\s*&quot;;
+    /**
+     * This is the regex used to support the split in case the input is an
+     * array.
+     */
+    public static final String DEFAULT_REGEX_FOR_ARRAY = &quot;\\s*,\\s*&quot;;
 
-<span class="fc" id="L59">	private Map&lt;Integer, Function&lt;Object, Object&gt;&gt; mapper = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L59">    private final Map&lt;Integer, Function&lt;Object, Object&gt;&gt; mapper = new HashMap&lt;&gt;();</span>
 
-	@Override
-	public Object[] apply(T[] input) {
-<span class="fc" id="L63">		Object output[] = new Object[input.length];</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		for (int i = 0; i &lt; input.length; i++) {</span>
-<span class="fc" id="L65">			Function&lt;Object, Object&gt; f = mapper.getOrDefault(i,</span>
-<span class="fc" id="L66">					Function.identity());</span>
-<span class="fc" id="L67">			output[i] = f.apply(input[i]);</span>
-		}
-<span class="fc" id="L69">		return output;</span>
-	}
+    @Override
+    public Object[] apply(T[] input) {
+<span class="fc" id="L63">        Object output[] = new Object[input.length];</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        for (int i = 0; i &lt; input.length; i++) {</span>
+<span class="fc" id="L65">            Function&lt;Object, Object&gt; f = mapper.getOrDefault(i,</span>
+<span class="fc" id="L66">                    Function.identity());</span>
+<span class="fc" id="L67">            output[i] = f.apply(input[i]);</span>
+        }
+<span class="fc" id="L69">        return output;</span>
+    }
 
-	/**
-	 * Start building a Parameter Mapper function, with an initial converter.
-	 * &lt;p&gt;
-	 * Not specified index are considered transformed by identity function.
-	 * 
-	 * @param idx
-	 *            The parameter index
-	 * @param mapFunction
-	 *            the function to be applied
-	 * @return the function on the parameter array
-	 * @param &lt;T&gt;
-	 *            The input type for the function
-	 * @param &lt;R&gt;
-	 *            the result type for the function
-	 */
-	public static &lt;T, R&gt; StreamParametersMapFunction&lt;T&gt; map(int idx,
-			Function&lt;T, R&gt; mapFunction) {
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (idx &lt; 0) {</span>
-<span class="nc" id="L90">			throw new IllegalArgumentException(&quot;idx can't be negative&quot;);</span>
-		}
-<span class="nc" id="L92">		return new StreamParametersMapFunction&lt;T&gt;().andMap(idx, mapFunction);</span>
-	}
+    /**
+     * Start building a Parameter Mapper function, with an initial converter.
+     * &lt;p&gt;
+     * Not specified index are considered transformed by identity function.
+     * 
+     * @param idx
+     *            The parameter index
+     * @param mapFunction
+     *            the function to be applied
+     * @return the function on the parameter array
+     * @param &lt;T&gt;
+     *            The input type for the function
+     * @param &lt;R&gt;
+     *            the result type for the function
+     */
+    public static &lt;T, R&gt; StreamParametersMapFunction&lt;T&gt; map(int idx,
+            Function&lt;T, R&gt; mapFunction) {
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        if (idx &lt; 0) {</span>
+<span class="nc" id="L90">            throw new IllegalArgumentException(&quot;idx can't be negative&quot;);</span>
+        }
+<span class="nc" id="L92">        return new StreamParametersMapFunction&lt;T&gt;().andMap(idx, mapFunction);</span>
+    }
 
-	/**
-	 * Start building a Parameter Mapper function, assuming that the input are
-	 * String, and using the type of the {@link Parameter &amp;#64;Parameter} field.
-	 * &lt;p&gt;
-	 * Fields not supported will not be mapped and must be handled manually,
-	 * using {@link StreamParametersMapFunction#andMap(int, Function) andMap}
-	 * method.
-	 * 
-	 * @param testClass
-	 *            the testClass with the annotation
-	 * @return the function on the parameter array
-	 * @see &lt;a href=&quot;./doc-files/convertedType.html&quot;&gt;Supported automated
-	 *      conversion&lt;/a&gt;
-	 */
-	public static StreamParametersMapFunction&lt;String&gt; stringToParameterMap(
-			Class&lt;?&gt; testClass) {
-<span class="fc" id="L111">		StreamParametersMapFunction&lt;String&gt; map = new StreamParametersMapFunction&lt;&gt;();</span>
-<span class="fc" id="L112">		Arrays.stream(testClass.getDeclaredFields())</span>
-<span class="fc" id="L113">				.filter(f -&gt; f.isAnnotationPresent(Parameter.class))</span>
-<span class="fc" id="L114">				.forEach(</span>
-						f -&gt; {
-							int pid = f.getAnnotation(Parameter.class).value();
-							Function&lt;String, ?&gt; fct = null;
-							if (f.getGenericType() instanceof Class) {
-								Class&lt;?&gt; c = (Class&lt;?&gt;) f.getGenericType();
-								fct = getEntryClassMapperFunction(c);
+    /**
+     * Start building a Parameter Mapper function, assuming that the input are
+     * String, and using the type of the {@link Parameter &amp;#64;Parameter} field.
+     * &lt;p&gt;
+     * Fields not supported will not be mapped and must be handled manually,
+     * using {@link StreamParametersMapFunction#andMap(int, Function) andMap}
+     * method.
+     * 
+     * @param testClass
+     *            the testClass with the annotation
+     * @return the function on the parameter array
+     * @see &lt;a href=&quot;./doc-files/convertedType.html&quot;&gt;Supported automated
+     *      conversion&lt;/a&gt;
+     */
+    public static StreamParametersMapFunction&lt;String&gt; stringToParameterMap(
+            Class&lt;?&gt; testClass) {
+<span class="fc" id="L111">        StreamParametersMapFunction&lt;String&gt; map = new StreamParametersMapFunction&lt;&gt;();</span>
+<span class="fc" id="L112">        Arrays.stream(testClass.getDeclaredFields())</span>
+<span class="fc" id="L113">                .filter(f -&gt; f.isAnnotationPresent(Parameter.class))</span>
+<span class="fc" id="L114">                .forEach(</span>
+                        f -&gt; {
+                            int pid = f.getAnnotation(Parameter.class).value();
+                            Function&lt;String, ?&gt; fct = null;
+                            if (f.getGenericType() instanceof Class) {
+                                Class&lt;?&gt; c = (Class&lt;?&gt;) f.getGenericType();
+                                fct = getEntryClassMapperFunction(c);
 
-							} else if (f.getGenericType() instanceof ParameterizedType) {
-								ParameterizedType p = (ParameterizedType) f
-										.getGenericType();
-								fct = getEntryParameterizedTypeFunction(p);
-							}
-							if (fct != null) {
-								map.andMap(pid, fct);
-							}
-						});
-<span class="fc" id="L131">		return map;</span>
-	}
+                            } else if (f.getGenericType() instanceof ParameterizedType) {
+                                ParameterizedType p = (ParameterizedType) f
+                                        .getGenericType();
+                                fct = getEntryParameterizedTypeFunction(p);
+                            }
+                            if (fct != null) {
+                                map.andMap(pid, fct);
+                            }
+                        });
+<span class="fc" id="L131">        return map;</span>
+    }
 
-	@SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
-	private static Function&lt;String, ?&gt; getEntryParameterizedTypeFunction(
-			ParameterizedType p) {
-<span class="fc" id="L137">		Type raw = p.getRawType();</span>
-<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (Collection.class.equals(raw)</span>
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">				&amp;&amp; p.getActualTypeArguments()[0] instanceof Class) {</span>
-<span class="fc" id="L140">			Class&lt;?&gt; param = (Class&lt;?&gt;) p.getActualTypeArguments()[0];</span>
-<span class="fc" id="L141">			return collectionMapper((Class) param,</span>
-<span class="fc" id="L142">					getEntryClassMapperFunction(param), DEFAULT_REGEX_FOR_ARRAY);</span>
-<span class="fc bfc" id="L143" title="All 2 branches covered.">		} else if (Set.class.equals(raw)</span>
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">				&amp;&amp; p.getActualTypeArguments()[0] instanceof Class) {</span>
-<span class="fc" id="L145">			Class&lt;?&gt; param = (Class&lt;?&gt;) p.getActualTypeArguments()[0];</span>
-<span class="fc" id="L146">			return setMapper((Class) param, getEntryClassMapperFunction(param),</span>
-					DEFAULT_REGEX_FOR_ARRAY);
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		} else if (Class.class.equals(raw)) {</span>
-<span class="fc" id="L149">			return getEntryClassMapperFunction((Class) raw);</span>
-		}
-<span class="nc" id="L151">		return null;</span>
-	}
+    @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+    private static Function&lt;String, ?&gt; getEntryParameterizedTypeFunction(
+            ParameterizedType p) {
+<span class="fc" id="L137">        Type raw = p.getRawType();</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        if (Collection.class.equals(raw)</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">                &amp;&amp; p.getActualTypeArguments()[0] instanceof Class) {</span>
+<span class="fc" id="L140">            Class&lt;?&gt; param = (Class&lt;?&gt;) p.getActualTypeArguments()[0];</span>
+<span class="fc" id="L141">            return collectionMapper((Class) param,</span>
+<span class="fc" id="L142">                    getEntryClassMapperFunction(param), DEFAULT_REGEX_FOR_ARRAY);</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        } else if (Set.class.equals(raw)</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">                &amp;&amp; p.getActualTypeArguments()[0] instanceof Class) {</span>
+<span class="fc" id="L145">            Class&lt;?&gt; param = (Class&lt;?&gt;) p.getActualTypeArguments()[0];</span>
+<span class="fc" id="L146">            return setMapper((Class) param, getEntryClassMapperFunction(param),</span>
+                    DEFAULT_REGEX_FOR_ARRAY);
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        } else if (Class.class.equals(raw)) {</span>
+<span class="fc" id="L149">            return getEntryClassMapperFunction((Class) raw);</span>
+        }
+<span class="nc" id="L151">        return null;</span>
+    }
 
-	@SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
-	private static Function&lt;String, ?&gt; getEntryClassMapperFunction(Class&lt;?&gt; c) {
-<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (c.isArray()) {</span>
-<span class="fc" id="L157">			Function&lt;String, ?&gt; compound = getEntryClassMapperFunction(c</span>
-<span class="fc" id="L158">					.getComponentType());</span>
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">			if (compound != null) {</span>
-<span class="fc" id="L160">				return arrayMapper((Class) c.getComponentType(), compound,</span>
-						DEFAULT_REGEX_FOR_ARRAY);
-			}
-<span class="nc" id="L163">		} else {</span>
-<span class="fc" id="L164">			return getSingleEntryClassMapperFunction(c);</span>
-		}
-<span class="nc" id="L166">		return null;</span>
-	}
+    @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+    private static Function&lt;String, ?&gt; getEntryClassMapperFunction(Class&lt;?&gt; c) {
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        if (c.isArray()) {</span>
+<span class="fc" id="L157">            Function&lt;String, ?&gt; compound = getEntryClassMapperFunction(c</span>
+<span class="fc" id="L158">                    .getComponentType());</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">            if (compound != null) {</span>
+<span class="fc" id="L160">                return arrayMapper((Class) c.getComponentType(), compound,</span>
+                        DEFAULT_REGEX_FOR_ARRAY);
+            }
+<span class="nc" id="L163">        } else {</span>
+<span class="fc" id="L164">            return getSingleEntryClassMapperFunction(c);</span>
+        }
+<span class="nc" id="L166">        return null;</span>
+    }
 
-	private static Function&lt;String, ?&gt; getSingleEntryClassMapperFunction(
-			Class&lt;?&gt; c) {
-<span class="pc bpc" id="L171" title="1 of 4 branches missed.">		if (int.class.equals(c) || Integer.class.equals(c)) {</span>
-<span class="fc" id="L172">			return Integer::valueOf;</span>
-<span class="pc bpc" id="L173" title="2 of 4 branches missed.">		} else if (float.class.equals(c) || Float.class.equals(c)) {</span>
-<span class="nc" id="L174">			return Float::valueOf;</span>
-<span class="pc bpc" id="L175" title="2 of 4 branches missed.">		} else if (short.class.equals(c) || Short.class.equals(c)) {</span>
-<span class="nc" id="L176">			return Short::valueOf;</span>
-<span class="pc bpc" id="L177" title="2 of 4 branches missed.">		} else if (double.class.equals(c) || Double.class.equals(c)) {</span>
-<span class="nc" id="L178">			return Double::valueOf;</span>
-<span class="pc bpc" id="L179" title="1 of 4 branches missed.">		} else if (long.class.equals(c) || Long.class.equals(c)) {</span>
-<span class="fc" id="L180">			return Long::valueOf;</span>
-<span class="pc bpc" id="L181" title="1 of 4 branches missed.">		} else if (char.class.equals(c) || Character.class.equals(c)) {</span>
-<span class="fc" id="L182">			return s -&gt; s.charAt(0);</span>
-<span class="fc bfc" id="L183" title="All 2 branches covered.">		} else if (String.class.equals(c)) {</span>
-<span class="fc" id="L184">			return Function.identity();</span>
-<span class="pc bpc" id="L185" title="1 of 4 branches missed.">		} else if (boolean.class.equals(c) || Boolean.class.equals(c)) {</span>
-<span class="fc" id="L186">			return Boolean::valueOf;</span>
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		} else if (Class.class.equals(c)) {</span>
-<span class="fc" id="L188">			return s -&gt; {</span>
-				try {
-					return Class.forName(s);
-				} catch (ClassNotFoundException e) {
-					throw new IllegalArgumentException(&quot;Unexpected error &quot;
-							+ e.getMessage(), e);
-				}
-			};
-		}
-<span class="nc" id="L197">		return null;</span>
-	}
+    private static Function&lt;String, ?&gt; getSingleEntryClassMapperFunction(
+            Class&lt;?&gt; c) {
+<span class="pc bpc" id="L171" title="1 of 4 branches missed.">        if (int.class.equals(c) || Integer.class.equals(c)) {</span>
+<span class="fc" id="L172">            return Integer::valueOf;</span>
+<span class="pc bpc" id="L173" title="2 of 4 branches missed.">        } else if (float.class.equals(c) || Float.class.equals(c)) {</span>
+<span class="nc" id="L174">            return Float::valueOf;</span>
+<span class="pc bpc" id="L175" title="2 of 4 branches missed.">        } else if (short.class.equals(c) || Short.class.equals(c)) {</span>
+<span class="nc" id="L176">            return Short::valueOf;</span>
+<span class="pc bpc" id="L177" title="2 of 4 branches missed.">        } else if (double.class.equals(c) || Double.class.equals(c)) {</span>
+<span class="nc" id="L178">            return Double::valueOf;</span>
+<span class="pc bpc" id="L179" title="1 of 4 branches missed.">        } else if (long.class.equals(c) || Long.class.equals(c)) {</span>
+<span class="fc" id="L180">            return Long::valueOf;</span>
+<span class="pc bpc" id="L181" title="1 of 4 branches missed.">        } else if (char.class.equals(c) || Character.class.equals(c)) {</span>
+<span class="fc" id="L182">            return s -&gt; s.charAt(0);</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        } else if (String.class.equals(c)) {</span>
+<span class="fc" id="L184">            return Function.identity();</span>
+<span class="pc bpc" id="L185" title="1 of 4 branches missed.">        } else if (boolean.class.equals(c) || Boolean.class.equals(c)) {</span>
+<span class="fc" id="L186">            return Boolean::valueOf;</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        } else if (Class.class.equals(c)) {</span>
+<span class="fc" id="L188">            return s -&gt; {</span>
+                try {
+                    return Class.forName(s);
+                } catch (ClassNotFoundException e) {
+                    throw new IllegalArgumentException(&quot;Unexpected error &quot;
+                            + e.getMessage(), e);
+                }
+            };
+        }
+<span class="nc" id="L197">        return null;</span>
+    }
 
-	@SuppressWarnings(&quot;unchecked&quot;)
-	private static &lt;T&gt; Function&lt;String, T[]&gt; arrayMapper(Class&lt;T&gt; clazz,
-			Function&lt;String, T&gt; singleElementMapper, String separator) {
-<span class="fc" id="L203">		return (s) -&gt; {</span>
-			if (s == null) {
-				return null;
-			}
-			return Arrays.stream(s.split(separator)).map(singleElementMapper)
-					.toArray((i) -&gt; (T[]) Array.newInstance(clazz, i));
-		};
-	}
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private static &lt;T&gt; Function&lt;String, T[]&gt; arrayMapper(Class&lt;T&gt; clazz,
+            Function&lt;String, T&gt; singleElementMapper, String separator) {
+<span class="fc" id="L203">        return (s) -&gt; {</span>
+            if (s == null) {
+                return null;
+            }
+            return Arrays.stream(s.split(separator)).map(singleElementMapper)
+                    .toArray((i) -&gt; (T[]) Array.newInstance(clazz, i));
+        };
+    }
 
-	private static &lt;T&gt; Function&lt;String, Collection&lt;T&gt;&gt; collectionMapper(
-			Class&lt;T&gt; clazz, Function&lt;String, T&gt; singleElementMapper,
-			String separator) {
-<span class="fc" id="L215">		return (s) -&gt; {</span>
-			if (s == null) {
-				return null;
-			}
-			return Arrays.stream(s.split(separator)).map(singleElementMapper)
-					.collect(Collectors.toList());
-		};
-	}
+    private static &lt;T&gt; Function&lt;String, Collection&lt;T&gt;&gt; collectionMapper(
+            Class&lt;T&gt; clazz, Function&lt;String, T&gt; singleElementMapper,
+            String separator) {
+<span class="fc" id="L215">        return (s) -&gt; {</span>
+            if (s == null) {
+                return null;
+            }
+            return Arrays.stream(s.split(separator)).map(singleElementMapper)
+                    .collect(Collectors.toList());
+        };
+    }
 
-	private static &lt;T&gt; Function&lt;String, Set&lt;T&gt;&gt; setMapper(Class&lt;T&gt; clazz,
-			Function&lt;String, T&gt; singleElementMapper, String separator) {
-<span class="fc" id="L226">		return (s) -&gt; {</span>
-			if (s == null) {
-				return null;
-			}
-			return Arrays.stream(s.split(separator)).map(singleElementMapper)
-					.collect(Collectors.toSet());
-		};
-	}
+    private static &lt;T&gt; Function&lt;String, Set&lt;T&gt;&gt; setMapper(Class&lt;T&gt; clazz,
+            Function&lt;String, T&gt; singleElementMapper, String separator) {
+<span class="fc" id="L226">        return (s) -&gt; {</span>
+            if (s == null) {
+                return null;
+            }
+            return Arrays.stream(s.split(separator)).map(singleElementMapper)
+                    .collect(Collectors.toSet());
+        };
+    }
 
-	/**
-	 * Defines an additional Parameter Mapper function.
-	 * &lt;p&gt;
-	 * Not specified index are considered transformed by identity function.
-	 * 
-	 * @param idx
-	 *            The parameter index
-	 * @param mapFunction
-	 *            the function to be applied
-	 * @return the function on the parameter array
-	 * @param &lt;R&gt;
-	 *            The return type for the function
-	 */
-	@SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
-	public &lt;R&gt; StreamParametersMapFunction&lt;T&gt; andMap(int idx,
-			Function&lt;T, R&gt; mapFunction) {
-<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (idx &lt; 0) {</span>
-<span class="nc" id="L252">			throw new IllegalArgumentException(&quot;idx can't be negative&quot;);</span>
-		}
-<span class="fc" id="L254">		Objects.requireNonNull(mapFunction);</span>
-<span class="fc" id="L255">		mapper.put(idx, (Function) mapFunction);</span>
-<span class="fc" id="L256">		return this;</span>
-	}
+    /**
+     * Defines an additional Parameter Mapper function.
+     * &lt;p&gt;
+     * Not specified index are considered transformed by identity function.
+     * 
+     * @param idx
+     *            The parameter index
+     * @param mapFunction
+     *            the function to be applied
+     * @return the function on the parameter array
+     * @param &lt;R&gt;
+     *            The return type for the function
+     */
+    @SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
+    public &lt;R&gt; StreamParametersMapFunction&lt;T&gt; andMap(int idx,
+            Function&lt;T, R&gt; mapFunction) {
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">        if (idx &lt; 0) {</span>
+<span class="nc" id="L252">            throw new IllegalArgumentException(&quot;idx can't be negative&quot;);</span>
+        }
+<span class="fc" id="L254">        Objects.requireNonNull(mapFunction);</span>
+<span class="fc" id="L255">        mapper.put(idx, (Function) mapFunction);</span>
+<span class="fc" id="L256">        return this;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

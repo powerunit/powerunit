@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -36,35 +36,35 @@ import ch.powerunit.Test;
  */
 public class PowerUnitProviderScannerFilter implements ScannerFilter {
 
-	private final Set&lt;String&gt; sgroups;
+    private final Set&lt;String&gt; sgroups;
 
-	private final Set&lt;String&gt; sexcludedGroups;
+    private final Set&lt;String&gt; sexcludedGroups;
 
-<span class="fc" id="L43">	public PowerUnitProviderScannerFilter(Properties parameters) {</span>
-<span class="fc" id="L44">		String groups = parameters.getProperty(</span>
-				ProviderParameterNames.TESTNG_GROUPS_PROP, &quot;&quot;);
-<span class="fc" id="L46">		String excludedGroups = parameters.getProperty(</span>
-				ProviderParameterNames.TESTNG_EXCLUDEDGROUPS_PROP, &quot;&quot;);
-<span class="fc" id="L48">		Set&lt;String&gt; sgroups = new HashSet&lt;String&gt;();</span>
-<span class="fc" id="L49">		Set&lt;String&gt; sexcludedGroups = new HashSet&lt;String&gt;();</span>
-<span class="fc bfc" id="L50" title="All 2 branches covered.">		for (String g : groups.split(&quot;,&quot;)) {</span>
-<span class="fc" id="L51">			sgroups.add(g);</span>
-		}
-<span class="fc bfc" id="L53" title="All 2 branches covered.">		for (String g : excludedGroups.split(&quot;,&quot;)) {</span>
-<span class="fc" id="L54">			sexcludedGroups.add(g);</span>
-		}
-<span class="fc" id="L56">		this.sgroups = Collections.unmodifiableSet(sgroups);</span>
-<span class="fc" id="L57">		this.sexcludedGroups = Collections.unmodifiableSet(sexcludedGroups);</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L43">    public PowerUnitProviderScannerFilter(Properties parameters) {</span>
+<span class="fc" id="L44">        String groups = parameters.getProperty(</span>
+                ProviderParameterNames.TESTNG_GROUPS_PROP, &quot;&quot;);
+<span class="fc" id="L46">        String excludedGroups = parameters.getProperty(</span>
+                ProviderParameterNames.TESTNG_EXCLUDEDGROUPS_PROP, &quot;&quot;);
+<span class="fc" id="L48">        Set&lt;String&gt; sgroups = new HashSet&lt;String&gt;();</span>
+<span class="fc" id="L49">        Set&lt;String&gt; sexcludedGroups = new HashSet&lt;String&gt;();</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        for (String g : groups.split(&quot;,&quot;)) {</span>
+<span class="fc" id="L51">            sgroups.add(g);</span>
+        }
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        for (String g : excludedGroups.split(&quot;,&quot;)) {</span>
+<span class="fc" id="L54">            sexcludedGroups.add(g);</span>
+        }
+<span class="fc" id="L56">        this.sgroups = Collections.unmodifiableSet(sgroups);</span>
+<span class="fc" id="L57">        this.sexcludedGroups = Collections.unmodifiableSet(sexcludedGroups);</span>
+<span class="fc" id="L58">    }</span>
 
-	@Override
-	public boolean accept(@SuppressWarnings(&quot;rawtypes&quot;) Class testClass) {
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (Method m : testClass.getDeclaredMethods()) {</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">			if (m.isAnnotationPresent(Test.class)) {</span>
-<span class="fc" id="L64">				return true;</span>
-			}
-		}
-<span class="fc" id="L67">		return false;</span>
-	}
+    @Override
+    public boolean accept(@SuppressWarnings(&quot;rawtypes&quot;) Class testClass) {
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        for (Method m : testClass.getDeclaredMethods()) {</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            if (m.isAnnotationPresent(Test.class)) {</span>
+<span class="fc" id="L64">                return true;</span>
+            }
+        }
+<span class="fc" id="L67">        return false;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

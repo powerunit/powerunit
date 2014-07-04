@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -26,20 +26,20 @@ import org.hamcrest.Matcher;
 
 /**
  * The Mather on isAbsolute File
- * 
+ *
  * @author borettim
  *
  */
 public class FileIsAbsoluteMatcher extends FeatureMatcher&lt;File, Boolean&gt; {
 
-	public FileIsAbsoluteMatcher(Matcher&lt;? super Boolean&gt; subMatcher) {
-<span class="nc" id="L36">		super(subMatcher, &quot;is absolute&quot;, &quot;is absolute&quot;);</span>
-<span class="nc" id="L37">	}</span>
+    public FileIsAbsoluteMatcher(Matcher&lt;? super Boolean&gt; subMatcher) {
+<span class="nc" id="L36">        super(subMatcher, &quot;is absolute&quot;, &quot;is absolute&quot;);</span>
+<span class="nc" id="L37">    }</span>
 
-	@Override
-	protected Boolean featureValueOf(File actual) {
-<span class="nc" id="L41">		return actual.isAbsolute();</span>
-	}
+    @Override
+    protected Boolean featureValueOf(File actual) {
+<span class="nc" id="L41">        return actual.isAbsolute();</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

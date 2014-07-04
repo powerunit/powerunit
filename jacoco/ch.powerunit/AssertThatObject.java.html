@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -27,74 +27,74 @@ import org.hamcrest.Matchers;
  * &lt;p&gt;
  * This interface is returned by the various methods
  * {@link TestSuite#assertThat(Object) assertThat} exposed by {@link TestSuite}.
- * 
+ *
  * @author borettim
  * @param &lt;T&gt;
  *            the object type.
  */
 public interface AssertThatObject&lt;T&gt; {
 
-	/**
-	 * Check that the object is matching the passed matcher.
-	 * 
-	 * @param matching
-	 *            the matcher.
-	 */
-	void is(Matcher&lt;? super T&gt; matching);
+    /**
+     * Check that the object is matching the passed matcher.
+     * 
+     * @param matching
+     *            the matcher.
+     */
+    void is(Matcher&lt;? super T&gt; matching);
 
-	/**
-	 * Check that the object is the passed one (shortcut to Matcher.equalTo).
-	 * 
-	 * @param compareTo
-	 *            the value.
-	 */
-	default void is(T compareTo) {
-<span class="fc" id="L52">		is(Matchers.equalTo(compareTo));</span>
-<span class="fc" id="L53">	}</span>
+    /**
+     * Check that the object is the passed one (shortcut to Matcher.equalTo).
+     * 
+     * @param compareTo
+     *            the value.
+     */
+    default void is(T compareTo) {
+<span class="fc" id="L52">        is(Matchers.equalTo(compareTo));</span>
+<span class="fc" id="L53">    }</span>
 
-	/**
-	 * Check that the object is not the passed one.
-	 * 
-	 * @param compareTo
-	 *            the value
-	 */
-	default void isNot(T compareTo) {
-<span class="fc" id="L62">		isNot(Matchers.equalTo(compareTo));</span>
-<span class="fc" id="L63">	}</span>
+    /**
+     * Check that the object is not the passed one.
+     * 
+     * @param compareTo
+     *            the value
+     */
+    default void isNot(T compareTo) {
+<span class="fc" id="L62">        isNot(Matchers.equalTo(compareTo));</span>
+<span class="fc" id="L63">    }</span>
 
-	/**
-	 * Check that the object is not matching the passed matcher.
-	 * 
-	 * @param matching
-	 *            the matcher
-	 */
-	default void isNot(Matcher&lt;T&gt; matching) {
-<span class="fc" id="L72">		is(Matchers.not(matching));</span>
-<span class="fc" id="L73">	}</span>
+    /**
+     * Check that the object is not matching the passed matcher.
+     * 
+     * @param matching
+     *            the matcher
+     */
+    default void isNot(Matcher&lt;T&gt; matching) {
+<span class="fc" id="L72">        is(Matchers.not(matching));</span>
+<span class="fc" id="L73">    }</span>
 
-	/**
-	 * Check that the object is null.
-	 */
-	default void isNull() {
-<span class="fc" id="L79">		is(Matchers.nullValue());</span>
-<span class="fc" id="L80">	}</span>
+    /**
+     * Check that the object is null.
+     */
+    default void isNull() {
+<span class="fc" id="L79">        is(Matchers.nullValue());</span>
+<span class="fc" id="L80">    }</span>
 
-	/**
-	 * Check that the object is not null.
-	 */
-	default void isNotNull() {
-<span class="fc" id="L86">		is(Matchers.notNullValue());</span>
-<span class="fc" id="L87">	}</span>
+    /**
+     * Check that the object is not null.
+     */
+    default void isNotNull() {
+<span class="fc" id="L86">        is(Matchers.notNullValue());</span>
+<span class="fc" id="L87">    }</span>
 
-	/**
-	 * Check that the object is of a specific class (or subclasses).
-	 * 
-	 * @param clazz
-	 *            the class
-	 */
-	default void isA(Class&lt;? super T&gt; clazz) {
-<span class="fc" id="L96">		is(Matchers.isA(clazz));</span>
-<span class="fc" id="L97">	}</span>
+    /**
+     * Check that the object is of a specific class (or subclasses).
+     * 
+     * @param clazz
+     *            the class
+     */
+    default void isA(Class&lt;? super T&gt; clazz) {
+<span class="fc" id="L96">        is(Matchers.isA(clazz));</span>
+<span class="fc" id="L97">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

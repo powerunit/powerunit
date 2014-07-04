@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -26,20 +26,20 @@ import ch.powerunit.Parameter;
 import ch.powerunit.exception.InternalError;
 
 public interface ParameterValidator {
-	default void checkParameterAnnotationForField(Field f) {
-<span class="fc bfc" id="L30" title="All 2 branches covered.">		if (Modifier.isStatic(f.getModifiers())) {</span>
-<span class="fc" id="L31">			throw new InternalError(&quot;@Parameter field is static &quot;</span>
-<span class="fc" id="L32">					+ f.toString());</span>
-		}
-<span class="fc bfc" id="L34" title="All 2 branches covered.">		if (!Modifier.isPublic(f.getModifiers())) {</span>
-<span class="fc" id="L35">			throw new InternalError(&quot;@Parameter field is not public &quot;</span>
-<span class="fc" id="L36">					+ f.toString());</span>
-		}
-<span class="fc" id="L38">		int position = f.getAnnotation(Parameter.class).value();</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">		if (position &lt; 0) {</span>
-<span class="fc" id="L40">			throw new InternalError(&quot;@Parameter can'be negative &quot;</span>
-<span class="fc" id="L41">					+ f.toString());</span>
-		}
-<span class="fc" id="L43">	}</span>
+    default void checkParameterAnnotationForField(Field f) {
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (Modifier.isStatic(f.getModifiers())) {</span>
+<span class="fc" id="L31">            throw new InternalError(&quot;@Parameter field is static &quot;</span>
+<span class="fc" id="L32">                    + f.toString());</span>
+        }
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (!Modifier.isPublic(f.getModifiers())) {</span>
+<span class="fc" id="L35">            throw new InternalError(&quot;@Parameter field is not public &quot;</span>
+<span class="fc" id="L36">                    + f.toString());</span>
+        }
+<span class="fc" id="L38">        int position = f.getAnnotation(Parameter.class).value();</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (position &lt; 0) {</span>
+<span class="fc" id="L40">            throw new InternalError(&quot;@Parameter can'be negative &quot;</span>
+<span class="fc" id="L41">                    + f.toString());</span>
+        }
+<span class="fc" id="L43">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

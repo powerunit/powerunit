@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -29,470 +29,470 @@ import ch.powerunit.impl.AssertThatStringImpl;
 
 /**
  * This is the assert features.
- * 
+ *
  * @author borettim
  *
  */
 interface Assert {
 
-	/**
-	 * Assert the value of an object.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myObject).is(myOtherObject);
-	 * &lt;/pre&gt;
-	 * 
-	 * This will check that &lt;code&gt;myObject&lt;/code&gt; is &lt;code&gt;myOtherObject&lt;/code&gt;
-	 * (using the &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
-	 * 
-	 * @param &lt;T&gt;
-	 *            the object type.
-	 * @param obj
-	 *            the object
-	 * @return {@link AssertThatObject the assert DSL on this object}
-	 */
-	default &lt;T&gt; AssertThatObject&lt;T&gt; assertThat(T obj) {
-<span class="fc" id="L57">		return assertThat(null, obj);</span>
-	}
+    /**
+     * Assert the value of an object.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertThat(myObject).is(myOtherObject);
+     * &lt;/pre&gt;
+     * 
+     * This will check that &lt;code&gt;myObject&lt;/code&gt; is &lt;code&gt;myOtherObject&lt;/code&gt;
+     * (using the &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
+     * 
+     * @param &lt;T&gt;
+     *            the object type.
+     * @param obj
+     *            the object
+     * @return {@link AssertThatObject the assert DSL on this object}
+     */
+    default &lt;T&gt; AssertThatObject&lt;T&gt; assertThat(T obj) {
+<span class="fc" id="L57">        return assertThat(null, obj);</span>
+    }
 
-	/**
-	 * Assert the value of an object.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(&amp;quot;msg&amp;quot;, myObject).is(myOtherObject);
-	 * &lt;/pre&gt;
-	 * 
-	 * This will check that &lt;code&gt;myObject&lt;/code&gt; is &lt;code&gt;myOtherObject&lt;/code&gt;
-	 * (using the &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
-	 * 
-	 * @param &lt;T&gt;
-	 *            the object type.
-	 * @param msg
-	 *            a message
-	 * @param obj
-	 *            the object
-	 * @return {@link AssertThatObject the assert DSL on this object}
-	 */
-	default &lt;T&gt; AssertThatObject&lt;T&gt; assertThat(String msg, T obj) {
-<span class="fc" id="L81">		return new AssertThatObjectImpl&lt;T&gt;(true, msg, () -&gt; obj);</span>
-	}
+    /**
+     * Assert the value of an object.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertThat(&amp;quot;msg&amp;quot;, myObject).is(myOtherObject);
+     * &lt;/pre&gt;
+     * 
+     * This will check that &lt;code&gt;myObject&lt;/code&gt; is &lt;code&gt;myOtherObject&lt;/code&gt;
+     * (using the &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
+     * 
+     * @param &lt;T&gt;
+     *            the object type.
+     * @param msg
+     *            a message
+     * @param obj
+     *            the object
+     * @return {@link AssertThatObject the assert DSL on this object}
+     */
+    default &lt;T&gt; AssertThatObject&lt;T&gt; assertThat(String msg, T obj) {
+<span class="fc" id="L81">        return new AssertThatObjectImpl&lt;T&gt;(true, msg, () -&gt; obj);</span>
+    }
 
-	/**
-	 * Assert the value of a String.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(myString).is(&amp;quot;&amp;quot;);
-	 * &lt;/pre&gt;
-	 * 
-	 * This will check that &lt;code&gt;myString&lt;/code&gt; is &lt;code&gt;&quot;&quot;&lt;/code&gt; (using the
-	 * &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
-	 * 
-	 * @param obj
-	 *            the String
-	 * @return {@link AssertThatString the assert DSL on this object}
-	 */
-	default AssertThatString assertThat(String obj) {
-<span class="fc" id="L101">		return assertThat(null, obj);</span>
-	}
+    /**
+     * Assert the value of a String.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertThat(myString).is(&amp;quot;&amp;quot;);
+     * &lt;/pre&gt;
+     * 
+     * This will check that &lt;code&gt;myString&lt;/code&gt; is &lt;code&gt;&quot;&quot;&lt;/code&gt; (using the
+     * &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
+     * 
+     * @param obj
+     *            the String
+     * @return {@link AssertThatString the assert DSL on this object}
+     */
+    default AssertThatString assertThat(String obj) {
+<span class="fc" id="L101">        return assertThat(null, obj);</span>
+    }
 
-	/**
-	 * Assert the value of a String.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertThat(&amp;quot;msg&amp;quot;, myString).is(&amp;quot;&amp;quot;);
-	 * &lt;/pre&gt;
-	 * 
-	 * This will check that &lt;code&gt;myString&lt;/code&gt; is &lt;code&gt;&quot;&quot;&lt;/code&gt; (using the
-	 * &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
-	 * 
-	 * @param msg
-	 *            a message
-	 * @param obj
-	 *            the String
-	 * @return {@link AssertThatString the assert DSL on this object}
-	 */
-	default AssertThatString assertThat(String msg, String obj) {
-<span class="fc" id="L123">		return new AssertThatStringImpl(true, msg, () -&gt; obj);</span>
-	}
+    /**
+     * Assert the value of a String.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertThat(&amp;quot;msg&amp;quot;, myString).is(&amp;quot;&amp;quot;);
+     * &lt;/pre&gt;
+     * 
+     * This will check that &lt;code&gt;myString&lt;/code&gt; is &lt;code&gt;&quot;&quot;&lt;/code&gt; (using the
+     * &lt;code&gt;equalTo&lt;/code&gt; Hamcrest matcher).
+     * 
+     * @param msg
+     *            a message
+     * @param obj
+     *            the String
+     * @return {@link AssertThatString the assert DSL on this object}
+     */
+    default AssertThatString assertThat(String msg, String obj) {
+<span class="fc" id="L123">        return new AssertThatStringImpl(true, msg, () -&gt; obj);</span>
+    }
 
-	/**
-	 * Assert on an iterable object.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertThatIterable(myIterable).hasSize(0);
-	 * &lt;/pre&gt;
-	 * 
-	 * This will check that &lt;code&gt;myIterable&lt;/code&gt; has a size of 0.
-	 * 
-	 * @param &lt;T&gt;
-	 *            the element type.
-	 * @param obj
-	 *            the object (Iterable)
-	 * @return {@link AssertThatIterable the assert DSL on this iterable}
-	 */
-	default &lt;T&gt; AssertThatIterable&lt;T&gt; assertThatIterable(Iterable&lt;T&gt; obj) {
-<span class="fc" id="L144">		return assertThatIterable(null, obj);</span>
-	}
+    /**
+     * Assert on an iterable object.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertThatIterable(myIterable).hasSize(0);
+     * &lt;/pre&gt;
+     * 
+     * This will check that &lt;code&gt;myIterable&lt;/code&gt; has a size of 0.
+     * 
+     * @param &lt;T&gt;
+     *            the element type.
+     * @param obj
+     *            the object (Iterable)
+     * @return {@link AssertThatIterable the assert DSL on this iterable}
+     */
+    default &lt;T&gt; AssertThatIterable&lt;T&gt; assertThatIterable(Iterable&lt;T&gt; obj) {
+<span class="fc" id="L144">        return assertThatIterable(null, obj);</span>
+    }
 
-	/**
-	 * Assert on an iterable object.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertThatIterable(&amp;quot;msg&amp;quot;, myIterable).hasSize(0);
-	 * &lt;/pre&gt;
-	 * 
-	 * This will check that &lt;code&gt;myIterable&lt;/code&gt; has a size of 0.
-	 * 
-	 * @param &lt;T&gt;
-	 *            the element type.
-	 * @param msg
-	 *            a message
-	 * @param obj
-	 *            the object (Iterable)
-	 * @return {@link AssertThatIterable the assert DSL on this iterable}
-	 */
-	default &lt;T&gt; AssertThatIterable&lt;T&gt; assertThatIterable(String msg,
-			Iterable&lt;T&gt; obj) {
-<span class="fc" id="L168">		return new AssertThatIterableImpl&lt;T&gt;(true, msg, () -&gt; obj);</span>
-	}
+    /**
+     * Assert on an iterable object.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertThatIterable(&amp;quot;msg&amp;quot;, myIterable).hasSize(0);
+     * &lt;/pre&gt;
+     * 
+     * This will check that &lt;code&gt;myIterable&lt;/code&gt; has a size of 0.
+     * 
+     * @param &lt;T&gt;
+     *            the element type.
+     * @param msg
+     *            a message
+     * @param obj
+     *            the object (Iterable)
+     * @return {@link AssertThatIterable the assert DSL on this iterable}
+     */
+    default &lt;T&gt; AssertThatIterable&lt;T&gt; assertThatIterable(String msg,
+            Iterable&lt;T&gt; obj) {
+<span class="fc" id="L168">        return new AssertThatIterableImpl&lt;T&gt;(true, msg, () -&gt; obj);</span>
+    }
 
-	/**
-	 * Assert on a function.
-	 * &lt;p&gt;
-	 * The purpose of this variant of &lt;i&gt;assertThat&lt;/i&gt; provides a way to apply
-	 * a function on some input and to check the result.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertThatFunction((a) -&amp;gt; a + &amp;quot;x&amp;quot;, &amp;quot;b&amp;quot;).is(&amp;quot;bx&amp;quot;)
-	 * &lt;/pre&gt;
-	 * 
-	 * This will pass the &lt;code&gt;b&lt;/code&gt; string to the passed function (which
-	 * add a &lt;code&gt;x&lt;/code&gt; add the end of the string and then it will check
-	 * that this string is &lt;code&gt;bx&lt;/code&gt; (which is the case).
-	 * 
-	 * @param &lt;T&gt;
-	 *            the object type of the input of the function
-	 * @param &lt;R&gt;
-	 *            the object type of the result
-	 * @param function
-	 *            the function
-	 * @param input
-	 *            the input to the function
-	 * @return {@link AssertThatObject then assert DSL on the result of the
-	 *         function}
-	 */
-	default &lt;T, R&gt; AssertThatObject&lt;R&gt; assertThatFunction(
-			Function&lt;T, R&gt; function, T input) {
-<span class="fc" id="L200">		return new AssertThatObjectImpl&lt;R&gt;(true, null,</span>
-				() -&gt; function.apply(input));
-	}
+    /**
+     * Assert on a function.
+     * &lt;p&gt;
+     * The purpose of this variant of &lt;i&gt;assertThat&lt;/i&gt; provides a way to apply
+     * a function on some input and to check the result.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertThatFunction((a) -&amp;gt; a + &amp;quot;x&amp;quot;, &amp;quot;b&amp;quot;).is(&amp;quot;bx&amp;quot;)
+     * &lt;/pre&gt;
+     * 
+     * This will pass the &lt;code&gt;b&lt;/code&gt; string to the passed function (which
+     * add a &lt;code&gt;x&lt;/code&gt; add the end of the string and then it will check
+     * that this string is &lt;code&gt;bx&lt;/code&gt; (which is the case).
+     * 
+     * @param &lt;T&gt;
+     *            the object type of the input of the function
+     * @param &lt;R&gt;
+     *            the object type of the result
+     * @param function
+     *            the function
+     * @param input
+     *            the input to the function
+     * @return {@link AssertThatObject then assert DSL on the result of the
+     *         function}
+     */
+    default &lt;T, R&gt; AssertThatObject&lt;R&gt; assertThatFunction(
+            Function&lt;T, R&gt; function, T input) {
+<span class="fc" id="L200">        return new AssertThatObjectImpl&lt;R&gt;(true, null,</span>
+                () -&gt; function.apply(input));
+    }
 
-	/**
-	 * Assert on a function.
-	 * &lt;p&gt;
-	 * The purpose of this variant of &lt;i&gt;assertThat&lt;/i&gt; provides a way to apply
-	 * a function on some input and to check the result.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertThatFunction(&amp;quot;msg&amp;quot;, (a) -&amp;gt; a + &amp;quot;x&amp;quot;, &amp;quot;b&amp;quot;).is(&amp;quot;bx&amp;quot;)
-	 * &lt;/pre&gt;
-	 * 
-	 * This will pass the &lt;code&gt;b&lt;/code&gt; string to the passed function (which
-	 * add a &lt;code&gt;x&lt;/code&gt; add the end of the string and then it will check
-	 * that this string is &lt;code&gt;bx&lt;/code&gt; (which is the case).
-	 * 
-	 * @param &lt;T&gt;
-	 *            the object type of the input of the function
-	 * @param &lt;R&gt;
-	 *            the object type of the result
-	 * @param msg
-	 *            a message
-	 * @param function
-	 *            the function
-	 * @param input
-	 *            the input to the function
-	 * @return {@link AssertThatObject then assert DSL on the result of the
-	 *         function}
-	 */
-	default &lt;T, R&gt; AssertThatObject&lt;R&gt; assertThatFunction(String msg,
-			Function&lt;T, R&gt; function, T input) {
-<span class="fc" id="L235">		return new AssertThatObjectImpl&lt;R&gt;(true, msg,</span>
-				() -&gt; function.apply(input));
-	}
+    /**
+     * Assert on a function.
+     * &lt;p&gt;
+     * The purpose of this variant of &lt;i&gt;assertThat&lt;/i&gt; provides a way to apply
+     * a function on some input and to check the result.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertThatFunction(&amp;quot;msg&amp;quot;, (a) -&amp;gt; a + &amp;quot;x&amp;quot;, &amp;quot;b&amp;quot;).is(&amp;quot;bx&amp;quot;)
+     * &lt;/pre&gt;
+     * 
+     * This will pass the &lt;code&gt;b&lt;/code&gt; string to the passed function (which
+     * add a &lt;code&gt;x&lt;/code&gt; add the end of the string and then it will check
+     * that this string is &lt;code&gt;bx&lt;/code&gt; (which is the case).
+     * 
+     * @param &lt;T&gt;
+     *            the object type of the input of the function
+     * @param &lt;R&gt;
+     *            the object type of the result
+     * @param msg
+     *            a message
+     * @param function
+     *            the function
+     * @param input
+     *            the input to the function
+     * @return {@link AssertThatObject then assert DSL on the result of the
+     *         function}
+     */
+    default &lt;T, R&gt; AssertThatObject&lt;R&gt; assertThatFunction(String msg,
+            Function&lt;T, R&gt; function, T input) {
+<span class="fc" id="L235">        return new AssertThatObjectImpl&lt;R&gt;(true, msg,</span>
+                () -&gt; function.apply(input));
+    }
 
-	/**
-	 * Assert on a bifunction.
-	 * &lt;p&gt;
-	 * The purpose of this variant of &lt;i&gt;assertThat&lt;/i&gt; provides a way to apply
-	 * a bifunction on some input and to check the result.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertThatBiFunction((a, b) -&amp;gt; a + b, &amp;quot;a&amp;quot;, &amp;quot;b&amp;quot;).is(&amp;quot;ab&amp;quot;)
-	 * &lt;/pre&gt;
-	 * 
-	 * This will pass the &lt;code&gt;b&lt;/code&gt; string to the passed function (which
-	 * add a &lt;code&gt;x&lt;/code&gt; add the end of the string and then it will check
-	 * that this string is &lt;code&gt;bx&lt;/code&gt; (which is the case).
-	 * 
-	 * @param &lt;T&gt;
-	 *            the object type of the first input of the function
-	 * @param &lt;U&gt;
-	 *            the object type fo the second input of the function
-	 * @param &lt;R&gt;
-	 *            the object type of the result
-	 * @param function
-	 *            the function
-	 * @param input1
-	 *            the first input to the function
-	 * @param input2
-	 *            the second input to the function
-	 * @return {@link AssertThatObject then assert DSL on the result of the
-	 *         bifunction}
-	 */
-	default &lt;T, U, R&gt; AssertThatObject&lt;R&gt; assertThatBiFunction(
-			BiFunction&lt;T, U, R&gt; function, T input1, U input2) {
-<span class="fc" id="L272">		return new AssertThatObjectImpl&lt;R&gt;(true, null, () -&gt; function.apply(</span>
-				input1, input2));
-	}
+    /**
+     * Assert on a bifunction.
+     * &lt;p&gt;
+     * The purpose of this variant of &lt;i&gt;assertThat&lt;/i&gt; provides a way to apply
+     * a bifunction on some input and to check the result.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertThatBiFunction((a, b) -&amp;gt; a + b, &amp;quot;a&amp;quot;, &amp;quot;b&amp;quot;).is(&amp;quot;ab&amp;quot;)
+     * &lt;/pre&gt;
+     * 
+     * This will pass the &lt;code&gt;b&lt;/code&gt; string to the passed function (which
+     * add a &lt;code&gt;x&lt;/code&gt; add the end of the string and then it will check
+     * that this string is &lt;code&gt;bx&lt;/code&gt; (which is the case).
+     * 
+     * @param &lt;T&gt;
+     *            the object type of the first input of the function
+     * @param &lt;U&gt;
+     *            the object type fo the second input of the function
+     * @param &lt;R&gt;
+     *            the object type of the result
+     * @param function
+     *            the function
+     * @param input1
+     *            the first input to the function
+     * @param input2
+     *            the second input to the function
+     * @return {@link AssertThatObject then assert DSL on the result of the
+     *         bifunction}
+     */
+    default &lt;T, U, R&gt; AssertThatObject&lt;R&gt; assertThatBiFunction(
+            BiFunction&lt;T, U, R&gt; function, T input1, U input2) {
+<span class="fc" id="L272">        return new AssertThatObjectImpl&lt;R&gt;(true, null, () -&gt; function.apply(</span>
+                input1, input2));
+    }
 
-	/**
-	 * Assert on a bifunction.
-	 * &lt;p&gt;
-	 * The purpose of this variant of &lt;i&gt;assertThat&lt;/i&gt; provides a way to apply
-	 * a bifunction on some input and to check the result.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertThatBiFunction((a, b) -&amp;gt; a + b, &amp;quot;a&amp;quot;, &amp;quot;b&amp;quot;).is(&amp;quot;ab&amp;quot;)
-	 * &lt;/pre&gt;
-	 * 
-	 * This will pass the &lt;code&gt;b&lt;/code&gt; string to the passed function (which
-	 * add a &lt;code&gt;x&lt;/code&gt; add the end of the string and then it will check
-	 * that this string is &lt;code&gt;bx&lt;/code&gt; (which is the case).
-	 * 
-	 * @param &lt;T&gt;
-	 *            the object type of the first input of the function
-	 * @param &lt;U&gt;
-	 *            the object type fo the second input of the function
-	 * @param &lt;R&gt;
-	 *            the object type of the result
-	 * @param msg
-	 *            a message
-	 * @param function
-	 *            the function
-	 * @param input1
-	 *            the first input to the function
-	 * @param input2
-	 *            the second input to the function
-	 * @return {@link AssertThatObject then assert DSL on the result of the
-	 *         bifunction}
-	 */
-	default &lt;T, U, R&gt; AssertThatObject&lt;R&gt; assertThatBiFunction(String msg,
-			BiFunction&lt;T, U, R&gt; function, T input1, U input2) {
-<span class="fc" id="L311">		return new AssertThatObjectImpl&lt;R&gt;(true, msg, () -&gt; function.apply(</span>
-				input1, input2));
-	}
+    /**
+     * Assert on a bifunction.
+     * &lt;p&gt;
+     * The purpose of this variant of &lt;i&gt;assertThat&lt;/i&gt; provides a way to apply
+     * a bifunction on some input and to check the result.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertThatBiFunction((a, b) -&amp;gt; a + b, &amp;quot;a&amp;quot;, &amp;quot;b&amp;quot;).is(&amp;quot;ab&amp;quot;)
+     * &lt;/pre&gt;
+     * 
+     * This will pass the &lt;code&gt;b&lt;/code&gt; string to the passed function (which
+     * add a &lt;code&gt;x&lt;/code&gt; add the end of the string and then it will check
+     * that this string is &lt;code&gt;bx&lt;/code&gt; (which is the case).
+     * 
+     * @param &lt;T&gt;
+     *            the object type of the first input of the function
+     * @param &lt;U&gt;
+     *            the object type fo the second input of the function
+     * @param &lt;R&gt;
+     *            the object type of the result
+     * @param msg
+     *            a message
+     * @param function
+     *            the function
+     * @param input1
+     *            the first input to the function
+     * @param input2
+     *            the second input to the function
+     * @return {@link AssertThatObject then assert DSL on the result of the
+     *         bifunction}
+     */
+    default &lt;T, U, R&gt; AssertThatObject&lt;R&gt; assertThatBiFunction(String msg,
+            BiFunction&lt;T, U, R&gt; function, T input1, U input2) {
+<span class="fc" id="L311">        return new AssertThatObjectImpl&lt;R&gt;(true, msg, () -&gt; function.apply(</span>
+                input1, input2));
+    }
 
-	/**
-	 * Assert that a statement (a piece of code) throw an exception.
-	 * &lt;p&gt;
-	 * The goal of &lt;code&gt;assertWhen&lt;/code&gt; is to provide a way to validate that
-	 * an exception is thrown.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertWhen((p) -&amp;gt; {
-	 * 	throw new Throwable(&amp;quot;test&amp;quot;);
-	 * }).throwException(exceptionMessage(&amp;quot;test&amp;quot;));
-	 * &lt;/pre&gt;
-	 * 
-	 * Will run a piece of code that always thrown an exception and then
-	 * validate that the message of the exception is &lt;code&gt;test&lt;/code&gt;.
-	 * 
-	 * @param underTest
-	 *            the {@link Statement} &lt;code&gt;(p)-&amp;gt;{}&lt;/code&gt;
-	 * @return {@link AssertThatException the assert DSL on the exception}
-	 * @param &lt;T&gt;
-	 *            the exception type
-	 */
-	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
-			Statement&lt;?, T&gt; underTest) {
-<span class="fc" id="L340">		return assertWhen(null, underTest, null);</span>
-	}
+    /**
+     * Assert that a statement (a piece of code) throw an exception.
+     * &lt;p&gt;
+     * The goal of &lt;code&gt;assertWhen&lt;/code&gt; is to provide a way to validate that
+     * an exception is thrown.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertWhen((p) -&amp;gt; {
+     *     throw new Throwable(&amp;quot;test&amp;quot;);
+     * }).throwException(exceptionMessage(&amp;quot;test&amp;quot;));
+     * &lt;/pre&gt;
+     * 
+     * Will run a piece of code that always thrown an exception and then
+     * validate that the message of the exception is &lt;code&gt;test&lt;/code&gt;.
+     * 
+     * @param underTest
+     *            the {@link Statement} &lt;code&gt;(p)-&amp;gt;{}&lt;/code&gt;
+     * @return {@link AssertThatException the assert DSL on the exception}
+     * @param &lt;T&gt;
+     *            the exception type
+     */
+    default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
+            Statement&lt;?, T&gt; underTest) {
+<span class="fc" id="L340">        return assertWhen(null, underTest, null);</span>
+    }
 
-	/**
-	 * Assert that a statement (a piece of code) throw an exception.
-	 * &lt;p&gt;
-	 * The goal of &lt;code&gt;assertWhen&lt;/code&gt; is to provide a way to validate that
-	 * an exception is thrown.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertWhen((p) -&amp;gt; {
-	 * 	throw new Throwable(&amp;quot;test&amp;quot;);
-	 * }, null).throwException(exceptionMessage(&amp;quot;test&amp;quot;));
-	 * &lt;/pre&gt;
-	 * 
-	 * Will run a piece of code, passing null as parameter, that always thrown
-	 * an exception and then validate that the message of the exception is
-	 * &lt;code&gt;test&lt;/code&gt;.
-	 * 
-	 * @param underTest
-	 *            the {@link Statement} &lt;code&gt;(p)-&amp;gt;{}&lt;/code&gt;
-	 * @param param
-	 *            the parameter for the statement underTest
-	 * @param &lt;P&gt;
-	 *            the type of the parameter
-	 * @param &lt;T&gt;
-	 *            the exception type
-	 * @return {@link AssertThatException the assert DSL on the exception}
-	 * 
-	 */
-	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
-			Statement&lt;P, T&gt; underTest, P param) {
-<span class="fc" id="L374">		return assertWhen(null, underTest, param);</span>
-	}
+    /**
+     * Assert that a statement (a piece of code) throw an exception.
+     * &lt;p&gt;
+     * The goal of &lt;code&gt;assertWhen&lt;/code&gt; is to provide a way to validate that
+     * an exception is thrown.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertWhen((p) -&amp;gt; {
+     *     throw new Throwable(&amp;quot;test&amp;quot;);
+     * }, null).throwException(exceptionMessage(&amp;quot;test&amp;quot;));
+     * &lt;/pre&gt;
+     * 
+     * Will run a piece of code, passing null as parameter, that always thrown
+     * an exception and then validate that the message of the exception is
+     * &lt;code&gt;test&lt;/code&gt;.
+     * 
+     * @param underTest
+     *            the {@link Statement} &lt;code&gt;(p)-&amp;gt;{}&lt;/code&gt;
+     * @param param
+     *            the parameter for the statement underTest
+     * @param &lt;P&gt;
+     *            the type of the parameter
+     * @param &lt;T&gt;
+     *            the exception type
+     * @return {@link AssertThatException the assert DSL on the exception}
+     * 
+     */
+    default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
+            Statement&lt;P, T&gt; underTest, P param) {
+<span class="fc" id="L374">        return assertWhen(null, underTest, param);</span>
+    }
 
-	/**
-	 * Assert that a statement (a piece of code) throw an exception.
-	 * &lt;p&gt;
-	 * The goal of &lt;code&gt;assertWhen&lt;/code&gt; is to provide a way to validate that
-	 * an exception is thrown.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertWhen(&amp;quot;msg&amp;quot;, (p) -&amp;gt; {
-	 * 	throw new Throwable(&amp;quot;test&amp;quot;);
-	 * }).throwException(exceptionMessage(&amp;quot;test&amp;quot;));
-	 * &lt;/pre&gt;
-	 * 
-	 * Will run a piece of code that always thrown an exception and then
-	 * validate that the message of the exception is &lt;code&gt;test&lt;/code&gt;.
-	 * 
-	 * @param msg
-	 *            a message
-	 * @param underTest
-	 *            the statement &lt;code&gt;(p)-&amp;gt;{}&lt;/code&gt;
-	 * @return {@link AssertThatException the assert DSL on the exception}
-	 * @param &lt;T&gt;
-	 *            the exception type
-	 */
-	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(String msg,
-			Statement&lt;?, T&gt; underTest) {
-<span class="fc" id="L404">		return assertWhen(msg, underTest, null);</span>
-	}
+    /**
+     * Assert that a statement (a piece of code) throw an exception.
+     * &lt;p&gt;
+     * The goal of &lt;code&gt;assertWhen&lt;/code&gt; is to provide a way to validate that
+     * an exception is thrown.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertWhen(&amp;quot;msg&amp;quot;, (p) -&amp;gt; {
+     *     throw new Throwable(&amp;quot;test&amp;quot;);
+     * }).throwException(exceptionMessage(&amp;quot;test&amp;quot;));
+     * &lt;/pre&gt;
+     * 
+     * Will run a piece of code that always thrown an exception and then
+     * validate that the message of the exception is &lt;code&gt;test&lt;/code&gt;.
+     * 
+     * @param msg
+     *            a message
+     * @param underTest
+     *            the statement &lt;code&gt;(p)-&amp;gt;{}&lt;/code&gt;
+     * @return {@link AssertThatException the assert DSL on the exception}
+     * @param &lt;T&gt;
+     *            the exception type
+     */
+    default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(String msg,
+            Statement&lt;?, T&gt; underTest) {
+<span class="fc" id="L404">        return assertWhen(msg, underTest, null);</span>
+    }
 
-	/**
-	 * Assert that a statement (a piece of code) throw an exception.
-	 * &lt;p&gt;
-	 * The goal of &lt;code&gt;assertWhen&lt;/code&gt; is to provide a way to validate that
-	 * an exception is thrown.
-	 * &lt;p&gt;
-	 * For instance
-	 * 
-	 * &lt;pre&gt;
-	 * assertWhen(&amp;quot;msg&amp;quot;, (p) -&amp;gt; {
-	 * 	throw new Throwable(&amp;quot;test&amp;quot;);
-	 * }, null).throwException(exceptionMessage(&amp;quot;test&amp;quot;));
-	 * &lt;/pre&gt;
-	 * 
-	 * Will run a piece of code, passing null as parameter, that always thrown
-	 * an exception and then validate that the message of the exception is
-	 * &lt;code&gt;test&lt;/code&gt;.
-	 * 
-	 * @param msg
-	 *            a message
-	 * @param underTest
-	 *            the statement &lt;code&gt;(p)-&amp;gt;{}&lt;/code&gt;
-	 * @param param
-	 *            the parameter for the statement underTest
-	 * @param &lt;P&gt;
-	 *            the type of the parameter
-	 * @param &lt;T&gt;
-	 *            the exception type
-	 * @return {@link AssertThatException the assert DSL on the exception}
-	 * 
-	 * 
-	 */
-	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
-			String msg, Statement&lt;P, T&gt; underTest, P param) {
-<span class="fc" id="L441">		return new AssertThatExceptionImpl&lt;P, T&gt;(true, underTest, param, msg);</span>
-	}
+    /**
+     * Assert that a statement (a piece of code) throw an exception.
+     * &lt;p&gt;
+     * The goal of &lt;code&gt;assertWhen&lt;/code&gt; is to provide a way to validate that
+     * an exception is thrown.
+     * &lt;p&gt;
+     * For instance
+     * 
+     * &lt;pre&gt;
+     * assertWhen(&amp;quot;msg&amp;quot;, (p) -&amp;gt; {
+     *     throw new Throwable(&amp;quot;test&amp;quot;);
+     * }, null).throwException(exceptionMessage(&amp;quot;test&amp;quot;));
+     * &lt;/pre&gt;
+     * 
+     * Will run a piece of code, passing null as parameter, that always thrown
+     * an exception and then validate that the message of the exception is
+     * &lt;code&gt;test&lt;/code&gt;.
+     * 
+     * @param msg
+     *            a message
+     * @param underTest
+     *            the statement &lt;code&gt;(p)-&amp;gt;{}&lt;/code&gt;
+     * @param param
+     *            the parameter for the statement underTest
+     * @param &lt;P&gt;
+     *            the type of the parameter
+     * @param &lt;T&gt;
+     *            the exception type
+     * @return {@link AssertThatException the assert DSL on the exception}
+     * 
+     * 
+     */
+    default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
+            String msg, Statement&lt;P, T&gt; underTest, P param) {
+<span class="fc" id="L441">        return new AssertThatExceptionImpl&lt;P, T&gt;(true, underTest, param, msg);</span>
+    }
 
-	/**
-	 * Always produce a failure.
-	 * &lt;p&gt;
-	 * For instance :
-	 * 
-	 * &lt;pre&gt;
-	 * fail();
-	 * &lt;/pre&gt;
-	 * 
-	 * will immediately fail the current test.
-	 */
-	default void fail() {
-<span class="nc" id="L456">		fail(&quot;Manual failure&quot;);</span>
-<span class="nc" id="L457">	}</span>
+    /**
+     * Always produce a failure.
+     * &lt;p&gt;
+     * For instance :
+     * 
+     * &lt;pre&gt;
+     * fail();
+     * &lt;/pre&gt;
+     * 
+     * will immediately fail the current test.
+     */
+    default void fail() {
+<span class="nc" id="L456">        fail(&quot;Manual failure&quot;);</span>
+<span class="nc" id="L457">    }</span>
 
-	/**
-	 * Always produce a failure.
-	 * &lt;p&gt;
-	 * For instance :
-	 * 
-	 * &lt;pre&gt;
-	 * fail(&amp;quot;my message&amp;quot;);
-	 * &lt;/pre&gt;
-	 * 
-	 * will immediately fail the current test.
-	 * 
-	 * @param msg
-	 *            a message
-	 */
-	default void fail(String msg) {
-<span class="fc" id="L474">		throw new AssertionError(msg);</span>
-	}
+    /**
+     * Always produce a failure.
+     * &lt;p&gt;
+     * For instance :
+     * 
+     * &lt;pre&gt;
+     * fail(&amp;quot;my message&amp;quot;);
+     * &lt;/pre&gt;
+     * 
+     * will immediately fail the current test.
+     * 
+     * @param msg
+     *            a message
+     */
+    default void fail(String msg) {
+<span class="fc" id="L474">        throw new AssertionError(msg);</span>
+    }
 
-	/**
-	 * Always produce a failure.
-	 * &lt;p&gt;
-	 * For instance :
-	 * 
-	 * &lt;pre&gt;
-	 * fail(&amp;quot;my message&amp;quot;, t);
-	 * &lt;/pre&gt;
-	 * 
-	 * will immediately fail the current test.
-	 * 
-	 * @param msg
-	 *            a message
-	 * @param innerError
-	 *            the error cause
-	 */
-	default void fail(String msg, Throwable innerError) {
-<span class="nc" id="L494">		throw new AssertionError(msg, innerError);</span>
-	}
+    /**
+     * Always produce a failure.
+     * &lt;p&gt;
+     * For instance :
+     * 
+     * &lt;pre&gt;
+     * fail(&amp;quot;my message&amp;quot;, t);
+     * &lt;/pre&gt;
+     * 
+     * will immediately fail the current test.
+     * 
+     * @param msg
+     *            a message
+     * @param innerError
+     *            the error cause
+     */
+    default void fail(String msg, Throwable innerError) {
+<span class="nc" id="L494">        throw new AssertionError(msg, innerError);</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

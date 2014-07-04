@@ -13,7 +13,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
@@ -27,33 +27,33 @@ import javax.lang.model.element.Modifier;
 import ch.powerunit.Parameter;
 
 public interface ParameterProcessorValidator extends ProcessValidator {
-	default void parameterAnnotationValidation(RoundEnvironment roundEnv) {
-<span class="nc" id="L31">		roundEnv.getElementsAnnotatedWith(Parameter.class).forEach(</span>
-				this::parameterOneAnnotationValidation);
-<span class="nc" id="L33">	}</span>
+    default void parameterAnnotationValidation(RoundEnvironment roundEnv) {
+<span class="nc" id="L31">        roundEnv.getElementsAnnotatedWith(Parameter.class).forEach(</span>
+                this::parameterOneAnnotationValidation);
+<span class="nc" id="L33">    }</span>
 
-	default void parameterOneAnnotationValidation(Element element) {
-<span class="nc bnc" id="L36" title="All 2 branches missed.">		if (element.getKind() != ElementKind.FIELD) {</span>
-<span class="nc" id="L37">			error(&quot;@Parameter must prefix a field -- &quot; + element</span>
-					+ &quot; is not a field&quot;);
-<span class="nc" id="L39">			return;</span>
-		}
-<span class="nc bnc" id="L41" title="All 2 branches missed.">		if (element.getModifiers().contains(Modifier.STATIC)) {</span>
-<span class="nc" id="L42">			warn(&quot;Field &quot;</span>
-<span class="nc" id="L43">					+ elementAsString(element)</span>
-					+ &quot;\n\tis prefixed with @Parameter and is static\n\tA parameter field can't be static&quot;);
-		}
-<span class="nc bnc" id="L46" title="All 2 branches missed.">		if (!element.getModifiers().contains(Modifier.PUBLIC)) {</span>
-<span class="nc" id="L47">			warn(&quot;Field &quot;</span>
-<span class="nc" id="L48">					+ elementAsString(element)</span>
-					+ &quot;\n\tis prefixed with @Parameter and is not public\n\tA parameter field must be public&quot;);
-		}
-<span class="nc bnc" id="L51" title="All 2 branches missed.">		if (element.getAnnotation(Parameter.class).value() &lt; 0) {</span>
-<span class="nc" id="L52">			warn(&quot;Field &quot; + elementAsString(element)</span>
-					+ &quot;\n\tis prefixed with @Parameter and value is &quot;
-<span class="nc" id="L54">					+ element.getAnnotation(Parameter.class).value()</span>
-					+ &quot;\n\tA parameter field value must be &gt;=0&quot;);
-		}
-<span class="nc" id="L57">	}</span>
+    default void parameterOneAnnotationValidation(Element element) {
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (element.getKind() != ElementKind.FIELD) {</span>
+<span class="nc" id="L37">            error(&quot;@Parameter must prefix a field -- &quot; + element</span>
+                    + &quot; is not a field&quot;);
+<span class="nc" id="L39">            return;</span>
+        }
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (element.getModifiers().contains(Modifier.STATIC)) {</span>
+<span class="nc" id="L42">            warn(&quot;Field &quot;</span>
+<span class="nc" id="L43">                    + elementAsString(element)</span>
+                    + &quot;\n\tis prefixed with @Parameter and is static\n\tA parameter field can't be static&quot;);
+        }
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (!element.getModifiers().contains(Modifier.PUBLIC)) {</span>
+<span class="nc" id="L47">            warn(&quot;Field &quot;</span>
+<span class="nc" id="L48">                    + elementAsString(element)</span>
+                    + &quot;\n\tis prefixed with @Parameter and is not public\n\tA parameter field must be public&quot;);
+        }
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        if (element.getAnnotation(Parameter.class).value() &lt; 0) {</span>
+<span class="nc" id="L52">            warn(&quot;Field &quot; + elementAsString(element)</span>
+                    + &quot;\n\tis prefixed with @Parameter and value is &quot;
+<span class="nc" id="L54">                    + element.getAnnotation(Parameter.class).value()</span>
+                    + &quot;\n\tA parameter field value must be &gt;=0&quot;);
+        }
+<span class="nc" id="L57">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
