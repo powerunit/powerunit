@@ -56,5 +56,6 @@ The Powerunit framework
 * Roadmap
 
  The version 0.0.1 of this library is the first release. Please refer to {{{./release.html}the release principles page}} for more 
- information.
+ information. The next version (outside bug fix version), will be the 0.1.0 that will mainly add documentation and functionnality
+ on the parameter support.
  
