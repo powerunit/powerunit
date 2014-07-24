@@ -8,6 +8,10 @@
           img="https://travis-ci.org/powerunit/powerunit.svg?branch=master"/>
   </poweredBy>
   <body>
+  	<head>
+  		<link rel="icon" type="image/png" href="logo.png" />
+  		<link rel="shortcut icon" type="image/png" href="log.png" />
+  	</head>
     <menu ref="reports" />
     <menu name="General documentations">
       <item name="FAQ" href="faq.html" />
