@@ -10,7 +10,7 @@
   <body>
   	<head>
   		<link rel="icon" type="image/png" href="logo.png" />
-  		<link rel="shortcut icon" type="image/png" href="log.png" />
+  		<link rel="shortcut icon" type="image/png" href="logo.png" />
   	</head>
     <menu ref="reports" />
     <menu name="General documentations">
