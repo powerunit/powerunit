@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PowerUnitMainRunner.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit</a> &gt; <span class="el_source">PowerUnitMainRunner.java</span></div><h1>PowerUnitMainRunner.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit;
+
+import java.io.PrintStream;
+import java.util.Arrays;
+
+import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
+import ch.powerunit.impl.DefaultTestResultListener;
+
+/**
+ * Main class that can be used to run test.
+ * 
+ * @author borettim
+ * @since 0.1.0
+ * @see #main(String[]) The main method to have the description of the
+ *      parameters.
+ */
+<span class="nc" id="L36">public class PowerUnitMainRunner {</span>
+
+<span class="fc" id="L38">    public static final PrintStream DEFAULT_OUT = System.out;</span>
+
+    /**
+     * The main method.
+     * 
+     * @param args
+     *            The argument syntax is the following :
+     *            &lt;ul&gt;
+     *            &lt;li&gt;&lt;code&gt;path className,...&lt;/code&gt;&lt;/li&gt;
+     *            &lt;/ul&gt;
+     */
+    public static void main(String[] args) {
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        if (args.length != 2) {</span>
+<span class="nc" id="L51">            DEFAULT_OUT.printf(&quot;The received argument is not valid : %1$s%n&quot;,</span>
+<span class="nc" id="L52">                    Arrays.toString(args));</span>
+<span class="nc" id="L53">            System.exit(-1);</span>
+        }
+<span class="fc" id="L55">        String outputPath = args[0];</span>
+<span class="fc" id="L56">        String classes[] = args[1].split(&quot;\\s*,\\s*&quot;);</span>
+<span class="fc" id="L57">        boolean success = true;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        for (String c : classes) {</span>
+<span class="fc" id="L59">            DEFAULT_OUT.printf(&quot;Running test for %1$s%n&quot;, c);</span>
+            try {
+<span class="fc" id="L61">                Class&lt;?&gt; cls = Class.forName(c);</span>
+<span class="fc" id="L62">                PowerUnitRunner r = new DefaultPowerUnitRunnerImpl(cls);</span>
+<span class="fc" id="L63">                DefaultTestResultListener def = new DefaultTestResultListener(</span>
+                        outputPath, DEFAULT_OUT);
+<span class="fc" id="L65">                r.addListener(def);</span>
+<span class="fc" id="L66">                r.run();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">                success &amp;= !def.isError();</span>
+<span class="nc" id="L68">            } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L69">                DEFAULT_OUT.printf(&quot;Unable to create the class %1$s%n&quot;, c);</span>
+            } finally {
+<span class="pc" id="L71">                DEFAULT_OUT.printf(&quot;End running test for %1$s%n&quot;, c);</span>
+<span class="pc" id="L72">            }</span>
+        }
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (!success) {</span>
+<span class="nc" id="L75">            System.exit(-1);</span>
+        }
+<span class="nc" id="L77">        System.exit(0);</span>
+<span class="nc" id="L78">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

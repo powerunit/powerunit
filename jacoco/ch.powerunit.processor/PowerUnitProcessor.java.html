@@ -149,39 +149,32 @@ import ch.powerunit.impl.validator.TestProcessorValidator;
 <span class="nc" id="L149">            w.println(&quot;    return;&quot;);</span>
 <span class="nc" id="L150">            w.println(&quot;    }&quot;);</span>
 <span class="nc" id="L151">            w.println(&quot;    String name = argv[1];&quot;);</span>
-<span class="nc" id="L152">            w.println(&quot;    boolean success=true;&quot;);</span>
+<span class="nc" id="L152">            w.println(&quot;    StringBuilder sb = new StringBuilder();&quot;);</span>
 <span class="nc" id="L153">            w.println(&quot;    for(Class&lt;?&gt; c:getSuites().get(name)) {&quot;);</span>
-<span class="nc" id="L154">            w.println(&quot;      ch.powerunit.PowerUnitRunner r = new ch.powerunit.impl.DefaultPowerUnitRunnerImpl(c);&quot;);</span>
-<span class="nc" id="L155">            w.println(&quot;      ch.powerunit.impl.DefaultTestResultListener def = new ch.powerunit.impl.DefaultTestResultListener(argv[0]);&quot;);</span>
-<span class="nc" id="L156">            w.println(&quot;      r.addListener(def);&quot;);</span>
-<span class="nc" id="L157">            w.println(&quot;      r.run();&quot;);</span>
-<span class="nc" id="L158">            w.println(&quot;      success=success&amp;&amp;!def.isError();&quot;);</span>
-<span class="nc" id="L159">            w.println(&quot;    }&quot;);</span>
-<span class="nc" id="L160">            w.println(&quot;    if(!success) {&quot;);</span>
-<span class="nc" id="L161">            w.println(&quot;      System.out.println(\&quot;Tests in error.\&quot;);&quot;);</span>
-<span class="nc" id="L162">            w.println(&quot;      System.exit(-1);&quot;);</span>
-<span class="nc" id="L163">            w.println(&quot;    }&quot;);</span>
-<span class="nc" id="L164">            w.println(&quot;  }&quot;);</span>
-<span class="nc" id="L165">            w.println();</span>
-<span class="nc" id="L166">            w.println(&quot;}&quot;);</span>
-<span class="nc bnc" id="L167" title="All 8 branches missed.">        }</span>
-<span class="nc" id="L168">    }</span>
+<span class="nc" id="L154">            w.println(&quot;      sb.append(c.getName()).append(',');&quot;);</span>
+<span class="nc" id="L155">            w.println(&quot;    }&quot;);</span>
+<span class="nc" id="L156">            w.println(&quot;    ch.powerunit.PowerUnitMainRunner.main(new String[]{argv[0],sb.toString()});&quot;);</span>
+<span class="nc" id="L157">            w.println(&quot;  }&quot;);</span>
+<span class="nc" id="L158">            w.println();</span>
+<span class="nc" id="L159">            w.println(&quot;}&quot;);</span>
+<span class="nc bnc" id="L160" title="All 8 branches missed.">        }</span>
+<span class="nc" id="L161">    }</span>
 
     @Override
     public String elementAsString(Element ee) {
-<span class="nc" id="L172">        return ee.toString() + &quot; of &quot; + ee.getEnclosingElement().toString();</span>
+<span class="nc" id="L165">        return ee.toString() + &quot; of &quot; + ee.getEnclosingElement().toString();</span>
     }
 
     @Override
     public void error(String msg) {
-<span class="nc" id="L177">        processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, msg);</span>
-<span class="nc" id="L178">    }</span>
+<span class="nc" id="L170">        processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, msg);</span>
+<span class="nc" id="L171">    }</span>
 
     @Override
     public void warn(String msg) {
-<span class="nc" id="L182">        processingEnv.getMessager().printMessage(</span>
+<span class="nc" id="L175">        processingEnv.getMessager().printMessage(</span>
                 Diagnostic.Kind.MANDATORY_WARNING, msg);
-<span class="nc" id="L184">    }</span>
+<span class="nc" id="L177">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
