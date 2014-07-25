@@ -72,11 +72,11 @@
                           <a href="equalsverifier.html" title="EqualsVerifier integration">EqualsVerifier integration</a>
             </li>
                       <li class="none">
-            <strong>Parameterized tests</strong>
-          </li>
-                      <li class="none">
-                          <a href="rules.html" title="Rule chain">Rule chain</a>
+                          <a href="parameters.html" title="Parameterized tests">Parameterized tests</a>
             </li>
+                      <li class="none">
+            <strong>Rule chain</strong>
+          </li>
               </ul>
         </li>
           </ul>
@@ -93,107 +93,51 @@
     <div id="bodyColumn">
       <div id="contentBox">
         <div class="section">
-<h2>Parameterized tests<a name="Parameterized_tests"></a></h2>
+<h2>Rule chains<a name="Rule_chains"></a></h2>
+<p>As shown in <a href="./helloworldmaven.html">the helloworld sample</a>, it is possible to use one field as a Test Rule Chain. A test rule chain defines action that must be done before or after the several test method executions. This concept is a key element of PowerUnit and is different of the test rule chain of junit in several ways. One key difference is that PowerUnit doesn't provide any annotation to mark a method to be executed before or after a test ; This must be done by using a test rule chain.</p>
 <div class="section">
-<h3>Principles<a name="Principles"></a></h3>
-<p>It is possible to inject several data, that must be used to do different test execution. This functionnality is based on the <tt>@Parameters</tt> system.</p></div>
-<div class="section">
-<h3>Simple usage<a name="Simple_usage"></a></h3>
-<p>Let's assume you like to test the <tt>valueOf</tt> method of the <tt>Integer</tt> class. It is logical to try to test it with different parameters. The following code can be used :</p>
-<div>
-<pre>import java.util.Arrays;
-import java.util.function.Function;
-import java.util.stream.Stream;
-
-import ch.powerunit.Parameter;
-import ch.powerunit.Parameters;
+<h3>Defining before and after method<a name="Defining_before_and_after_method"></a></h3>
+<div class="source">
+<pre>import ch.powerunit.Rule;
 import ch.powerunit.Test;
+import ch.powerunit.TestRule;
 import ch.powerunit.TestSuite;
 
-public class FunctionParameterTest implements TestSuite {
+public class MyBeanTest implements TestSuite {
+    @Rule
+    public final TestRule rule = before(this::prepare).around(
+            after(this::after));
 
-    @Parameters(&quot;{0} expecting {1}&quot;)
-    public static Stream&lt;Object[]&gt; getDatas() {
-        return Arrays.stream(new Object[][] { { &quot;1&quot;, 1 }, { &quot;2&quot;, 2} });
+    private MyBean bean;
+
+    private void prepare() {
+        bean = new MyBean();
     }
 
-    @Parameter(0)
-    public String input;
-
-    @Parameter(1)
-    public Integer expected;
+    private void after() {
+        bean = null;
+    }
 
     @Test
-    public void testAFunction() {
-        assertThatFunction(Integer::valueOf, input).is(expected);
+    public void testSimple() {
+        bean.setField1(&quot;x&quot;);
+        assertThat(bean.getField1()).is(&quot;x&quot;);
     }
 }</pre></div>
-<p>This will run twice the test method <tt>testAFunction</tt>, using the different parameters set.</p></div>
+<p>This test class use a test rule to define action to be done before and after every test method. To do so, the rule chain is started by using the <tt>before</tt> method, passing as parameter a reference to the method <tt>prepare</tt>. This method return a chainable rule that provides the around method, which receive as a parameter another rule that is to be executed <i>inside</i> the previous one. This new rules is defined by using the <tt>after</tt> method. From a field initialization perspective, this will :</p>
+<ul>
+<li>Create a first rule that will execute the method <tt>prepare</tt> before every test.</li>
+<li>Create a second rule that will execute the method <tt>after</tt> after every test.</li>
+<li>Merge these two rules in a new ones that will take execute the method <tt>prepare</tt> before every test <b>and</b> execute the method <tt>after</tt> after every test.</li></ul>
+<p>From a DSL perspective, the <tt>around</tt> method use to chain the rule assume that the left side of the usage is execute around the right side. This principe ensure that when it is required to have to before (or after) method, the order between these methods is strictly deterministic.</p></div>
 <div class="section">
-<h3>Conditional usage<a name="Conditional_usage"></a></h3>
-<p>In a lot of case, not all test methods must be executed for each test parameter set. For instance a test method may check the exception case and another one the nominal case. As in JUnit, the <tt>assumeThat</tt> approach is available, but a more powerfull syntax is also available : It is possible to add one parameter, that will be a function that is used to check if a test method is applicable or not to the test data.</p>
-<p>For instance :</p>
-<div>
-<pre>import java.util.Arrays;
-import java.util.function.BiFunction;
-import java.util.stream.Stream;
-
-import ch.powerunit.Parameter;
-import ch.powerunit.Parameters;
-import ch.powerunit.Test;
-import ch.powerunit.TestSuite;
-
-public class FiboUsingFilteringTest implements TestSuite {
-
-    @Parameters()
-    public static Stream&lt;Object[]&gt; getDatas() {
-        return Arrays
-                .stream(new Object[][] { { 0, 0, null }, { 1, 1, null },
-                        { 2, 1, null }, { 3, 2, null }, { 4, 3, null },
-                        { 10, 55, null },
-                        { -1, -1, IllegalArgumentException.class } })
-                .map(TestSuite.DSL
-                        .&lt;BiFunction&lt;String, Object[], Boolean&gt;&gt; addFieldToEachEntry(FiboUsingFilteringTest::validateTestMethod));
-    }
-
-    private static boolean validateTestMethod(String name, Object parameters[]) {
-        if (parameters[2] == null) {
-            return &quot;testFib&quot;.equals(name);
-        }
-        return &quot;testFibException&quot;.equals(name);
-    }
-
-    @Parameter(0)
-    public int x;
-
-    @Parameter(1)
-    public int y;
-
-    @Parameter(2)
-    public Class&lt;?&gt; expectedException;
-
-    @Parameter(value = 3, filter = true)
-    public BiFunction&lt;String, Object[], Boolean&gt; filter;
-
-    @Test(name = &quot;validate the fib suite : {0}-&gt;{1}&quot;)
-    public void testFib() {
-        assertThatFunction(Fibo::fibo, x).is(y);
-    }
-
-    @Test(name = &quot;Validate exception is {2}&quot;)
-    public void testFibException() {
-        assertWhen((p) -&gt; Fibo.fibo(p), x).throwException(
-                instanceOf(expectedException));
-    }
-
-}</pre></div>
-<p>In this example, the <tt>@Parameters</tt> method build a stream, without specifying anything special and then use the <tt>map</tt> method of the stream using the result of the method <tt>addFieldToEachEntry</tt>. This will add to each <i>lines</i> of the stream the same object. This object is a <tt>BiFunction</tt> that is constructed by using a lambda expression. This method will check the received parameter and defines which test method are acceptable regarding the context.</p>
-<p>The function is injected into a special parameter that is annotated with <tt>@Parameter(field = true)</tt>.</p>
-<p>When executed with surefire, the result will be :</p>
-<div>
-<pre>Running ch.powerunit.demo.FiboUsingFilteringTest (of &lt;none&gt;)
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in ch.powerunit.demo.FiboUsingFilteringTest (of &lt;none&gt;)</pre></div>
-<p>We can see that event if we have seven parameters lines and two test methods, only seven execution are displayed.</p></div></div>
+<h3>Starting a test rule chain<a name="Starting_a_test_rule_chain"></a></h3>
+<p>A test rule is at the same time a test rule chain, thanks to the default method of Java 8. The interesting side effect is that it is not required to have special rule to be used to aggregate other rules. A test rule chain can be started in several ways :</p>
+<ul>
+<li>Using the <tt>before</tt> or <tt>after</tt> method to create the first rule.</li>
+<li>Create (using a constructor for instance) to create an instance of the rule.</li>
+<li>Use any other DSL method that return a test rule (for instance the mockitoRule).</li></ul>
+<p>What is essential is to start with the most outer rule.</p></div></div>
       </div>
     </div>
     <div class="clear">
