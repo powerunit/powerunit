@@ -54,3 +54,18 @@ public class MyBeanTest implements TestSuite {
  From a DSL perspective, the <<<around>>> method use to chain the rule assume that the left side of the usage is execute around
  the right side. This principe ensure that when it is required to have to before (or after) method, the order between these 
  methods is strictly deterministic.
+
+* Starting a test rule chain
+ 
+ A test rule is at the same time a test rule chain, thanks to the default method of Java 8. The interesting side effect is that 
+ it is not required to have special rule to be used to aggregate other rules. A test rule chain can be started in several ways :
+ 
+ * Using the <<<before>>> or <<<after>>> method to create the first rule.
+ 
+ * Create (using a constructor for instance) to create an instance of the rule.
+ 
+ * Use any other DSL method that return a test rule (for instance the mockitoRule).
+ 
+ []
+ 
+ What is essential is to start with the most outer rule.
