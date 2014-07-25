@@ -598,6 +598,11 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
+	<!--archive> <manifestEntries> <Bundle-SymbolicName>ch.powerunit.powerunit</Bundle-SymbolicName> 
+		<Bundle-ManifestVersion>2</Bundle-ManifestVersion> <Bundle-RequiredExecutionEnvironment>JavaSE-1.8</Bundle-RequiredExecutionEnvironment> 
+		<Export-Package>ch.powerunit</Export-Package> <Bundle-Vendor>PowerUnit</Bundle-Vendor> 
+		<Bundle-Name>Powerunit</Bundle-Name> <Bundle-Version>0.1.0</Bundle-Version> 
+		</manifestEntries> </archive -->
 					<attach>false</attach>
 				</configuration>
 				<executions>

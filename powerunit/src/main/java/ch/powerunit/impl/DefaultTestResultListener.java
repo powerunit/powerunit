@@ -20,6 +20,7 @@
 package ch.powerunit.impl;
 
 import java.io.File;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +42,12 @@ import ch.powerunit.report.Testsuites;
 public class DefaultTestResultListener<T> implements TestResultListener<T> {
 
     public DefaultTestResultListener(String targetFolder) {
+        this(targetFolder, null);
+    }
+
+    public DefaultTestResultListener(String targetFolder,
+            PrintStream outputConsole) {
+        this.outputConsole = outputConsole;
         this.targetFolder = new File(targetFolder);
         this.targetFolder.mkdirs();
     }
@@ -58,6 +65,8 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 
     private boolean error = false;
 
+    private final PrintStream outputConsole;
+
     private final Map<String, Testsuite> result = new HashMap<>();
 
     private final Map<String, Testsuites> results = new HashMap<>();
@@ -65,6 +74,12 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
     private final Map<String, Map<String, Testcase>> resultcase = new HashMap<>();
 
     private final File targetFolder;
+
+    private void printf(String format, Object... args) {
+        if (outputConsole != null) {
+            outputConsole.printf(format, args);
+        }
+    }
 
     @Override
     public void notifySetStart(String setName, String parameters) {
@@ -93,6 +108,7 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
     public void notifySetEnd(String setName, String parameters) {
         try {
             File target = new File(targetFolder, setName + ".xml");
+            printf("Pushing test results into %1$s%n", target.getAbsolutePath());
             Object o = results.get(setName);
             if (results.get(setName).getTestsuite().isEmpty()) {
                 o = result.get(setName);
@@ -119,7 +135,7 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
         resultcase.get(setName).put(context.getFullTestName(), tc);
         ts.getTestcase().add(tc);
         tc.setTime(System.currentTimeMillis());
-
+        printf("Start of test %1$s%n", context.getFullTestName());
     }
 
     @Override
@@ -133,6 +149,7 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
         tc.setTime((end - tc.getTime()) / 1000);
         ts.setTime(ts.getTime() + tc.getTime());
         ts.setTests(ts.getTests() + 1);
+        printf("Success of test %1$s%n", context.getFullTestName());
     }
 
     @Override
@@ -158,6 +175,8 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
             stack.append(ste.toString()).append('\n');
         }
         f.setContent(stack.toString());
+        printf("Failure of test %1$s because of %2$s%n",
+                context.getFullTestName(), cause.getMessage());
     }
 
     @Override
@@ -173,6 +192,7 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
         ts.setDisabled(ts.getDisabled() + 1);
 
         tc.setSkipped("Skipped");
+        printf("Skip of test %1$s%n", context.getFullTestName());
     }
 
     @Override
@@ -198,6 +218,8 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
             stack.append(ste.toString()).append('\n');
         }
         e.setContent(stack.toString());
+        printf("Error of test %1$s because of %2$s%n",
+                context.getFullTestName(), cause.getMessage());
     }
 
     @Override
