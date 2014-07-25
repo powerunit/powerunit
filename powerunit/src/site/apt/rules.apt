@@ -1,0 +1,56 @@
+Rule chains
+
+ As shown in {{{./helloworldmaven.html}the helloworld sample}}, it is possible to use one field as a Test Rule Chain. A
+ test rule chain defines action that must be done before or after the several test method executions. This concept is a key
+ element of PowerUnit and is different of the test rule chain of junit in several ways. One key difference is that PowerUnit
+ doesn't provide any annotation to mark a method to be executed before or after a test ; This must be done by using a test
+ rule chain.
+ 
+* Defining before and after method
+
++-----
+import ch.powerunit.Rule;
+import ch.powerunit.Test;
+import ch.powerunit.TestRule;
+import ch.powerunit.TestSuite;
+
+public class MyBeanTest implements TestSuite {
+    @Rule
+    public final TestRule rule = before(this::prepare).around(
+            after(this::after));
+
+    private MyBean bean;
+
+    private void prepare() {
+        bean = new MyBean();
+    }
+
+    private void after() {
+        bean = null;
+    }
+
+    @Test
+    public void testSimple() {
+        bean.setField1("x");
+        assertThat(bean.getField1()).is("x");
+    }
+}
++-----
+
+ This test class use a test rule to define action to be done before and after every test method. To do so, the rule chain is
+ started by using the <<<before>>> method, passing as parameter a reference to the method <<<prepare>>>. This method return 
+ a chainable rule that provides the around method, which receive as a parameter another rule that is to be executed <inside> the 
+ previous one. This new rules is defined by using the <<<after>>> method. From a field initialization perspective, this will :
+  
+  * Create a first rule that will execute the method <<<prepare>>> before every test.
+  
+  * Create a second rule that will execute the method <<<after>>> after every test.
+  
+  * Merge these two rules in a new ones that will take execute the method <<<prepare>>> before every test <<and>> execute the 
+    method <<<after>>> after every test.
+    
+  []
+
+ From a DSL perspective, the <<<around>>> method use to chain the rule assume that the left side of the usage is execute around
+ the right side. This principe ensure that when it is required to have to before (or after) method, the order between these 
+ methods is strictly deterministic.

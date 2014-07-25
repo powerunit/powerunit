@@ -18,5 +18,8 @@ Release principles
 * Planned release
 
  The release plan is not yet fully defined. For this jar, the next planned version is the 0.1.0 and will
- by related to documentation and parameter support ; On the other side, the development of the eclipse
- integration will be done before the evolution of the test framework itself.
+ by related to documentation and parameter support ; Also, the version 0.1.0 should contains everything required for the eclipse
+ integration.
+ 
+ On the other side, the development of the eclipse integration itself will be done before the evolution of the test framework 
+ itself.
