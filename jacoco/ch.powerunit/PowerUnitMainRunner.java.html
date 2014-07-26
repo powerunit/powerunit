@@ -33,9 +33,12 @@ import ch.powerunit.impl.DefaultTestResultListener;
  * @see #main(String[]) The main method to have the description of the
  *      parameters.
  */
-<span class="nc" id="L36">public class PowerUnitMainRunner {</span>
+public class PowerUnitMainRunner {
 
-<span class="fc" id="L38">    public static final PrintStream DEFAULT_OUT = System.out;</span>
+<span class="nc" id="L38">    private PowerUnitMainRunner() {</span>
+<span class="nc" id="L39">    }</span>
+
+<span class="fc" id="L41">    public static final PrintStream DEFAULT_OUT = System.out;</span>
 
     /**
      * The main method.
@@ -47,45 +50,45 @@ import ch.powerunit.impl.DefaultTestResultListener;
      *            &lt;/ul&gt;
      */
     public static void main(String[] args) {
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        if (args.length != 2) {</span>
-<span class="nc" id="L51">            DEFAULT_OUT.printf(&quot;The received argument is not valid : %1$s%n&quot;,</span>
-<span class="nc" id="L52">                    Arrays.toString(args));</span>
-<span class="nc" id="L53">            System.exit(-1);</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (args.length != 2) {</span>
+<span class="nc" id="L54">            DEFAULT_OUT.printf(&quot;The received argument is not valid : %1$s%n&quot;,</span>
+<span class="nc" id="L55">                    Arrays.toString(args));</span>
+<span class="nc" id="L56">            System.exit(-1);// NOSONAR</span>
         }
-<span class="fc" id="L55">        String outputPath = args[0];</span>
-<span class="fc" id="L56">        String classes[] = args[1].split(&quot;\\s*,\\s*&quot;);</span>
-<span class="fc" id="L57">        StringBuilder resumedSucess = new StringBuilder();</span>
-<span class="fc" id="L58">        StringBuilder resumedFailure = new StringBuilder();</span>
-<span class="fc" id="L59">        StringBuilder resumedSkipped = new StringBuilder();</span>
+<span class="fc" id="L58">        String outputPath = args[0];</span>
+<span class="fc" id="L59">        String classes[] = args[1].split(&quot;\\s*,\\s*&quot;);</span>
+<span class="fc" id="L60">        StringBuilder resumedSucess = new StringBuilder();</span>
+<span class="fc" id="L61">        StringBuilder resumedFailure = new StringBuilder();</span>
+<span class="fc" id="L62">        StringBuilder resumedSkipped = new StringBuilder();</span>
 
-<span class="fc" id="L61">        boolean success = true;</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">        for (String c : classes) {</span>
-<span class="fc" id="L63">            DEFAULT_OUT.printf(&quot;Running test for %1$s%n&quot;, c);</span>
+<span class="fc" id="L64">        boolean success = true;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (String c : classes) {</span>
+<span class="fc" id="L66">            DEFAULT_OUT.printf(&quot;Running test for %1$s%n&quot;, c);</span>
             try {
-<span class="fc" id="L65">                Class&lt;?&gt; cls = Class.forName(c);</span>
-<span class="fc" id="L66">                PowerUnitRunner r = new DefaultPowerUnitRunnerImpl(cls);</span>
-<span class="fc" id="L67">                DefaultTestResultListener def = new DefaultTestResultListener(</span>
+<span class="fc" id="L68">                Class&lt;?&gt; cls = Class.forName(c);</span>
+<span class="fc" id="L69">                PowerUnitRunner r = new DefaultPowerUnitRunnerImpl(cls);</span>
+<span class="fc" id="L70">                DefaultTestResultListener def = new DefaultTestResultListener(</span>
                         outputPath, DEFAULT_OUT);
-<span class="fc" id="L69">                r.addListener(def);</span>
-<span class="fc" id="L70">                r.run();</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">                success &amp;= !def.isError();</span>
-<span class="fc" id="L72">                resumedSucess.append(def.getResumedSucess());</span>
-<span class="fc" id="L73">                resumedFailure.append(def.getResumedFailure());</span>
-<span class="fc" id="L74">                resumedSkipped.append(def.getResumedSkipped());</span>
-<span class="nc" id="L75">            } catch (ClassNotFoundException e) {</span>
-<span class="nc" id="L76">                DEFAULT_OUT.printf(&quot;Unable to create the class %1$s%n&quot;, c);</span>
+<span class="fc" id="L72">                r.addListener(def);</span>
+<span class="fc" id="L73">                r.run();// NOSONAR</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">                success &amp;= !def.isError();</span>
+<span class="fc" id="L75">                resumedSucess.append(def.getResumedSucess());</span>
+<span class="fc" id="L76">                resumedFailure.append(def.getResumedFailure());</span>
+<span class="fc" id="L77">                resumedSkipped.append(def.getResumedSkipped());</span>
+<span class="nc" id="L78">            } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L79">                DEFAULT_OUT.printf(&quot;Unable to create the class %1$s%n&quot;, c);</span>
             } finally {
-<span class="pc" id="L78">                DEFAULT_OUT.printf(&quot;End running test for %1$s%n&quot;, c);</span>
-<span class="pc" id="L79">            }</span>
+<span class="pc" id="L81">                DEFAULT_OUT.printf(&quot;End running test for %1$s%n&quot;, c);</span>
+<span class="pc" id="L82">            }</span>
         }
-<span class="fc" id="L81">        DEFAULT_OUT.print(&quot;\n\nSuccess tests:\n&quot; + resumedSucess.toString()</span>
-<span class="fc" id="L82">                + &quot;\n\nSkipped tests:\n&quot; + resumedSkipped.toString()</span>
-<span class="fc" id="L83">                + &quot;\n\nFailed tests:\n&quot; + resumedFailure.toString() + &quot;\n&quot;);</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (!success) {</span>
-<span class="nc" id="L85">            System.exit(-1);</span>
+<span class="fc" id="L84">        DEFAULT_OUT.print(&quot;\n\nSuccess tests:\n&quot; + resumedSucess.toString()</span>
+<span class="fc" id="L85">                + &quot;\n\nSkipped tests:\n&quot; + resumedSkipped.toString()</span>
+<span class="fc" id="L86">                + &quot;\n\nFailed tests:\n&quot; + resumedFailure.toString() + &quot;\n&quot;);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (!success) {</span>
+<span class="nc" id="L88">            System.exit(-1);// NOSONAR</span>
         }
-<span class="nc" id="L87">        System.exit(0);</span>
-<span class="nc" id="L88">    }</span>
+<span class="nc" id="L90">        System.exit(0);// NOSONAR</span>
+<span class="nc" id="L91">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

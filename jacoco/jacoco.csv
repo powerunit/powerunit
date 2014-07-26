@@ -58,7 +58,7 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,HamcrestMatchers,306
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,AssertThatIterable,0,30,0,0,0,12,0,6,0,6
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,AssertThatString,12,15,0,0,4,6,2,3,2,3
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,TestRule,0,17,0,0,0,5,0,5,0,5
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,PowerUnitMainRunner,56,136,2,6,9,25,3,4,1,2
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,PowerUnitMainRunner,56,136,2,6,10,25,3,4,1,2
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,Matchers,10,133,0,0,2,17,2,17,2,17
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,Assume,35,77,0,0,6,11,5,11,5,11
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,Statement,2,41,0,0,1,11,1,4,1,4
