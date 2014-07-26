@@ -50,12 +50,20 @@ The Powerunit framework
 </plugin>
 +--
 
- An artifact <<<powerunit-with-dependencies>>> is also available (not in the version 0.0.1); This one provides the same 
+ An artifact <<<powerunit-with-dependencies>>> is also available (starting with version 0.1.0); This one provides the same 
  functionnalities, but with all the dependencies included inside the jar. This can be used in non-maven context.
 
 * Roadmap
 
- The version 0.0.1 of this library is the first release. Please refer to {{{./release.html}the release principles page}} for more 
- information. The next version (outside bug fix version), will be the 0.1.0 that will mainly add documentation and functionnality
- on the parameter support.
+ Please refer to {{{./release.html}the release principles page}} for more information.
+
+** Version 0.0.1
+
+ The version 0.0.1 of this library is the first release.
+ 
+** Version 0.1.0
+
+ The 0.1.0 version covers parameter filtering, documentation issue and add a Main Class to run test (to be used by the initial
+ implementation of the eclipse integration).
+ 
  
