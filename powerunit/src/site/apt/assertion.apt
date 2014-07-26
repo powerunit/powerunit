@@ -1,0 +1,60 @@
+Assertions
+
+ <Assertions> are a key element of all tests. The assertion are provided by the <<<TestSuite>>> interface that should be
+ implemented by all PowerUnit Test. In general, with PowerUnit, all assertions method name start with <<<assert>>>.
+ 
+* Assertion on Object
+
+ In a most of case, assertion is done on some object. This is done by using the method <<<assertThat>>> method.
+ 
++-----
+assertThat(myString).is("x");
++-----
+
+ These assertion start by passing the object that must be check as parameter of the <<<assertThat>>> method. These methods
+ can take an additionnal parameter (first one) that is a message to be used in case of failure. This method return a DSL object
+ providing the various method to check the object. The more generic DSL method that can be used is the <<<is>>> one, which
+ can be used to pass an hamcrest matcher or directly a value to be used for comparing (equality).
+ 
+ In case the object to be checked is a <<<String>>>, special assertion (like <<<startsWith>>>) can also be used.
+ 
+* Assertion on Iterable
+
+ In some case, the object to be check is an Iterable one. In this case, the method <<<assertThatIterable>>> can be used.
+ 
++-----
+assertThatIterable(myIterable).contains(true, false);
++-----
+
+ In this case, the same DSL that for Object is available, but additionnal DSL method (like <<<contains>>>) can be used to
+ validate the iterable.
+ 
+* Assertion on Function
+
+ In Java 8, the concept of Function is available and dedicated assertion integration is usefull. A Function is a piece of code
+ that receive one parameter and return a result. In the context of assertion, the method <><assertThatFunction>>> can be used
+ to assert on the result of the execution of a Function, receiving some input.
+ 
++-----
+assertThatFunction(Fibo::fibo, x).is(y);
++-----
+
+ The <<<assertThatFunction>>> take two parameters : the function itself and the value to be passed to the function. This
+ method return a DSL object (same as for assertion on object) that will be used on the result of the execution of the function.
+ 
+ Also, a <<<BiFunction>>> concept exists in Java 8 (two parameters, one result). An <<<assertThatBiFunction>>> is also
+ available.
+ 
+* Exception assertion
+
+ Finally, outside of validating some value, it can also be usefull to that on the outcome of the execution of a piece of code.
+ PowerUnit provides a way to validate that a piece of code (a lambda), will raise an exception.
+ 
++-----
+assertWhen((p) -> {throw new Throwable("tst");}).throwException(exceptionMessage("tst"));
++-----
+
+ The method <<<assertWhen>>> method receive a lambda (a one-argument method, void return), that can thrown exception. This 
+ method return DSL object that can be used to validate the thrown exception (using Matchers for instance) ; In case no-exception
+ is thrown, the test is failed.
+ 

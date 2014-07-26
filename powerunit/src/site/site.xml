@@ -21,6 +21,7 @@
       	<item name="EqualsVerifier integration" href="equalsverifier.html"/>
       	<item name="Parameterized tests" href="parameters.html"/>
       	<item name="Rule chain" href="rules.html"/>
+      	<item name="Assertions" href="assertion.html"/>
       </item>
     </menu>
   </body>
