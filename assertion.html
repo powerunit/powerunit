@@ -113,7 +113,7 @@
 <p>In this case, the same DSL that for Object is available, but additionnal DSL method (like <tt>contains</tt>) can be used to validate the iterable.</p></div>
 <div class="section">
 <h3>Assertion on Function<a name="Assertion_on_Function"></a></h3>
-<p>In Java 8, the concept of Function is available and dedicated assertion integration is usefull. A Function is a piece of code that receive one parameter and return a result. In the context of assertion, the method <i></i><i>assertThatFunction</i>&gt;&gt; can be used to assert on the result of the execution of a Function, receiving some input.</p>
+<p>In Java 8, the concept of Function is available and dedicated assertion integration is usefull. A Function is a piece of code that receive one parameter and return a result. In the context of assertion, the method <tt>assertThatFunction</tt> can be used to assert on the result of the execution of a Function, receiving some input.</p>
 <div class="source">
 <pre>assertThatFunction(Fibo::fibo, x).is(y);</pre></div>
 <p>The <tt>assertThatFunction</tt> take two parameters : the function itself and the value to be passed to the function. This method return a DSL object (same as for assertion on object) that will be used on the result of the execution of the function.</p>
