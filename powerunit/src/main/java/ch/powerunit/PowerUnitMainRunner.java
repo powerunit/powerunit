@@ -35,6 +35,9 @@ import ch.powerunit.impl.DefaultTestResultListener;
  */
 public class PowerUnitMainRunner {
 
+    private PowerUnitMainRunner() {
+    }
+
     public static final PrintStream DEFAULT_OUT = System.out;
 
     /**
@@ -50,7 +53,7 @@ public class PowerUnitMainRunner {
         if (args.length != 2) {
             DEFAULT_OUT.printf("The received argument is not valid : %1$s%n",
                     Arrays.toString(args));
-            System.exit(-1);
+            System.exit(-1);// NOSONAR
         }
         String outputPath = args[0];
         String classes[] = args[1].split("\\s*,\\s*");
@@ -67,7 +70,7 @@ public class PowerUnitMainRunner {
                 DefaultTestResultListener def = new DefaultTestResultListener(
                         outputPath, DEFAULT_OUT);
                 r.addListener(def);
-                r.run();
+                r.run();// NOSONAR
                 success &= !def.isError();
                 resumedSucess.append(def.getResumedSucess());
                 resumedFailure.append(def.getResumedFailure());
@@ -82,9 +85,9 @@ public class PowerUnitMainRunner {
                 + "\n\nSkipped tests:\n" + resumedSkipped.toString()
                 + "\n\nFailed tests:\n" + resumedFailure.toString() + "\n");
         if (!success) {
-            System.exit(-1);
+            System.exit(-1);// NOSONAR
         }
-        System.exit(0);
+        System.exit(0);// NOSONAR
     }
 
 }

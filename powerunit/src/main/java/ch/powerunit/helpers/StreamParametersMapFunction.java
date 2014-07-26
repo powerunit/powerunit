@@ -184,7 +184,7 @@ public final class StreamParametersMapFunction<T> implements
             return Function.identity();
         } else if (boolean.class.equals(c) || Boolean.class.equals(c)) {
             return Boolean::valueOf;
-        } else if (Class.class.equals(c)) {
+        } else if (Class.class.equals(c))
             return s -> {
                 try {
                     return Class.forName(s);
@@ -193,7 +193,6 @@ public final class StreamParametersMapFunction<T> implements
                             + e.getMessage(), e);
                 }
             };
-        }
         return null;
     }
 
