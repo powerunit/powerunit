@@ -32,7 +32,7 @@ assertThatIterable(myIterable).contains(true, false);
 * Assertion on Function
 
  In Java 8, the concept of Function is available and dedicated assertion integration is usefull. A Function is a piece of code
- that receive one parameter and return a result. In the context of assertion, the method <><assertThatFunction>>> can be used
+ that receive one parameter and return a result. In the context of assertion, the method <<<assertThatFunction>>> can be used
  to assert on the result of the execution of a Function, receiving some input.
  
 +-----
