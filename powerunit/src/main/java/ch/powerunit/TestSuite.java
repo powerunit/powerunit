@@ -294,7 +294,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
     }
 
     /**
-     * Provide a way to add a field to head parameter line.
+     * Provide a way to add a field to each parameter line.
      * 
      * @param field
      *            The field to be added.
