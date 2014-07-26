@@ -54,6 +54,10 @@ public class PowerUnitMainRunner {
         }
         String outputPath = args[0];
         String classes[] = args[1].split("\\s*,\\s*");
+        StringBuilder resumedSucess = new StringBuilder();
+        StringBuilder resumedFailure = new StringBuilder();
+        StringBuilder resumedSkipped = new StringBuilder();
+
         boolean success = true;
         for (String c : classes) {
             DEFAULT_OUT.printf("Running test for %1$s%n", c);
@@ -65,12 +69,18 @@ public class PowerUnitMainRunner {
                 r.addListener(def);
                 r.run();
                 success &= !def.isError();
+                resumedSucess.append(def.getResumedSucess());
+                resumedFailure.append(def.getResumedFailure());
+                resumedSkipped.append(def.getResumedSkipped());
             } catch (ClassNotFoundException e) {
                 DEFAULT_OUT.printf("Unable to create the class %1$s%n", c);
             } finally {
                 DEFAULT_OUT.printf("End running test for %1$s%n", c);
             }
         }
+        DEFAULT_OUT.print("\n\nSuccess tests:\n" + resumedSucess.toString()
+                + "\n\nSkipped tests:\n" + resumedSkipped.toString()
+                + "\n\nFailed tests:\n" + resumedFailure.toString() + "\n");
         if (!success) {
             System.exit(-1);
         }

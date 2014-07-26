@@ -54,6 +54,42 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 
     private static final JAXBContext JAXB_CONTEXT;
 
+    private final StringBuilder resumedSucess = new StringBuilder();
+
+    private final StringBuilder resumedFailure = new StringBuilder();
+
+    private final StringBuilder resumedSkipped = new StringBuilder();
+
+    /**
+     * @return the resumed
+     */
+    public String getResumed() {
+        return "Success tests:\n" + resumedSucess.toString()
+                + "\n\nSkipped tests:\n" + resumedSkipped.toString()
+                + "\n\nFailed tests:\n" + resumedFailure.toString() + "\n";
+    }
+
+    /**
+     * @return the resumedSucess
+     */
+    public String getResumedSucess() {
+        return resumedSucess.toString();
+    }
+
+    /**
+     * @return the resumedFailure
+     */
+    public String getResumedFailure() {
+        return resumedFailure.toString();
+    }
+
+    /**
+     * @return the resumedSkipped
+     */
+    public String getResumedSkipped() {
+        return resumedSkipped.toString();
+    }
+
     static {
         try {
             JAXB_CONTEXT = JAXBContext.newInstance(Testsuites.class);
@@ -150,6 +186,8 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
         ts.setTime(ts.getTime() + tc.getTime());
         ts.setTests(ts.getTests() + 1);
         printf("Success of test %1$s%n", context.getFullTestName());
+        resumedSucess.append("\t").append(context.getLocalTestName())
+                .append(" of ").append(context.getSetName()).append("\n");
     }
 
     @Override
@@ -177,6 +215,9 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
         f.setContent(stack.toString());
         printf("Failure of test %1$s because of %2$s%n",
                 context.getFullTestName(), cause.getMessage());
+        resumedFailure.append("\t").append(context.getLocalTestName())
+                .append(" of ").append(context.getSetName())
+                .append(" caused by ").append(cause.getMessage()).append("\n");
     }
 
     @Override
@@ -193,6 +234,8 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 
         tc.setSkipped("Skipped");
         printf("Skip of test %1$s%n", context.getFullTestName());
+        resumedSkipped.append("\t").append(context.getLocalTestName())
+                .append(" of ").append(context.getSetName()).append("\n");
     }
 
     @Override
@@ -220,6 +263,9 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
         e.setContent(stack.toString());
         printf("Error of test %1$s because of %2$s%n",
                 context.getFullTestName(), cause.getMessage());
+        resumedFailure.append("\t").append(context.getLocalTestName())
+                .append(" of ").append(context.getSetName())
+                .append(" caused by ").append(cause.getMessage()).append("\n");
     }
 
     @Override
