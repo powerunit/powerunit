@@ -207,7 +207,7 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
         tc.getFailure().add(f);
         f.setType(cause.getClass().getCanonicalName());
         f.setMessage(cause.getMessage());
-        StringBuilder stack = new StringBuilder(cause.getMessage())
+        StringBuilder stack = new StringBuilder("" + cause.getMessage())
                 .append('\n');
         for (StackTraceElement ste : cause.getStackTrace()) {
             stack.append(ste.toString()).append('\n');
@@ -255,7 +255,7 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
         tc.getError().add(e);
         e.setType(cause.getClass().getCanonicalName());
         e.setMessage(cause.getMessage());
-        StringBuilder stack = new StringBuilder(cause.getMessage())
+        StringBuilder stack = new StringBuilder("" + cause.getMessage())
                 .append('\n');
         for (StackTraceElement ste : cause.getStackTrace()) {
             stack.append(ste.toString()).append('\n');
