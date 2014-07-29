@@ -30,7 +30,7 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatItera
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatObjectImpl,0,95,0,8,0,18,0,6,0,2
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultPowerUnitRunnerImpl,103,483,9,25,8,135,8,30,1,20
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatStringImpl,0,6,0,0,0,2,0,1,0,1
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultTestResultListener,64,927,3,17,11,160,5,23,2,16
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultTestResultListener,64,941,3,17,11,160,5,23,2,16
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,TestContextImpl,0,69,0,2,0,15,0,8,0,7
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatExceptionImpl,0,94,0,8,0,16,0,6,0,2
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.exception,InternalError,0,9,0,0,0,4,0,2,0,2
