@@ -215,7 +215,7 @@
 <a class="jxr_linenumber" name="L207" href="#L207">207</a>         tc.getFailure().add(f);
 <a class="jxr_linenumber" name="L208" href="#L208">208</a>         f.setType(cause.getClass().getCanonicalName());
 <a class="jxr_linenumber" name="L209" href="#L209">209</a>         f.setMessage(cause.getMessage());
-<a class="jxr_linenumber" name="L210" href="#L210">210</a>         StringBuilder stack = <strong class="jxr_keyword">new</strong> StringBuilder(cause.getMessage())
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>         StringBuilder stack = <strong class="jxr_keyword">new</strong> StringBuilder(<span class="jxr_string">""</span> + cause.getMessage())
 <a class="jxr_linenumber" name="L211" href="#L211">211</a>                 .append('\n');
 <a class="jxr_linenumber" name="L212" href="#L212">212</a>         <strong class="jxr_keyword">for</strong> (StackTraceElement ste : cause.getStackTrace()) {
 <a class="jxr_linenumber" name="L213" href="#L213">213</a>             stack.append(ste.toString()).append('\n');
@@ -263,7 +263,7 @@
 <a class="jxr_linenumber" name="L255" href="#L255">255</a>         tc.getError().add(e);
 <a class="jxr_linenumber" name="L256" href="#L256">256</a>         e.setType(cause.getClass().getCanonicalName());
 <a class="jxr_linenumber" name="L257" href="#L257">257</a>         e.setMessage(cause.getMessage());
-<a class="jxr_linenumber" name="L258" href="#L258">258</a>         StringBuilder stack = <strong class="jxr_keyword">new</strong> StringBuilder(cause.getMessage())
+<a class="jxr_linenumber" name="L258" href="#L258">258</a>         StringBuilder stack = <strong class="jxr_keyword">new</strong> StringBuilder(<span class="jxr_string">""</span> + cause.getMessage())
 <a class="jxr_linenumber" name="L259" href="#L259">259</a>                 .append('\n');
 <a class="jxr_linenumber" name="L260" href="#L260">260</a>         <strong class="jxr_keyword">for</strong> (StackTraceElement ste : cause.getStackTrace()) {
 <a class="jxr_linenumber" name="L261" href="#L261">261</a>             stack.append(ste.toString()).append('\n');

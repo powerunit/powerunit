@@ -207,7 +207,7 @@ public class DefaultTestResultListener&lt;T&gt; implements TestResultListener&lt
 <span class="fc" id="L207">        tc.getFailure().add(f);</span>
 <span class="fc" id="L208">        f.setType(cause.getClass().getCanonicalName());</span>
 <span class="fc" id="L209">        f.setMessage(cause.getMessage());</span>
-<span class="fc" id="L210">        StringBuilder stack = new StringBuilder(cause.getMessage())</span>
+<span class="fc" id="L210">        StringBuilder stack = new StringBuilder(&quot;&quot; + cause.getMessage())</span>
 <span class="fc" id="L211">                .append('\n');</span>
 <span class="fc bfc" id="L212" title="All 2 branches covered.">        for (StackTraceElement ste : cause.getStackTrace()) {</span>
 <span class="fc" id="L213">            stack.append(ste.toString()).append('\n');</span>
@@ -255,7 +255,7 @@ public class DefaultTestResultListener&lt;T&gt; implements TestResultListener&lt
 <span class="fc" id="L255">        tc.getError().add(e);</span>
 <span class="fc" id="L256">        e.setType(cause.getClass().getCanonicalName());</span>
 <span class="fc" id="L257">        e.setMessage(cause.getMessage());</span>
-<span class="fc" id="L258">        StringBuilder stack = new StringBuilder(cause.getMessage())</span>
+<span class="fc" id="L258">        StringBuilder stack = new StringBuilder(&quot;&quot; + cause.getMessage())</span>
 <span class="fc" id="L259">                .append('\n');</span>
 <span class="fc bfc" id="L260" title="All 2 branches covered.">        for (StackTraceElement ste : cause.getStackTrace()) {</span>
 <span class="fc" id="L261">            stack.append(ste.toString()).append('\n');</span>
