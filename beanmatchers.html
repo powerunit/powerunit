@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Powerunit - Java Testing framework for JDK 1.8 - Invoker Report</title>
+    <title>Powerunit - Java Testing framework for JDK 1.8 - </title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -50,32 +50,9 @@
                                                                                                                                                                                                                                                                                             <li class="collapsed">
                           <a href="project-info.html" title="Project Information">Project Information</a>
                   </li>
-                                                                                                                                                                                          <li class="expanded">
+                                                                                                                                                                                <li class="collapsed">
                           <a href="project-reports.html" title="Project Reports">Project Reports</a>
-                    <ul>
-                      <li class="none">
-                          <a href="github-report.html" title="GitHub Report">GitHub Report</a>
-            </li>
-                      <li class="none">
-                          <a href="apidocs/index.html" title="JavaDocs">JavaDocs</a>
-            </li>
-                      <li class="none">
-                          <a href="surefire-report.html" title="Surefire Report">Surefire Report</a>
-            </li>
-                      <li class="none">
-                          <a href="xref-test/index.html" title="Test Source Xref">Test Source Xref</a>
-            </li>
-                      <li class="none">
-                          <a href="xref/index.html" title="Source Xref">Source Xref</a>
-            </li>
-                      <li class="none">
-                          <a href="jacoco/index.html" title="JaCoCo Test">JaCoCo Test</a>
-            </li>
-                      <li class="none">
-            <strong>Invoker Build Results</strong>
-          </li>
-              </ul>
-        </li>
+                  </li>
           </ul>
                        <h5>General documentations</h5>
                   <ul>
@@ -85,9 +62,29 @@
                   <li class="none">
                           <a href="release.html" title="Release principles">Release principles</a>
             </li>
-                                                                                                                                                              <li class="collapsed">
+                                                                                                                                                                        <li class="expanded">
                           <a href="helloworldmaven.html" title="Samples">Samples</a>
-                  </li>
+                    <ul>
+                      <li class="none">
+                          <a href="helloworldmaven.html" title="HelloWorld Test">HelloWorld Test</a>
+            </li>
+                      <li class="none">
+                          <a href="equalsverifier.html" title="EqualsVerifier integration">EqualsVerifier integration</a>
+            </li>
+                      <li class="none">
+            <strong>Bean-Matchers integration</strong>
+          </li>
+                      <li class="none">
+                          <a href="parameters.html" title="Parameterized tests">Parameterized tests</a>
+            </li>
+                      <li class="none">
+                          <a href="rules.html" title="Rule chain">Rule chain</a>
+            </li>
+                      <li class="none">
+                          <a href="assertion.html" title="Assertions">Assertions</a>
+            </li>
+              </ul>
+        </li>
           </ul>
                                                                                                                                      <a href="../" title="PowerUnit" class="poweredBy">
         <img class="poweredBy"  alt="PowerUnit" src="logo.png"     />
@@ -102,65 +99,37 @@
     <div id="bodyColumn">
       <div id="contentBox">
         <div class="section">
-<h2>Invoker Report<a name="Invoker_Report"></a></h2>
-<p>The results of the Maven invocations.</p></div>
+<h2>Bean Matchers integration<a name="Bean_Matchers_integration"></a></h2>
+<p>Powerunit is compatible with the <a class="externalLink" href="http://docs.bean-matchers.googlecode.com/git/index.html">Bean Matchers</a> framework. Here is an example of usage.</p>
 <div class="section">
-<h3>Summary<a name="Summary"></a></h3></div>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th>Builds</th>
-<th>Success</th>
-<th>Failures</th>
-<th>Skipped</th>
-<th>Success Rate</th>
-<th>Total Time</th>
-<th>Avg Time</th></tr>
-<tr class="b">
-<td>6</td>
-<td>6</td>
-<td>0</td>
-<td>0</td>
-<td>100.0%</td>
-<td>39.0&#xa0;s</td>
-<td>6.5&#xa0;s</td></tr></table>
+<h3>Maven<a name="Maven"></a></h3>
+<p>It is possible to use the pom from the <a href="./helloworldmaven.html">Hello World sample</a> ; Then add the dependency to Bean Matchers :</p>
+<div>
+<pre>&lt;dependency&gt;
+  &lt;groupId&gt;com.google.code.bean-matchers&lt;/groupId&gt;
+  &lt;artifactId&gt;bean-matchers&lt;/artifactId&gt;
+&lt;/dependency&gt;</pre></div></div>
 <div class="section">
-<h3>Build Details<a name="Build_Details"></a></h3></div>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th>Name</th>
-<th>Result</th>
-<th>Time</th>
-<th>Message</th></tr>
-<tr class="b">
-<td>chain/pom.xml</td>
-<td>success</td>
-<td>6.5&#xa0;s</td>
-<td></td></tr>
-<tr class="a">
-<td>equalsverifier/pom.xml</td>
-<td>success</td>
-<td>7.2&#xa0;s</td>
-<td></td></tr>
-<tr class="b">
-<td>beanMatchers/pom.xml</td>
-<td>success</td>
-<td>7.1&#xa0;s</td>
-<td></td></tr>
-<tr class="a">
-<td>parameters/pom.xml</td>
-<td>success</td>
-<td>5.9&#xa0;s</td>
-<td></td></tr>
-<tr class="b">
-<td>helloworldmaven/pom.xml</td>
-<td>success</td>
-<td>5.9&#xa0;s</td>
-<td></td></tr>
-<tr class="a">
-<td>withdependencies/pom.xml</td>
-<td>success</td>
-<td>6.3&#xa0;s</td>
-<td></td></tr></table>
+<h3>Usage<a name="Usage"></a></h3>
+<p>The Bean matchers features can be used as with others frameworks ; For instance :</p>
+<div>
+<pre>package ch.powerunit.demo;
+
+import ch.powerunit.Test;
+import ch.powerunit.TestRule;
+import ch.powerunit.TestSuite;
+import static com.google.code.beanmatchers.BeanMatchers.*;
+
+public class MyBeanTest implements TestSuite {
+
+    @Test
+    public void testEquals() {
+        assertThat(MyBean.class).is(
+                allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(),
+                        hasValidBeanHashCode(), hasValidBeanEquals(),
+                        hasValidBeanToString()));
+    }
+}</pre></div></div></div>
       </div>
     </div>
     <div class="clear">
