@@ -64,9 +64,16 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 
     private final String setName;
 
+    private final Method singleMethod;
+
     public DefaultPowerUnitRunnerImpl(Class<T> testClass) {
+        this(testClass, null);
+    }
+
+    public DefaultPowerUnitRunnerImpl(Class<T> testClass, Method singleMethod) {
         Objects.requireNonNull(testClass);
 
+        this.singleMethod = singleMethod;
         this.setName = testClass.getName();
         Set<String> groups = findClass(testClass)
                 .stream()
@@ -284,7 +291,8 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
                 cls -> {
                     Arrays.stream(cls.getDeclaredMethods())
                             .filter(m -> m.isAnnotationPresent(Test.class))
-                            .forEach(m -> {
+                            .filter(m -> singleMethod == null
+                                    || singleMethod.equals(m)).forEach(m -> {
                                 checkTestAnnotationForMethod(m);
                                 Test annotation = m.getAnnotation(Test.class);
                                 String testName = m.getName();

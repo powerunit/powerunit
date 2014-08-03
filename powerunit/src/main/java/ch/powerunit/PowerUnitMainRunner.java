@@ -20,6 +20,7 @@
 package ch.powerunit;
 
 import java.io.PrintStream;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
@@ -65,8 +66,16 @@ public class PowerUnitMainRunner {
         for (String c : classes) {
             DEFAULT_OUT.printf("Running test for %1$s%n", c);
             try {
-                Class<?> cls = Class.forName(c);
-                PowerUnitRunner r = new DefaultPowerUnitRunnerImpl(cls);
+                PowerUnitRunner r = null;
+                if (c.contains(":")) {
+                    String param[] = c.split("\\s*:\\s*");
+                    Class<?> cls = Class.forName(param[0]);
+                    Method m = cls.getMethod(param[1]);
+                    r = new DefaultPowerUnitRunnerImpl(cls, m);
+                } else {
+                    Class<?> cls = Class.forName(c);
+                    r = new DefaultPowerUnitRunnerImpl(cls);
+                }
                 DefaultTestResultListener def = new DefaultTestResultListener(
                         outputPath, DEFAULT_OUT);
                 r.addListener(def);
@@ -77,6 +86,13 @@ public class PowerUnitMainRunner {
                 resumedSkipped.append(def.getResumedSkipped());
             } catch (ClassNotFoundException e) {
                 DEFAULT_OUT.printf("Unable to create the class %1$s%n", c);
+            } catch (NoSuchMethodException e) {
+                DEFAULT_OUT.printf(
+                        "Unable to create the find the method %1$s%n", c);
+            } catch (SecurityException e) {
+                DEFAULT_OUT
+                        .printf("Unable to create the test because of security issue %1$s%n",
+                                c);
             } finally {
                 DEFAULT_OUT.printf("End running test for %1$s%n", c);
             }

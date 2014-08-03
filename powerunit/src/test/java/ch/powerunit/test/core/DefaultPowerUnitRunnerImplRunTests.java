@@ -63,6 +63,35 @@ public class DefaultPowerUnitRunnerImplRunTests {
                                     + 10000000000l + 100000000000l);
 
                 });
+
+        AllTests.testNoException(
+                "testRun-OnlyOneMethod",
+                () -> {
+                    counter = 0;
+                    DefaultPowerUnitRunnerImpl<TestClass6> underTest;
+                    try {
+                        underTest = new DefaultPowerUnitRunnerImpl<>(
+                                TestClass6.class, TestClass6.class
+                                        .getMethod("testMethod"));
+                        underTest.addListener(new Listener<TestClass6>());
+                        underTest.run();
+                    } catch (Exception e) {
+                        throw new IllegalArgumentException(
+                                "Unable to create the test");
+                    }
+                    TestSuite.DSL.assertThat(TestClass6.counter1).is(1);
+                    TestSuite.DSL.assertThat(TestClass6.counter2).is(0);
+                    TestSuite.DSL.assertThat(TestClass6.counter3).is(1);
+                    TestSuite.DSL.assertThat(TestClass6.counter4).is(1);
+                    TestSuite.DSL.assertThat(TestClass6.counter5).is(2);
+                    TestSuite.DSL.assertThat(TestClass6.counter6).is(2);
+                    TestSuite.DSL.assertThat(TestClass6.bigCounter).is(0);
+                    TestSuite.DSL.assertThat(counter).is(
+                            1000l + 10000 + 100000 + 1000000 + 10000000000l
+                                    + 100000000000l);
+
+                });
+
         AllTests.testNoException(
                 "testRun2",
                 () -> {
@@ -400,6 +429,104 @@ public class DefaultPowerUnitRunnerImplRunTests {
         @Test
         public void testMethod2() {
             fail("Should not pass here");
+        }
+
+    }
+
+    public static class TestClass6 implements TestSuite {
+
+        public static int counter1 = 0;
+
+        public static int counter2 = 0;
+
+        public static int counter3 = 0;
+
+        public static int counter4 = 0;
+
+        public static int counter5 = 0;
+
+        public static int counter6 = 0;
+
+        public static int bigCounter = 0;
+
+        @Parameters
+        public static Stream<Object[]> getParameters() {
+            return Arrays.stream(new Object[][] { { "name1" } });
+        }
+
+        @Parameter(0)
+        public String name1;
+
+        public void nonAnnotatedMethod() {
+        }
+
+        @Rule
+        public final TestRule rule = before(() -> {
+            assertThat(bigCounter).is(0);
+            bigCounter++;
+        }).around(new ExternalResource() {
+
+            @Override
+            public void before() {
+                assertThat(bigCounter).is(1);
+                bigCounter++;
+                counter5++;
+            }
+
+            @Override
+            public void after() {
+                assertThat(bigCounter).is(8);
+                counter6++;
+                bigCounter = 0;
+
+            }
+
+        }).around(() -> {
+            assertThat(bigCounter).is(2);
+            bigCounter++;
+            return new ExternalResource() {
+
+                @Override
+                public void before() {
+                    assertThat(bigCounter).is(3);
+                    bigCounter++;
+                    counter5++;
+                }
+
+                @Override
+                public void after() {
+                    assertThat(bigCounter).is(7);
+                    bigCounter++;
+                    counter6++;
+                }
+
+            };
+        }).around(before(this::beforeMethod)).around(after(this::afterMethod));
+
+        @Test
+        public void testMethod() {
+            assertThat(bigCounter).is(5);
+            bigCounter++;
+            counter1++;
+        }
+
+        @Test(name = "otherName")
+        public void testMethod2() {
+            assertThat(bigCounter).is(5);
+            bigCounter++;
+            counter2++;
+        }
+
+        public void beforeMethod() {
+            assertThat(bigCounter).is(4);
+            bigCounter++;
+            counter3++;
+        }
+
+        public void afterMethod() {
+            counter4++;
+            assertThat(bigCounter).is(6);
+            bigCounter++;
         }
 
     }
