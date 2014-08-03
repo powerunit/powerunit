@@ -20,6 +20,7 @@
 package ch.powerunit;
 
 import java.io.PrintStream;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
@@ -35,10 +36,10 @@ import ch.powerunit.impl.DefaultTestResultListener;
  */
 public class PowerUnitMainRunner {
 
-<span class="nc" id="L38">    private PowerUnitMainRunner() {</span>
-<span class="nc" id="L39">    }</span>
+<span class="nc" id="L39">    private PowerUnitMainRunner() {</span>
+<span class="nc" id="L40">    }</span>
 
-<span class="fc" id="L41">    public static final PrintStream DEFAULT_OUT = System.out;</span>
+<span class="fc" id="L42">    public static final PrintStream DEFAULT_OUT = System.out;</span>
 
     /**
      * The main method.
@@ -46,49 +47,64 @@ public class PowerUnitMainRunner {
      * @param args
      *            The argument syntax is the following :
      *            &lt;ul&gt;
-     *            &lt;li&gt;&lt;code&gt;path className,...&lt;/code&gt;&lt;/li&gt;
+     *            &lt;li&gt;&lt;code&gt;path className[:methodName],...&lt;/code&gt;&lt;/li&gt;
      *            &lt;/ul&gt;
      */
     public static void main(String[] args) {
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (args.length != 2) {</span>
-<span class="nc" id="L54">            DEFAULT_OUT.printf(&quot;The received argument is not valid : %1$s%n&quot;,</span>
-<span class="nc" id="L55">                    Arrays.toString(args));</span>
-<span class="nc" id="L56">            System.exit(-1);// NOSONAR</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (args.length != 2) {</span>
+<span class="nc" id="L55">            DEFAULT_OUT.printf(&quot;The received argument is not valid : %1$s%n&quot;,</span>
+<span class="nc" id="L56">                    Arrays.toString(args));</span>
+<span class="nc" id="L57">            System.exit(-1);// NOSONAR</span>
         }
-<span class="fc" id="L58">        String outputPath = args[0];</span>
-<span class="fc" id="L59">        String classes[] = args[1].split(&quot;\\s*,\\s*&quot;);</span>
-<span class="fc" id="L60">        StringBuilder resumedSucess = new StringBuilder();</span>
-<span class="fc" id="L61">        StringBuilder resumedFailure = new StringBuilder();</span>
-<span class="fc" id="L62">        StringBuilder resumedSkipped = new StringBuilder();</span>
+<span class="fc" id="L59">        String outputPath = args[0];</span>
+<span class="fc" id="L60">        String classes[] = args[1].split(&quot;\\s*,\\s*&quot;);</span>
+<span class="fc" id="L61">        StringBuilder resumedSucess = new StringBuilder();</span>
+<span class="fc" id="L62">        StringBuilder resumedFailure = new StringBuilder();</span>
+<span class="fc" id="L63">        StringBuilder resumedSkipped = new StringBuilder();</span>
 
-<span class="fc" id="L64">        boolean success = true;</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (String c : classes) {</span>
-<span class="fc" id="L66">            DEFAULT_OUT.printf(&quot;Running test for %1$s%n&quot;, c);</span>
+<span class="fc" id="L65">        boolean success = true;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        for (String c : classes) {</span>
+<span class="fc" id="L67">            DEFAULT_OUT.printf(&quot;Running test for %1$s%n&quot;, c);</span>
             try {
-<span class="fc" id="L68">                Class&lt;?&gt; cls = Class.forName(c);</span>
-<span class="fc" id="L69">                PowerUnitRunner r = new DefaultPowerUnitRunnerImpl(cls);</span>
-<span class="fc" id="L70">                DefaultTestResultListener def = new DefaultTestResultListener(</span>
+<span class="fc" id="L69">                PowerUnitRunner r = null;</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">                if (c.contains(&quot;:&quot;)) {</span>
+<span class="nc" id="L71">                    String param[] = c.split(&quot;\\s*:\\s*&quot;);</span>
+<span class="nc" id="L72">                    Class&lt;?&gt; cls = Class.forName(param[0]);</span>
+<span class="nc" id="L73">                    Method m = cls.getMethod(param[1]);</span>
+<span class="nc" id="L74">                    r = new DefaultPowerUnitRunnerImpl(cls, m);</span>
+<span class="nc" id="L75">                } else {</span>
+<span class="fc" id="L76">                    Class&lt;?&gt; cls = Class.forName(c);</span>
+<span class="fc" id="L77">                    r = new DefaultPowerUnitRunnerImpl(cls);</span>
+                }
+<span class="fc" id="L79">                DefaultTestResultListener def = new DefaultTestResultListener(</span>
                         outputPath, DEFAULT_OUT);
-<span class="fc" id="L72">                r.addListener(def);</span>
-<span class="fc" id="L73">                r.run();// NOSONAR</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">                success &amp;= !def.isError();</span>
-<span class="fc" id="L75">                resumedSucess.append(def.getResumedSucess());</span>
-<span class="fc" id="L76">                resumedFailure.append(def.getResumedFailure());</span>
-<span class="fc" id="L77">                resumedSkipped.append(def.getResumedSkipped());</span>
-<span class="nc" id="L78">            } catch (ClassNotFoundException e) {</span>
-<span class="nc" id="L79">                DEFAULT_OUT.printf(&quot;Unable to create the class %1$s%n&quot;, c);</span>
+<span class="fc" id="L81">                r.addListener(def);</span>
+<span class="fc" id="L82">                r.run();// NOSONAR</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">                success &amp;= !def.isError();</span>
+<span class="fc" id="L84">                resumedSucess.append(def.getResumedSucess());</span>
+<span class="fc" id="L85">                resumedFailure.append(def.getResumedFailure());</span>
+<span class="fc" id="L86">                resumedSkipped.append(def.getResumedSkipped());</span>
+<span class="nc" id="L87">            } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L88">                DEFAULT_OUT.printf(&quot;Unable to create the class %1$s%n&quot;, c);</span>
+<span class="nc" id="L89">            } catch (NoSuchMethodException e) {</span>
+<span class="nc" id="L90">                DEFAULT_OUT.printf(</span>
+                        &quot;Unable to create the find the method %1$s%n&quot;, c);
+<span class="nc" id="L92">            } catch (SecurityException e) {</span>
+<span class="nc" id="L93">                DEFAULT_OUT</span>
+<span class="nc" id="L94">                        .printf(&quot;Unable to create the test because of security issue %1$s%n&quot;,</span>
+                                c);
             } finally {
-<span class="pc" id="L81">                DEFAULT_OUT.printf(&quot;End running test for %1$s%n&quot;, c);</span>
-<span class="pc" id="L82">            }</span>
+<span class="pc" id="L97">                DEFAULT_OUT.printf(&quot;End running test for %1$s%n&quot;, c);</span>
+<span class="pc" id="L98">            }</span>
         }
-<span class="fc" id="L84">        DEFAULT_OUT.print(&quot;\n\nSuccess tests:\n&quot; + resumedSucess.toString()</span>
-<span class="fc" id="L85">                + &quot;\n\nSkipped tests:\n&quot; + resumedSkipped.toString()</span>
-<span class="fc" id="L86">                + &quot;\n\nFailed tests:\n&quot; + resumedFailure.toString() + &quot;\n&quot;);</span>
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (!success) {</span>
-<span class="nc" id="L88">            System.exit(-1);// NOSONAR</span>
+<span class="fc" id="L100">        DEFAULT_OUT.print(&quot;\n\nSuccess tests:\n&quot; + resumedSucess.toString()</span>
+<span class="fc" id="L101">                + &quot;\n\nSkipped tests:\n&quot; + resumedSkipped.toString()</span>
+<span class="fc" id="L102">                + &quot;\n\nFailed tests:\n&quot; + resumedFailure.toString() + &quot;\n&quot;);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        if (!success) {</span>
+<span class="nc" id="L104">            System.exit(-1);// NOSONAR</span>
         }
-<span class="nc" id="L90">        System.exit(0);// NOSONAR</span>
-<span class="nc" id="L91">    }</span>
+<span class="nc" id="L106">        System.exit(0);// NOSONAR</span>
+<span class="nc" id="L107">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
