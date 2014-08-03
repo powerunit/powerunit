@@ -47,7 +47,7 @@ public class PowerUnitMainRunner {
      * @param args
      *            The argument syntax is the following :
      *            <ul>
-     *            <li><code>path className,...</code></li>
+     *            <li><code>path className[:methodName],...</code></li>
      *            </ul>
      */
     public static void main(String[] args) {
