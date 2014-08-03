@@ -19,6 +19,7 @@
       <item name="Samples" collapse="true" href="helloworldmaven.html">
       	<item name="HelloWorld Test" href="helloworldmaven.html"/>
       	<item name="EqualsVerifier integration" href="equalsverifier.html"/>
+      	<item name="Bean-Matchers integration" href="beanmatchers.html"/>
       	<item name="Parameterized tests" href="parameters.html"/>
       	<item name="Rule chain" href="rules.html"/>
       	<item name="Assertions" href="assertion.html"/>

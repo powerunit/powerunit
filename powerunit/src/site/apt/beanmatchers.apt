@@ -1,0 +1,39 @@
+Bean Matchers integration
+
+ Powerunit is compatible with the {{{http://docs.bean-matchers.googlecode.com/git/index.html}Bean Matchers}} framework. Here is 
+ an example of usage.
+ 
+* Maven
+
+ It is possible to use the pom from the {{{./helloworldmaven.html}Hello World sample}} ; Then add the dependency to Bean Matchers :
+ 
+-----
+<dependency>
+  <groupId>com.google.code.bean-matchers</groupId>
+  <artifactId>bean-matchers</artifactId>
+</dependency>
+-----
+
+* Usage
+
+ The Bean matchers features can be used as with others frameworks ; For instance :
+ 
+-----
+package ch.powerunit.demo;
+
+import ch.powerunit.Test;
+import ch.powerunit.TestRule;
+import ch.powerunit.TestSuite;
+import static com.google.code.beanmatchers.BeanMatchers.*;
+
+public class MyBeanTest implements TestSuite {
+
+    @Test
+    public void testEquals() {
+        assertThat(MyBean.class).is(
+                allOf(hasValidBeanConstructor(), hasValidGettersAndSetters(),
+                        hasValidBeanHashCode(), hasValidBeanEquals(),
+                        hasValidBeanToString()));
+    }
+}
+-----
