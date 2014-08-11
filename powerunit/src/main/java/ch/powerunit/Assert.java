@@ -494,4 +494,22 @@ interface Assert {
         throw new AssertionError(msg, innerError);
     }
 
+    /**
+     * Always produce a failure.
+     * <p>
+     * For instance :
+     * 
+     * <pre>
+     * fail(t);
+     * </pre>
+     * 
+     * will immediately fail the current test.
+     * 
+     * @param innerError
+     *            the error cause
+     */
+    default void fail(Throwable innerError) {
+        throw new AssertionError(innerError.getMessage(), innerError);
+    }
+
 }
