@@ -494,5 +494,23 @@ interface Assert {
 <span class="nc" id="L494">        throw new AssertionError(msg, innerError);</span>
     }
 
+    /**
+     * Always produce a failure.
+     * &lt;p&gt;
+     * For instance :
+     * 
+     * &lt;pre&gt;
+     * fail(t);
+     * &lt;/pre&gt;
+     * 
+     * will immediately fail the current test.
+     * 
+     * @param innerError
+     *            the error cause
+     */
+    default void fail(Throwable innerError) {
+<span class="nc" id="L512">        throw new AssertionError(innerError.getMessage(), innerError);</span>
+    }
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
