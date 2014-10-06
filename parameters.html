@@ -133,8 +133,7 @@ public class FunctionParameterTest implements TestSuite {
     public void testAFunction() {
         assertThatFunction(Integer::valueOf, input).is(expected);
     }
-}
-</pre></div>
+}</pre></div>
 <p>This will run twice the test method <tt>testAFunction</tt>, using the different parameters set.</p></div>
 <div class="section">
 <h3><a name="Conditional_usage"></a>Conditional usage</h3>
@@ -193,15 +192,13 @@ public class FiboUsingFilteringTest implements TestSuite {
                 instanceOf(expectedException));
     }
 
-}
-</pre></div>
+}</pre></div>
 <p>In this example, the <tt>@Parameters</tt> method build a stream, without specifying anything special and then use the <tt>map</tt> method of the stream using the result of the method <tt>addFieldToEachEntry</tt>. This will add to each <i>lines</i> of the stream the same object. This object is a <tt>BiFunction</tt> that is constructed by using a lambda expression. This method will check the received parameter and defines which test method are acceptable regarding the context.</p>
 <p>The function is injected into a special parameter that is annotated with <tt>@Parameter(field = true)</tt>.</p>
 <p>When executed with surefire, the result will be :</p>
 <div>
 <pre>Running ch.powerunit.demo.FiboUsingFilteringTest (of &lt;none&gt;)
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in ch.powerunit.demo.FiboUsingFilteringTest (of &lt;none&gt;)
-</pre></div>
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in ch.powerunit.demo.FiboUsingFilteringTest (of &lt;none&gt;)</pre></div>
 <p>We can see that event if we have seven parameters lines and two test methods, only seven execution are displayed.</p></div></div>
       </div>
     </div>
