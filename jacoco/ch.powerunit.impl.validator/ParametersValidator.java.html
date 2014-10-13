@@ -23,26 +23,44 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.stream.Stream;
 
+import ch.powerunit.TestDelegator;
 import ch.powerunit.exception.InternalError;
 
 public interface ParametersValidator {
     default void checkParametersAnnotationForMethod(Method m) {
-<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (!Modifier.isStatic(m.getModifiers())) {</span>
-<span class="fc" id="L31">            throw new InternalError(&quot;@Parameters method is not static &quot;</span>
-<span class="fc" id="L32">                    + m.toString());</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (!Modifier.isStatic(m.getModifiers())</span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">                &amp;&amp; !m.getDeclaringClass().isAnnotationPresent(</span>
+                        TestDelegator.class)) {
+<span class="fc" id="L34">            throw new InternalError(&quot;@Parameters method is not static &quot;</span>
+<span class="fc" id="L35">                    + m.toString());</span>
         }
-<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (!Modifier.isPublic(m.getModifiers())) {</span>
-<span class="fc" id="L35">            throw new InternalError(&quot;@Parameters method is not public &quot;</span>
-<span class="fc" id="L36">                    + m.toString());</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (Modifier.isStatic(m.getModifiers())</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">                &amp;&amp; m.getDeclaringClass().isAnnotationPresent(</span>
+                        TestDelegator.class)) {
+<span class="nc" id="L40">            throw new InternalError(&quot;@Parameters method is static &quot;</span>
+<span class="nc" id="L41">                    + m.toString()</span>
+                    + &quot; and can't be when used with test delegator.&quot;);
         }
-<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (!Stream.class.isAssignableFrom(m.getReturnType())) {</span>
-<span class="fc" id="L39">            throw new InternalError(&quot;@Parameters method is not Stream&lt;...&gt; &quot;</span>
-<span class="fc" id="L40">                    + m.toString());</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (!Modifier.isPublic(m.getModifiers())) {</span>
+<span class="fc" id="L45">            throw new InternalError(&quot;@Parameters method is not public &quot;</span>
+<span class="fc" id="L46">                    + m.toString());</span>
         }
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (m.getParameterCount() != 0) {</span>
-<span class="fc" id="L43">            throw new InternalError(&quot;@Parameters method is not 0-parameter &quot;</span>
-<span class="fc" id="L44">                    + m.toString());</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (!Stream.class.isAssignableFrom(m.getReturnType())) {</span>
+<span class="fc" id="L49">            throw new InternalError(&quot;@Parameters method is not Stream&lt;...&gt; &quot;</span>
+<span class="fc" id="L50">                    + m.toString());</span>
         }
-<span class="fc" id="L46">    }</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (m.getParameterCount() != 0</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">                &amp;&amp; !m.getDeclaringClass().isAnnotationPresent(</span>
+                        TestDelegator.class)) {
+<span class="fc" id="L55">            throw new InternalError(&quot;@Parameters method is not 0-parameter &quot;</span>
+<span class="fc" id="L56">                    + m.toString());</span>
+        }
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (m.getParameterCount() != 1</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">                &amp;&amp; m.getDeclaringClass().isAnnotationPresent(</span>
+                        TestDelegator.class)) {
+<span class="nc" id="L61">            throw new InternalError(&quot;@Parameters method is not 1-parameter &quot;</span>
+<span class="nc" id="L62">                    + m.toString() + &quot; with test delegator.&quot;);</span>
+        }
+<span class="fc" id="L64">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -22,6 +22,7 @@ package ch.powerunit;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import ch.powerunit.exception.InternalError;
 
@@ -59,7 +60,7 @@ public interface Statement&lt;P, T extends Throwable&gt; {
      * @since 0.1.0
      */
     default String getName() {
-<span class="nc" id="L62">        return null;</span>
+<span class="nc" id="L63">        return null;</span>
     }
 
     /**
@@ -71,8 +72,8 @@ public interface Statement&lt;P, T extends Throwable&gt; {
      * @return the new statement
      */
     default Statement&lt;P, T&gt; andThenAlways(Statement&lt;P, T&gt; after) {
-<span class="fc" id="L74">        Objects.requireNonNull(after);</span>
-<span class="fc" id="L75">        return (p) -&gt; {</span>
+<span class="fc" id="L75">        Objects.requireNonNull(after);</span>
+<span class="fc" id="L76">        return (p) -&gt; {</span>
             try {
                 run(p);
             } finally {
@@ -90,8 +91,8 @@ public interface Statement&lt;P, T extends Throwable&gt; {
      * @return the new statement
      */
     default Statement&lt;P, T&gt; andThenOnlySuccess(Statement&lt;P, T&gt; after) {
-<span class="fc" id="L93">        Objects.requireNonNull(after);</span>
-<span class="fc" id="L94">        return (p) -&gt; {</span>
+<span class="fc" id="L94">        Objects.requireNonNull(after);</span>
+<span class="fc" id="L95">        return (p) -&gt; {</span>
             run(p);
             after.run(p);
         };
@@ -116,10 +117,10 @@ public interface Statement&lt;P, T extends Throwable&gt; {
     static &lt;P, T extends Throwable&gt; Statement&lt;P, T&gt; around(
             Statement&lt;P, T&gt; internal, Statement&lt;P, T&gt; before,
             Statement&lt;P, T&gt; after) {
-<span class="fc" id="L119">        Objects.requireNonNull(internal);</span>
-<span class="fc" id="L120">        Objects.requireNonNull(before);</span>
-<span class="fc" id="L121">        Objects.requireNonNull(after);</span>
-<span class="fc" id="L122">        return before.andThenOnlySuccess(internal).andThenAlways(after);</span>
+<span class="fc" id="L120">        Objects.requireNonNull(internal);</span>
+<span class="fc" id="L121">        Objects.requireNonNull(before);</span>
+<span class="fc" id="L122">        Objects.requireNonNull(after);</span>
+<span class="fc" id="L123">        return before.andThenOnlySuccess(internal).andThenAlways(after);</span>
     }
 
     /**
@@ -137,25 +138,56 @@ public interface Statement&lt;P, T extends Throwable&gt; {
      */
     static &lt;P, T extends Throwable&gt; Statement&lt;P, T&gt; reflectionMethod(
             Object target, Method method) {
-<span class="fc" id="L140">        Objects.requireNonNull(target);</span>
-<span class="fc" id="L141">        Objects.requireNonNull(method);</span>
-<span class="fc" id="L142">        return new Statement&lt;P, T&gt;() {</span>
+<span class="fc" id="L141">        Objects.requireNonNull(target);</span>
+<span class="fc" id="L142">        Objects.requireNonNull(method);</span>
+<span class="fc" id="L143">        return new Statement&lt;P, T&gt;() {</span>
 
             @Override
             public void run(P parameter) throws Throwable {
                 try {
-<span class="fc" id="L147">                    method.invoke(target);</span>
-<span class="fc" id="L148">                } catch (InvocationTargetException e) {</span>
-<span class="fc" id="L149">                    throw e.getCause();</span>
-<span class="nc" id="L150">                } catch (IllegalAccessException | IllegalArgumentException e) {</span>
-<span class="nc" id="L151">                    throw new InternalError(&quot;Unexpected error &quot;</span>
-<span class="nc" id="L152">                            + e.getMessage(), e);</span>
-<span class="fc" id="L153">                }</span>
-<span class="fc" id="L154">            }</span>
+<span class="fc" id="L148">                    method.invoke(target);</span>
+<span class="fc" id="L149">                } catch (InvocationTargetException e) {</span>
+<span class="fc" id="L150">                    throw e.getCause();</span>
+<span class="nc" id="L151">                } catch (IllegalAccessException | IllegalArgumentException e) {</span>
+<span class="nc" id="L152">                    throw new InternalError(&quot;Unexpected error &quot;</span>
+<span class="nc" id="L153">                            + e.getMessage(), e);</span>
+<span class="fc" id="L154">                }</span>
+<span class="fc" id="L155">            }</span>
 
             @Override
             public String getName() {
-<span class="nc" id="L158">                return method.getName();</span>
+<span class="nc" id="L159">                return method.getName();</span>
+            }
+        };
+    }
+
+    /**
+     * Build a statement based on a method-
+     * 
+     * @param method
+     *            the method
+     * @param param
+     *            the param
+     * @return the new statement.
+     * @param &lt;P&gt;
+     *            The type of the parameter
+     * @param &lt;T&gt;
+     *            the exception type
+     * @since 0.2.0
+     */
+    static &lt;P, T extends Throwable&gt; Statement&lt;P, T&gt; reflectionMethod(
+            Consumer&lt;Object&gt; method, Object param) {
+<span class="nc" id="L180">        Objects.requireNonNull(method);</span>
+<span class="nc" id="L181">        return new Statement&lt;P, T&gt;() {</span>
+
+            @Override
+            public void run(P parameter) throws Throwable {
+<span class="nc" id="L185">                method.accept(param);</span>
+<span class="nc" id="L186">            }</span>
+
+            @Override
+            public String getName() {
+<span class="nc" id="L190">                return &quot;N/A&quot;;</span>
             }
         };
     }

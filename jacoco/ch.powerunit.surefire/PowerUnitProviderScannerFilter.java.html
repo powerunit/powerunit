@@ -19,6 +19,7 @@
  */
 package ch.powerunit.surefire;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashSet;
@@ -29,6 +30,7 @@ import org.apache.maven.surefire.booter.ProviderParameterNames;
 import org.apache.maven.surefire.util.ScannerFilter;
 
 import ch.powerunit.Test;
+import ch.powerunit.TestDelegate;
 
 /**
  * @author borettim
@@ -40,31 +42,36 @@ public class PowerUnitProviderScannerFilter implements ScannerFilter {
 
     private final Set&lt;String&gt; sexcludedGroups;
 
-<span class="fc" id="L43">    public PowerUnitProviderScannerFilter(Properties parameters) {</span>
-<span class="fc" id="L44">        String groups = parameters.getProperty(</span>
+<span class="fc" id="L45">    public PowerUnitProviderScannerFilter(Properties parameters) {</span>
+<span class="fc" id="L46">        String groups = parameters.getProperty(</span>
                 ProviderParameterNames.TESTNG_GROUPS_PROP, &quot;&quot;);
-<span class="fc" id="L46">        String excludedGroups = parameters.getProperty(</span>
+<span class="fc" id="L48">        String excludedGroups = parameters.getProperty(</span>
                 ProviderParameterNames.TESTNG_EXCLUDEDGROUPS_PROP, &quot;&quot;);
-<span class="fc" id="L48">        Set&lt;String&gt; sgroups = new HashSet&lt;String&gt;();</span>
-<span class="fc" id="L49">        Set&lt;String&gt; sexcludedGroups = new HashSet&lt;String&gt;();</span>
-<span class="fc bfc" id="L50" title="All 2 branches covered.">        for (String g : groups.split(&quot;,&quot;)) {</span>
-<span class="fc" id="L51">            sgroups.add(g);</span>
+<span class="fc" id="L50">        Set&lt;String&gt; sgroups = new HashSet&lt;String&gt;();</span>
+<span class="fc" id="L51">        Set&lt;String&gt; sexcludedGroups = new HashSet&lt;String&gt;();</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        for (String g : groups.split(&quot;,&quot;)) {</span>
+<span class="fc" id="L53">            sgroups.add(g);</span>
         }
-<span class="fc bfc" id="L53" title="All 2 branches covered.">        for (String g : excludedGroups.split(&quot;,&quot;)) {</span>
-<span class="fc" id="L54">            sexcludedGroups.add(g);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (String g : excludedGroups.split(&quot;,&quot;)) {</span>
+<span class="fc" id="L56">            sexcludedGroups.add(g);</span>
         }
-<span class="fc" id="L56">        this.sgroups = Collections.unmodifiableSet(sgroups);</span>
-<span class="fc" id="L57">        this.sexcludedGroups = Collections.unmodifiableSet(sexcludedGroups);</span>
-<span class="fc" id="L58">    }</span>
+<span class="fc" id="L58">        this.sgroups = Collections.unmodifiableSet(sgroups);</span>
+<span class="fc" id="L59">        this.sexcludedGroups = Collections.unmodifiableSet(sexcludedGroups);</span>
+<span class="fc" id="L60">    }</span>
 
     @Override
     public boolean accept(@SuppressWarnings(&quot;rawtypes&quot;) Class testClass) {
-<span class="fc bfc" id="L62" title="All 2 branches covered.">        for (Method m : testClass.getDeclaredMethods()) {</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">            if (m.isAnnotationPresent(Test.class)) {</span>
-<span class="fc" id="L64">                return true;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        for (Method m : testClass.getDeclaredMethods()) {</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">            if (m.isAnnotationPresent(Test.class)) {</span>
+<span class="fc" id="L66">                return true;</span>
             }
         }
-<span class="fc" id="L67">        return false;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        for (Field f : testClass.getDeclaredFields()) {</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">            if (f.isAnnotationPresent(TestDelegate.class)) {</span>
+<span class="nc" id="L71">                return true;</span>
+            }
+        }
+<span class="fc" id="L74">        return false;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
