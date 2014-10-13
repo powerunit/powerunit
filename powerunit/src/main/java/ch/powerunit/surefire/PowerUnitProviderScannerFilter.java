@@ -19,6 +19,7 @@
  */
 package ch.powerunit.surefire;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashSet;
@@ -29,6 +30,7 @@ import org.apache.maven.surefire.booter.ProviderParameterNames;
 import org.apache.maven.surefire.util.ScannerFilter;
 
 import ch.powerunit.Test;
+import ch.powerunit.TestDelegate;
 
 /**
  * @author borettim
@@ -61,6 +63,11 @@ public class PowerUnitProviderScannerFilter implements ScannerFilter {
     public boolean accept(@SuppressWarnings("rawtypes") Class testClass) {
         for (Method m : testClass.getDeclaredMethods()) {
             if (m.isAnnotationPresent(Test.class)) {
+                return true;
+            }
+        }
+        for (Field f : testClass.getDeclaredFields()) {
+            if (f.isAnnotationPresent(TestDelegate.class)) {
                 return true;
             }
         }

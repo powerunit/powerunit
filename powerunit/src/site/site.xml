@@ -23,6 +23,7 @@
       	<item name="Parameterized tests" href="parameters.html"/>
       	<item name="Rule chain" href="rules.html"/>
       	<item name="Assertions" href="assertion.html"/>
+      	<item name="Tests framework" href="framework.html"/>
       </item>
     </menu>
   </body>

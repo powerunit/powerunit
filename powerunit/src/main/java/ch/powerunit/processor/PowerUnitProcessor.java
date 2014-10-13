@@ -45,16 +45,18 @@ import ch.powerunit.impl.validator.IgnoreProcessorValidator;
 import ch.powerunit.impl.validator.ParameterProcessorValidator;
 import ch.powerunit.impl.validator.ParametersProcessorValidator;
 import ch.powerunit.impl.validator.RuleProcessorValidator;
+import ch.powerunit.impl.validator.TestDelegateProcessorValidator;
 import ch.powerunit.impl.validator.TestProcessorValidator;
 
 @SupportedAnnotationTypes({ "ch.powerunit.Test", "ch.powerunit.Rule",
         "ch.powerunit.Parameters", "ch.powerunit.Parameter",
-        "ch.powerunit.Ignore", "ch.powerunit.Categories" })
+        "ch.powerunit.Ignore", "ch.powerunit.Categories",
+        "ch.powerunit.TestDelegate" })
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class PowerUnitProcessor extends AbstractProcessor implements
         ParametersProcessorValidator, ParameterProcessorValidator,
         RuleProcessorValidator, TestProcessorValidator,
-        IgnoreProcessorValidator {
+        IgnoreProcessorValidator, TestDelegateProcessorValidator {
 
     private boolean categoryDone = false;
 
@@ -67,6 +69,7 @@ public class PowerUnitProcessor extends AbstractProcessor implements
             parametersValidation(processingEnv, roundEnv);
             parameterAnnotationValidation(processingEnv, roundEnv);
             ignoreAnnotationValidation(roundEnv);
+            testDelegateAnnotationValidation(processingEnv, roundEnv);
             try {
                 if (!categoryDone) {
                     generateCategorySuite(roundEnv);

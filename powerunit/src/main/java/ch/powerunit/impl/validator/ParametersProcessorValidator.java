@@ -34,6 +34,7 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 
 import ch.powerunit.Parameters;
+import ch.powerunit.TestDelegator;
 
 public interface ParametersProcessorValidator extends ProcessValidator {
     default void parametersValidation(ProcessingEnvironment processingEnv,
@@ -57,10 +58,19 @@ public interface ParametersProcessorValidator extends ProcessValidator {
             }
             exists.add(parent);
             ExecutableElement ee = (ExecutableElement) element;
-            if (!ee.getModifiers().contains(Modifier.STATIC)) {
+            if (!ee.getModifiers().contains(Modifier.STATIC)
+                    && ee.getEnclosingElement().getAnnotation(
+                            TestDelegator.class) == null) {
                 warn("Method "
                         + elementAsString(element)
                         + "\n\tis prefixed with @Parameters and is not static\n\tThe parameters method must be static");
+            }
+            if (ee.getModifiers().contains(Modifier.STATIC)
+                    && ee.getEnclosingElement().getAnnotation(
+                            TestDelegator.class) != null) {
+                warn("Method "
+                        + elementAsString(element)
+                        + "\n\tis prefixed with @Parameters and is static\n\tThe parameters method must not static when used with TestDelegator.");
             }
             if (!ee.getModifiers().contains(Modifier.PUBLIC)) {
                 warn("Method "
@@ -82,10 +92,19 @@ public interface ParametersProcessorValidator extends ProcessValidator {
                             + "\n\tThe parameters method must return " + stream);
                 }
             }
-            if (!ee.getParameters().isEmpty()) {
+            if (!ee.getParameters().isEmpty()
+                    && ee.getEnclosingElement().getAnnotation(
+                            TestDelegator.class) == null) {
                 warn("Method "
                         + elementAsString(element)
                         + "\n\tis prefixed with @Parameters and is not 0-args\n\tThe parameters method must be 0-args");
+            }
+            if (ee.getParameters().size() != 1
+                    && ee.getEnclosingElement().getAnnotation(
+                            TestDelegator.class) != null) {
+                warn("Method "
+                        + elementAsString(element)
+                        + "\n\tis prefixed with @Parameters and is not 1-args\n\tThe parameters method must be 1-args when used with TestDelegator.");
             }
         }
     }

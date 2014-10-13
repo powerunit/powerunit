@@ -1,0 +1,117 @@
+Tests framework
+
+* Sample
+
+ The idea is to be able to define a test class, like a normal test and then be able to use this test class from inside real test
+ class.
+ 
+ Let's assume you like to provide a generic framework to test the fibonacci suite. Using the test framework feature, it is
+ done in the following way :
+ 
+ [[1]] Create the test class to do this test :
+ 
+-----
+import java.util.Arrays;
+import java.util.function.BiFunction;
+import java.util.stream.Stream;
+
+import ch.powerunit.Categories;
+import ch.powerunit.Parameter;
+import ch.powerunit.Parameters;
+import ch.powerunit.Test;
+import ch.powerunit.TestDelegator;
+import ch.powerunit.TestSuite;
+
+@TestDelegator
+public class FiboUsingFilteringTester implements TestSuite {
+
+    @Parameters()
+    public Stream<Object[]> getDatas(FiboTestInterface param) {
+        return Arrays
+                .stream(new Object[][] { { 0, 0, null }, { 1, 1, null },
+                        { 2, 1, null }, { 3, 2, null }, { 4, 3, null },
+                        { 10, 55, null },
+                        { -1, -1, IllegalArgumentException.class } })
+                .map(TestSuite.DSL
+                        .<BiFunction<String, Object[], Boolean>> addFieldToEachEntry(FiboUsingFilteringTester::validateTestMethod));
+    }
+
+    private static boolean validateTestMethod(String name, Object parameters[]) {
+        if (parameters[2] == null) {
+            return "testFib".equals(name);
+        }
+        return "testFibException".equals(name);
+    }
+
+    @Parameter(0)
+    public int x;
+
+    @Parameter(1)
+    public int y;
+
+    @Parameter(2)
+    public Class<?> expectedException;
+
+    @Parameter(value = 3, filter = true)
+    public BiFunction<String, Object[], Boolean> filter;
+
+    @Test(name = "validate the fib suite : {0}->{1}")
+    public void testFib() {
+        assertThatFunction(Fibo::fibo, x).is(y);
+    }
+
+    @Test(name = "Validate exception is {2}")
+    public void testFibException() {
+        assertWhen((p) -> Fibo.fibo(p), x).throwException(
+                instanceOf(expectedException));
+    }
+
+}
+-----
+ This is a normal test class, but there is two main difference :
+ 
+ * First of all this class is annotated with <<<@TestDelegator>>>.
+ 
+ * The method annotated with <<<@Parameters>>> is not static and have one parameter.
+ 
+ []
+ 
+ [[2]] Define the test interface that will be used from the real test :
+ 
+-----
+import ch.powerunit.TestInterface;
+
+@TestInterface(FiboUsingFilteringTester.class)
+public class FiboTestInterface {
+}
+-----
+ This is the class that will be used from the real test. The annotation <<<@TestInterface>>> is use to reference the class 
+ that will execute the test.
+ 
+ [[3]] Finally, the test framework is used from a real test :
+ 
+-----
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+import ch.powerunit.Categories;
+import ch.powerunit.Parameter;
+import ch.powerunit.Parameters;
+import ch.powerunit.Test;
+import ch.powerunit.TestDelegate;
+import ch.powerunit.TestSuite;
+
+@Categories({ "example", "demo" })
+public class FiboTest implements TestSuite {
+    @TestDelegate
+    public final FiboTestInterface delegate = new FiboTestInterface();
+    
+}
+-----
+
+ The test interface class is available as a field annotated with <<<@TestDelegate>>>. It can also be a <<<Supplier>>>, which 
+ provide a way to provide the test interface with parameterized value.
+ 
+* Concept
+
+ ...

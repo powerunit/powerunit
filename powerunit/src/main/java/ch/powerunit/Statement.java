@@ -22,6 +22,7 @@ package ch.powerunit;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import ch.powerunit.exception.InternalError;
 
@@ -156,6 +157,37 @@ public interface Statement<P, T extends Throwable> {
             @Override
             public String getName() {
                 return method.getName();
+            }
+        };
+    }
+
+    /**
+     * Build a statement based on a method-
+     * 
+     * @param method
+     *            the method
+     * @param param
+     *            the param
+     * @return the new statement.
+     * @param <P>
+     *            The type of the parameter
+     * @param <T>
+     *            the exception type
+     * @since 0.2.0
+     */
+    static <P, T extends Throwable> Statement<P, T> reflectionMethod(
+            Consumer<Object> method, Object param) {
+        Objects.requireNonNull(method);
+        return new Statement<P, T>() {
+
+            @Override
+            public void run(P parameter) throws Throwable {
+                method.accept(param);
+            }
+
+            @Override
+            public String getName() {
+                return "N/A";
             }
         };
     }
