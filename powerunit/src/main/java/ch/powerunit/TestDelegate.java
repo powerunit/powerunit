@@ -26,7 +26,26 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * TODO
+ * This annotation can be used on a non static, final field in a test class as
+ * providing access to a test framework.
+ * <p>
+ * This annotation can be use to delegate test execution to a provided test
+ * framework. For example, assuming that the exposed interface for the framework
+ * is a class <code>TestFrameworkInterface</code> (which will be required to be
+ * annotated with <code>{@link TestInterface}</code>), this framework can be
+ * used in the following ways :
+ * 
+ * <pre>
+ * &#064;TestDelegate
+ * public final TestFrameworkInterface myDelegation = new TestFrameworkInterface(...);
+ * </pre>
+ * 
+ * or
+ * 
+ * <pre>
+ * &#064;TestDelegate
+ * public final Supplier&lt;TestFrameworkInterface&gt; myDelegation = ()-&gt;new TestFrameworkInterface(...);
+ * </pre>
  * 
  * @author borettim
  * @since 1.0.2

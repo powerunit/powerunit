@@ -5,8 +5,16 @@
 <body>
 	This is the PowerUnit Framework : A test framework for Java 8+.
 	<p />
+	<a name="INTERNALTOP"> <i><a href="#Concepts">Concepts</a>&nbsp;<a
+			href="#Annotations processor">Annotations processor</a>&nbsp;<a
+			href="#Surefire integration">Surefire integration</a>&nbsp;<a
+			href="#About Hamcrest integration">About Hamcrest integration</a>&nbsp;<a
+			href="#Test framework creation">Test framework creation</a></i></a>
+	<br />
 
-	<h3>Concepts</h3>
+	<h3>
+		<a name="Concepts">Concepts</a>
+	</h3>
 
 	This framework provides a test framework for Java, based on the JDK
 	1.8. The idea are similar to the idea of the others test framework.
@@ -29,12 +37,12 @@ public class HelloWorldTest implements TestSuite {
 }</pre>
 	Several elements are interesting here :
 	<ul>
-		<li>The class implements the {@link ch.powerunit.TestSuite}.
-			This is not strictly required by the framework but it is the best way
-			to integrate nicely with the framework. This implementation provides
-			the DSL of the framework (assertions, matchers, etc). As the
-			interface name says it, a test class is considered as a test suite
-			(has it should contains a set of test, that share a common fixture).</li>
+		<li>The class implements the {@link ch.powerunit.TestSuite}. This
+			is not strictly required by the framework but it is the best way to
+			integrate nicely with the framework. This implementation provides the
+			DSL of the framework (assertions, matchers, etc). As the interface
+			name says it, a test class is considered as a test suite (has it
+			should contains a set of test, that share a common fixture).</li>
 		<li>The test method are annotated with the {@link
 			ch.powerunit.Test} annotation.</li>
 		<li>The {@link ch.powerunit.TestSuite assertThat} used here is
@@ -253,9 +261,9 @@ ch.powerunit.examples.ChildrenTest:test1[1]:clean1
 			is (for the assertion): <pre>assertThatIterable(myIterable)...</pre>
 			This method will return an instance of {@link
 			ch.powerunit.AssertThatIterable AssertThatIterable} (which is an
-			extension of {@link ch.powerunit.AssertThatObject
-			AssertThatObject}), providing the same features as before and several
-			additional method to validate the iterable (size, contains).
+			extension of {@link ch.powerunit.AssertThatObject AssertThatObject}),
+			providing the same features as before and several additional method
+			to validate the iterable (size, contains).
 			<p /></li>
 		<li><b><code>assertThatFunction</code>/<code>assumeThatFunction</code></b><br />This
 			is a much complicated assertion/assumption usage. Here the goal is to
@@ -286,8 +294,12 @@ ch.powerunit.examples.ChildrenTest:test1[1]:clean1
 	</ul>
 	The provides matcher also support the new {@link java.util.Optional
 	Optional} concept of Java 8.
-
-	<h3>Annotations processor</h3>
+	<hr />
+	<a href="#INTERNALTOP">[TOP]</a>
+	<br />
+	<h3>
+		<a name="Annotations processor">Annotations processor</a>
+	</h3>
 	PowerUnit provides an integration out of the box with the annotation
 	processor of the java compiler. This is provided by the {@link
 	org.power.processor.PowerUnitProcessor PowerUnitProcessor}. The goal of
@@ -309,7 +321,9 @@ ch.powerunit.examples.ChildrenTest:test1[1]:clean1
 		</li>
 	</ul>
 
-	<h3>Surefire integration</h3>
+	<h3>
+		<a name="Surefire integration">Surefire integration</a>
+	</h3>
 	This test system can integrated out of the box with Surefire. This is
 	done by adding this package as a dependencies of the surefire plugin :
 	<pre>
@@ -323,13 +337,161 @@ ch.powerunit.examples.ChildrenTest:test1[1]:clean1
     &lt;/dependency&gt;
   &lt;/dependencies&gt;
 &lt;/plugin&gt;</pre>
-
-	<h3>About Hamcrest integration</h3>
+	<hr />
+	<a href="#INTERNALTOP">[TOP]</a>
+	<br />
+	<h3>
+		<a name="About Hamcrest integration">About Hamcrest integration</a>
+	</h3>
 	Hamcrest is integrated with this framework, as a maven dependency. Here
 	the {@link ch.powerunit.TestSuite TestSuite} interface provides the
 	standard hamcrest DSL features, with some additional matcher (for
 	exception and the new {@link java.util.Optional Optional} class for
 	instance).
+	<hr />
+	<a href="#INTERNALTOP">[TOP]</a>
+	<br />
+	<h3>
+		<a name="Test framework creation">Test framework creation</a>
+	</h3>
+	A special feature of PowerUnit exists to help creation of test
+	framework. The idea is here to be able to wrote a normal test case and
+	be able to expose it to normal test classes. This is done by using
+	three annotations :
+	<code>TestDelegator</code>
+	,
+	<code>TestInterface</code>
+	and
+	<code>TestDelegate</code>
+	. The annotation
+	<code>TestDelegate</code>
+	is used by the user of the test framework ; the two other annotations
+	are used by the test test framework developer. Let's assume, for the
+	example that we like to provide a test framework to validate the
+	Fibonacci function. To do so, we first need a class that can be used
+	from the test, define which method must be tested. This can be done
+	with the following class :
+	<pre>
+import ch.powerunit.TestInterface;
+
+@TestInterface(FiboUsingFilteringTester.class)
+public class FiboTestInterface {
+    public interface Fibo {
+        int fibo(int x);
+    }
+    
+    private final Fibo method;
+
+    public FiboTestInterface(Fibo method) {
+        this.method=method;
+    }
+    
+    public Fibo getMethod() {
+        return method;
+    }
+}
+</pre>
+	This class use the annotation
+	<code>TestInterface</code>
+	and is just a simple POJO. In this case we use a functional interface
+	to receive the method to be tested ; The annotation reference an other
+	class, which is the implementation of the test :
+	<pre>
+import java.util.Arrays;
+import java.util.function.BiFunction;
+import java.util.stream.Stream;
+
+import ch.powerunit.Parameter;
+import ch.powerunit.Parameters;
+import ch.powerunit.Test;
+import ch.powerunit.TestDelegator;
+import ch.powerunit.TestSuite;
+
+@TestDelegator
+public class FiboUsingFilteringTester implements TestSuite {
+
+    @Parameters()
+    public static Stream&lt;Object[]&gt; getDatas(FiboTestInterface param) {
+        return Arrays
+                .stream(new Object[][] { { 0, 0, null }, { 1, 1, null },
+                        { 2, 1, null }, { 3, 2, null }, { 4, 3, null },
+                        { 10, 55, null },
+                        { -1, -1, IllegalArgumentException.class } })
+                .map(TestSuite.DSL.addFieldToEachEntry(param.getMethod()))
+                .map(TestSuite.DSL
+                        .&lt;BiFunction
+			&lt;String , Object[], Boolean&gt;&gt; addFieldToEachEntry(FiboUsingFilteringTester::validateTestMethod));
+    }
+
+    private static boolean validateTestMethod(String name, Object parameters[]) {
+        if (parameters[2] == null) {
+            return "testFib".equals(name);
+        }
+        return "testFibException".equals(name);
+    }
+
+    @Parameter(0)
+    public int x;
+
+    @Parameter(1)
+    public int y;
+
+    @Parameter(2)
+    public Class&lt;?&gt; expectedException;
+
+    @Parameter(3)
+    public FiboTestInterface.Fibo method;
+
+    @Parameter(value = 4, filter = true)
+    public BiFunction&lt;String, Object[], Boolean&gt; filter;
+
+    @Test(name = "validate the fib suite : {0}-&gt;{1}")
+    public void testFib() {
+        assertThat(method.fibo(x)).is(y);
+    }
+
+    @Test(name = "Validate exception is {2}")
+    public void testFibException() {
+        assertWhen((p) -&gt; {
+            method.fibo(x);
+        }).throwException(instanceOf(expectedException));
+    }
+
+}
+</pre>
+	This is a
+	<i>normal</i> test class, but this class is annotated with
+	<code>TestDelegator</code>
+	, is required to be a parameterized test and the method annotated with
+	<code>Parameters</code>
+	has one parameter which is the class defined previously.
+	<br /> The user of the framework will only be required to know the
+	class annotated with
+	<code>TestInterface</code>
+	. To use the framework, it is possible to do :
+	<pre>
+import ch.powerunit.Categories;
+import ch.powerunit.TestDelegate;
+import ch.powerunit.TestSuite;
+
+@Categories({ "example", "demo" })
+public class FiboTest implements TestSuite {
+    @TestDelegate
+    public final FiboTestInterface delegate = new FiboTestInterface(
+            new ch.powerunit.demo.Fibo()::fibo);
+
+}
+	</pre>
+	Field annotated with @TestDelegate will be used to indicate a test
+	delegation ; The value of the field (or if the field is a Supplier the
+	result of the execution of the Supplier, which is done for every test
+	execution in case of parameterized test) is use to find the test class
+	delegation and is passed to the
+	<code>Parameters</code>
+	annotated method.
+	<hr />
+	<a href="#INTERNALTOP">[TOP]</a>
+	<br />
 </body>
 
 </html>

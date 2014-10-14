@@ -35,6 +35,7 @@ public class AllTests {
         StreamParametersMapFunctionTests.main(args);
         MatchersTests.main(args);
         FileMatchersTests.main(args);
+        TestDelegateTests.main(args);
     }
 
 }

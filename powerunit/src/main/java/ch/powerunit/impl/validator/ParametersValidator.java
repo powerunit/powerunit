@@ -28,18 +28,9 @@ import ch.powerunit.exception.InternalError;
 
 public interface ParametersValidator {
     default void checkParametersAnnotationForMethod(Method m) {
-        if (!Modifier.isStatic(m.getModifiers())
-                && !m.getDeclaringClass().isAnnotationPresent(
-                        TestDelegator.class)) {
+        if (!Modifier.isStatic(m.getModifiers())) {
             throw new InternalError("@Parameters method is not static "
                     + m.toString());
-        }
-        if (Modifier.isStatic(m.getModifiers())
-                && m.getDeclaringClass().isAnnotationPresent(
-                        TestDelegator.class)) {
-            throw new InternalError("@Parameters method is static "
-                    + m.toString()
-                    + " and can't be when used with test delegator.");
         }
         if (!Modifier.isPublic(m.getModifiers())) {
             throw new InternalError("@Parameters method is not public "

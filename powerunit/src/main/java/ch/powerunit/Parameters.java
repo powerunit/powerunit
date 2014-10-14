@@ -74,6 +74,13 @@ import java.lang.annotation.Target;
  * receiving the test method name and the parameters and returning a boolean. (
  * <code>BiFunction&lt;String,Object[],Boolean&gt;</code>). This method will be
  * used to check if the test method accept (or not) the parameter.
+ * 
+ * <p>
+ * In case this annotation is used on a method from a test class annotated with
+ * <code>{@link TestDelegator}</code>, this method is used as a way to provide
+ * parameter to the test classes. In this case, this method must have exactly
+ * one parameter, which will be a class annotated with
+ * <code>{@link TestInterface}</code>.
  *
  * @author borettim
  * @see java.util.stream.Stream

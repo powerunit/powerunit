@@ -51,13 +51,15 @@ public interface ParameterProcessorValidator extends ProcessValidator {
                             }
 
                             Element parent = element.getEnclosingElement();
+                            TypeElement pp = (TypeElement) parent;
+
                             if (element.getAnnotation(Parameter.class).filter()) {
-                                if (exists.contains(parent.getSimpleName())) {
+                                if (exists.contains(pp.getQualifiedName())) {
                                     warn("Class "
                                             + elementAsString(parent)
                                             + "\n\t contains more than one @Parameter field with filter = true\n\tOnly one @Parameter field can use the filter attribute with true value.");
                                 }
-                                exists.add(parent.getSimpleName());
+                                exists.add(pp.getQualifiedName());
                                 TypeMirror rt = element.asType();
                                 if (rt.getKind() != TypeKind.DECLARED) {
                                     warn("Field "

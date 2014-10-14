@@ -13,32 +13,20 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-package ch.powerunit;
+package ch.powerunit.demo2;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import ch.powerunit.Categories;
+import ch.powerunit.TestDelegate;
+import ch.powerunit.TestSuite;
 
-/**
- * This annotation is used on test framework class.
- * <p>
- * This annotation is used on test classes that are test framework. This
- * annotation modify the validation of the method annotated with
- * <code>{@link Parameters}</code> to indicate that this method receive one
- * parameter.
- * 
- * @author borettim
- * @since 1.0.2
- */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface TestDelegator {
+@Categories({ "example", "demo" })
+public class FiboTest implements TestSuite {
+    @TestDelegate
+    public final FiboTestInterface delegate = new FiboTestInterface(
+            new ch.powerunit.demo.Fibo()::fibo);
 
 }

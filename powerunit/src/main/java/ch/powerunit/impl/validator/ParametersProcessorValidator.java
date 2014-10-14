@@ -58,19 +58,10 @@ public interface ParametersProcessorValidator extends ProcessValidator {
             }
             exists.add(parent);
             ExecutableElement ee = (ExecutableElement) element;
-            if (!ee.getModifiers().contains(Modifier.STATIC)
-                    && ee.getEnclosingElement().getAnnotation(
-                            TestDelegator.class) == null) {
+            if (!ee.getModifiers().contains(Modifier.STATIC)) {
                 warn("Method "
                         + elementAsString(element)
                         + "\n\tis prefixed with @Parameters and is not static\n\tThe parameters method must be static");
-            }
-            if (ee.getModifiers().contains(Modifier.STATIC)
-                    && ee.getEnclosingElement().getAnnotation(
-                            TestDelegator.class) != null) {
-                warn("Method "
-                        + elementAsString(element)
-                        + "\n\tis prefixed with @Parameters and is static\n\tThe parameters method must not static when used with TestDelegator.");
             }
             if (!ee.getModifiers().contains(Modifier.PUBLIC)) {
                 warn("Method "

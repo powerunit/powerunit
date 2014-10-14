@@ -26,7 +26,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * TODO
+ * This annotation is used on a class that is the <i>public</i> interface of a
+ * test framework.
+ * <p>
+ * This annotation is used to indicate which test class must be used when the
+ * annotation <code>{@link TestDelegate}</code> is used in a test for an
+ * instance of the class annotated with this annotation. The instance of this
+ * class will be passed to the real test class.
  * 
  * @author borettim
  * @since 0.2.0
@@ -36,9 +42,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface TestInterface {
     /**
-     * TODO
+     * The real test class linked with this test interface.
      * 
-     * @return TODO
+     * @return the real test class.
      */
     Class<?> value();
 }

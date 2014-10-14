@@ -20,7 +20,7 @@
 package ch.powerunit.demo;
 
 public class Fibo {
-    public static int fibo(int n) {
+    public int fibo(int n) {
         if (n < 0) {
             throw new IllegalArgumentException("n must be positive");
         }

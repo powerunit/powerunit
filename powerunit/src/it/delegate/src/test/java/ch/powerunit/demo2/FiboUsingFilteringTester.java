@@ -17,13 +17,12 @@
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-package ch.powerunit.demo;
+package ch.powerunit.demo2;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
-import ch.powerunit.Categories;
 import ch.powerunit.Parameter;
 import ch.powerunit.Parameters;
 import ch.powerunit.Test;
@@ -40,6 +39,7 @@ public class FiboUsingFilteringTester implements TestSuite {
                         { 2, 1, null }, { 3, 2, null }, { 4, 3, null },
                         { 10, 55, null },
                         { -1, -1, IllegalArgumentException.class } })
+                .map(TestSuite.DSL.addFieldToEachEntry(param.getMethod()))
                 .map(TestSuite.DSL
                         .<BiFunction<String, Object[], Boolean>> addFieldToEachEntry(FiboUsingFilteringTester::validateTestMethod));
     }
@@ -60,18 +60,22 @@ public class FiboUsingFilteringTester implements TestSuite {
     @Parameter(2)
     public Class<?> expectedException;
 
-    @Parameter(value = 3, filter = true)
+    @Parameter(3)
+    public FiboTestInterface.Fibo method;
+
+    @Parameter(value = 4, filter = true)
     public BiFunction<String, Object[], Boolean> filter;
 
     @Test(name = "validate the fib suite : {0}->{1}")
     public void testFib() {
-        assertThatFunction(new Fibo()::fibo, x).is(y);
+        assertThat(method.fibo(x)).is(y);
     }
 
     @Test(name = "Validate exception is {2}")
     public void testFibException() {
-        assertWhen((p) -> new Fibo().fibo(p), x).throwException(
-                instanceOf(expectedException));
+        assertWhen((p) -> {
+            method.fibo(x);
+        }).throwException(instanceOf(expectedException));
     }
 
 }

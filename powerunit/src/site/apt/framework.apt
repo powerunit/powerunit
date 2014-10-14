@@ -26,7 +26,7 @@ import ch.powerunit.TestSuite;
 public class FiboUsingFilteringTester implements TestSuite {
 
     @Parameters()
-    public Stream<Object[]> getDatas(FiboTestInterface param) {
+    public static Stream<Object[]> getDatas(FiboTestInterface param) {
         return Arrays
                 .stream(new Object[][] { { 0, 0, null }, { 1, 1, null },
                         { 2, 1, null }, { 3, 2, null }, { 4, 3, null },
@@ -72,7 +72,7 @@ public class FiboUsingFilteringTester implements TestSuite {
  
  * First of all this class is annotated with <<<@TestDelegator>>>.
  
- * The method annotated with <<<@Parameters>>> is not static and have one parameter.
+ * The method annotated with <<<@Parameters>>> have one parameter.
  
  []
  
