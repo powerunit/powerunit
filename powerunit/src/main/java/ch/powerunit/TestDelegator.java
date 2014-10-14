@@ -34,7 +34,7 @@ import java.lang.annotation.Target;
  * parameter.
  * 
  * @author borettim
- * @since 1.0.2
+ * @since 0.2.0
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
