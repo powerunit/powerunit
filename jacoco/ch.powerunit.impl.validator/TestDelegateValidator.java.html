@@ -26,18 +26,18 @@ import ch.powerunit.exception.InternalError;
 
 public interface TestDelegateValidator {
     default void checkTestDelegateAnnotationForField(Field f) {
-<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (Modifier.isStatic(f.getModifiers())) {</span>
+<span class="pc bpc" id="L29" title="1 of 2 branches missed.">        if (Modifier.isStatic(f.getModifiers())) {</span>
 <span class="nc" id="L30">            throw new InternalError(&quot;@TestDelegate field is static &quot;</span>
 <span class="nc" id="L31">                    + f.toString());</span>
         }
-<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (!Modifier.isPublic(f.getModifiers())) {</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (!Modifier.isPublic(f.getModifiers())) {</span>
 <span class="nc" id="L34">            throw new InternalError(&quot;@TestDelegate field is not public &quot;</span>
 <span class="nc" id="L35">                    + f.toString());</span>
         }
-<span class="nc bnc" id="L37" title="All 2 branches missed.">        if (!Modifier.isFinal(f.getModifiers())) {</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (!Modifier.isFinal(f.getModifiers())) {</span>
 <span class="nc" id="L38">            throw new InternalError(&quot;@TestDelegate field is not final &quot;</span>
 <span class="nc" id="L39">                    + f.toString());</span>
         }
-<span class="nc" id="L41">    }</span>
+<span class="fc" id="L41">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

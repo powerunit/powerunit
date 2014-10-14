@@ -51,13 +51,15 @@ public interface ParameterProcessorValidator extends ProcessValidator {
                             }
 
                             Element parent = element.getEnclosingElement();
+                            TypeElement pp = (TypeElement) parent;
+
                             if (element.getAnnotation(Parameter.class).filter()) {
-                                if (exists.contains(parent.getSimpleName())) {
+                                if (exists.contains(pp.getQualifiedName())) {
                                     warn(&quot;Class &quot;
                                             + elementAsString(parent)
                                             + &quot;\n\t contains more than one @Parameter field with filter = true\n\tOnly one @Parameter field can use the filter attribute with true value.&quot;);
                                 }
-                                exists.add(parent.getSimpleName());
+                                exists.add(pp.getQualifiedName());
                                 TypeMirror rt = element.asType();
                                 if (rt.getKind() != TypeKind.DECLARED) {
                                     warn(&quot;Field &quot;
@@ -102,6 +104,6 @@ public interface ParameterProcessorValidator extends ProcessValidator {
                                         + &quot;\n\tA parameter field value must be &gt;=0&quot;);
                             }
                         });
-<span class="nc" id="L105">    }</span>
+<span class="nc" id="L107">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

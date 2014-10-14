@@ -36,41 +36,32 @@
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> <a href="../../../../ch/powerunit/impl/validator/ParametersValidator.html">ParametersValidator</a> {
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">default</strong> <strong class="jxr_keyword">void</strong> checkParametersAnnotationForMethod(Method m) {
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>          <strong class="jxr_keyword">if</strong> (!Modifier.isStatic(m.getModifiers())
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>                  &amp;&amp; !m.getDeclaringClass().isAnnotationPresent(
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>                          TestDelegator.<strong class="jxr_keyword">class</strong>)) {
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../ch/powerunit/exception/InternalError.html">InternalError</a>(<span class="jxr_string">"@Parameters method is not static "</span>
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>                      + m.toString());
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>          }
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>          <strong class="jxr_keyword">if</strong> (Modifier.isStatic(m.getModifiers())
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>                  &amp;&amp; m.getDeclaringClass().isAnnotationPresent(
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>                          TestDelegator.<strong class="jxr_keyword">class</strong>)) {
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../ch/powerunit/exception/InternalError.html">InternalError</a>(<span class="jxr_string">"@Parameters method is static "</span>
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>                      + m.toString()
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>                      + <span class="jxr_string">" and can't be when used with test delegator."</span>);
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>          }
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>          <strong class="jxr_keyword">if</strong> (!Modifier.isPublic(m.getModifiers())) {
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../ch/powerunit/exception/InternalError.html">InternalError</a>(<span class="jxr_string">"@Parameters method is not public "</span>
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>                      + m.toString());
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>          }
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>          <strong class="jxr_keyword">if</strong> (!Stream.<strong class="jxr_keyword">class</strong>.isAssignableFrom(m.getReturnType())) {
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../ch/powerunit/exception/InternalError.html">InternalError</a>(<span class="jxr_string">"@Parameters method is not Stream&lt;...&gt; "</span>
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>                      + m.toString());
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>          }
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>          <strong class="jxr_keyword">if</strong> (m.getParameterCount() != 0
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>                  &amp;&amp; !m.getDeclaringClass().isAnnotationPresent(
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>                          TestDelegator.<strong class="jxr_keyword">class</strong>)) {
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../ch/powerunit/exception/InternalError.html">InternalError</a>(<span class="jxr_string">"@Parameters method is not 0-parameter "</span>
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>                      + m.toString());
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>          }
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>          <strong class="jxr_keyword">if</strong> (m.getParameterCount() != 1
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>                  &amp;&amp; m.getDeclaringClass().isAnnotationPresent(
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>                          TestDelegator.<strong class="jxr_keyword">class</strong>)) {
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../ch/powerunit/exception/InternalError.html">InternalError</a>(<span class="jxr_string">"@Parameters method is not 1-parameter "</span>
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>                      + m.toString() + <span class="jxr_string">" with test delegator."</span>);
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>          }
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      }
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>  }
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          <strong class="jxr_keyword">if</strong> (!Modifier.isStatic(m.getModifiers())) {
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../ch/powerunit/exception/InternalError.html">InternalError</a>(<span class="jxr_string">"@Parameters method is not static "</span>
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>                      + m.toString());
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>          }
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>          <strong class="jxr_keyword">if</strong> (!Modifier.isPublic(m.getModifiers())) {
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../ch/powerunit/exception/InternalError.html">InternalError</a>(<span class="jxr_string">"@Parameters method is not public "</span>
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>                      + m.toString());
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>          }
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          <strong class="jxr_keyword">if</strong> (!Stream.<strong class="jxr_keyword">class</strong>.isAssignableFrom(m.getReturnType())) {
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../ch/powerunit/exception/InternalError.html">InternalError</a>(<span class="jxr_string">"@Parameters method is not Stream&lt;...&gt; "</span>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>                      + m.toString());
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          }
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          <strong class="jxr_keyword">if</strong> (m.getParameterCount() != 0
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>                  &amp;&amp; !m.getDeclaringClass().isAnnotationPresent(
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>                          TestDelegator.<strong class="jxr_keyword">class</strong>)) {
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../ch/powerunit/exception/InternalError.html">InternalError</a>(<span class="jxr_string">"@Parameters method is not 0-parameter "</span>
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>                      + m.toString());
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>          }
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          <strong class="jxr_keyword">if</strong> (m.getParameterCount() != 1
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>                  &amp;&amp; m.getDeclaringClass().isAnnotationPresent(
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>                          TestDelegator.<strong class="jxr_keyword">class</strong>)) {
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../ch/powerunit/exception/InternalError.html">InternalError</a>(<span class="jxr_string">"@Parameters method is not 1-parameter "</span>
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>                      + m.toString() + <span class="jxr_string">" with test delegator."</span>);
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>          }
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>      }
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2014. All rights reserved.</div>

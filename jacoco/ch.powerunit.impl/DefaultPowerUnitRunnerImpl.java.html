@@ -74,8 +74,8 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
     private final Object externalParameter;
 
     DefaultPowerUnitRunnerImpl(Class&lt;T&gt; testClass, Object externalParameter) {
-<span class="nc" id="L77">        this(testClass, null, externalParameter);</span>
-<span class="nc" id="L78">    }</span>
+<span class="fc" id="L77">        this(testClass, null, externalParameter);</span>
+<span class="fc" id="L78">    }</span>
 
     public DefaultPowerUnitRunnerImpl(Class&lt;T&gt; testClass) {
 <span class="fc" id="L81">        this(testClass, null);</span>
@@ -145,8 +145,8 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 
     private void runAll() {
 <span class="fc" id="L147">        testIndex = 0;</span>
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        try (Stream&lt;?&gt; params = (Stream&lt;?&gt;) (externalParameter == null ? parameters</span>
-<span class="pc" id="L149">                .invoke(targetObject) : parameters.invoke(targetObject,</span>
+<span class="pc bfc" id="L148" title="All 2 branches covered.">        try (Stream&lt;?&gt; params = (Stream&lt;?&gt;) (externalParameter == null ? parameters</span>
+<span class="fc" id="L149">                .invoke(targetObject) : parameters.invoke(targetObject,</span>
                 externalParameter))) {
 <span class="fc" id="L151">            params.forEach(this::runOneParameter);</span>
 <span class="pc bpc" id="L152" title="6 of 8 branches missed.">        } catch (IllegalAccessException | IllegalArgumentException</span>
@@ -499,22 +499,22 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 <span class="fc" id="L499">                .collect(Collectors.toMap(test -&gt; test.getKey(), test -&gt; {</span>
                     Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; stest;
                     Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; itest = p -&gt; {
-<span class="nc" id="L502">                        new Statement&lt;TestContext&lt;Object&gt;, Throwable&gt;() {</span>
+<span class="fc" id="L502">                        new Statement&lt;TestContext&lt;Object&gt;, Throwable&gt;() {</span>
 
                             @Override
                             public void run(TestContext&lt;Object&gt; parameter)
                                     throws Throwable {
-<span class="nc" id="L507">                                Supplier&lt;Object&gt; o = test.getValue();</span>
-<span class="nc" id="L508">                                Object target = o.get();</span>
-<span class="nc" id="L509">                                Class&lt;?&gt; delegator = target.getClass()</span>
-<span class="nc" id="L510">                                        .getAnnotation(TestInterface.class)</span>
-<span class="nc" id="L511">                                        .value();</span>
-<span class="nc" id="L512">                                DefaultPowerUnitRunnerImpl&lt;?&gt; dpu = new DefaultPowerUnitRunnerImpl&lt;&gt;(</span>
+<span class="fc" id="L507">                                Supplier&lt;Object&gt; o = test.getValue();</span>
+<span class="fc" id="L508">                                Object target = o.get();</span>
+<span class="fc" id="L509">                                Class&lt;?&gt; delegator = target.getClass()</span>
+<span class="fc" id="L510">                                        .getAnnotation(TestInterface.class)</span>
+<span class="fc" id="L511">                                        .value();</span>
+<span class="fc" id="L512">                                DefaultPowerUnitRunnerImpl&lt;?&gt; dpu = new DefaultPowerUnitRunnerImpl&lt;&gt;(</span>
                                         delegator, target);
-<span class="nc" id="L514">                                dpu.addListener((TestResultListener) new DelegationTestResultListener(</span>
+<span class="fc" id="L514">                                dpu.addListener((TestResultListener) new DelegationTestResultListener(</span>
                                         parameter));
-<span class="nc" id="L516">                                dpu.run();</span>
-<span class="nc" id="L517">                            }</span>
+<span class="fc" id="L516">                                dpu.run();</span>
+<span class="fc" id="L517">                            }</span>
 
                             @Override
                             public String getName() {
@@ -604,39 +604,39 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 
         private final TestContext&lt;Object&gt; parentContext;
 
-<span class="nc" id="L607">        public DelegationTestResultListener(TestContext&lt;Object&gt; parentContext) {</span>
-<span class="nc" id="L608">            this.parentContext = parentContext;</span>
-<span class="nc" id="L609">        }</span>
+<span class="fc" id="L607">        public DelegationTestResultListener(TestContext&lt;Object&gt; parentContext) {</span>
+<span class="fc" id="L608">            this.parentContext = parentContext;</span>
+<span class="fc" id="L609">        }</span>
 
         @Override
         public void notifySetStart(String setName, String groups) {
             // ignore
-<span class="nc" id="L614">        }</span>
+<span class="fc" id="L614">        }</span>
 
         @Override
         public void notifySetEnd(String setName, String groups) {
             // ignore
-<span class="nc" id="L619">        }</span>
+<span class="fc" id="L619">        }</span>
 
         @Override
         public void notifyStart(TestContext&lt;Object&gt; context) {
-<span class="nc" id="L623">            TestContext&lt;Object&gt; ctx = new TestContextImpl&lt;Object&gt;(</span>
-<span class="nc" id="L624">                    parentContext.getTestSuiteObject(),</span>
-<span class="nc" id="L625">                    parentContext.getSetName(), context.getLocalTestName(),</span>
-<span class="nc" id="L626">                    parentContext.getParameterName(),</span>
-<span class="nc" id="L627">                    parentContext.getTestCategories());</span>
-<span class="nc" id="L628">            notifyStartTest(ctx);</span>
-<span class="nc" id="L629">        }</span>
+<span class="fc" id="L623">            TestContext&lt;Object&gt; ctx = new TestContextImpl&lt;Object&gt;(</span>
+<span class="fc" id="L624">                    parentContext.getTestSuiteObject(),</span>
+<span class="fc" id="L625">                    parentContext.getSetName(), context.getLocalTestName(),</span>
+<span class="fc" id="L626">                    parentContext.getParameterName(),</span>
+<span class="fc" id="L627">                    parentContext.getTestCategories());</span>
+<span class="fc" id="L628">            notifyStartTest(ctx);</span>
+<span class="fc" id="L629">        }</span>
 
         @Override
         public void notifySuccess(TestContext&lt;Object&gt; context) {
-<span class="nc" id="L633">            TestContext&lt;Object&gt; ctx = new TestContextImpl&lt;Object&gt;(</span>
-<span class="nc" id="L634">                    parentContext.getTestSuiteObject(),</span>
-<span class="nc" id="L635">                    parentContext.getSetName(), context.getLocalTestName(),</span>
-<span class="nc" id="L636">                    parentContext.getParameterName(),</span>
-<span class="nc" id="L637">                    parentContext.getTestCategories());</span>
-<span class="nc" id="L638">            notifyEndSuccessTest(ctx);</span>
-<span class="nc" id="L639">        }</span>
+<span class="fc" id="L633">            TestContext&lt;Object&gt; ctx = new TestContextImpl&lt;Object&gt;(</span>
+<span class="fc" id="L634">                    parentContext.getTestSuiteObject(),</span>
+<span class="fc" id="L635">                    parentContext.getSetName(), context.getLocalTestName(),</span>
+<span class="fc" id="L636">                    parentContext.getParameterName(),</span>
+<span class="fc" id="L637">                    parentContext.getTestCategories());</span>
+<span class="fc" id="L638">            notifyEndSuccessTest(ctx);</span>
+<span class="fc" id="L639">        }</span>
 
         @Override
         public void notifyFailure(TestContext&lt;Object&gt; context, Throwable cause) {
@@ -671,12 +671,12 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
         @Override
         public void notifyParameterStart(String setName, String parameterName) {
             // ignore
-<span class="nc" id="L674">        }</span>
+<span class="fc" id="L674">        }</span>
 
         @Override
         public void notifyParameterEnd(String setName, String parameterName) {
             // ignore
-<span class="nc" id="L679">        }</span>
+<span class="fc" id="L679">        }</span>
 
     }
 }
