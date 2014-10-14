@@ -374,7 +374,7 @@ ch.powerunit.examples.ChildrenTest:test1[1]:clean1
 	<pre>
 import ch.powerunit.TestInterface;
 
-@TestInterface(FiboUsingFilteringTester.class)
+&#64;TestInterface(FiboUsingFilteringTester.class)
 public class FiboTestInterface {
     public interface Fibo {
         int fibo(int x);
@@ -407,10 +407,10 @@ import ch.powerunit.Test;
 import ch.powerunit.TestDelegator;
 import ch.powerunit.TestSuite;
 
-@TestDelegator
+&#64;TestDelegator
 public class FiboUsingFilteringTester implements TestSuite {
 
-    @Parameters()
+    &#64;Parameters()
     public static Stream&lt;Object[]&gt; getDatas(FiboTestInterface param) {
         return Arrays
                 .stream(new Object[][] { { 0, 0, null }, { 1, 1, null },
@@ -430,27 +430,27 @@ public class FiboUsingFilteringTester implements TestSuite {
         return "testFibException".equals(name);
     }
 
-    @Parameter(0)
+    &#64;Parameter(0)
     public int x;
 
-    @Parameter(1)
+    &#64;Parameter(1)
     public int y;
 
-    @Parameter(2)
+    &#64;Parameter(2)
     public Class&lt;?&gt; expectedException;
 
-    @Parameter(3)
+    &#64;Parameter(3)
     public FiboTestInterface.Fibo method;
 
-    @Parameter(value = 4, filter = true)
+    &#64;Parameter(value = 4, filter = true)
     public BiFunction&lt;String, Object[], Boolean&gt; filter;
 
-    @Test(name = "validate the fib suite : {0}-&gt;{1}")
+    &#64;Test(name = "validate the fib suite : {0}-&gt;{1}")
     public void testFib() {
         assertThat(method.fibo(x)).is(y);
     }
 
-    @Test(name = "Validate exception is {2}")
+    &#64;Test(name = "Validate exception is {2}")
     public void testFibException() {
         assertWhen((p) -&gt; {
             method.fibo(x);
@@ -474,15 +474,15 @@ import ch.powerunit.Categories;
 import ch.powerunit.TestDelegate;
 import ch.powerunit.TestSuite;
 
-@Categories({ "example", "demo" })
+&#64;Categories({ "example", "demo" })
 public class FiboTest implements TestSuite {
-    @TestDelegate
+    &#64;TestDelegate
     public final FiboTestInterface delegate = new FiboTestInterface(
             new ch.powerunit.demo.Fibo()::fibo);
 
 }
 	</pre>
-	Field annotated with @TestDelegate will be used to indicate a test
+	Field annotated with &#64;TestDelegate will be used to indicate a test
 	delegation ; The value of the field (or if the field is a Supplier the
 	result of the execution of the Supplier, which is done for every test
 	execution in case of parameterized test) is use to find the test class
