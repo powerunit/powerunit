@@ -27,6 +27,7 @@ import ch.powerunit.Categories;
 import ch.powerunit.Parameter;
 import ch.powerunit.Parameters;
 import ch.powerunit.Test;
+import ch.powerunit.TestDelegator;
 import ch.powerunit.TestSuite;
 import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
 import ch.powerunit.impl.validator.ParameterValidator;
@@ -50,7 +51,7 @@ public class RuntimeParametersValidatorTests {
                     TestClass6.class, TestClass7.class, TestClass8.class,
                     TestClass9.class, TestClass10.class, TestClass11.class,
                     TestClass12.class, TestClass13.class, TestClass14.class,
-                    TestClass15.class });
+                    TestClass15.class, TestClass16.class });
         }
 
         @Parameter(0)
@@ -213,6 +214,17 @@ public class RuntimeParametersValidatorTests {
 
         @Parameter(value = 1, filter = true)
         public BiFunction<String, Object[], Boolean> p2;
+    }
+
+    @TestDelegator
+    public static class TestClass16 {
+        @Parameters
+        public static Stream<Object[]> getDatas() {
+            return null;
+        }
+
+        @Parameter(0)
+        public String p1;
     }
 
 }
