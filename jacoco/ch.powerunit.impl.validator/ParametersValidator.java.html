@@ -47,10 +47,10 @@ public interface ParametersValidator {
 <span class="fc" id="L47">                    + m.toString());</span>
         }
 <span class="fc bfc" id="L49" title="All 2 branches covered.">        if (m.getParameterCount() != 1</span>
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">                &amp;&amp; m.getDeclaringClass().isAnnotationPresent(</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">                &amp;&amp; m.getDeclaringClass().isAnnotationPresent(</span>
                         TestDelegator.class)) {
-<span class="nc" id="L52">            throw new InternalError(&quot;@Parameters method is not 1-parameter &quot;</span>
-<span class="nc" id="L53">                    + m.toString() + &quot; with test delegator.&quot;);</span>
+<span class="fc" id="L52">            throw new InternalError(&quot;@Parameters method is not 1-parameter &quot;</span>
+<span class="fc" id="L53">                    + m.toString() + &quot; with test delegator.&quot;);</span>
         }
 <span class="fc" id="L55">    }</span>
 }
