@@ -17,6 +17,4 @@ Release principles
  
 * Planned release
 
- The release plan is not yet fully defined. The version 0.2.0 will provide support to run only some method, which may be
- reqired by the eclipse integration. The development of the eclipse integration itself will be done before the evolution 
- of the test framework itself.
+ The release plan is not yet fully defined. 

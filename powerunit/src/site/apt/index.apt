@@ -66,4 +66,6 @@ The Powerunit framework
  The 0.1.0 version covers parameter filtering, documentation issue and add a Main Class to run test (to be used by the initial
  implementation of the eclipse integration).
  
- 
+** Version 0.2.0
+
+ The 0.2.0 version provides support for better eclipse integration and test framework.
