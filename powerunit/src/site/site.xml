@@ -9,7 +9,6 @@
   <custom>
     <fluidoSkin>
       <googleSearch>
-        <sitesearch/>
       </googleSearch>
       <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
       <gitHub>
