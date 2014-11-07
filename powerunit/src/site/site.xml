@@ -1,6 +1,24 @@
 <project xmlns="http://maven.apache.org/DECORATION/1.3.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd">
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-fluido-skin</artifactId>
+    <version>1.3.1</version>
+  </skin>
+  <custom>
+    <fluidoSkin>
+      <googleSearch>
+        <sitesearch/>
+      </googleSearch>
+      <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+      <gitHub>
+        <projectId>powerunit/powerunit</projectId>
+        <ribbonOrientation>right</ribbonOrientation>
+        <ribbonColor>black</ribbonColor>
+      </gitHub>
+    </fluidoSkin>
+  </custom>
   <poweredBy>
     <logo name="PowerUnit" href="http://www.powerunit.ch/"
           img="http://www.powerunit.ch/powerunit/logo.png"/>
@@ -25,6 +43,9 @@
       	<item name="Assertions" href="assertion.html"/>
       	<item name="Tests framework" href="framework.html"/>
       </item>
+    </menu>
+    <menu name="Linked projects">
+      <item name="Eclipse integration" href="http://www.powerunit.ch/powerunit-eclipse"/>
     </menu>
   </body>
 </project>
