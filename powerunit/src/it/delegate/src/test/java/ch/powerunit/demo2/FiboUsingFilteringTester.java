@@ -21,6 +21,7 @@ package ch.powerunit.demo2;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import ch.powerunit.Parameter;
@@ -32,50 +33,49 @@ import ch.powerunit.TestSuite;
 @TestDelegator
 public class FiboUsingFilteringTester implements TestSuite {
 
-    @Parameters()
-    public static Stream<Object[]> getDatas(FiboTestInterface param) {
-        return Arrays
-                .stream(new Object[][] { { 0, 0, null }, { 1, 1, null },
-                        { 2, 1, null }, { 3, 2, null }, { 4, 3, null },
-                        { 10, 55, null },
-                        { -1, -1, IllegalArgumentException.class } })
-                .map(TestSuite.DSL.addFieldToEachEntry(param.getMethod()))
-                .map(TestSuite.DSL
-                        .<BiFunction<String, Object[], Boolean>> addFieldToEachEntry(FiboUsingFilteringTester::validateTestMethod));
-    }
+	@Parameters()
+	public static Stream<Object[]> getDatas(FiboTestInterface param) {
+		return Arrays
+				.stream(new Object[][] { { 0, 0, null }, { 1, 1, null },
+						{ 2, 1, null }, { 3, 2, null }, { 4, 3, null },
+						{ 10, 55, null },
+						{ -1, -1, IllegalArgumentException.class } })
+				.map(TestSuite.DSL.addFieldToEachEntry(param.getMethod()))
+				.map(TestSuite.DSL
+						.<BiFunction<String, Object[], Boolean>> addFieldToEachEntry(FiboUsingFilteringTester::validateTestMethod));
+	}
 
-    private static boolean validateTestMethod(String name, Object parameters[]) {
-        if (parameters[2] == null) {
-            return "testFib".equals(name);
-        }
-        return "testFibException".equals(name);
-    }
+	private static boolean validateTestMethod(String name, Object parameters[]) {
+		if (parameters[2] == null) {
+			return "testFib".equals(name);
+		}
+		return "testFibException".equals(name);
+	}
 
-    @Parameter(0)
-    public int x;
+	@Parameter(0)
+	public int x;
 
-    @Parameter(1)
-    public int y;
+	@Parameter(1)
+	public int y;
 
-    @Parameter(2)
-    public Class<?> expectedException;
+	@Parameter(2)
+	public Class<?> expectedException;
 
-    @Parameter(3)
-    public FiboTestInterface.Fibo method;
+	@Parameter(3)
+	public Function<Integer, Integer> method;
 
-    @Parameter(value = 4, filter = true)
-    public BiFunction<String, Object[], Boolean> filter;
+	@Parameter(value = 4, filter = true)
+	public BiFunction<String, Object[], Boolean> filter;
 
-    @Test(name = "validate the fib suite : {0}->{1}")
-    public void testFib() {
-        assertThat(method.fibo(x)).is(y);
-    }
+	@Test(name = "validate the fib suite : {0}->{1}")
+	public void testFib() {
+		assertThatFunction(method, x).is(y);
+	}
 
-    @Test(name = "Validate exception is {2}")
-    public void testFibException() {
-        assertWhen((p) -> {
-            method.fibo(x);
-        }).throwException(instanceOf(expectedException));
-    }
+	@Test(name = "Validate exception is {2} for input {0}")
+	public void testFibException() {
+		assertWhenFunction(method, x).throwException(
+				instanceOf(expectedException));
+	}
 
 }

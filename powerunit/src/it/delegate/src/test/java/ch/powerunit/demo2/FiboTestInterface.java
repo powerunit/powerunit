@@ -20,20 +20,18 @@
 package ch.powerunit.demo2;
 
 import ch.powerunit.TestInterface;
+import java.util.function.Function;
+
 
 @TestInterface(FiboUsingFilteringTester.class)
 public class FiboTestInterface {
-    public interface Fibo {
-        int fibo(int x);
-    }
-    
-    private final Fibo method;
+    private final Function<Integer,Integer> method;
 
-    public FiboTestInterface(Fibo method) {
+    public FiboTestInterface(Function<Integer,Integer> method) {
         this.method=method;
     }
     
-    public Fibo getMethod() {
+    public Function<Integer,Integer> getMethod() {
         return method;
     }
 }

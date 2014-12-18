@@ -24,56 +24,72 @@ import org.hamcrest.Matchers;
 import ch.powerunit.TestSuite;
 
 public class AssertWhenTests {
-    public static void main(String[] args) {
-        AllTests.testNoException(
-                "testAssertWhenOKWithoutMessage",
-                () -> TestSuite.DSL.assertWhen((p) -> {
-                    throw new Exception("test");
-                }).throwException(
-                        Matchers.hasProperty("message",
-                                Matchers.equalTo("test"))));
+	public static void main(String[] args) {
+		AllTests.testNoException(
+				"testAssertWhenOKWithoutMessage",
+				() -> TestSuite.DSL.assertWhen((p) -> {
+					throw new Exception("test");
+				}).throwException(
+						Matchers.hasProperty("message",
+								Matchers.equalTo("test"))));
 
-        AllTests.testException(
-                "testAssertWhenKONoExceptionWithoutMessage",
-                () -> TestSuite.DSL.assertWhen((p) -> {
-                }).throwException(
-                        Matchers.hasProperty("message",
-                                Matchers.equalTo("test"))),
-                "An exception was expected, but none was thrown");
+		AllTests.testException(
+				"testAssertWhenKONoExceptionWithoutMessage",
+				() -> TestSuite.DSL.assertWhen((p) -> {
+				}).throwException(
+						Matchers.hasProperty("message",
+								Matchers.equalTo("test"))),
+				"An exception was expected, but none was thrown");
 
-        AllTests.testException(
-                "testAssertWhenKOExceptionWithoutMessage",
-                () -> TestSuite.DSL.assertWhen((p) -> {
-                    throw new Exception("test");
-                }).throwException(
-                        Matchers.hasProperty("message",
-                                Matchers.equalTo("other"))),
-                "expecting hasProperty(\"message\", \"other\") but property 'message' was \"test\"");
+		AllTests.testException(
+				"testAssertWhenKOExceptionWithoutMessage",
+				() -> TestSuite.DSL.assertWhen((p) -> {
+					throw new Exception("test");
+				}).throwException(
+						Matchers.hasProperty("message",
+								Matchers.equalTo("other"))),
+				"expecting hasProperty(\"message\", \"other\") but property 'message' was \"test\"");
 
-        AllTests.testNoException(
-                "testAssertWhenOKWithMessage",
-                () -> TestSuite.DSL.assertWhen("msg", (p) -> {
-                    throw new Exception("test");
-                }).throwException(
-                        Matchers.hasProperty("message",
-                                Matchers.equalTo("test"))));
+		AllTests.testNoException(
+				"testAssertWhenOKWithMessage",
+				() -> TestSuite.DSL.assertWhen("msg", (p) -> {
+					throw new Exception("test");
+				}).throwException(
+						Matchers.hasProperty("message",
+								Matchers.equalTo("test"))));
 
-        AllTests.testException(
-                "testAssertWhenKONoExceptionWithMessage",
-                () -> TestSuite.DSL.assertWhen("msg", (p) -> {
-                }).throwException(
-                        Matchers.hasProperty("message",
-                                Matchers.equalTo("test"))),
-                "msg\nAn exception was expected, but none was thrown");
+		AllTests.testException(
+				"testAssertWhenKONoExceptionWithMessage",
+				() -> TestSuite.DSL.assertWhen("msg", (p) -> {
+				}).throwException(
+						Matchers.hasProperty("message",
+								Matchers.equalTo("test"))),
+				"msg\nAn exception was expected, but none was thrown");
 
-        AllTests.testException(
-                "testAssertWhenKOExceptionWithMessage",
-                () -> TestSuite.DSL.assertWhen("msg", (p) -> {
-                    throw new Exception("test");
-                }).throwException(
-                        Matchers.hasProperty("message",
-                                Matchers.equalTo("other"))),
-                "msg\nexpecting hasProperty(\"message\", \"other\") but property 'message' was \"test\"");
-    }
+		AllTests.testException(
+				"testAssertWhenKOExceptionWithMessage",
+				() -> TestSuite.DSL.assertWhen("msg", (p) -> {
+					throw new Exception("test");
+				}).throwException(
+						Matchers.hasProperty("message",
+								Matchers.equalTo("other"))),
+				"msg\nexpecting hasProperty(\"message\", \"other\") but property 'message' was \"test\"");
 
+		AllTests.testNoException(
+				"testAssertWhenFunctionWithMessage",
+				() -> TestSuite.DSL.assertWhenFunction("msg", (p) -> {
+					throw new RuntimeException("test");
+				}, 1).throwException(
+						Matchers.hasProperty("message",
+								Matchers.equalTo("test"))));
+
+		AllTests.testException(
+				"testAssertWhenFunctionKOExceptionWithMessage",
+				() -> TestSuite.DSL.assertWhenFunction("msg", (p) -> {
+					throw new RuntimeException("test");
+				}, 1).throwException(
+						Matchers.hasProperty("message",
+								Matchers.equalTo("other"))),
+				"msg\nexpecting hasProperty(\"message\", \"other\") but property 'message' was \"test\"");
+	}
 }

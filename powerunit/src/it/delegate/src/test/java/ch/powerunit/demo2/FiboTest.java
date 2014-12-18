@@ -22,11 +22,12 @@ package ch.powerunit.demo2;
 import ch.powerunit.Categories;
 import ch.powerunit.TestDelegate;
 import ch.powerunit.TestSuite;
+import java.util.function.Supplier;
 
 @Categories({ "example", "demo" })
 public class FiboTest implements TestSuite {
     @TestDelegate
-    public final FiboTestInterface delegate = new FiboTestInterface(
+    public final Supplier<FiboTestInterface> delegate = ()->new FiboTestInterface(
             new ch.powerunit.demo.Fibo()::fibo);
 
 }
