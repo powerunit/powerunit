@@ -1,1 +1,5 @@
-ch.powerunit.extensions.matchers
+ch.powerunit
+ch.powerunit.exception
+ch.powerunit.helpers
+ch.powerunit.rules
+ch.powerunit.surefire

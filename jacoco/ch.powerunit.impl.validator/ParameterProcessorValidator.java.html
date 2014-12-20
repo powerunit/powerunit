@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ParameterProcessorValidator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.impl.validator</a> &gt; <span class="el_source">ParameterProcessorValidator.java</span></div><h1>ParameterProcessorValidator.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.impl.validator;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.RoundEnvironment;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Modifier;
+import javax.lang.model.element.Name;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeKind;
+import javax.lang.model.type.TypeMirror;
+
+import ch.powerunit.Parameter;
+
+public interface ParameterProcessorValidator extends ProcessValidator {
+    default void parameterAnnotationValidation(
+            ProcessingEnvironment processingEnv, RoundEnvironment roundEnv) {
+<span class="nc" id="L41">        TypeElement predicate = processingEnv.getElementUtils().getTypeElement(</span>
+                &quot;java.util.function.BiFunction&quot;);
+<span class="nc" id="L43">        Set&lt;Name&gt; exists = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L44">        roundEnv.getElementsAnnotatedWith(Parameter.class)</span>
+<span class="nc" id="L45">                .forEach(</span>
+                        (Element element) -&gt; {
+                            if (element.getKind() != ElementKind.FIELD) {
+                                error(&quot;@Parameter must prefix a field -- &quot;
+                                        + element + &quot; is not a field&quot;);
+                                return;
+                            }
+
+                            Element parent = element.getEnclosingElement();
+                            TypeElement pp = (TypeElement) parent;
+
+                            if (element.getAnnotation(Parameter.class).filter()) {
+                                if (exists.contains(pp.getQualifiedName())) {
+                                    warn(&quot;Class &quot;
+                                            + elementAsString(parent)
+                                            + &quot;\n\t contains more than one @Parameter field with filter = true\n\tOnly one @Parameter field can use the filter attribute with true value.&quot;);
+                                }
+                                exists.add(pp.getQualifiedName());
+                                TypeMirror rt = element.asType();
+                                if (rt.getKind() != TypeKind.DECLARED) {
+                                    warn(&quot;Field &quot;
+                                            + elementAsString(element)
+                                            + &quot;\n\tis prefixed with @Parameter(filter=true) and is &quot;
+                                            + element
+                                            + &quot;\n\tA predicate field must be &quot;
+                                            + predicate);
+                                } else {
+                                    DeclaredType dt = (DeclaredType) rt;
+                                    if (!processingEnv.getTypeUtils()
+                                            .isSubtype(dt.asElement().asType(),
+                                                    predicate.asType())) {
+                                        warn(&quot;Field &quot;
+                                                + elementAsString(element)
+                                                + &quot;\n\tis prefixed with @Parameter(filter=true) and is &quot;
+                                                + dt.asElement().asType()
+                                                + &quot;\n\tA predicate field must be &quot;
+                                                + predicate);
+                                    }
+                                }
+                            }
+                            if (element.getModifiers()
+                                    .contains(Modifier.STATIC)) {
+                                warn(&quot;Field &quot;
+                                        + elementAsString(element)
+                                        + &quot;\n\tis prefixed with @Parameter and is static\n\tA parameter field can't be static&quot;);
+                            }
+                            if (!element.getModifiers().contains(
+                                    Modifier.PUBLIC)) {
+                                warn(&quot;Field &quot;
+                                        + elementAsString(element)
+                                        + &quot;\n\tis prefixed with @Parameter and is not public\n\tA parameter field must be public&quot;);
+                            }
+                            if (element.getAnnotation(Parameter.class).value() &lt; 0) {
+                                warn(&quot;Field &quot;
+                                        + elementAsString(element)
+                                        + &quot;\n\tis prefixed with @Parameter and value is &quot;
+                                        + element
+                                                .getAnnotation(Parameter.class)
+                                                .value()
+                                        + &quot;\n\tA parameter field value must be &gt;=0&quot;);
+                            }
+                        });
+<span class="nc" id="L107">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

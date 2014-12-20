@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PowerUnitProvider.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.surefire</a> &gt; <span class="el_source">PowerUnitProvider.java</span></div><h1>PowerUnitProvider.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.surefire;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
+import java.util.Properties;
+
+import org.apache.maven.surefire.providerapi.AbstractProvider;
+import org.apache.maven.surefire.providerapi.ProviderParameters;
+import org.apache.maven.surefire.report.ConsoleLogger;
+import org.apache.maven.surefire.report.ReporterException;
+import org.apache.maven.surefire.report.ReporterFactory;
+import org.apache.maven.surefire.report.RunListener;
+import org.apache.maven.surefire.suite.RunResult;
+import org.apache.maven.surefire.testset.TestSetFailedException;
+import org.apache.maven.surefire.util.RunOrderCalculator;
+import org.apache.maven.surefire.util.ScanResult;
+import org.apache.maven.surefire.util.TestsToRun;
+
+import ch.powerunit.TestResultListener;
+import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
+
+/**
+ * @author borettim
+ *
+ */
+public class PowerUnitProvider&lt;T&gt; extends AbstractProvider {
+
+    private final ClassLoader testClassLoader;
+
+    private final ProviderParameters providerParameters;
+
+    private final RunOrderCalculator runOrderCalculator;
+
+    private final ScanResult scanResult;
+
+    private final Properties parameters;
+
+<span class="fc" id="L57">    public PowerUnitProvider(ProviderParameters providerParameters) {</span>
+<span class="fc" id="L58">        this.providerParameters = providerParameters;</span>
+<span class="fc" id="L59">        this.testClassLoader = providerParameters.getTestClassLoader();</span>
+<span class="fc" id="L60">        this.scanResult = providerParameters.getScanResult();</span>
+<span class="fc" id="L61">        this.runOrderCalculator = providerParameters.getRunOrderCalculator();</span>
+<span class="fc" id="L62">        this.parameters = providerParameters.getProviderProperties();</span>
+<span class="fc" id="L63">    }</span>
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.maven.surefire.providerapi.SurefireProvider#getSuites()
+     */
+    @SuppressWarnings(&quot;rawtypes&quot;)
+    @Override
+    public Iterator&lt;Class&gt; getSuites() {
+<span class="fc" id="L73">        TestsToRun scanned = scanResult</span>
+<span class="fc" id="L74">                .applyFilter(new PowerUnitProviderScannerFilter(parameters),</span>
+                        testClassLoader);
+<span class="fc" id="L76">        return runOrderCalculator.orderTestClasses(scanned).iterator();</span>
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.apache.maven.surefire.providerapi.SurefireProvider#invoke(java.lang
+     * .Object)
+     */
+    @Override
+    public RunResult invoke(Object forkTestSet) throws TestSetFailedException,
+            ReporterException, InvocationTargetException {
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (forkTestSet == null) {</span>
+<span class="fc" id="L90">            RunResult r = RunResult.noTestsRun();</span>
+            @SuppressWarnings(&quot;rawtypes&quot;)
+<span class="fc" id="L92">            Iterator&lt;Class&gt; i = getSuites();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">            while (i.hasNext()) {</span>
+<span class="fc" id="L94">                r = r.aggregate(invoke(i.next()));</span>
+            }
+<span class="fc" id="L96">            return r;</span>
+        }
+<span class="fc" id="L98">        ReporterFactory reporterFactory = providerParameters</span>
+<span class="fc" id="L99">                .getReporterFactory();</span>
+
+<span class="fc" id="L101">        ConsoleLogger consoleLogger = providerParameters.getConsoleLogger();</span>
+<span class="fc" id="L102">        RunListener rl = reporterFactory.createReporter();</span>
+
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (!(forkTestSet instanceof Class)) {</span>
+<span class="nc" id="L105">            throw new TestSetFailedException(</span>
+                    &quot;Unexpected error. Received parameter is not a class&quot;);
+        }
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L109">        Class&lt;T&gt; underTest = (Class&lt;T&gt;) forkTestSet;</span>
+<span class="fc" id="L110">        TestResultListener&lt;T&gt; listener = new PowerUnitProviderListener&lt;&gt;(</span>
+                consoleLogger, rl, underTest);
+
+<span class="fc" id="L113">        DefaultPowerUnitRunnerImpl&lt;T&gt; runner = new DefaultPowerUnitRunnerImpl&lt;&gt;(</span>
+                underTest);
+<span class="fc" id="L115">        runner.addListener(listener);</span>
+<span class="fc" id="L116">        runner.run();</span>
+<span class="fc" id="L117">        return reporterFactory.close();</span>
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

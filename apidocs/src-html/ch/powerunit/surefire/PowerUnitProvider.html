@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Powerunit - A JDK1.8 test framework<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * Copyright (C) 2014 Mathieu Boretti.<a name="line.3"></a>
+<span class="sourceLineNo">004</span> *<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * This file is part of Powerunit<a name="line.5"></a>
+<span class="sourceLineNo">006</span> *<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * Powerunit is free software: you can redistribute it and/or modify<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * it under the terms of the GNU General Public License as published by<a name="line.8"></a>
+<span class="sourceLineNo">009</span> * the Free Software Foundation, either version 3 of the License, or<a name="line.9"></a>
+<span class="sourceLineNo">010</span> * (at your option) any later version.<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Powerunit is distributed in the hope that it will be useful,<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * but WITHOUT ANY WARRANTY; without even the implied warranty of<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * GNU General Public License for more details.<a name="line.15"></a>
+<span class="sourceLineNo">016</span> *<a name="line.16"></a>
+<span class="sourceLineNo">017</span> * You should have received a copy of the GNU General Public License<a name="line.17"></a>
+<span class="sourceLineNo">018</span> * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.<a name="line.18"></a>
+<span class="sourceLineNo">019</span> */<a name="line.19"></a>
+<span class="sourceLineNo">020</span>package ch.powerunit.surefire;<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>import java.lang.reflect.InvocationTargetException;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.util.Iterator;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.Properties;<a name="line.24"></a>
+<span class="sourceLineNo">025</span><a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.apache.maven.surefire.providerapi.AbstractProvider;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.apache.maven.surefire.providerapi.ProviderParameters;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.apache.maven.surefire.report.ConsoleLogger;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.apache.maven.surefire.report.ReporterException;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.apache.maven.surefire.report.ReporterFactory;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.apache.maven.surefire.report.RunListener;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.apache.maven.surefire.suite.RunResult;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.apache.maven.surefire.testset.TestSetFailedException;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.apache.maven.surefire.util.RunOrderCalculator;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.apache.maven.surefire.util.ScanResult;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.apache.maven.surefire.util.TestsToRun;<a name="line.36"></a>
+<span class="sourceLineNo">037</span><a name="line.37"></a>
+<span class="sourceLineNo">038</span>import ch.powerunit.TestResultListener;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;<a name="line.39"></a>
+<span class="sourceLineNo">040</span><a name="line.40"></a>
+<span class="sourceLineNo">041</span>/**<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * @author borettim<a name="line.42"></a>
+<span class="sourceLineNo">043</span> *<a name="line.43"></a>
+<span class="sourceLineNo">044</span> */<a name="line.44"></a>
+<span class="sourceLineNo">045</span>public class PowerUnitProvider&lt;T&gt; extends AbstractProvider {<a name="line.45"></a>
+<span class="sourceLineNo">046</span><a name="line.46"></a>
+<span class="sourceLineNo">047</span>    private final ClassLoader testClassLoader;<a name="line.47"></a>
+<span class="sourceLineNo">048</span><a name="line.48"></a>
+<span class="sourceLineNo">049</span>    private final ProviderParameters providerParameters;<a name="line.49"></a>
+<span class="sourceLineNo">050</span><a name="line.50"></a>
+<span class="sourceLineNo">051</span>    private final RunOrderCalculator runOrderCalculator;<a name="line.51"></a>
+<span class="sourceLineNo">052</span><a name="line.52"></a>
+<span class="sourceLineNo">053</span>    private final ScanResult scanResult;<a name="line.53"></a>
+<span class="sourceLineNo">054</span><a name="line.54"></a>
+<span class="sourceLineNo">055</span>    private final Properties parameters;<a name="line.55"></a>
+<span class="sourceLineNo">056</span><a name="line.56"></a>
+<span class="sourceLineNo">057</span>    public PowerUnitProvider(ProviderParameters providerParameters) {<a name="line.57"></a>
+<span class="sourceLineNo">058</span>        this.providerParameters = providerParameters;<a name="line.58"></a>
+<span class="sourceLineNo">059</span>        this.testClassLoader = providerParameters.getTestClassLoader();<a name="line.59"></a>
+<span class="sourceLineNo">060</span>        this.scanResult = providerParameters.getScanResult();<a name="line.60"></a>
+<span class="sourceLineNo">061</span>        this.runOrderCalculator = providerParameters.getRunOrderCalculator();<a name="line.61"></a>
+<span class="sourceLineNo">062</span>        this.parameters = providerParameters.getProviderProperties();<a name="line.62"></a>
+<span class="sourceLineNo">063</span>    }<a name="line.63"></a>
+<span class="sourceLineNo">064</span><a name="line.64"></a>
+<span class="sourceLineNo">065</span>    /*<a name="line.65"></a>
+<span class="sourceLineNo">066</span>     * (non-Javadoc)<a name="line.66"></a>
+<span class="sourceLineNo">067</span>     * <a name="line.67"></a>
+<span class="sourceLineNo">068</span>     * @see org.apache.maven.surefire.providerapi.SurefireProvider#getSuites()<a name="line.68"></a>
+<span class="sourceLineNo">069</span>     */<a name="line.69"></a>
+<span class="sourceLineNo">070</span>    @SuppressWarnings("rawtypes")<a name="line.70"></a>
+<span class="sourceLineNo">071</span>    @Override<a name="line.71"></a>
+<span class="sourceLineNo">072</span>    public Iterator&lt;Class&gt; getSuites() {<a name="line.72"></a>
+<span class="sourceLineNo">073</span>        TestsToRun scanned = scanResult<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                .applyFilter(new PowerUnitProviderScannerFilter(parameters),<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                        testClassLoader);<a name="line.75"></a>
+<span class="sourceLineNo">076</span>        return runOrderCalculator.orderTestClasses(scanned).iterator();<a name="line.76"></a>
+<span class="sourceLineNo">077</span>    }<a name="line.77"></a>
+<span class="sourceLineNo">078</span><a name="line.78"></a>
+<span class="sourceLineNo">079</span>    /*<a name="line.79"></a>
+<span class="sourceLineNo">080</span>     * (non-Javadoc)<a name="line.80"></a>
+<span class="sourceLineNo">081</span>     * <a name="line.81"></a>
+<span class="sourceLineNo">082</span>     * @see<a name="line.82"></a>
+<span class="sourceLineNo">083</span>     * org.apache.maven.surefire.providerapi.SurefireProvider#invoke(java.lang<a name="line.83"></a>
+<span class="sourceLineNo">084</span>     * .Object)<a name="line.84"></a>
+<span class="sourceLineNo">085</span>     */<a name="line.85"></a>
+<span class="sourceLineNo">086</span>    @Override<a name="line.86"></a>
+<span class="sourceLineNo">087</span>    public RunResult invoke(Object forkTestSet) throws TestSetFailedException,<a name="line.87"></a>
+<span class="sourceLineNo">088</span>            ReporterException, InvocationTargetException {<a name="line.88"></a>
+<span class="sourceLineNo">089</span>        if (forkTestSet == null) {<a name="line.89"></a>
+<span class="sourceLineNo">090</span>            RunResult r = RunResult.noTestsRun();<a name="line.90"></a>
+<span class="sourceLineNo">091</span>            @SuppressWarnings("rawtypes")<a name="line.91"></a>
+<span class="sourceLineNo">092</span>            Iterator&lt;Class&gt; i = getSuites();<a name="line.92"></a>
+<span class="sourceLineNo">093</span>            while (i.hasNext()) {<a name="line.93"></a>
+<span class="sourceLineNo">094</span>                r = r.aggregate(invoke(i.next()));<a name="line.94"></a>
+<span class="sourceLineNo">095</span>            }<a name="line.95"></a>
+<span class="sourceLineNo">096</span>            return r;<a name="line.96"></a>
+<span class="sourceLineNo">097</span>        }<a name="line.97"></a>
+<span class="sourceLineNo">098</span>        ReporterFactory reporterFactory = providerParameters<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                .getReporterFactory();<a name="line.99"></a>
+<span class="sourceLineNo">100</span><a name="line.100"></a>
+<span class="sourceLineNo">101</span>        ConsoleLogger consoleLogger = providerParameters.getConsoleLogger();<a name="line.101"></a>
+<span class="sourceLineNo">102</span>        RunListener rl = reporterFactory.createReporter();<a name="line.102"></a>
+<span class="sourceLineNo">103</span><a name="line.103"></a>
+<span class="sourceLineNo">104</span>        if (!(forkTestSet instanceof Class)) {<a name="line.104"></a>
+<span class="sourceLineNo">105</span>            throw new TestSetFailedException(<a name="line.105"></a>
+<span class="sourceLineNo">106</span>                    "Unexpected error. Received parameter is not a class");<a name="line.106"></a>
+<span class="sourceLineNo">107</span>        }<a name="line.107"></a>
+<span class="sourceLineNo">108</span>        @SuppressWarnings("unchecked")<a name="line.108"></a>
+<span class="sourceLineNo">109</span>        Class&lt;T&gt; underTest = (Class&lt;T&gt;) forkTestSet;<a name="line.109"></a>
+<span class="sourceLineNo">110</span>        TestResultListener&lt;T&gt; listener = new PowerUnitProviderListener&lt;&gt;(<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                consoleLogger, rl, underTest);<a name="line.111"></a>
+<span class="sourceLineNo">112</span><a name="line.112"></a>
+<span class="sourceLineNo">113</span>        DefaultPowerUnitRunnerImpl&lt;T&gt; runner = new DefaultPowerUnitRunnerImpl&lt;&gt;(<a name="line.113"></a>
+<span class="sourceLineNo">114</span>                underTest);<a name="line.114"></a>
+<span class="sourceLineNo">115</span>        runner.addListener(listener);<a name="line.115"></a>
+<span class="sourceLineNo">116</span>        runner.run();<a name="line.116"></a>
+<span class="sourceLineNo">117</span>        return reporterFactory.close();<a name="line.117"></a>
+<span class="sourceLineNo">118</span><a name="line.118"></a>
+<span class="sourceLineNo">119</span>    }<a name="line.119"></a>
+<span class="sourceLineNo">120</span>}<a name="line.120"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
