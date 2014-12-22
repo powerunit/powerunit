@@ -215,7 +215,8 @@
 <div class="source">
 <pre>assertThat(myString).is(&quot;x&quot;);</pre></div>
 <p>These assertion start by passing the object that must be check as parameter of the <tt>assertThat</tt> method. These methods can take an additionnal parameter (first one) that is a message to be used in case of failure. This method return a DSL object providing the various method to check the object. The more generic DSL method that can be used is the <tt>is</tt> one, which can be used to pass an hamcrest matcher or directly a value to be used for comparing (equality).</p>
-<p>In case the object to be checked is a <tt>String</tt>, special assertion (like <tt>startsWith</tt>) can also be used.</p></div>
+<p>In case the object to be checked is a <tt>String</tt>, special assertion (like <tt>startsWith</tt>) can also be used.</p>
+<p>Also, as a first step in the validation, the <tt>as</tt> method can be used to convert the received value into a sub class of the received one. For instance, if the assertion receive a <tt>Number</tt>, the <tt>as</tt> intermediate method can be used to transform this number into an <tt>Integer</tt>, if and only if the received instance is really an <tt>Integer</tt>.</p></div>
 <div class="section">
 <h3><a name="Assertion_on_Iterable"></a>Assertion on Iterable</h3>
 <p>In some case, the object to be check is an Iterable one. In this case, the method <tt>assertThatIterable</tt> can be used.</p>
