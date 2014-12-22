@@ -33,7 +33,7 @@ import org.hamcrest.Matchers;
  *            the object type.
  */
 public interface AssertThatObject<T> {
-
+	
     /**
      * Check that the object is matching the passed matcher.
      * 

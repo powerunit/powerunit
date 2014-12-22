@@ -96,6 +96,22 @@ public class AssumeThatTests {
                 () -> TestSuite.DSL.assumeThat("msg", "x").isA(
                         (Class) Integer.class),
                 "msg\nexpecting is an instance of java.lang.Integer but \"x\" is a java.lang.String");
+        
+        AllTests.testNoException(
+				"testAssumeThatAsOK",
+				() -> {
+					TestSuite.DSL.assumeThat((Number) Integer.valueOf(0))
+							.as(Integer.class).is(0);
+				});
+		AllTests.testException("testAssumeThatAsKONull", () -> {
+			TestSuite.DSL.assumeThat((Number) Integer.valueOf(0)).as(null);
+		}, "clazz argument can't be null");
+		AllTests.testException(
+				"testAssumeThatAsKOType",
+				() -> {
+					TestSuite.DSL.assumeThat((Number) Integer.valueOf(0))
+							.as(Double.class).is(0d);
+				}, "The value 0 can't be casted to java.lang.Double");
     }
 
 }
