@@ -18,6 +18,10 @@ assertThat(myString).is("x");
  
  In case the object to be checked is a <<<String>>>, special assertion (like <<<startsWith>>>) can also be used.
  
+ Also, as a first step in the validation, the <<<as>>> method can be used to convert the received value into a sub class of 
+ the received one. For instance, if the assertion receive a <<<Number>>>, the <<<as>>> intermediate method can be used to
+ transform this number into an <<<Integer>>>, if and only if the received instance is really an <<<Integer>>>.
+ 
 * Assertion on Iterable
 
  In some case, the object to be check is an Iterable one. In this case, the method <<<assertThatIterable>>> can be used.
