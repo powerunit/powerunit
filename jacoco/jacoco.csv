@@ -28,7 +28,7 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.surefire,PowerUnitPr
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.processor,PowerUnitProcessor,373,0,28,0,91,0,20,0,6,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatIterableImpl,0,6,0,0,0,2,0,1,0,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultPowerUnitRunnerImpl.DelegationTestResultListener,72,59,0,0,21,21,3,7,3,7
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatObjectImpl,0,95,0,8,0,18,0,6,0,2
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatObjectImpl,0,113,0,10,0,21,0,8,0,3
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultPowerUnitRunnerImpl,103,570,9,27,8,158,8,36,1,25
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatStringImpl,0,6,0,0,0,2,0,1,0,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultTestResultListener,64,941,3,17,11,160,5,23,2,16

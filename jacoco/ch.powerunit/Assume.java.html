@@ -53,9 +53,9 @@ interface Assume {
 	 *            the object type.
 	 * @param obj
 	 *            the object
-	 * @return {@link AssertThatObject the assert DSL on this object}
+	 * @return {@link AssertThatCastableObject the assert DSL on this object}
 	 */
-	default &lt;T&gt; AssertThatObject&lt;T&gt; assumeThat(T obj) {
+	default &lt;T&gt; AssertThatCastableObject&lt;T&gt; assumeThat(T obj) {
 <span class="fc" id="L59">		return assumeThat(null, obj);</span>
 	}
 
@@ -78,9 +78,9 @@ interface Assume {
 	 *            a message
 	 * @param obj
 	 *            the object
-	 * @return {@link AssertThatObject the assert DSL on this object}
+	 * @return {@link AssertThatCastableObject the assert DSL on this object}
 	 */
-	default &lt;T&gt; AssertThatObject&lt;T&gt; assumeThat(String msg, T obj) {
+	default &lt;T&gt; AssertThatCastableObject&lt;T&gt; assumeThat(String msg, T obj) {
 <span class="fc" id="L84">		return new AssertThatObjectImpl&lt;T&gt;(false, msg, () -&gt; obj);</span>
 	}
 
@@ -198,10 +198,10 @@ interface Assume {
 	 *            the function
 	 * @param input
 	 *            the input to the function
-	 * @return {@link AssertThatObject then assert DSL on the result of the
+	 * @return {@link AssertThatCastableObject then assert DSL on the result of the
 	 *         function}
 	 */
-	default &lt;T, R&gt; AssertThatObject&lt;R&gt; assumeThatFunction(
+	default &lt;T, R&gt; AssertThatCastableObject&lt;R&gt; assumeThatFunction(
 			Function&lt;T, R&gt; function, T input) {
 <span class="fc" id="L206">		return new AssertThatObjectImpl&lt;R&gt;(false, null,</span>
 				() -&gt; function.apply(input));
@@ -234,10 +234,10 @@ interface Assume {
 	 *            the function
 	 * @param input
 	 *            the input to the function
-	 * @return {@link AssertThatObject then assert DSL on the result of the
+	 * @return {@link AssertThatCastableObject then assert DSL on the result of the
 	 *         function}
 	 */
-	default &lt;T, R&gt; AssertThatObject&lt;R&gt; assumeThatFunction(String msg,
+	default &lt;T, R&gt; AssertThatCastableObject&lt;R&gt; assumeThatFunction(String msg,
 			Function&lt;T, R&gt; function, T input) {
 <span class="fc" id="L242">		return new AssertThatObjectImpl&lt;R&gt;(false, msg,</span>
 				() -&gt; function.apply(input));
@@ -271,10 +271,10 @@ interface Assume {
 	 *            the first input to the function
 	 * @param input2
 	 *            the second input to the function
-	 * @return {@link AssertThatObject then assert DSL on the result of the
+	 * @return {@link AssertThatCastableObject then assert DSL on the result of the
 	 *         bifunction}
 	 */
-	default &lt;T, U, R&gt; AssertThatObject&lt;R&gt; assumeThatBiFunction(
+	default &lt;T, U, R&gt; AssertThatCastableObject&lt;R&gt; assumeThatBiFunction(
 			BiFunction&lt;T, U, R&gt; function, T input1, U input2) {
 <span class="nc" id="L279">		return new AssertThatObjectImpl&lt;R&gt;(false, null, () -&gt; function.apply(</span>
 				input1, input2));
@@ -310,10 +310,10 @@ interface Assume {
 	 *            the first input to the function
 	 * @param input2
 	 *            the second input to the function
-	 * @return {@link AssertThatObject then assert DSL on the result of the
+	 * @return {@link AssertThatCastableObject then assert DSL on the result of the
 	 *         bifunction}
 	 */
-	default &lt;T, U, R&gt; AssertThatObject&lt;R&gt; assumeThatBiFunction(String msg,
+	default &lt;T, U, R&gt; AssertThatCastableObject&lt;R&gt; assumeThatBiFunction(String msg,
 			BiFunction&lt;T, U, R&gt; function, T input1, U input2) {
 <span class="nc" id="L318">		return new AssertThatObjectImpl&lt;R&gt;(false, msg, () -&gt; function.apply(</span>
 				input1, input2));

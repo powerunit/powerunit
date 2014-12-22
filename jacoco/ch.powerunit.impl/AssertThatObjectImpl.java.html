@@ -25,42 +25,69 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 
+import ch.powerunit.AssertThatCastableObject;
 import ch.powerunit.AssertThatObject;
 import ch.powerunit.exception.AssumptionError;
+import ch.powerunit.exception.InternalError;
 
-public class AssertThatObjectImpl&lt;T&gt; implements AssertThatObject&lt;T&gt; {
+public class AssertThatObjectImpl&lt;T&gt; implements AssertThatObject&lt;T&gt;,
+		AssertThatCastableObject&lt;T&gt; {
 
-    private final boolean assertion;
+	private final boolean assertion;
 
-    public AssertThatObjectImpl(boolean assertion, String msg,
-<span class="fc" id="L36">            Supplier&lt;T&gt; provider) {</span>
-<span class="fc" id="L37">        this.provider = provider;</span>
-<span class="fc" id="L38">        this.msg = msg;</span>
-<span class="fc" id="L39">        this.assertion = assertion;</span>
-<span class="fc" id="L40">    }</span>
+	public AssertThatObjectImpl(boolean assertion, String msg,
+<span class="fc" id="L39">			Supplier&lt;T&gt; provider) {</span>
+<span class="fc" id="L40">		this.provider = provider;</span>
+<span class="fc" id="L41">		this.msg = msg;</span>
+<span class="fc" id="L42">		this.assertion = assertion;</span>
+<span class="fc" id="L43">	}</span>
 
-    private final Supplier&lt;T&gt; provider;
+	private final Supplier&lt;T&gt; provider;
 
-    private final String msg;
+	private final String msg;
 
-    @Override
-    public void is(Matcher&lt;? super T&gt; matching) {
-<span class="fc" id="L48">        Description message = new StringDescription();</span>
-<span class="fc" id="L49">        message.appendText(&quot;expecting &quot;);</span>
-<span class="fc" id="L50">        matching.describeTo(message);</span>
-<span class="fc" id="L51">        message.appendText(&quot; but &quot;);</span>
-<span class="fc" id="L52">        T obj = provider.get();</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (!matching.matches(obj)) {</span>
-<span class="fc" id="L54">            matching.describeMismatch(obj, message);</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">            if (assertion) {</span>
-<span class="fc bfc" id="L56" title="All 2 branches covered.">                throw new AssertionError((msg == null ? &quot;&quot; : msg + &quot;\n&quot;)</span>
-<span class="fc" id="L57">                        + message.toString());</span>
-            } else {
-<span class="fc bfc" id="L59" title="All 2 branches covered.">                throw new AssumptionError((msg == null ? &quot;&quot; : msg + &quot;\n&quot;)</span>
-<span class="fc" id="L60">                        + message.toString());</span>
-            }
-        }
-<span class="fc" id="L63">    }</span>
+	@Override
+	public void is(Matcher&lt;? super T&gt; matching) {
+<span class="fc" id="L51">		Description message = new StringDescription();</span>
+<span class="fc" id="L52">		message.appendText(&quot;expecting &quot;);</span>
+<span class="fc" id="L53">		matching.describeTo(message);</span>
+<span class="fc" id="L54">		message.appendText(&quot; but &quot;);</span>
+<span class="fc" id="L55">		T obj = provider.get();</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		if (!matching.matches(obj)) {</span>
+<span class="fc" id="L57">			matching.describeMismatch(obj, message);</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">			if (assertion) {</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">				throw new AssertionError((msg == null ? &quot;&quot; : msg + &quot;\n&quot;)</span>
+<span class="fc" id="L60">						+ message.toString());</span>
+			} else {
+<span class="fc bfc" id="L62" title="All 2 branches covered.">				throw new AssumptionError((msg == null ? &quot;&quot; : msg + &quot;\n&quot;)</span>
+<span class="fc" id="L63">						+ message.toString());</span>
+			}
+		}
+<span class="fc" id="L66">	}</span>
 
+	@Override
+	public &lt;P extends T&gt; AssertThatObject&lt;P&gt; as(Class&lt;P&gt; clazz) {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (clazz == null) {</span>
+<span class="fc" id="L71">			throw new InternalError(&quot;clazz argument can't be null&quot;);</span>
+		}
+<span class="fc" id="L73">		return new AssertThatObjectImpl&lt;P&gt;(assertion, msg, () -&gt; {</span>
+			T v = provider.get();
+			if (v == null) {
+				return null;
+			} else if (!clazz.isAssignableFrom(v.getClass())) {
+				if (assertion) {
+					throw new AssertionError((msg == null ? &quot;&quot; : msg + &quot;\n&quot;)
+							+ &quot;The value &quot; + v + &quot; can't be casted to &quot;
+							+ clazz.getName());
+				} else {
+					throw new AssumptionError((msg == null ? &quot;&quot; : msg + &quot;\n&quot;)
+							+ &quot;The value &quot; + v + &quot; can't be casted to &quot;
+							+ clazz.getName());
+				}
+			} else {
+				return (P) v;
+			}
+		});
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
