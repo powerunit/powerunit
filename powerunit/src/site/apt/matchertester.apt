@@ -1,0 +1,55 @@
+Tester for hamcrest Matchers
+
+ <<<Matcher>>>, used for test or not, must also be tested. Powerunit provides a way to test Matcher 
+ in a simple way.
+ 
+ The class <<<MatcherTester>>> exposes a DSL to create build a tester, based on the concept of
+ Test Framework. Let's assume you have a matcher on <<<String>>> that check for equality. It is 
+ possible to wrote a test in the following way :
+ 
++-----
+import ch.powerunit.TestDelegate;
+import ch.powerunit.TestSuite;
+import ch.powerunit.matchers.MatcherTester;
+import static ch.powerunit.matchers.MatcherTester.*;
+
+public class MatcherTesterTest implements TestSuite {
+
+  @TestDelegate
+  public final MatcherTester<TestMatcher> tester = MatcherTester.of(TestMatcher.class).with(
+      matcher(new TestMatcher(null)).describedAs("is null")
+          .nullAccepted().rejecting(value("x").withMessage(" was \"x\"")),
+      matcher(new TestMatcher("x")).describedAs("is \"x\"")
+          .nullRejected(" was null").accepting("x").rejecting(value("y").withMessage(" was \"y\"")),
+      matcher(new TestMatcher("y")).describedAs("is \"y\"")
+          .nullRejected(" was null").accepting("y").rejecting(value("x").withMessage(" was \"x\"")));
+}
++-----
+
+ The framework provides a way to declare several expectation (test fixtures) for a Matcher. It starts
+ with a <<<<MatcherTester.of(theclass).with(one or several validation)>>>. Each of these validation
+ are builded by using the syntax <<<matcher(instance of matcher).describedAs(expected message or
+ matcher).>>> followed by several of the following :
+ 
+ * <<<nullAccepted()>>>
+ 
+ * <<<nullRejected()>>>
+
+ * <<<accepting(list of expected value)>>>
+
+ * <<<rejecting(...)>>> Each rejecting clause is defined by <<<value(rejected value).withMessage(
+ expected message or matcher)>>>
+ 
+ Error of validation will be integrated in the normal test result, like for instance :
+ 
++-----
+Failed tests:
+	Validate that a value (x) is accepted for the matcher of class class ch.powerunit.examples.MatcherTesterTest$TestMatcher (TestMatcher [target=x]) of ch.powerunit.examples.MatcherTesterTest caused by Validate x is accepted by this matcher
+expecting <true> but was <false>
+	Validate that a value (y) is rejected for the matcher of class class ch.powerunit.examples.MatcherTesterTest$TestMatcher (TestMatcher [target=x] then " was \"y\"") of ch.powerunit.examples.MatcherTesterTest caused by Validate y is rejected by this matcher
+expecting <false> but was <true>
+	Validate that a value (y) is accepted for the matcher of class class ch.powerunit.examples.MatcherTesterTest$TestMatcher (TestMatcher [target=y]) of ch.powerunit.examples.MatcherTesterTest caused by Validate y is accepted by this matcher
+expecting <true> but was <false>
+	Validate that a value (x) is rejected for the matcher of class class ch.powerunit.examples.MatcherTesterTest$TestMatcher (TestMatcher [target=y] then " was \"x\"") of ch.powerunit.examples.MatcherTesterTest caused by Validate x is rejected by this matcher
+expecting <false> but was <true>
++-----
