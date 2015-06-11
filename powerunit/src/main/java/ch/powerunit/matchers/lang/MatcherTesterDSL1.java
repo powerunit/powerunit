@@ -24,35 +24,117 @@ import org.hamcrest.Matcher;
 import ch.powerunit.matchers.MatcherTester;
 
 /**
+ * Definition of the expectation on a matcher.
+ * 
  * @author borettim
  * @since 0.3.0
  */
 public interface MatcherTesterDSL1<T extends Matcher<?>> {
 	/**
+	 * DSL to define the expectation.
+	 * 
 	 * @param assertions
-	 * @return
+	 *            the expectation
+	 * @return the tester
+	 * @see ch.powerunit.matchers.MatcherTester#matcher(Matcher)
 	 */
 	MatcherTester<T> with(MatcherAssertion<T>... assertions);
 
 	/**
+	 * DSL to define the expectation.
+	 * 
 	 * @param first
-	 * @return
+	 *            first expectation
+	 * @return the tester
+	 * @see ch.powerunit.matchers.MatcherTester#matcher(Matcher)
 	 */
 	MatcherTester<T> with(MatcherAssertion<T> first);
 
 	/**
+	 * DSL to define the expectation.
+	 * 
 	 * @param first
+	 *            first expectation
 	 * @param second
-	 * @return
+	 *            second expectation
+	 * @return the tester
+	 * @see ch.powerunit.matchers.MatcherTester#matcher(Matcher)
 	 */
 	MatcherTester<T> with(MatcherAssertion<T> first, MatcherAssertion<T> second);
 
 	/**
+	 * DSL to define the expectation.
+	 * 
 	 * @param first
+	 *            first expectation
 	 * @param second
+	 *            second expectation
 	 * @param third
-	 * @return
+	 *            third expectation
+	 * @return the tester
+	 * @see ch.powerunit.matchers.MatcherTester#matcher(Matcher)
 	 */
 	MatcherTester<T> with(MatcherAssertion<T> first,
 			MatcherAssertion<T> second, MatcherAssertion<T> third);
+
+	/**
+	 * DSL to define the expectation.
+	 * 
+	 * @param first
+	 *            first expectation
+	 * @param second
+	 *            second expectation
+	 * @param third
+	 *            third expectation
+	 * @param fourth
+	 *            fourth expectation
+	 * @return the tester
+	 * @see ch.powerunit.matchers.MatcherTester#matcher(Matcher)
+	 */
+	MatcherTester<T> with(MatcherAssertion<T> first,
+			MatcherAssertion<T> second, MatcherAssertion<T> third,
+			MatcherAssertion<T> fourth);
+
+	/**
+	 * DSL to define the expectation.
+	 * 
+	 * @param first
+	 *            first expectation
+	 * @param second
+	 *            second expectation
+	 * @param third
+	 *            third expectation
+	 * @param fourth
+	 *            fourth expectation
+	 * @param fifth
+	 *            fifth expectation
+	 * @return the tester
+	 * @see ch.powerunit.matchers.MatcherTester#matcher(Matcher)
+	 */
+	MatcherTester<T> with(MatcherAssertion<T> first,
+			MatcherAssertion<T> second, MatcherAssertion<T> third,
+			MatcherAssertion<T> fourth, MatcherAssertion<T> fifth);
+
+	/**
+	 * DSL to define the expectation.
+	 * 
+	 * @param first
+	 *            first expectation
+	 * @param second
+	 *            second expectation
+	 * @param third
+	 *            third expectation
+	 * @param fourth
+	 *            fourth expectation
+	 * @param fifth
+	 *            fifth expectation
+	 * @param sixth
+	 *            sixth expectation
+	 * @return the tester
+	 * @see ch.powerunit.matchers.MatcherTester#matcher(Matcher)
+	 */
+	MatcherTester<T> with(MatcherAssertion<T> first,
+			MatcherAssertion<T> second, MatcherAssertion<T> third,
+			MatcherAssertion<T> fourth, MatcherAssertion<T> fifth,
+			MatcherAssertion<T> sixth);
 }

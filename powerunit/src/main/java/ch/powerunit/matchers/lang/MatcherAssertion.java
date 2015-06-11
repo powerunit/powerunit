@@ -22,40 +22,62 @@ package ch.powerunit.matchers.lang;
 import org.hamcrest.Matcher;
 
 /**
+ * Use to define the expectation on one single instance of a matcher.
+ * 
  * @author borettim
  * @since 0.3.0
  */
 public interface MatcherAssertion<T extends Matcher<?>> {
 	/**
-	 * @return
+	 * Indicate that this matcher instance must accept the null value.
+	 * 
+	 * @return continuation of the DSL.
 	 */
 	MatcherAssertion<T> nullAccepted();
 
 	/**
+	 * Indicate that this matcher instance must reject the null value with a
+	 * message accepted by a matcher.
+	 * 
 	 * @param rejectedMessage
-	 * @return
+	 *            the matcher on the message
+	 * @return continuation of the DSL
 	 */
 	MatcherAssertion<T> nullRejected(Matcher<String> rejectedMessage);
 
 	/**
+	 * Indicate that this matcher instance must reject the null value with a
+	 * message.
+	 * 
 	 * @param rejectedMessage
-	 * @return
+	 *            the expected message
+	 * @return continuation of the DSL
 	 */
 	MatcherAssertion<T> nullRejected(String rejectedMessage);
 
 	/**
+	 * Define a list of value accepted by this matcher.
+	 * 
 	 * @param values
-	 * @return
+	 *            the values accepted by this matcher
+	 * @return continuation of the DSL
 	 */
 	MatcherAssertion<T> accepting(Object... values);
 
 	/**
+	 * Define a list of value rejected by this matcher.
+	 * 
 	 * @param reject
-	 * @return
+	 *            the values (and expectation on rejecting message) rejected by
+	 *            this this matcher.
+	 * @return continuation of the DSL
+	 * @see ch.powerunit.matchers.MatcherTester#value(Object)
 	 */
 	MatcherAssertion<T> rejecting(Reject... reject);
 
 	/**
+	 * Definition of a rejected value.
+	 * 
 	 * @author borettim
 	 * @since 0.3.0
 	 */

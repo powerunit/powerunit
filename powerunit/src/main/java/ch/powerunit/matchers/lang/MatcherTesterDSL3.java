@@ -24,19 +24,27 @@ import org.hamcrest.Matcher;
 import ch.powerunit.matchers.lang.MatcherAssertion.Reject;
 
 /**
+ * Define the expected message for rejected object.
+ * 
  * @author borettim
  * @since 0.3.0
  */
 public interface MatcherTesterDSL3 {
 	/**
+	 * Define the rejecting message.
+	 * 
 	 * @param message
-	 * @return
+	 *            the expected message.
+	 * @return the rejecting object to be used
 	 */
 	Reject withMessage(String message);
 
 	/**
+	 * Define the rejecting message.
+	 * 
 	 * @param message
-	 * @return
+	 *            the matcher on the expected message
+	 * @return the rejecting object to be used
 	 */
 	Reject withMessage(Matcher<String> message);
 }

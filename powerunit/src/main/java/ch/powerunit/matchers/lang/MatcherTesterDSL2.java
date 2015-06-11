@@ -22,20 +22,28 @@ package ch.powerunit.matchers.lang;
 import org.hamcrest.Matcher;
 
 /**
+ * Define the expectation on the description of the matcher.
+ * 
  * @author borettim
  * @since 0.3.0
  * @param <T>
  */
 public interface MatcherTesterDSL2<T extends Matcher<?>> {
 	/**
+	 * Define the expected describedAs message for the instance of the matcher.
+	 * 
 	 * @param expected
-	 * @return
+	 *            the matcher on the describedAs message
+	 * @return the continuation of the DSL
 	 */
 	MatcherAssertion<T> describedAs(Matcher<String> expected);
 
 	/**
+	 * Define the expected describedAs message for the instance of the matcher.
+	 * 
 	 * @param expected
-	 * @return
+	 *            the expected message of the describedAs message
+	 * @return the continuation of the DSL
 	 */
 	MatcherAssertion<T> describedAs(String expected);
 }
