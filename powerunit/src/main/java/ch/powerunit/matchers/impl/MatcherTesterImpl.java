@@ -19,15 +19,7 @@
  */
 package ch.powerunit.matchers.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collector;
 import java.util.stream.Stream;
 import java.util.stream.Stream.Builder;
 
@@ -47,9 +39,9 @@ import ch.powerunit.matchers.lang.MatcherAssertion;
  * @since 0.3.0
  */
 @TestDelegator
-public final class MatcherTesterImpl implements TestSuite {
+public final class MatcherTesterImpl<T extends Matcher<?>> implements TestSuite {
 	@Parameters
-	public static Stream<Object[]> getParameter(MatcherTester<?> input) {
+	public static <T extends Matcher<?>> Stream<Object[]> getParameter(MatcherTester<T> input) {
 		Builder<Object[]> b = Stream.builder();
 		for (MatcherAssertion<?> ma : input.getAssertions()) {
 			MatcherAssertionImpl<?> c = (MatcherAssertionImpl<?>) ma;
@@ -81,10 +73,10 @@ public final class MatcherTesterImpl implements TestSuite {
 	}
 
 	@Parameter(0)
-	public MatcherAssertionImpl<?> assertion;
+	public MatcherAssertionImpl<T> assertion;
 
 	@Parameter(1)
-	public Matcher<?> target;
+	public Matcher<T> target;
 
 	@Parameter(2)
 	public Matcher<String> expectedDescription;
@@ -114,7 +106,7 @@ public final class MatcherTesterImpl implements TestSuite {
 	public String rejectMesageAsString;
 
 	@Parameter(11)
-	public Class<?> matcherClass;
+	public Class<T> matcherClass;
 
 	@Parameter(value = 12, filter = true)
 	public BiFunction<String, Object[], Boolean> filter;
