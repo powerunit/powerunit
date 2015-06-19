@@ -46,6 +46,7 @@ public class ComparatorTesterImpl<O, C extends Comparator<O>> implements
 		O equal[] = input.getEqualSamples().get();
 		O greater[] = input.getGreaterSamples().get();
 		Comparator<O> underTest = input.getUnderTest().get();
+		int i = 0;
 		for (O l : less) {
 			for (O e : equal) {
 				b.accept(new Object[] { input.getComparatorClass(), underTest,
@@ -59,7 +60,19 @@ public class ComparatorTesterImpl<O, C extends Comparator<O>> implements
 				b.accept(new Object[] { input.getComparatorClass(), underTest,
 						g, l, 1 });
 			}
+			int j = 0;
+			for (O l2 : less) {
+				if (j++ <= i) {
+					continue;
+				}
+				b.accept(new Object[] { input.getComparatorClass(), underTest,
+						l, l2, -1 });
+				b.accept(new Object[] { input.getComparatorClass(), underTest,
+						l2, l, 1 });
+			}
+			i++;
 		}
+		i = 0;
 		for (O e : equal) {
 			for (O g : greater) {
 				b.accept(new Object[] { input.getComparatorClass(), underTest,
@@ -73,6 +86,17 @@ public class ComparatorTesterImpl<O, C extends Comparator<O>> implements
 				b.accept(new Object[] { input.getComparatorClass(), underTest,
 						e2, e, 0 });
 			}
+			int j = 0;
+			for (O e2 : equal) {
+				if (j++ <= i) {
+					continue;
+				}
+				b.accept(new Object[] { input.getComparatorClass(), underTest,
+						e, e2, -1 });
+				b.accept(new Object[] { input.getComparatorClass(), underTest,
+						e2, e, 1 });
+			}
+			i++;
 		}
 		return b.build()
 				.map(TestSuite.DSL
@@ -113,7 +137,7 @@ public class ComparatorTesterImpl<O, C extends Comparator<O>> implements
 		return false;
 	}
 
-	@Test(name = "Having `{2}` < `{3}` Then result should be <0 for the Comparator class {0} (with instance {1})}")
+	@Test(name = "Having `{2}` < `{3}` Then result should be <0 for the Comparator class {0} (with instance {1})")
 	public void testLess() {
 		assertThat("Comparaison is negative", instance.compare(obj1, obj2)).is(
 				lessThan(0));

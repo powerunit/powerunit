@@ -54,4 +54,9 @@ public class ComparatorTesterTest implements TestSuite {
 	public final ComparatorTester<Integer, MyComparator> providedSampler = ComparatorTester
 			.of(MyComparator.class).withLessSamples(-6, -4)
 			.withEqualSamples(12).withGreaterSamples(16, 18).build();
+
+	@TestDelegate
+	public final ComparatorTester<Integer, MyComparator> providedSampler2 = ComparatorTester
+			.of(MyComparator.class).withLessSamples(-6).withEqualSamples(12)
+			.withGreaterSamples(16).build();
 }
