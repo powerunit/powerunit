@@ -1,4 +1,6 @@
 ch.powerunit
+ch.powerunit.comparator
+ch.powerunit.comparator.lang
 ch.powerunit.exception
 ch.powerunit.helpers
 ch.powerunit.rules

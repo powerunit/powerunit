@@ -1,5 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.helpers,StreamParametersMapFunction,60,346,24,42,18,82,24,30,1,20
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.comparator,ComparatorTester,0,42,0,0,0,14,0,7,0,7
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.comparator,ComparatorTester.ComparatorTesterDSL,161,144,0,4,11,29,9,16,9,14
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers,StringPatternMatcher,35,0,2,0,10,0,4,0,3,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers,MatcherTester,0,30,0,0,0,9,0,6,0,6
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers,ExceptionMessageMatcher,0,9,0,0,0,3,0,2,0,2
@@ -18,6 +20,8 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.rules,ExternalResour
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.rules,TestListenerRule,38,16,0,0,16,7,4,3,4,3
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.rules,SystemPropertiesRule,0,101,0,6,0,19,0,10,0,7
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.rules,TestContextRule,0,10,0,0,0,4,0,3,0,3
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.comparator.impl,ComparatorTesterImpl,0,425,0,24,0,50,0,18,0,6
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.comparator.impl,SampleProvider,355,93,16,4,27,17,10,6,0,6
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.report,ObjectFactory,74,0,0,0,15,0,12,0,12,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.report,Failure,9,15,0,0,3,7,3,4,3,4
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.report,Error,9,15,0,0,3,7,3,4,3,4
@@ -38,7 +42,7 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultPowerUni
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatObjectImpl,20,175,3,17,1,30,3,11,0,4
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultPowerUnitRunnerImpl,257,1072,13,61,43,277,15,101,4,75
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatStringImpl,0,6,0,0,0,2,0,1,0,1
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultTestResultListener,64,941,3,17,11,160,5,23,2,16
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultTestResultListener,82,931,4,16,13,163,6,23,2,17
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,TestContextImpl,0,69,0,2,0,15,0,8,0,7
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatExceptionImpl,0,94,0,8,0,16,0,6,0,2
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultPowerUnitRunnerImpl.new Statement() {...},5,41,0,0,1,10,1,2,1,2
@@ -66,7 +70,7 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,TestSuite,16,58,0,0,
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,AssertThatObject,0,28,0,0,0,12,0,6,0,6
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,Statement.new Statement() {...},17,0,0,0,4,0,3,0,3,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,Statement.new Statement() {...},19,23,0,0,4,6,1,2,1,2
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,HamcrestMatchers,304,33,0,0,123,11,90,11,90,11
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,HamcrestMatchers,298,39,0,0,121,13,88,13,88,13
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,AssertThatIterable,0,30,0,0,0,12,0,6,0,6
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,AssertThatString,12,15,0,0,4,6,2,3,2,3
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,TestRule,5,64,0,0,0,16,0,15,0,15

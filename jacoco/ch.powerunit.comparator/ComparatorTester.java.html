@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ComparatorTester.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.comparator</a> &gt; <span class="el_source">ComparatorTester.java</span></div><h1>ComparatorTester.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.comparator;
+
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.function.Supplier;
+
+import ch.powerunit.TestInterface;
+import ch.powerunit.comparator.impl.ComparatorTesterImpl;
+import ch.powerunit.comparator.impl.SampleProvider;
+import ch.powerunit.comparator.lang.ComparatorTesterDSLEnd;
+import ch.powerunit.comparator.lang.ComparatorTesterDSLEquals;
+import ch.powerunit.comparator.lang.ComparatorTesterDSLGreater;
+import ch.powerunit.comparator.lang.ComparatorTesterDSLLess;
+import ch.powerunit.comparator.lang.ComparatorTesterDSLStart;
+
+/**
+ * This is a framework to simplify the testing of {@link Comparator}.
+ * 
+ * @author borettim
+ * @since 0.3.0
+ * @param &lt;O&gt;
+ *            The object of the comparator
+ * @param &lt;C&gt;
+ *            The comparator undertest
+ */
+@TestInterface(ComparatorTesterImpl.class)
+public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
+	private static class ComparatorTesterDSL&lt;O, C extends Comparator&lt;O&gt;&gt;
+			implements ComparatorTesterDSLStart&lt;O, C&gt;,
+			ComparatorTesterDSLLess&lt;O, C&gt;, ComparatorTesterDSLEquals&lt;O, C&gt;,
+			ComparatorTesterDSLGreater&lt;O, C&gt;, ComparatorTesterDSLEnd&lt;O, C&gt; {
+		private final Class&lt;C&gt; clazzUnderTest;
+		private O lessSamples[];
+		private O equalSamples[];
+		private O greaterSamples[];
+		private C underTest;
+
+<span class="fc" id="L57">		public ComparatorTesterDSL(Class&lt;C&gt; clazzUnderTest) {</span>
+<span class="fc" id="L58">			this.clazzUnderTest = clazzUnderTest;</span>
+<span class="fc" id="L59">		}</span>
+
+		@Override
+		public ComparatorTesterDSLEquals&lt;O, C&gt; withLessSamples(O... lessSamples) {
+<span class="fc" id="L63">			this.lessSamples = lessSamples;</span>
+<span class="fc" id="L64">			return this;</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public ComparatorTesterDSLEquals&lt;O, C&gt; withLessSamples(O first) {
+<span class="nc" id="L70">			return withLessSamples((O[]) new Object[] { first });</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public ComparatorTesterDSLEquals&lt;O, C&gt; withLessSamples(O first, O second) {
+<span class="fc" id="L76">			return withLessSamples((O[]) new Object[] { first, second });</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public ComparatorTesterDSLEquals&lt;O, C&gt; withLessSamples(O first,
+				O second, O third) {
+<span class="nc" id="L83">			return withLessSamples((O[]) new Object[] { first, second, third });</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public ComparatorTesterDSLEquals&lt;O, C&gt; withLessSamples(O first,
+				O second, O third, O fourth) {
+<span class="nc" id="L90">			return withLessSamples((O[]) new Object[] { first, second, third,</span>
+					fourth });
+		}
+
+		@Override
+		public ComparatorTesterDSLGreater&lt;O, C&gt; withEqualSamples(
+				O... equalSamples) {
+<span class="fc" id="L97">			this.equalSamples = equalSamples;</span>
+<span class="fc" id="L98">			return this;</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public ComparatorTesterDSLGreater&lt;O, C&gt; withEqualSamples(O first) {
+<span class="fc" id="L104">			return withEqualSamples((O[]) new Object[] { first });</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public ComparatorTesterDSLGreater&lt;O, C&gt; withEqualSamples(O first,
+				O second) {
+<span class="nc" id="L111">			return withEqualSamples((O[]) new Object[] { first, second });</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public ComparatorTesterDSLGreater&lt;O, C&gt; withEqualSamples(O first,
+				O second, O third) {
+<span class="nc" id="L118">			return withEqualSamples((O[]) new Object[] { first, second, third });</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public ComparatorTesterDSLGreater&lt;O, C&gt; withEqualSamples(O first,
+				O second, O third, O fourth) {
+<span class="nc" id="L125">			return withEqualSamples((O[]) new Object[] { first, second, third,</span>
+					fourth });
+		}
+
+		@Override
+		public ComparatorTesterDSLEnd&lt;O, C&gt; withGreaterSamples(
+				O... greaterSamples) {
+<span class="fc" id="L132">			this.greaterSamples = greaterSamples;</span>
+<span class="fc" id="L133">			return this;</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public ComparatorTesterDSLEnd&lt;O, C&gt; withGreaterSamples(O first) {
+<span class="nc" id="L139">			return withGreaterSamples((O[]) new Object[] { first });</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public ComparatorTesterDSLEnd&lt;O, C&gt; withGreaterSamples(O first, O second) {
+<span class="fc" id="L145">			return withGreaterSamples((O[]) new Object[] { first, second });</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public ComparatorTesterDSLEnd&lt;O, C&gt; withGreaterSamples(O first,
+				O second, O third) {
+<span class="nc" id="L152">			return withGreaterSamples((O[]) new Object[] { first, second, third });</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public ComparatorTesterDSLEnd&lt;O, C&gt; withGreaterSamples(O first,
+				O second, O third, O fourth) {
+<span class="nc" id="L159">			return withGreaterSamples((O[]) new Object[] { first, second,</span>
+					third, fourth });
+		}
+
+		@Override
+		public ComparatorTesterDSLLess&lt;O, C&gt; usingInstance(C instance) {
+<span class="fc" id="L165">			Objects.requireNonNull(instance, &quot;instance can't be null&quot;);</span>
+<span class="fc" id="L166">			this.underTest = instance;</span>
+<span class="fc" id="L167">			return this;</span>
+		}
+
+		@Override
+		public ComparatorTester&lt;O, C&gt; build() {
+			Supplier&lt;C&gt; comparatorSupplier;
+<span class="fc bfc" id="L173" title="All 2 branches covered.">			if (underTest == null) {</span>
+<span class="fc" id="L174">				comparatorSupplier = () -&gt; {</span>
+					try {
+<span class="fc" id="L176">						return clazzUnderTest.newInstance();</span>
+<span class="nc" id="L177">					} catch (InstantiationException | IllegalAccessException e) {</span>
+<span class="nc" id="L178">						throw new IllegalArgumentException(</span>
+								&quot;Unable to instanciate the class underTest using the default constructor. Use the usingInstance method to provide an instance&quot;,
+								e);
+					}
+				};
+			} else {
+<span class="fc" id="L184">				comparatorSupplier = () -&gt; underTest;</span>
+			}
+			Supplier&lt;O[]&gt; lessSupplier;
+			Supplier&lt;O[]&gt; equalsSupplier;
+			Supplier&lt;O[]&gt; greatSupplier;
+<span class="fc bfc" id="L189" title="All 2 branches covered.">			if (lessSamples == null) {</span>
+<span class="fc" id="L190">				SampleProvider&lt;O, C&gt; providers = new SampleProvider&lt;O, C&gt;(</span>
+						clazzUnderTest, comparatorSupplier);
+<span class="fc" id="L192">				lessSupplier = providers::getLessSamples;</span>
+<span class="fc" id="L193">				equalsSupplier = providers::getEqualSamples;</span>
+<span class="fc" id="L194">				greatSupplier = providers::getGreaterSamples;</span>
+<span class="fc" id="L195">			} else {</span>
+<span class="fc" id="L196">				lessSupplier = () -&gt; lessSamples;</span>
+<span class="fc" id="L197">				equalsSupplier = () -&gt; equalSamples;</span>
+<span class="fc" id="L198">				greatSupplier = () -&gt; greaterSamples;</span>
+			}
+<span class="fc" id="L200">			return new ComparatorTester&lt;O, C&gt;(clazzUnderTest, lessSupplier,</span>
+					equalsSupplier, greatSupplier, comparatorSupplier);
+		}
+	}
+
+	private final Class&lt;C&gt; comparatorClass;
+
+	private final Supplier&lt;O[]&gt; lessSamples;
+
+	private final Supplier&lt;O[]&gt; equalSamples;
+
+	private final Supplier&lt;O[]&gt; greaterSamples;
+
+	private final Supplier&lt;C&gt; underTest;
+
+	private ComparatorTester(Class&lt;C&gt; comparatorClass,
+			Supplier&lt;O[]&gt; lessSamples, Supplier&lt;O[]&gt; equalSamples,
+<span class="fc" id="L217">			Supplier&lt;O[]&gt; greaterSamples, Supplier&lt;C&gt; underTest) {</span>
+<span class="fc" id="L218">		this.comparatorClass = comparatorClass;</span>
+<span class="fc" id="L219">		this.lessSamples = lessSamples;</span>
+<span class="fc" id="L220">		this.equalSamples = equalSamples;</span>
+<span class="fc" id="L221">		this.greaterSamples = greaterSamples;</span>
+<span class="fc" id="L222">		this.underTest = underTest;</span>
+<span class="fc" id="L223">	}</span>
+
+	/**
+	 * Use this method to start the DSL to test a comparator.
+	 * 
+	 * @param clazzUnderTest
+	 *            The class of the comparator to be tested.
+	 * @return {@link ComparatorTesterDSLStart the following of the DSL}
+	 * @throws NullPointerException
+	 *             when clazzUnderTest is null
+	 * @param &lt;O&gt;
+	 *            The object of the comparator
+	 * @param &lt;C&gt;
+	 *            The comparator undertest
+	 */
+	public static &lt;O, C extends Comparator&lt;O&gt;&gt; ComparatorTesterDSLStart&lt;O, C&gt; of(
+			final Class&lt;C&gt; clazzUnderTest) {
+<span class="fc" id="L240">		Objects.requireNonNull(clazzUnderTest, &quot;clazzUnderTest can't be null&quot;);</span>
+<span class="fc" id="L241">		return new ComparatorTesterDSL&lt;O, C&gt;(clazzUnderTest);</span>
+	}
+
+	/**
+	 * Used by the framework.
+	 * 
+	 * @return the comparatorClass
+	 */
+	public Class&lt;C&gt; getComparatorClass() {
+<span class="fc" id="L250">		return comparatorClass;</span>
+	}
+
+	/**
+	 * Used by the framework.
+	 * 
+	 * @return the lessSamples
+	 */
+	public Supplier&lt;O[]&gt; getLessSamples() {
+<span class="fc" id="L259">		return lessSamples;</span>
+	}
+
+	/**
+	 * Used by the framework.
+	 * 
+	 * @return the equalSamples
+	 */
+	public Supplier&lt;O[]&gt; getEqualSamples() {
+<span class="fc" id="L268">		return equalSamples;</span>
+	}
+
+	/**
+	 * Used by the framework.
+	 * 
+	 * @return the greaterSamples
+	 */
+	public Supplier&lt;O[]&gt; getGreaterSamples() {
+<span class="fc" id="L277">		return greaterSamples;</span>
+	}
+
+	/**
+	 * Used by the framework.
+	 * 
+	 * @return the underTest
+	 */
+	public Supplier&lt;C&gt; getUnderTest() {
+<span class="fc" id="L286">		return underTest;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

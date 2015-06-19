@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ComparatorTesterImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.comparator.impl</a> &gt; <span class="el_source">ComparatorTesterImpl.java</span></div><h1>ComparatorTesterImpl.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.comparator.impl;
+
+import java.util.Comparator;
+import java.util.function.BiFunction;
+import java.util.stream.Stream;
+import java.util.stream.Stream.Builder;
+
+import ch.powerunit.Parameter;
+import ch.powerunit.Parameters;
+import ch.powerunit.Test;
+import ch.powerunit.TestDelegator;
+import ch.powerunit.TestSuite;
+import ch.powerunit.comparator.ComparatorTester;
+
+/**
+ * @author borettim
+ *
+ */
+@TestDelegator
+<span class="fc" id="L39">public class ComparatorTesterImpl&lt;O, C extends Comparator&lt;O&gt;&gt; implements</span>
+		TestSuite {
+	@Parameters
+	public static &lt;O, C extends Comparator&lt;O&gt;&gt; Stream&lt;Object[]&gt; getParameter(
+			ComparatorTester&lt;O, C&gt; input) {
+<span class="fc" id="L44">		Builder&lt;Object[]&gt; b = Stream.builder();</span>
+<span class="fc" id="L45">		O less[] = input.getLessSamples().get();</span>
+<span class="fc" id="L46">		O equal[] = input.getEqualSamples().get();</span>
+<span class="fc" id="L47">		O greater[] = input.getGreaterSamples().get();</span>
+<span class="fc" id="L48">		Comparator&lt;O&gt; underTest = input.getUnderTest().get();</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">		for (O l : less) {</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">			for (O e : equal) {</span>
+<span class="fc" id="L51">				b.accept(new Object[] { input.getComparatorClass(), underTest,</span>
+<span class="fc" id="L52">						l, e, -1 });</span>
+<span class="fc" id="L53">				b.accept(new Object[] { input.getComparatorClass(), underTest,</span>
+<span class="fc" id="L54">						e, l, 1 });</span>
+			}
+<span class="fc bfc" id="L56" title="All 2 branches covered.">			for (O g : greater) {</span>
+<span class="fc" id="L57">				b.accept(new Object[] { input.getComparatorClass(), underTest,</span>
+<span class="fc" id="L58">						l, g, -1 });</span>
+<span class="fc" id="L59">				b.accept(new Object[] { input.getComparatorClass(), underTest,</span>
+<span class="fc" id="L60">						g, l, 1 });</span>
+			}
+		}
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		for (O e : equal) {</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">			for (O g : greater) {</span>
+<span class="fc" id="L65">				b.accept(new Object[] { input.getComparatorClass(), underTest,</span>
+<span class="fc" id="L66">						e, g, -1 });</span>
+<span class="fc" id="L67">				b.accept(new Object[] { input.getComparatorClass(), underTest,</span>
+<span class="fc" id="L68">						g, e, 1 });</span>
+			}
+<span class="fc bfc" id="L70" title="All 2 branches covered.">			for (O e2 : equal) {</span>
+<span class="fc" id="L71">				b.accept(new Object[] { input.getComparatorClass(), underTest,</span>
+<span class="fc" id="L72">						e, e2, 0 });</span>
+<span class="fc" id="L73">				b.accept(new Object[] { input.getComparatorClass(), underTest,</span>
+<span class="fc" id="L74">						e2, e, 0 });</span>
+			}
+		}
+<span class="fc" id="L77">		return b.build()</span>
+<span class="fc" id="L78">				.map(TestSuite.DSL</span>
+<span class="fc" id="L79">						.&lt;BiFunction&lt;String, Object[], Boolean&gt;&gt; addFieldToEachEntry(ComparatorTesterImpl::filter));</span>
+	}
+
+	@Parameter(0)
+	public Class&lt;C&gt; target;
+
+	@Parameter(1)
+	public Comparator&lt;O&gt; instance;
+
+	@Parameter(2)
+	public O obj1;
+
+	@Parameter(3)
+	public O obj2;
+
+	@Parameter(4)
+	public int expectedResult;
+
+	@Parameter(value = 5, filter = true)
+	public BiFunction&lt;String, Object[], Boolean&gt; filter;
+
+	private static boolean filter(String methodName, Object parameter[]) {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (methodName == &quot;testLess&quot;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">				&amp;&amp; Integer.valueOf(-1).equals(parameter[4])) {</span>
+<span class="fc" id="L103">			return true;</span>
+		}
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (methodName == &quot;testEquals&quot;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">				&amp;&amp; Integer.valueOf(0).equals(parameter[4])) {</span>
+<span class="fc" id="L107">			return true;</span>
+		}
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (methodName == &quot;testGreater&quot;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">				&amp;&amp; Integer.valueOf(1).equals(parameter[4])) {</span>
+<span class="fc" id="L111">			return true;</span>
+		}
+<span class="fc" id="L113">		return false;</span>
+	}
+
+	@Test(name = &quot;Having `{2}` &lt; `{3}` Then result should be &lt;0 for the Comparator class {0} (with instance {1})}&quot;)
+	public void testLess() {
+<span class="fc" id="L118">		assertThat(&quot;Comparaison is negative&quot;, instance.compare(obj1, obj2)).is(</span>
+<span class="fc" id="L119">				lessThan(0));</span>
+<span class="fc" id="L120">	}</span>
+
+	@Test(name = &quot;Having `{2}` = `{3}` Then result should be 0 for the Comparator class {0} (with instance {1})&quot;)
+	public void testEquals() {
+<span class="fc" id="L124">		assertThat(&quot;Comparaison is 0&quot;, instance.compare(obj1, obj2)).is(</span>
+<span class="fc" id="L125">				equalTo(0));</span>
+<span class="fc" id="L126">	}</span>
+
+	@Test(name = &quot;Having `{2}` &gt; `{3}` Then result should be &gt;0 for the Comparator class {0} (with instance {1})&quot;)
+	public void testGreater() {
+<span class="fc" id="L130">		assertThat(&quot;Comparaison is positive&quot;, instance.compare(obj1, obj2)).is(</span>
+<span class="fc" id="L131">				greaterThan(0));</span>
+<span class="fc" id="L132">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
