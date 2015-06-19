@@ -41,264 +41,275 @@ import ch.powerunit.report.Testsuites;
  */
 public class DefaultTestResultListener<T> implements TestResultListener<T> {
 
-    public DefaultTestResultListener(String targetFolder) {
-        this(targetFolder, null);
-    }
+	public DefaultTestResultListener(String targetFolder) {
+		this(targetFolder, null);
+	}
 
-    public DefaultTestResultListener(String targetFolder,
-            PrintStream outputConsole) {
-        this.outputConsole = outputConsole;
-        this.targetFolder = new File(targetFolder);
-        this.targetFolder.mkdirs();
-    }
+	public DefaultTestResultListener(String targetFolder,
+			PrintStream outputConsole) {
+		this.outputConsole = outputConsole;
+		this.targetFolder = new File(targetFolder);
+		this.targetFolder.mkdirs();
+	}
 
-    private static final JAXBContext JAXB_CONTEXT;
+	private static final JAXBContext JAXB_CONTEXT;
 
-    private final StringBuilder resumedSucess = new StringBuilder();
+	private final StringBuilder resumedSucess = new StringBuilder();
 
-    private final StringBuilder resumedFailure = new StringBuilder();
+	private final StringBuilder resumedFailure = new StringBuilder();
 
-    private final StringBuilder resumedSkipped = new StringBuilder();
+	private final StringBuilder resumedSkipped = new StringBuilder();
 
-    /**
-     * @return the resumed
-     */
-    public String getResumed() {
-        return "Success tests:\n" + resumedSucess.toString()
-                + "\n\nSkipped tests:\n" + resumedSkipped.toString()
-                + "\n\nFailed tests:\n" + resumedFailure.toString() + "\n";
-    }
+	/**
+	 * @return the resumed
+	 */
+	public String getResumed() {
+		return "Success tests:\n" + resumedSucess.toString()
+				+ "\n\nSkipped tests:\n" + resumedSkipped.toString()
+				+ "\n\nFailed tests:\n" + resumedFailure.toString() + "\n";
+	}
 
-    /**
-     * @return the resumedSucess
-     */
-    public String getResumedSucess() {
-        return resumedSucess.toString();
-    }
+	/**
+	 * @return the resumedSucess
+	 */
+	public String getResumedSucess() {
+		return resumedSucess.toString();
+	}
 
-    /**
-     * @return the resumedFailure
-     */
-    public String getResumedFailure() {
-        return resumedFailure.toString();
-    }
+	/**
+	 * @return the resumedFailure
+	 */
+	public String getResumedFailure() {
+		return resumedFailure.toString();
+	}
 
-    /**
-     * @return the resumedSkipped
-     */
-    public String getResumedSkipped() {
-        return resumedSkipped.toString();
-    }
+	/**
+	 * @return the resumedSkipped
+	 */
+	public String getResumedSkipped() {
+		return resumedSkipped.toString();
+	}
 
-    static {
-        try {
-            JAXB_CONTEXT = JAXBContext.newInstance(Testsuites.class);
-        } catch (JAXBException e) {
-            throw new IllegalArgumentException("Unable to setup jaxb "
-                    + e.getMessage(), e);
-        }
-    }
+	static {
+		try {
+			JAXB_CONTEXT = JAXBContext.newInstance(Testsuites.class);
+		} catch (JAXBException e) {
+			throw new IllegalArgumentException("Unable to setup jaxb "
+					+ e.getMessage(), e);
+		}
+	}
 
-    private boolean error = false;
+	private boolean error = false;
 
-    private final PrintStream outputConsole;
+	private final PrintStream outputConsole;
 
-    private final Map<String, Testsuite> result = new HashMap<>();
+	private final Map<String, Testsuite> result = new HashMap<>();
 
-    private final Map<String, Testsuites> results = new HashMap<>();
+	private final Map<String, Testsuites> results = new HashMap<>();
 
-    private final Map<String, Map<String, Testcase>> resultcase = new HashMap<>();
+	private final Map<String, Map<String, Testcase>> resultcase = new HashMap<>();
 
-    private final File targetFolder;
+	private final File targetFolder;
 
-    private void printf(String format, Object... args) {
-        if (outputConsole != null) {
-            outputConsole.printf(format, args);
-        }
-    }
+	private void printf(String format, Object... args) {
+		if (outputConsole != null) {
+			outputConsole.printf(format, args);
+		}
+	}
 
-    @Override
-    public void notifySetStart(String setName, String parameters) {
-        Testsuites tss = new Testsuites();
-        tss.setDisabled(0);
-        tss.setErrors(0);
-        tss.setFailures(0);
-        tss.setName(setName);
-        tss.setTests(0);
-        tss.setTime(0L);
-        results.put(setName, tss);
+	@Override
+	public void notifySetStart(String setName, String parameters) {
+		Testsuites tss = new Testsuites();
+		tss.setDisabled(0);
+		tss.setErrors(0);
+		tss.setFailures(0);
+		tss.setName(setName);
+		tss.setTests(0);
+		tss.setTime(0L);
+		results.put(setName, tss);
 
-        Testsuite ts = new Testsuite();
-        result.put(setName, ts);
-        ts.setName(setName.replace('$', '.'));
-        ts.setDisabled(0);
-        ts.setErrors(0);
-        ts.setFailures(0);
-        ts.setTests(0);
-        ts.setTime(0L);
-        resultcase.put(setName, new HashMap<>());
+		Testsuite ts = new Testsuite();
+		result.put(setName, ts);
+		ts.setName(setName.replace('$', '.'));
+		ts.setDisabled(0);
+		ts.setErrors(0);
+		ts.setFailures(0);
+		ts.setTests(0);
+		ts.setTime(0L);
+		resultcase.put(setName, new HashMap<>());
 
-    }
+	}
 
-    @Override
-    public void notifySetEnd(String setName, String parameters) {
-        try {
-            File target = new File(targetFolder, setName + ".xml");
-            printf("Pushing test results into %1$s%n", target.getAbsolutePath());
-            Object o = results.get(setName);
-            if (results.get(setName).getTestsuite().isEmpty()) {
-                o = result.get(setName);
-            }
-            JAXB_CONTEXT.createMarshaller().marshal(o, target);
-        } catch (JAXBException e) {
-            throw new IllegalArgumentException("Unable to setup jaxb "
-                    + e.getMessage(), e);
-        }
-    }
+	@Override
+	public void notifySetEnd(String setName, String parameters) {
+		try {
+			File target = new File(targetFolder, setName + ".xml");
+			printf("Pushing test results into %1$s%n", target.getAbsolutePath());
+			Object o = results.get(setName);
+			if (results.get(setName).getTestsuite().isEmpty()) {
+				o = result.get(setName);
+			}
+			JAXB_CONTEXT.createMarshaller().marshal(o, target);
+		} catch (JAXBException e) {
+			throw new IllegalArgumentException("Unable to setup jaxb "
+					+ e.getMessage(), e);
+		}
+	}
 
-    @Override
-    public void notifyStart(TestContext<T> context) {
-        String setName = context.getSetName()
-                + (context.getParameterName() == null ? "" : context
-                        .getParameterName());
-        Testsuite ts = result.get(setName);
-        Testcase tc = new Testcase();
-        tc.setName(context.getLocalTestName()
-                + (context.getParameterName() == null ? "" : "["
-                        + context.getParameterName() + "]"));
-        tc.setClassname(context.getTestSuiteObject().getClass()
-                .getCanonicalName());
-        resultcase.get(setName).put(context.getFullTestName(), tc);
-        ts.getTestcase().add(tc);
-        tc.setTime(System.currentTimeMillis());
-        printf("Start of test %1$s%n", context.getFullTestName());
-    }
+	@Override
+	public void notifyStart(TestContext<T> context) {
+		String setName = context.getSetName()
+				+ (context.getParameterName() == null ? "" : context
+						.getParameterName());
+		Testsuite ts = result.get(setName);
+		Testcase tc = new Testcase();
+		tc.setName(context.getLocalTestName()
+				+ (context.getParameterName() == null ? "" : "["
+						+ context.getParameterName() + "]"));
+		tc.setClassname(context.getTestSuiteObject().getClass()
+				.getCanonicalName());
+		resultcase.get(setName).put(context.getFullTestName(), tc);
+		ts.getTestcase().add(tc);
+		tc.setTime(System.currentTimeMillis());
+		printf("Start of test %1$s%n", context.getFullTestName());
+	}
 
-    @Override
-    public void notifySuccess(TestContext<T> context) {
-        String setName = context.getSetName()
-                + (context.getParameterName() == null ? "" : context
-                        .getParameterName());
-        long end = System.currentTimeMillis();
-        Testsuite ts = result.get(setName);
-        Testcase tc = resultcase.get(setName).get(context.getFullTestName());
-        tc.setTime((end - tc.getTime()) / 1000);
-        ts.setTime(ts.getTime() + tc.getTime());
-        ts.setTests(ts.getTests() + 1);
-        printf("Success of test %1$s%n", context.getFullTestName());
-        resumedSucess.append("\t").append(context.getLocalTestName())
-                .append(" of ").append(context.getSetName()).append("\n");
-    }
+	@Override
+	public void notifySuccess(TestContext<T> context) {
+		String setName = context.getSetName()
+				+ (context.getParameterName() == null ? "" : context
+						.getParameterName());
+		long end = System.currentTimeMillis();
+		Testsuite ts = result.get(setName);
+		Testcase tc = resultcase.get(setName).get(context.getFullTestName());
+		tc.setTime((end - tc.getTime()) / 1000);
+		ts.setTime(ts.getTime() + tc.getTime());
+		ts.setTests(ts.getTests() + 1);
+		printf("Success of test %1$s%n", context.getFullTestName());
+		resumedSucess.append("\t").append(context.getLocalTestName())
+				.append(" of ").append(context.getSetName()).append("\n");
+	}
 
-    @Override
-    public void notifyFailure(TestContext<T> context, Throwable cause) {
-        String setName = context.getSetName()
-                + (context.getParameterName() == null ? "" : context
-                        .getParameterName());
-        long end = System.currentTimeMillis();
-        Testsuite ts = result.get(setName);
-        Testcase tc = resultcase.get(setName).get(context.getFullTestName());
-        tc.setTime((end - tc.getTime()) / 1000);
-        ts.setTime(ts.getTime() + tc.getTime());
-        error = true;
-        ts.setFailures(ts.getFailures() + 1);
+	@Override
+	public void notifyFailure(TestContext<T> context, Throwable cause) {
+		String setName = context.getSetName()
+				+ (context.getParameterName() == null ? "" : context
+						.getParameterName());
+		long end = System.currentTimeMillis();
+		Testsuite ts = result.get(setName);
+		Testcase tc = resultcase.get(setName).get(context.getFullTestName());
+		tc.setTime((end - tc.getTime()) / 1000);
+		ts.setTime(ts.getTime() + tc.getTime());
+		error = true;
+		ts.setFailures(ts.getFailures() + 1);
 
-        Failure f = new Failure();
-        tc.getFailure().add(f);
-        f.setType(cause.getClass().getCanonicalName());
-        f.setMessage(cause.getMessage());
-        StringBuilder stack = new StringBuilder("" + cause.getMessage())
-                .append('\n');
-        for (StackTraceElement ste : cause.getStackTrace()) {
-            stack.append(ste.toString()).append('\n');
-        }
-        f.setContent(stack.toString());
-        printf("Failure of test %1$s because of %2$s%n",
-                context.getFullTestName(), cause.getMessage());
-        resumedFailure.append("\t").append(context.getLocalTestName())
-                .append(" of ").append(context.getSetName())
-                .append(" caused by ").append(cause.getMessage()).append("\n");
-    }
+		Failure f = new Failure();
+		tc.getFailure().add(f);
+		f.setType(cause.getClass().getCanonicalName());
+		f.setMessage(cause.getMessage());
+		StringBuilder stack = new StringBuilder("" + cause.getMessage())
+				.append('\n');
+		completeStack(cause, stack);
+		f.setContent(stack.toString());
+		printf("Failure of test %1$s because of %2$s%n",
+				context.getFullTestName(), cause.getMessage());
+		resumedFailure.append("\t").append(context.getLocalTestName())
+				.append(" of ").append(context.getSetName())
+				.append(" caused by ").append(cause.getMessage()).append("\n");
+	}
 
-    @Override
-    public void notifySkipped(TestContext<T> context) {
-        String setName = context.getSetName()
-                + (context.getParameterName() == null ? "" : context
-                        .getParameterName());
-        long end = System.currentTimeMillis();
-        Testsuite ts = result.get(setName);
-        Testcase tc = resultcase.get(setName).get(context.getFullTestName());
-        tc.setTime((end - tc.getTime()) / 1000);
-        ts.setTime(ts.getTime() + tc.getTime());
-        ts.setDisabled(ts.getDisabled() + 1);
+	@Override
+	public void notifySkipped(TestContext<T> context) {
+		String setName = context.getSetName()
+				+ (context.getParameterName() == null ? "" : context
+						.getParameterName());
+		long end = System.currentTimeMillis();
+		Testsuite ts = result.get(setName);
+		Testcase tc = resultcase.get(setName).get(context.getFullTestName());
+		tc.setTime((end - tc.getTime()) / 1000);
+		ts.setTime(ts.getTime() + tc.getTime());
+		ts.setDisabled(ts.getDisabled() + 1);
 
-        tc.setSkipped("Skipped");
-        printf("Skip of test %1$s%n", context.getFullTestName());
-        resumedSkipped.append("\t").append(context.getLocalTestName())
-                .append(" of ").append(context.getSetName()).append("\n");
-    }
+		tc.setSkipped("Skipped");
+		printf("Skip of test %1$s%n", context.getFullTestName());
+		resumedSkipped.append("\t").append(context.getLocalTestName())
+				.append(" of ").append(context.getSetName()).append("\n");
+	}
 
-    @Override
-    public void notifyError(TestContext<T> context, Throwable cause) {
-        String setName = context.getSetName()
-                + (context.getParameterName() == null ? "" : context
-                        .getParameterName());
-        long end = System.currentTimeMillis();
-        Testsuite ts = result.get(setName);
-        Testcase tc = resultcase.get(setName).get(context.getFullTestName());
-        tc.setTime((end - tc.getTime()) / 1000);
-        ts.setTime(ts.getTime() + tc.getTime());
-        error = true;
-        ts.setErrors(ts.getErrors() + 1);
+	@Override
+	public void notifyError(TestContext<T> context, Throwable cause) {
+		String setName = context.getSetName()
+				+ (context.getParameterName() == null ? "" : context
+						.getParameterName());
+		long end = System.currentTimeMillis();
+		Testsuite ts = result.get(setName);
+		Testcase tc = resultcase.get(setName).get(context.getFullTestName());
+		tc.setTime((end - tc.getTime()) / 1000);
+		ts.setTime(ts.getTime() + tc.getTime());
+		error = true;
+		ts.setErrors(ts.getErrors() + 1);
 
-        Error e = new Error();
-        tc.getError().add(e);
-        e.setType(cause.getClass().getCanonicalName());
-        e.setMessage(cause.getMessage());
-        StringBuilder stack = new StringBuilder("" + cause.getMessage())
-                .append('\n');
-        for (StackTraceElement ste : cause.getStackTrace()) {
-            stack.append(ste.toString()).append('\n');
-        }
-        e.setContent(stack.toString());
-        printf("Error of test %1$s because of %2$s%n",
-                context.getFullTestName(), cause.getMessage());
-        resumedFailure.append("\t").append(context.getLocalTestName())
-                .append(" of ").append(context.getSetName())
-                .append(" caused by ").append(cause.getMessage()).append("\n");
-    }
+		Error e = new Error();
+		tc.getError().add(e);
+		e.setType(cause.getClass().getCanonicalName());
+		e.setMessage(cause.getMessage());
+		StringBuilder stack = new StringBuilder("" + cause.getMessage())
+				.append('\n');
+		completeStack(cause, stack);
+		e.setContent(stack.toString());
+		printf("Error of test %1$s because of %2$s%n",
+				context.getFullTestName(), cause.getMessage());
+		resumedFailure.append("\t").append(context.getLocalTestName())
+				.append(" of ").append(context.getSetName())
+				.append(" caused by ").append(cause.getMessage()).append("\n");
+	}
 
-    @Override
-    public void notifyParameterStart(String setName, String parameterName) {
-        Testsuites tss = results.get(setName);
-        Testsuite ts = new Testsuite();
-        result.put(setName + parameterName, ts);
-        ts.setName(setName + "[" + parameterName + "]");
-        ts.setDisabled(0);
-        ts.setErrors(0);
-        ts.setFailures(0);
-        ts.setTests(0);
-        ts.setTime(0L);
-        resultcase.put(setName + parameterName, new HashMap<>());
-        tss.getTestsuite().add(ts);
-    }
+	/**
+	 * @param cause
+	 * @param stack
+	 */
+	private void completeStack(Throwable cause, StringBuilder stack) {
+		for (StackTraceElement ste : cause.getStackTrace()) {
+			stack.append(ste.toString()).append('\n');
+		}
+		Throwable by = cause.getCause();
+		if (by != null) {
+			stack.append("caused by ").append(by.getMessage() + "\n");
+			completeStack(by, stack);
+		}
+	}
 
-    @Override
-    public void notifyParameterEnd(String setName, String parameterName) {
-        Testsuites tss = results.get(setName);
-        Testsuite ts = result.get(setName + parameterName);
-        tss.setDisabled(tss.getDisabled() + ts.getDisabled());
-        tss.setErrors(tss.getErrors() + ts.getErrors());
-        tss.setFailures(tss.getFailures() + ts.getFailures());
-        tss.setTests(tss.getTests() + ts.getTests());
-        tss.setTime(tss.getTime() + ts.getTime());
-    }
+	@Override
+	public void notifyParameterStart(String setName, String parameterName) {
+		Testsuites tss = results.get(setName);
+		Testsuite ts = new Testsuite();
+		result.put(setName + parameterName, ts);
+		ts.setName(setName + "[" + parameterName + "]");
+		ts.setDisabled(0);
+		ts.setErrors(0);
+		ts.setFailures(0);
+		ts.setTests(0);
+		ts.setTime(0L);
+		resultcase.put(setName + parameterName, new HashMap<>());
+		tss.getTestsuite().add(ts);
+	}
 
-    /**
-     * @return the error
-     */
-    public boolean isError() {
-        return error;
-    }
+	@Override
+	public void notifyParameterEnd(String setName, String parameterName) {
+		Testsuites tss = results.get(setName);
+		Testsuite ts = result.get(setName + parameterName);
+		tss.setDisabled(tss.getDisabled() + ts.getDisabled());
+		tss.setErrors(tss.getErrors() + ts.getErrors());
+		tss.setFailures(tss.getFailures() + ts.getFailures());
+		tss.setTests(tss.getTests() + ts.getTests());
+		tss.setTime(tss.getTime() + ts.getTime());
+	}
+
+	/**
+	 * @return the error
+	 */
+	public boolean isError() {
+		return error;
+	}
 
 }
