@@ -62,7 +62,17 @@
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> ComparatorTester&lt;Integer, MyComparator&gt; providedSampler = ComparatorTester
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  			.of(MyComparator.<strong class="jxr_keyword">class</strong>).withLessSamples(-6, -4)
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  			.withEqualSamples(12).withGreaterSamples(16, 18).build();
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>  }
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>  
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  	@TestDelegate
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>  	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> ComparatorTester&lt;Integer, MyComparator&gt; providedSampler2 = ComparatorTester
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  			.of(MyComparator.<strong class="jxr_keyword">class</strong>).withLessSamples(-6).withEqualSamples(12)
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>  			.withGreaterSamples(16).build();
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>  
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  	@TestDelegate
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> ComparatorTester&lt;Integer, MyComparator&gt; direct = testerOfComparator(
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  			MyComparator.<strong class="jxr_keyword">class</strong>).withLessSamples(-6).withEqualSamples(12)
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  			.withGreaterSamples(16).build();
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2015. All rights reserved.</div>

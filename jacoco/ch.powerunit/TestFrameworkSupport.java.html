@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TestFrameworkSupport.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit</a> &gt; <span class="el_source">TestFrameworkSupport.java</span></div><h1>TestFrameworkSupport.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit;
+
+import java.util.Comparator;
+
+import org.hamcrest.Matcher;
+
+import ch.powerunit.comparator.ComparatorTester;
+import ch.powerunit.comparator.lang.ComparatorTesterDSLStart;
+import ch.powerunit.matchers.MatcherTester;
+import ch.powerunit.matchers.lang.MatcherTesterDSL1;
+
+/**
+ * @author borettim
+ * @since 0.3.0
+ */
+interface TestFrameworkSupport {
+
+	/**
+	 * Start the creation of a tester definition for a matcher.
+	 * &lt;p&gt;
+	 * &lt;b&gt;{@link MatcherTester#of(Class) Please refer to the complete
+	 * documentation}&lt;/b&gt;
+	 * 
+	 * @param matcherClass
+	 *            the class of the Matcher.
+	 * @return {@link MatcherTesterDSL1 The DSL}
+	 * @see MatcherTester#of(Class)
+	 * @since 0.3.0
+	 * @param &lt;T&gt;
+	 *            The matcher class
+	 */
+	default &lt;T extends Matcher&lt;?&gt;&gt; MatcherTesterDSL1&lt;T&gt; testerOfMatcher(
+			Class&lt;T&gt; matcherClass) {
+<span class="nc" id="L53">		return MatcherTester.of(matcherClass);</span>
+	}
+
+	/**
+	 * Use this method to start the DSL to test a comparator.
+	 * &lt;p&gt;
+	 * &lt;b&gt;{@link ComparatorTester#of(Class) Please refer to the complete
+	 * documentation}&lt;/b&gt;
+	 * 
+	 * @param comparatorClass
+	 *            the class of the Comparator
+	 * @return {@link ComparatorTesterDSLStart the DSL}
+	 * @see ComparatorTester#of(Class)
+	 * @since 0.3.0
+	 * @param &lt;O&gt;
+	 *            The object of the comparator
+	 * @param &lt;C&gt;
+	 *            The comparator undertest
+	 */
+	default &lt;O, C extends Comparator&lt;O&gt;&gt; ComparatorTesterDSLStart&lt;O, C&gt; testerOfComparator(
+			Class&lt;C&gt; comparatorClass) {
+<span class="fc" id="L74">		return ComparatorTester.of(comparatorClass);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

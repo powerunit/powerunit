@@ -162,17 +162,17 @@
         Tests framework</a>
             </li>
                     
-      <li class="active">
-  
-            <a href="#"><i class="none"></i>Tests support for hamcrest Matcher</a>
-          </li>
-                    
       <li>
   
-                          <a href="comparatortester.html" title="Tests support for Comparator">
+                          <a href="matchertester.html" title="Tests support for hamcrest Matcher">
           <i class="none"></i>
-        Tests support for Comparator</a>
+        Tests support for hamcrest Matcher</a>
             </li>
+                    
+      <li class="active">
+  
+            <a href="#"><i class="none"></i>Tests support for Comparator</a>
+          </li>
               </ul>
         </li>
                               <li class="nav-header">Linked projects</li>
@@ -221,43 +221,52 @@
         <div id="bodyColumn"  class="span9" >
                                   
             <div class="section">
-<h2><a name="Tester_for_hamcrest_Matchers"></a>Tester for hamcrest Matchers</h2>
-<p><tt>Matcher</tt>, used for test or not, must also be tested. Powerunit provides a way to test Matcher in a simple way.</p>
-<p>The class <tt>MatcherTester</tt> exposes a DSL to create build a tester, based on the concept of Test Framework. Let's assume you have a matcher on <tt>String</tt> that check for equality. It is possible to wrote a test in the following way :</p>
+<h2><a name="Testers_for_Comparator"></a>Testers for Comparator</h2>
+<p><a class="externalLink" href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html"><tt>Comparator</tt></a> can be tested by using a dedicated support. For instance :</p>
 <div class="source">
-<pre>import ch.powerunit.TestDelegate;
-import ch.powerunit.TestSuite;
-import ch.powerunit.matchers.MatcherTester;
-import static ch.powerunit.matchers.MatcherTester.*;
+<pre>import java.util.Comparator;
 
-public class MatcherTesterTest implements TestSuite {
+import ch.powerunit.Categories;
+import ch.powerunit.TestDelegate;
+import ch.powerunit.TestSuite;
+import ch.powerunit.comparator.ComparatorTester;
+
+
+public class MyComparatorTest implements TestSuite {
 
   @TestDelegate
-  public final MatcherTester&lt;TestMatcher&gt; tester = MatcherTester.of(TestMatcher.class).with(
-      matcher(new TestMatcher(null)).describedAs(&quot;is null&quot;)
-          .nullAccepted().rejecting(value(&quot;x&quot;).withMessage(&quot; was \&quot;x\&quot;&quot;)),
-      matcher(new TestMatcher(&quot;x&quot;)).describedAs(&quot;is \&quot;x\&quot;&quot;)
-          .nullRejected(&quot; was null&quot;).accepting(&quot;x&quot;).rejecting(value(&quot;y&quot;).withMessage(&quot; was \&quot;y\&quot;&quot;)),
-      matcher(new TestMatcher(&quot;y&quot;)).describedAs(&quot;is \&quot;y\&quot;&quot;)
-          .nullRejected(&quot; was null&quot;).accepting(&quot;y&quot;).rejecting(value(&quot;x&quot;).withMessage(&quot; was \&quot;x\&quot;&quot;)));
+  public final ComparatorTester&lt;Integer, MyComparator&gt; providedSampler = ComparatorTester
+      .of(MyComparator.class).withLessSamples(-6, -4)
+      .withEqualSamples(12).withGreaterSamples(16, 18).build();
 }</pre></div>
-<p>The framework provides a way to declare several expectation (test fixtures) for a Matcher. It starts with a <tt>&lt;MatcherTester.of(theclass).with(one or several validation)</tt>. Each of these validation are builded by using the syntax <tt>matcher(instance of matcher).describedAs(expected message or matcher).</tt> followed by several of the following :</p>
-<ul>
-<li><tt>nullAccepted()</tt></li>
-<li><tt>nullRejected()</tt></li>
-<li><tt>accepting(list of expected value)</tt></li>
-<li><tt>rejecting(...)</tt> Each rejecting clause is defined by <tt>value(rejected value).withMessage( expected message or matcher)</tt>
-<p>Error of validation will be integrated in the normal test result, like for instance :</p>
+<p>The DSL is provided by the class <tt>ComparatorTester</tt> and start by the call to <tt>of</tt> specifying the class of the <tt>Comparator</tt> to be tested. If the <tt>Comparator</tt> doesn't provide a 0-args public constructor, it is required to provide an instance to be tested, by using, as first step of the DSL, the method <tt>usingInstance</tt>.</p>
+<p>In very specific case, the framework may be able to build sample for the test ; But in real world it is most probably necessary to specify samples for the <tt>Comparator</tt>. To do so, a sequence of the three methods <tt>withLessSamples</tt>, <tt>withEqualSamples</tt> and <tt>withGreaterSamples</tt> is required to specify samples. When several less or greater samples are provided, they must be provided in the correct order, from the smallest to the biggest.</p>
+<p>The previous examples will generate the following test cases :</p>
 <div class="source">
-<pre>Failed tests:
-        Validate that a value (x) is accepted for the matcher of class class ch.powerunit.examples.MatcherTesterTest$TestMatcher (TestMatcher [target=x]) of ch.powerunit.examples.MatcherTesterTest caused by Validate x is accepted by this matcher
-expecting &lt;true&gt; but was &lt;false&gt;
-        Validate that a value (y) is rejected for the matcher of class class ch.powerunit.examples.MatcherTesterTest$TestMatcher (TestMatcher [target=x] then &quot; was \&quot;y\&quot;&quot;) of ch.powerunit.examples.MatcherTesterTest caused by Validate y is rejected by this matcher
-expecting &lt;false&gt; but was &lt;true&gt;
-        Validate that a value (y) is accepted for the matcher of class class ch.powerunit.examples.MatcherTesterTest$TestMatcher (TestMatcher [target=y]) of ch.powerunit.examples.MatcherTesterTest caused by Validate y is accepted by this matcher
-expecting &lt;true&gt; but was &lt;false&gt;
-        Validate that a value (x) is rejected for the matcher of class class ch.powerunit.examples.MatcherTesterTest$TestMatcher (TestMatcher [target=y] then &quot; was \&quot;x\&quot;&quot;) of ch.powerunit.examples.MatcherTesterTest caused by Validate x is rejected by this matcher
-expecting &lt;false&gt; but was &lt;true&gt;</pre></div></li></ul></div>
+<pre>Having `-6` &lt; `12` Then result should be &lt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `12` &gt; `-6` Then result should be &gt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `-6` &lt; `16` Then result should be &lt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `16` &gt; `-6` Then result should be &gt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `-6` &lt; `18` Then result should be &lt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `18` &gt; `-6` Then result should be &gt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `-6` &lt; `-4` Then result should be &lt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `-4` &gt; `-6` Then result should be &gt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `-4` &lt; `12` Then result should be &lt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `12` &gt; `-4` Then result should be &gt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `-4` &lt; `16` Then result should be &lt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `16` &gt; `-4` Then result should be &gt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `-4` &lt; `18` Then result should be &lt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `18` &gt; `-4` Then result should be &gt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `12` &lt; `16` Then result should be &lt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `16` &gt; `12` Then result should be &gt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `12` &lt; `18` Then result should be &lt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `18` &gt; `12` Then result should be &gt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `12` = `12` Then result should be 0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `12` = `12` Then result should be 0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest</pre></div>
+<p>In the case of error in the test, the result will look like (for one single test cases) :</p>
+<div class="source">
+<pre>Failure of test ch.powerunit.examples.ComparatorTesterTest:Having `0` &gt; `-3` Then result should be &gt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@7692d9cc) because of Comparaison is positive
+expecting a value greater than &lt;0&gt; but &lt;-1&gt; was less than &lt;0&gt;</pre></div></div>
                   </div>
             </div>
           </div>

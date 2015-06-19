@@ -59,279 +59,280 @@ import ch.powerunit.rules.impl.TemporaryFolderImpl;
  * @author borettim
  *
  */
-public interface TestSuite extends Assert, Assume, Matchers {
+public interface TestSuite extends Assert, Assume, Matchers,
+		TestFrameworkSupport {
 
-    /**
-     * A static field that is a testsuite (to avoid implementing TestSuite in
-     * test, in the rare case when it may be required).
-     * &lt;p&gt;
-     * The main use case is to access the stream functionnalities from a
-     * {@link Parameters &amp;#64;Parameters} annotated method, has this method must
-     * be static.
-     */
-<span class="fc" id="L72">    static TestSuite DSL = new TestSuite() {</span>
-    };
+	/**
+	 * A static field that is a testsuite (to avoid implementing TestSuite in
+	 * test, in the rare case when it may be required).
+	 * &lt;p&gt;
+	 * The main use case is to access the stream functionnalities from a
+	 * {@link Parameters &amp;#64;Parameters} annotated method, has this method must
+	 * be static.
+	 */
+<span class="fc" id="L73">	static TestSuite DSL = new TestSuite() {</span>
+	};
 
-    /**
-     * Build a before testrule.
-     * &lt;p&gt;
-     * The passed runnable will be used before each test. The exact location of
-     * the execution is depending on where this used on the testRule chain.
-     * &lt;p&gt;
-     * In the much simple case (just one method to be executed before each
-     * test), the syntax is :
-     * 
-     * &lt;pre&gt;
-     * &amp;#064;Rule
-     * public TestRule rule = before(this::beforeMethodName);
-     * &lt;/pre&gt;
-     * 
-     * @param befores
-     *            the befores
-     * @return {@link TestRule the rule chain}.
-     * @see Rule
-     */
-    default TestRule before(Runnable... befores) {
-<span class="fc" id="L95">        return Arrays.stream(befores).map(TestRule::before)</span>
-<span class="pc" id="L96">                .reduce((prev, next) -&gt; prev.around(next)).get();</span>
-    }
+	/**
+	 * Build a before testrule.
+	 * &lt;p&gt;
+	 * The passed runnable will be used before each test. The exact location of
+	 * the execution is depending on where this used on the testRule chain.
+	 * &lt;p&gt;
+	 * In the much simple case (just one method to be executed before each
+	 * test), the syntax is :
+	 * 
+	 * &lt;pre&gt;
+	 * &amp;#064;Rule
+	 * public TestRule rule = before(this::beforeMethodName);
+	 * &lt;/pre&gt;
+	 * 
+	 * @param befores
+	 *            the befores
+	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
+	 */
+	default TestRule before(Runnable... befores) {
+<span class="fc" id="L96">		return Arrays.stream(befores).map(TestRule::before)</span>
+<span class="pc" id="L97">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
+	}
 
-    /**
-     * Build a after testrule.
-     * &lt;p&gt;
-     * The passed runnable will be used after each test. The exact location of
-     * the execution is depending on where this used on the testRule chain.
-     * &lt;p&gt;
-     * In the much simple case (just one method to be executed after each test),
-     * the syntax is :
-     * 
-     * &lt;pre&gt;
-     * &amp;#064;Rule
-     * public TestRule rule = after(this::afterMethodName);
-     * &lt;/pre&gt;
-     * 
-     * @param afters
-     *            the afters
-     * @return {@link TestRule the rule chain}.
-     * @see Rule
-     */
-    default TestRule after(Runnable... afters) {
-<span class="fc" id="L119">        return Arrays.stream(afters).map(TestRule::after)</span>
-<span class="pc" id="L120">                .reduce((prev, next) -&gt; prev.around(next)).get();</span>
-    }
+	/**
+	 * Build a after testrule.
+	 * &lt;p&gt;
+	 * The passed runnable will be used after each test. The exact location of
+	 * the execution is depending on where this used on the testRule chain.
+	 * &lt;p&gt;
+	 * In the much simple case (just one method to be executed after each test),
+	 * the syntax is :
+	 * 
+	 * &lt;pre&gt;
+	 * &amp;#064;Rule
+	 * public TestRule rule = after(this::afterMethodName);
+	 * &lt;/pre&gt;
+	 * 
+	 * @param afters
+	 *            the afters
+	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
+	 */
+	default TestRule after(Runnable... afters) {
+<span class="fc" id="L120">		return Arrays.stream(afters).map(TestRule::after)</span>
+<span class="pc" id="L121">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
+	}
 
-    /**
-     * Create a rule to support mockito.
-     * &lt;p&gt;
-     * This provide a way to setup Mockito before each test.
-     * 
-     * @return {@link TestRule the rule chain}.
-     * @see Rule
-     */
-    default TestRule mockitoRule() {
-<span class="fc" id="L132">        return TestRule.mockitoRule();</span>
-    }
+	/**
+	 * Create a rule to support mockito.
+	 * &lt;p&gt;
+	 * This provide a way to setup Mockito before each test.
+	 * 
+	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
+	 */
+	default TestRule mockitoRule() {
+<span class="fc" id="L133">		return TestRule.mockitoRule();</span>
+	}
 
-    /**
-     * Produces a new rule for the temporary folder.
-     * &lt;p&gt;
-     * As the {@link TemporaryFolder} rule provides several methods that are
-     * required for the test, except in the case when only this rule is
-     * required, a direct usage in the rule DSL is not adapted.
-     * 
-     * For instance, assuming that it is required to mix a before and the
-     * {@link TemporaryFolder} rule, the code will look like :
-     * 
-     * &lt;pre&gt;
-     * private TemporaryFolder temporary = temporaryFolder();
-     * 
-     * &amp;#064;Rule
-     * public TestRule rule = before(this::beforeMethodName).around(temporary);
-     * &lt;/pre&gt;
-     * 
-     * This is required to ensure that the method of the {@link TemporaryFolder}
-     * object can be used (using the field named &lt;code&gt;temporary&lt;/code&gt;).
-     * 
-     * @return the temporary folder rule.
-     * @see Rule
-     */
-    default TemporaryFolder temporaryFolder() {
-<span class="fc" id="L159">        return temporaryFolderBuilder().build();</span>
-    }
+	/**
+	 * Produces a new rule for the temporary folder.
+	 * &lt;p&gt;
+	 * As the {@link TemporaryFolder} rule provides several methods that are
+	 * required for the test, except in the case when only this rule is
+	 * required, a direct usage in the rule DSL is not adapted.
+	 * 
+	 * For instance, assuming that it is required to mix a before and the
+	 * {@link TemporaryFolder} rule, the code will look like :
+	 * 
+	 * &lt;pre&gt;
+	 * private TemporaryFolder temporary = temporaryFolder();
+	 * 
+	 * &amp;#064;Rule
+	 * public TestRule rule = before(this::beforeMethodName).around(temporary);
+	 * &lt;/pre&gt;
+	 * 
+	 * This is required to ensure that the method of the {@link TemporaryFolder}
+	 * object can be used (using the field named &lt;code&gt;temporary&lt;/code&gt;).
+	 * 
+	 * @return the temporary folder rule.
+	 * @see Rule
+	 */
+	default TemporaryFolder temporaryFolder() {
+<span class="fc" id="L160">		return temporaryFolderBuilder().build();</span>
+	}
 
-    /**
-     * Produces a new rule builder for the temporary folder.
-     * &lt;p&gt;
-     * As the {@link TemporaryFolder} rule provides several methods that are
-     * required for the test, except in the case when only this rule is
-     * required, a direct usage in the rule DSL is not adapted.
-     * 
-     * For instance, assuming that it is required to mix a before and the
-     * {@link TemporaryFolder} rule, the code will look like :
-     * 
-     * &lt;pre&gt;
-     * private TemporaryFolder temporary = temporaryFolderBuilder().build();
-     * 
-     * &amp;#064;Rule
-     * public TestRule rule = before(this::beforeMethodName).around(temporary);
-     * &lt;/pre&gt;
-     * 
-     * This is required to ensure that the method of the {@link TemporaryFolder}
-     * object can be used (using the field named &lt;code&gt;temporary&lt;/code&gt;).
-     * &lt;p&gt;
-     * The builder provide several capabilities to create initial folder
-     * structure at the same time than the temporary folder itself.
-     * 
-     * @return the temporary folder rule builder.
-     * @see Rule
-     */
-    default TemporaryFolderBuilder temporaryFolderBuilder() {
-<span class="fc" id="L189">        return new TemporaryFolderImpl.TemporaryFolderBuilderImpl();</span>
-    }
+	/**
+	 * Produces a new rule builder for the temporary folder.
+	 * &lt;p&gt;
+	 * As the {@link TemporaryFolder} rule provides several methods that are
+	 * required for the test, except in the case when only this rule is
+	 * required, a direct usage in the rule DSL is not adapted.
+	 * 
+	 * For instance, assuming that it is required to mix a before and the
+	 * {@link TemporaryFolder} rule, the code will look like :
+	 * 
+	 * &lt;pre&gt;
+	 * private TemporaryFolder temporary = temporaryFolderBuilder().build();
+	 * 
+	 * &amp;#064;Rule
+	 * public TestRule rule = before(this::beforeMethodName).around(temporary);
+	 * &lt;/pre&gt;
+	 * 
+	 * This is required to ensure that the method of the {@link TemporaryFolder}
+	 * object can be used (using the field named &lt;code&gt;temporary&lt;/code&gt;).
+	 * &lt;p&gt;
+	 * The builder provide several capabilities to create initial folder
+	 * structure at the same time than the temporary folder itself.
+	 * 
+	 * @return the temporary folder rule builder.
+	 * @see Rule
+	 */
+	default TemporaryFolderBuilder temporaryFolderBuilder() {
+<span class="fc" id="L190">		return new TemporaryFolderImpl.TemporaryFolderBuilderImpl();</span>
+	}
 
-    /**
-     * Create a rule to restore some system properties after the test
-     * 
-     * @param propertiesName
-     *            the properties to be restored
-     * @return {@link TestRule the rule chain}.
-     * @see Rule
-     */
-    default TestRule systemPropertiesRule(String... propertiesName) {
-<span class="fc" id="L201">        return new SystemPropertiesRule(propertiesName);</span>
-    }
+	/**
+	 * Create a rule to restore some system properties after the test
+	 * 
+	 * @param propertiesName
+	 *            the properties to be restored
+	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
+	 */
+	default TestRule systemPropertiesRule(String... propertiesName) {
+<span class="fc" id="L202">		return new SystemPropertiesRule(propertiesName);</span>
+	}
 
-    /**
-     * Set a property before the run and ensure correct restore.
-     * 
-     * @param propertyName
-     *            the name of the property
-     * @param propertyValue
-     *            the value of the property
-     * @return {@link TestRule the rule chain}.
-     * @see Rule
-     */
-    default TestRule systemProperty(String propertyName,
-            Supplier&lt;String&gt; propertyValue) {
-<span class="nc" id="L216">        return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
-                propertyName, propertyValue);
-    }
+	/**
+	 * Set a property before the run and ensure correct restore.
+	 * 
+	 * @param propertyName
+	 *            the name of the property
+	 * @param propertyValue
+	 *            the value of the property
+	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
+	 */
+	default TestRule systemProperty(String propertyName,
+			Supplier&lt;String&gt; propertyValue) {
+<span class="nc" id="L217">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
+				propertyName, propertyValue);
+	}
 
-    /**
-     * Set a property before the run and ensure correct restore.
-     * 
-     * @param propertyName
-     *            the name of the property
-     * @param propertyValue
-     *            the value of the property
-     * @return {@link TestRule the rule chain}.
-     * @see Rule
-     */
-    default TestRule systemProperty(String propertyName, String propertyValue) {
-<span class="fc" id="L231">        return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
-                propertyName, propertyValue);
-    }
+	/**
+	 * Set a property before the run and ensure correct restore.
+	 * 
+	 * @param propertyName
+	 *            the name of the property
+	 * @param propertyValue
+	 *            the value of the property
+	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
+	 */
+	default TestRule systemProperty(String propertyName, String propertyValue) {
+<span class="fc" id="L232">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
+				propertyName, propertyValue);
+	}
 
-    /**
-     * Start building a Parameter Mapper function, with an initial converter.
-     * &lt;p&gt;
-     * Not specified index are considered transformed by identity function.
-     * 
-     * @param idx
-     *            The parameter index
-     * @param mapFunction
-     *            the function to be applied
-     * @return the function on the parameter array
-     * @param &lt;T&gt;
-     *            The input type for the function
-     * @param &lt;R&gt;
-     *            the result type for the function
-     */
-    default &lt;T, R&gt; StreamParametersMapFunction&lt;T&gt; parametersMap(int idx,
-            Function&lt;T, R&gt; mapFunction) {
-<span class="nc" id="L252">        return StreamParametersMapFunction.map(idx, mapFunction);</span>
-    }
+	/**
+	 * Start building a Parameter Mapper function, with an initial converter.
+	 * &lt;p&gt;
+	 * Not specified index are considered transformed by identity function.
+	 * 
+	 * @param idx
+	 *            The parameter index
+	 * @param mapFunction
+	 *            the function to be applied
+	 * @return the function on the parameter array
+	 * @param &lt;T&gt;
+	 *            The input type for the function
+	 * @param &lt;R&gt;
+	 *            the result type for the function
+	 */
+	default &lt;T, R&gt; StreamParametersMapFunction&lt;T&gt; parametersMap(int idx,
+			Function&lt;T, R&gt; mapFunction) {
+<span class="nc" id="L253">		return StreamParametersMapFunction.map(idx, mapFunction);</span>
+	}
 
-    /**
-     * Start building a Parameter Mapper function, assuming that the input are
-     * String, and using the type of the {@link Parameter &amp;#64;Parameter} field.
-     * &lt;p&gt;
-     * Fields not supported will not be mapped and must be handled manually,
-     * using {@link StreamParametersMapFunction#andMap(int, Function) andMap}
-     * method to avoid any unexpected error.
-     * &lt;p&gt;
-     * The goal of this method is to provide a way to receive so generic
-     * parameter and not having to care about typing. Let's take for example the
-     * following use case :
-     * &lt;ul&gt;
-     * &lt;li&gt;As an input for the test parameters, a CSV file is used. In this
-     * case, a framework like &lt;a
-     * href=&quot;http://opencsv.sourceforge.net/&quot;&gt;OpenCSV&lt;/a&gt; can be used to load
-     * all the parameters, but they are all String.&lt;/li&gt;
-     * &lt;li&gt;On the produced stream, the
-     * {@link java.util.stream.Stream#map(Function) map} method can be used to
-     * transform the received data into another format. Here, using the result
-     * of this method as parameter of the map method will ensure the
-     * transformation of the String to the right type, for simple type.&lt;/li&gt;
-     * &lt;li&gt;For undetected field type, it is possible to use the method
-     * {@link StreamParametersMapFunction#andMap(int, Function) andMap} (on the
-     * returned object of this method), to add manual transformation.&lt;/li&gt;
-     * &lt;/ul&gt;
-     * &lt;p&gt;
-     * In this context, as the {@link Parameters &amp;#64;Parameters} annotated
-     * method must be static, access to this method can be done using
-     * {@link #DSL DSL.} prefix.
-     * 
-     * @param testClass
-     *            the testClass, as this method is to be used in static mode.
-     * @return the function on the parameter array
-     * @see &lt;a href=&quot;./helpers/doc-files/convertedType.html&quot;&gt;Supported automated
-     *      conversion&lt;/a&gt;
-     */
-    default StreamParametersMapFunction&lt;String&gt; stringToParameterMap(
-            Class&lt;?&gt; testClass) {
-<span class="fc" id="L293">        return StreamParametersMapFunction.stringToParameterMap(testClass);</span>
-    }
+	/**
+	 * Start building a Parameter Mapper function, assuming that the input are
+	 * String, and using the type of the {@link Parameter &amp;#64;Parameter} field.
+	 * &lt;p&gt;
+	 * Fields not supported will not be mapped and must be handled manually,
+	 * using {@link StreamParametersMapFunction#andMap(int, Function) andMap}
+	 * method to avoid any unexpected error.
+	 * &lt;p&gt;
+	 * The goal of this method is to provide a way to receive so generic
+	 * parameter and not having to care about typing. Let's take for example the
+	 * following use case :
+	 * &lt;ul&gt;
+	 * &lt;li&gt;As an input for the test parameters, a CSV file is used. In this
+	 * case, a framework like &lt;a
+	 * href=&quot;http://opencsv.sourceforge.net/&quot;&gt;OpenCSV&lt;/a&gt; can be used to load
+	 * all the parameters, but they are all String.&lt;/li&gt;
+	 * &lt;li&gt;On the produced stream, the
+	 * {@link java.util.stream.Stream#map(Function) map} method can be used to
+	 * transform the received data into another format. Here, using the result
+	 * of this method as parameter of the map method will ensure the
+	 * transformation of the String to the right type, for simple type.&lt;/li&gt;
+	 * &lt;li&gt;For undetected field type, it is possible to use the method
+	 * {@link StreamParametersMapFunction#andMap(int, Function) andMap} (on the
+	 * returned object of this method), to add manual transformation.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * &lt;p&gt;
+	 * In this context, as the {@link Parameters &amp;#64;Parameters} annotated
+	 * method must be static, access to this method can be done using
+	 * {@link #DSL DSL.} prefix.
+	 * 
+	 * @param testClass
+	 *            the testClass, as this method is to be used in static mode.
+	 * @return the function on the parameter array
+	 * @see &lt;a href=&quot;./helpers/doc-files/convertedType.html&quot;&gt;Supported automated
+	 *      conversion&lt;/a&gt;
+	 */
+	default StreamParametersMapFunction&lt;String&gt; stringToParameterMap(
+			Class&lt;?&gt; testClass) {
+<span class="fc" id="L294">		return StreamParametersMapFunction.stringToParameterMap(testClass);</span>
+	}
 
-    /**
-     * Provide a way to add a field to each parameter line.
-     * 
-     * @param field
-     *            The field to be added.
-     * @return the function that can be used on the stream (
-     *         {@link java.util.stream.Stream#map(Function)}).
-     * @since 0.1.0
-     * @param &lt;T&gt;
-     *            The object type to be added.
-     */
-    default &lt;T&gt; Function&lt;Object[], Object[]&gt; addFieldToEachEntry(T field) {
-<span class="fc" id="L308">        return StreamParametersMapFunction.addFieldToEachEntry(field);</span>
-    }
+	/**
+	 * Provide a way to add a field to each parameter line.
+	 * 
+	 * @param field
+	 *            The field to be added.
+	 * @return the function that can be used on the stream (
+	 *         {@link java.util.stream.Stream#map(Function)}).
+	 * @since 0.1.0
+	 * @param &lt;T&gt;
+	 *            The object type to be added.
+	 */
+	default &lt;T&gt; Function&lt;Object[], Object[]&gt; addFieldToEachEntry(T field) {
+<span class="fc" id="L309">		return StreamParametersMapFunction.addFieldToEachEntry(field);</span>
+	}
 
-    /**
-     * Provide a filter for stream parameters, to keep only parameters accepted
-     * by a matcher.
-     * 
-     * @param matcher
-     *            the matcher
-     * @return the stream filter
-     */
-    default Predicate&lt;Object[]&gt; parametersFilterUsingMatcher(
-            Matcher&lt;Object[]&gt; matcher) {
-<span class="fc" id="L321">        return matcherPredicate(matcher);</span>
-    }
+	/**
+	 * Provide a filter for stream parameters, to keep only parameters accepted
+	 * by a matcher.
+	 * 
+	 * @param matcher
+	 *            the matcher
+	 * @return the stream filter
+	 */
+	default Predicate&lt;Object[]&gt; parametersFilterUsingMatcher(
+			Matcher&lt;Object[]&gt; matcher) {
+<span class="fc" id="L322">		return matcherPredicate(matcher);</span>
+	}
 
-    /**
-     * Expose a matcher as a predicate.
-     * 
-     * @param matcher
-     *            the matcher.
-     * @return the predicate
-     * @param &lt;T&gt;
-     *            The target object type
-     */
-    default &lt;T&gt; Predicate&lt;T&gt; matcherPredicate(Matcher&lt;T&gt; matcher) {
-<span class="fc" id="L334">        return matcher::matches;</span>
-    }
+	/**
+	 * Expose a matcher as a predicate.
+	 * 
+	 * @param matcher
+	 *            the matcher.
+	 * @return the predicate
+	 * @param &lt;T&gt;
+	 *            The target object type
+	 */
+	default &lt;T&gt; Predicate&lt;T&gt; matcherPredicate(Matcher&lt;T&gt; matcher) {
+<span class="fc" id="L335">		return matcher::matches;</span>
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
