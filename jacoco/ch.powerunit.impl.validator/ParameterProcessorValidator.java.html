@@ -44,66 +44,66 @@ public interface ParameterProcessorValidator extends ProcessValidator {
 <span class="nc" id="L44">        roundEnv.getElementsAnnotatedWith(Parameter.class)</span>
 <span class="nc" id="L45">                .forEach(</span>
                         (Element element) -&gt; {
-                            if (element.getKind() != ElementKind.FIELD) {
-                                error(&quot;@Parameter must prefix a field -- &quot;
+<span class="nc bnc" id="L47" title="All 2 branches missed.">                            if (element.getKind() != ElementKind.FIELD) {</span>
+<span class="nc" id="L48">                                error(&quot;@Parameter must prefix a field -- &quot;</span>
                                         + element + &quot; is not a field&quot;);
-                                return;
+<span class="nc" id="L50">                                return;</span>
                             }
 
-                            Element parent = element.getEnclosingElement();
-                            TypeElement pp = (TypeElement) parent;
+<span class="nc" id="L53">                            Element parent = element.getEnclosingElement();</span>
+<span class="nc" id="L54">                            TypeElement pp = (TypeElement) parent;</span>
 
-                            if (element.getAnnotation(Parameter.class).filter()) {
-                                if (exists.contains(pp.getQualifiedName())) {
-                                    warn(&quot;Class &quot;
-                                            + elementAsString(parent)
+<span class="nc bnc" id="L56" title="All 2 branches missed.">                            if (element.getAnnotation(Parameter.class).filter()) {</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">                                if (exists.contains(pp.getQualifiedName())) {</span>
+<span class="nc" id="L58">                                    warn(&quot;Class &quot;</span>
+<span class="nc" id="L59">                                            + elementAsString(parent)</span>
                                             + &quot;\n\t contains more than one @Parameter field with filter = true\n\tOnly one @Parameter field can use the filter attribute with true value.&quot;);
                                 }
-                                exists.add(pp.getQualifiedName());
-                                TypeMirror rt = element.asType();
-                                if (rt.getKind() != TypeKind.DECLARED) {
-                                    warn(&quot;Field &quot;
-                                            + elementAsString(element)
+<span class="nc" id="L62">                                exists.add(pp.getQualifiedName());</span>
+<span class="nc" id="L63">                                TypeMirror rt = element.asType();</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">                                if (rt.getKind() != TypeKind.DECLARED) {</span>
+<span class="nc" id="L65">                                    warn(&quot;Field &quot;</span>
+<span class="nc" id="L66">                                            + elementAsString(element)</span>
                                             + &quot;\n\tis prefixed with @Parameter(filter=true) and is &quot;
                                             + element
                                             + &quot;\n\tA predicate field must be &quot;
                                             + predicate);
                                 } else {
-                                    DeclaredType dt = (DeclaredType) rt;
-                                    if (!processingEnv.getTypeUtils()
-                                            .isSubtype(dt.asElement().asType(),
-                                                    predicate.asType())) {
-                                        warn(&quot;Field &quot;
-                                                + elementAsString(element)
+<span class="nc" id="L72">                                    DeclaredType dt = (DeclaredType) rt;</span>
+<span class="nc" id="L73">                                    if (!processingEnv.getTypeUtils()</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">                                            .isSubtype(dt.asElement().asType(),</span>
+<span class="nc" id="L75">                                                    predicate.asType())) {</span>
+<span class="nc" id="L76">                                        warn(&quot;Field &quot;</span>
+<span class="nc" id="L77">                                                + elementAsString(element)</span>
                                                 + &quot;\n\tis prefixed with @Parameter(filter=true) and is &quot;
-                                                + dt.asElement().asType()
+<span class="nc" id="L79">                                                + dt.asElement().asType()</span>
                                                 + &quot;\n\tA predicate field must be &quot;
                                                 + predicate);
                                     }
                                 }
                             }
-                            if (element.getModifiers()
-                                    .contains(Modifier.STATIC)) {
-                                warn(&quot;Field &quot;
-                                        + elementAsString(element)
+<span class="nc" id="L85">                            if (element.getModifiers()</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">                                    .contains(Modifier.STATIC)) {</span>
+<span class="nc" id="L87">                                warn(&quot;Field &quot;</span>
+<span class="nc" id="L88">                                        + elementAsString(element)</span>
                                         + &quot;\n\tis prefixed with @Parameter and is static\n\tA parameter field can't be static&quot;);
                             }
-                            if (!element.getModifiers().contains(
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                            if (!element.getModifiers().contains(</span>
                                     Modifier.PUBLIC)) {
-                                warn(&quot;Field &quot;
-                                        + elementAsString(element)
+<span class="nc" id="L93">                                warn(&quot;Field &quot;</span>
+<span class="nc" id="L94">                                        + elementAsString(element)</span>
                                         + &quot;\n\tis prefixed with @Parameter and is not public\n\tA parameter field must be public&quot;);
                             }
-                            if (element.getAnnotation(Parameter.class).value() &lt; 0) {
-                                warn(&quot;Field &quot;
-                                        + elementAsString(element)
+<span class="nc bnc" id="L97" title="All 2 branches missed.">                            if (element.getAnnotation(Parameter.class).value() &lt; 0) {</span>
+<span class="nc" id="L98">                                warn(&quot;Field &quot;</span>
+<span class="nc" id="L99">                                        + elementAsString(element)</span>
                                         + &quot;\n\tis prefixed with @Parameter and value is &quot;
                                         + element
-                                                .getAnnotation(Parameter.class)
-                                                .value()
+<span class="nc" id="L102">                                                .getAnnotation(Parameter.class)</span>
+<span class="nc" id="L103">                                                .value()</span>
                                         + &quot;\n\tA parameter field value must be &gt;=0&quot;);
                             }
-                        });
+<span class="nc" id="L106">                        });</span>
 <span class="nc" id="L107">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

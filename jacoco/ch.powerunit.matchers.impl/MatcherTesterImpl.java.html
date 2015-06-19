@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MatcherTesterImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.matchers.impl</a> &gt; <span class="el_source">MatcherTesterImpl.java</span></div><h1>MatcherTesterImpl.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.matchers.impl;
+
+import java.util.function.BiFunction;
+import java.util.stream.Stream;
+import java.util.stream.Stream.Builder;
+
+import org.hamcrest.Matcher;
+import org.hamcrest.StringDescription;
+
+import ch.powerunit.Parameter;
+import ch.powerunit.Parameters;
+import ch.powerunit.Test;
+import ch.powerunit.TestDelegator;
+import ch.powerunit.TestSuite;
+import ch.powerunit.matchers.MatcherTester;
+import ch.powerunit.matchers.lang.MatcherAssertion;
+
+/**
+ * @author borettim
+ * @since 0.3.0
+ */
+@TestDelegator
+<span class="fc" id="L42">public final class MatcherTesterImpl&lt;T extends Matcher&lt;?&gt;&gt; implements TestSuite {</span>
+	@Parameters
+	public static &lt;T extends Matcher&lt;?&gt;&gt; Stream&lt;Object[]&gt; getParameter(MatcherTester&lt;T&gt; input) {
+<span class="fc" id="L45">		Builder&lt;Object[]&gt; b = Stream.builder();</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		for (MatcherAssertion&lt;?&gt; ma : input.getAssertions()) {</span>
+<span class="fc" id="L47">			MatcherAssertionImpl&lt;?&gt; c = (MatcherAssertionImpl&lt;?&gt;) ma;</span>
+<span class="fc" id="L48">			b.accept(new Object[] { ma, c.getMatcher(), c.getExpected(),</span>
+<span class="fc" id="L49">					descriptionAsString(c.getExpected()), c.getNullRejected(),</span>
+<span class="fc" id="L50">					c.getNullRejectedMessage(),</span>
+<span class="fc" id="L51">					descriptionAsString(c.getNullRejectedMessage()), null,</span>
+					null, null, null });
+<span class="fc bfc" id="L53" title="All 2 branches covered.">			if (c.getAcceptedValues() != null) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">				for (Object o : c.getAcceptedValues()) {</span>
+<span class="fc" id="L55">					b.accept(new Object[] { ma, c.getMatcher(), null, null,</span>
+							null, null, null, o, null, null, null });
+				}
+			}
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (c.getRejectedValue() != null) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">				for (MatcherAssertion.Reject o : c.getRejectedValue()) {</span>
+<span class="fc" id="L61">					RejectImpl r = (RejectImpl) o;</span>
+<span class="fc" id="L62">					b.accept(new Object[] { ma, c.getMatcher(), null, null,</span>
+<span class="fc" id="L63">							null, null, null, null, r.getValue(),</span>
+<span class="fc" id="L64">							r.getMessageValidation(),</span>
+<span class="fc" id="L65">							descriptionAsString(r.getMessageValidation()) });</span>
+				}
+			}
+		}
+<span class="fc" id="L69">		return b.build()</span>
+<span class="fc" id="L70">				.map(TestSuite.DSL.addFieldToEachEntry(input.getMatcherClass()))</span>
+<span class="fc" id="L71">				.map(TestSuite.DSL</span>
+<span class="fc" id="L72">						.&lt;BiFunction&lt;String, Object[], Boolean&gt;&gt; addFieldToEachEntry(MatcherTesterImpl::filter));</span>
+	}
+
+	@Parameter(0)
+	public MatcherAssertionImpl&lt;T&gt; assertion;
+
+	@Parameter(1)
+	public Matcher&lt;T&gt; target;
+
+	@Parameter(2)
+	public Matcher&lt;String&gt; expectedDescription;
+
+	@Parameter(3)
+	public String expectedDescriptionAsString;
+
+	@Parameter(4)
+	public Boolean nullRejected;
+
+	@Parameter(5)
+	public Matcher&lt;String&gt; expectedRejectDescription;
+
+	@Parameter(6)
+	public String expectedRejectDescriptionAsString;
+
+	@Parameter(7)
+	public Object acceptedValue;
+
+	@Parameter(8)
+	public Object rejectedValue;
+
+	@Parameter(9)
+	public Matcher&lt;String&gt; rejectMessage;
+
+	@Parameter(10)
+	public String rejectMesageAsString;
+
+	@Parameter(11)
+	public Class&lt;T&gt; matcherClass;
+
+	@Parameter(value = 12, filter = true)
+	public BiFunction&lt;String, Object[], Boolean&gt; filter;
+
+	private static String descriptionAsString(Matcher&lt;?&gt; input) {
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (input == null) {</span>
+<span class="fc" id="L116">			return null;</span>
+		}
+<span class="fc" id="L118">		StringDescription description = new StringDescription();</span>
+<span class="fc" id="L119">		input.describeTo(description);</span>
+<span class="fc" id="L120">		return description.toString();</span>
+	}
+
+	private static boolean filter(String methodName, Object parameter[]) {
+<span class="fc bfc" id="L124" title="All 4 branches covered.">		if (&quot;testMatcherForExpectedValue&quot;.equals(methodName)</span>
+				&amp;&amp; parameter[2] == null) {
+<span class="fc" id="L126">			return false;</span>
+		}
+<span class="fc bfc" id="L128" title="All 4 branches covered.">		if (&quot;testMatcherForNullIsRejected&quot;.equals(methodName)</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">				&amp;&amp; (parameter[4] == null || (Boolean) parameter[4] == false)) {</span>
+<span class="fc" id="L130">			return false;</span>
+		}
+<span class="fc bfc" id="L132" title="All 4 branches covered.">		if (&quot;testMatcherForNullIsAccepted&quot;.equals(methodName)</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">				&amp;&amp; (parameter[4] == null || (Boolean) parameter[4] == true)) {</span>
+<span class="fc" id="L134">			return false;</span>
+		}
+<span class="fc bfc" id="L136" title="All 4 branches covered.">		if (&quot;testMatcherForValueIsAccepted&quot;.equals(methodName)</span>
+				&amp;&amp; parameter[7] == null) {
+<span class="fc" id="L138">			return false;</span>
+		}
+<span class="fc bfc" id="L140" title="All 4 branches covered.">		if (&quot;testMatcherForValueIsRejected&quot;.equals(methodName)</span>
+				&amp;&amp; parameter[8] == null) {
+<span class="fc" id="L142">			return false;</span>
+		}
+<span class="fc" id="L144">		return true;</span>
+	}
+
+	@Test(name = &quot;Validate that for the matcher of class {11} the expectedDescription is correct ({1} then {3})&quot;)
+	public void testMatcherForExpectedValue() {
+<span class="fc" id="L149">		StringDescription d = new StringDescription();</span>
+<span class="fc" id="L150">		assertion.getMatcher().describeTo(d);</span>
+<span class="fc" id="L151">		assertThat(&quot;Validate the description of the matcher &quot;, d.toString())</span>
+<span class="fc" id="L152">				.is(expectedDescription);</span>
+<span class="fc" id="L153">	}</span>
+
+	@Test(name = &quot;Validate that null is rejected for the matcher of class {11} ({1} then {6})&quot;)
+	public void testMatcherForNullIsRejected() {
+<span class="fc" id="L157">		assertThat(&quot;Validate null is rejected by this matcher&quot;,</span>
+<span class="fc" id="L158">				assertion.getMatcher().matches(null)).is(false);</span>
+<span class="fc" id="L159">		StringDescription d = new StringDescription();</span>
+<span class="fc" id="L160">		assertion.getMatcher().describeMismatch(null, d);</span>
+<span class="fc" id="L161">		assertThat(&quot;Validate the mismatch description for this matcher&quot;,</span>
+<span class="fc" id="L162">				d.toString()).is(expectedRejectDescription);</span>
+
+<span class="fc" id="L164">	}</span>
+
+	@Test(name = &quot;Validate that null is accepted for the matcher of class {11} ({1})&quot;)
+	public void testMatcherForNullIsAccepted() {
+<span class="fc" id="L168">		assertThat(&quot;Validate null is accepted by this matcher&quot;,</span>
+<span class="fc" id="L169">				assertion.getMatcher().matches(null)).is(true);</span>
+<span class="fc" id="L170">	}</span>
+
+	@Test(name = &quot;Validate that a value ({7}) is accepted for the matcher of class {11} ({1})&quot;)
+	public void testMatcherForValueIsAccepted() {
+<span class="fc" id="L174">		assertThat(</span>
+				&quot;Validate &quot; + acceptedValue + &quot; is accepted by this matcher&quot;,
+<span class="fc" id="L176">				assertion.getMatcher().matches(acceptedValue)).is(true);</span>
+<span class="fc" id="L177">	}</span>
+
+	@Test(name = &quot;Validate that a value ({8}) is rejected for the matcher of class {11} ({1} then {10})&quot;)
+	public void testMatcherForValueIsRejected() {
+<span class="fc" id="L181">		assertThat(</span>
+				&quot;Validate &quot; + rejectedValue + &quot; is rejected by this matcher&quot;,
+<span class="fc" id="L183">				assertion.getMatcher().matches(rejectedValue)).is(false);</span>
+<span class="fc" id="L184">		StringDescription d = new StringDescription();</span>
+<span class="fc" id="L185">		assertion.getMatcher().describeMismatch(rejectedValue, d);</span>
+<span class="fc" id="L186">		assertThat(&quot;Validate the mismatch description for this matcher&quot;,</span>
+<span class="fc" id="L187">				d.toString()).is(rejectMessage);</span>
+
+<span class="fc" id="L189">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

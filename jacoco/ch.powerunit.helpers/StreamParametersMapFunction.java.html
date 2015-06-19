@@ -113,21 +113,21 @@ public final class StreamParametersMapFunction&lt;T&gt; implements
 <span class="fc" id="L113">                .filter(f -&gt; f.isAnnotationPresent(Parameter.class))</span>
 <span class="fc" id="L114">                .forEach(</span>
                         f -&gt; {
-                            int pid = f.getAnnotation(Parameter.class).value();
-                            Function&lt;String, ?&gt; fct = null;
-                            if (f.getGenericType() instanceof Class) {
-                                Class&lt;?&gt; c = (Class&lt;?&gt;) f.getGenericType();
-                                fct = getEntryClassMapperFunction(c);
+<span class="fc" id="L116">                            int pid = f.getAnnotation(Parameter.class).value();</span>
+<span class="fc" id="L117">                            Function&lt;String, ?&gt; fct = null;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">                            if (f.getGenericType() instanceof Class) {</span>
+<span class="fc" id="L119">                                Class&lt;?&gt; c = (Class&lt;?&gt;) f.getGenericType();</span>
+<span class="fc" id="L120">                                fct = getEntryClassMapperFunction(c);</span>
 
-                            } else if (f.getGenericType() instanceof ParameterizedType) {
-                                ParameterizedType p = (ParameterizedType) f
-                                        .getGenericType();
-                                fct = getEntryParameterizedTypeFunction(p);
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">                            } else if (f.getGenericType() instanceof ParameterizedType) {</span>
+<span class="fc" id="L123">                                ParameterizedType p = (ParameterizedType) f</span>
+<span class="fc" id="L124">                                        .getGenericType();</span>
+<span class="fc" id="L125">                                fct = getEntryParameterizedTypeFunction(p);</span>
                             }
-                            if (fct != null) {
-                                map.andMap(pid, fct);
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">                            if (fct != null) {</span>
+<span class="fc" id="L128">                                map.andMap(pid, fct);</span>
                             }
-                        });
+<span class="fc" id="L130">                        });</span>
 <span class="fc" id="L131">        return map;</span>
     }
 
@@ -187,10 +187,10 @@ public final class StreamParametersMapFunction&lt;T&gt; implements
 <span class="pc bpc" id="L187" title="1 of 2 branches missed.">        } else if (Class.class.equals(c))</span>
 <span class="fc" id="L188">            return s -&gt; {</span>
                 try {
-                    return Class.forName(s);
-                } catch (ClassNotFoundException e) {
-                    throw new IllegalArgumentException(&quot;Unexpected error &quot;
-                            + e.getMessage(), e);
+<span class="fc" id="L190">                    return Class.forName(s);</span>
+<span class="nc" id="L191">                } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L192">                    throw new IllegalArgumentException(&quot;Unexpected error &quot;</span>
+<span class="nc" id="L193">                            + e.getMessage(), e);</span>
                 }
             };
 <span class="nc" id="L196">        return null;</span>
@@ -200,11 +200,11 @@ public final class StreamParametersMapFunction&lt;T&gt; implements
     private static &lt;T&gt; Function&lt;String, T[]&gt; arrayMapper(Class&lt;T&gt; clazz,
             Function&lt;String, T&gt; singleElementMapper, String separator) {
 <span class="fc" id="L202">        return (s) -&gt; {</span>
-            if (s == null) {
-                return null;
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">            if (s == null) {</span>
+<span class="nc" id="L204">                return null;</span>
             }
-            return Arrays.stream(s.split(separator)).map(singleElementMapper)
-                    .toArray((i) -&gt; (T[]) Array.newInstance(clazz, i));
+<span class="fc" id="L206">            return Arrays.stream(s.split(separator)).map(singleElementMapper)</span>
+<span class="fc" id="L207">                    .toArray((i) -&gt; (T[]) Array.newInstance(clazz, i));</span>
         };
     }
 
@@ -212,22 +212,22 @@ public final class StreamParametersMapFunction&lt;T&gt; implements
             Class&lt;T&gt; clazz, Function&lt;String, T&gt; singleElementMapper,
             String separator) {
 <span class="fc" id="L214">        return (s) -&gt; {</span>
-            if (s == null) {
-                return null;
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">            if (s == null) {</span>
+<span class="nc" id="L216">                return null;</span>
             }
-            return Arrays.stream(s.split(separator)).map(singleElementMapper)
-                    .collect(Collectors.toList());
+<span class="fc" id="L218">            return Arrays.stream(s.split(separator)).map(singleElementMapper)</span>
+<span class="fc" id="L219">                    .collect(Collectors.toList());</span>
         };
     }
 
     private static &lt;T&gt; Function&lt;String, Set&lt;T&gt;&gt; setMapper(Class&lt;T&gt; clazz,
             Function&lt;String, T&gt; singleElementMapper, String separator) {
 <span class="fc" id="L225">        return (s) -&gt; {</span>
-            if (s == null) {
-                return null;
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">            if (s == null) {</span>
+<span class="nc" id="L227">                return null;</span>
             }
-            return Arrays.stream(s.split(separator)).map(singleElementMapper)
-                    .collect(Collectors.toSet());
+<span class="fc" id="L229">            return Arrays.stream(s.split(separator)).map(singleElementMapper)</span>
+<span class="fc" id="L230">                    .collect(Collectors.toSet());</span>
         };
     }
 
@@ -268,15 +268,15 @@ public final class StreamParametersMapFunction&lt;T&gt; implements
      */
     public static &lt;T&gt; Function&lt;Object[], Object[]&gt; addFieldToEachEntry(T field) {
 <span class="fc" id="L270">        return i -&gt; {</span>
-            if (i == null) {
-                return new Object[] { field };
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">            if (i == null) {</span>
+<span class="nc" id="L272">                return new Object[] { field };</span>
             } else {
-                Object o[] = new Object[i.length + 1];
-                System.arraycopy(i, 0, o, 0, i.length);
-                o[i.length] = field;
-                return o;
+<span class="fc" id="L274">                Object o[] = new Object[i.length + 1];</span>
+<span class="fc" id="L275">                System.arraycopy(i, 0, o, 0, i.length);</span>
+<span class="fc" id="L276">                o[i.length] = field;</span>
+<span class="fc" id="L277">                return o;</span>
             }
         };
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

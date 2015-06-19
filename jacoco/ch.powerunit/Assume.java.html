@@ -204,7 +204,7 @@ interface Assume {
 	default &lt;T, R&gt; AssertThatCastableObject&lt;R&gt; assumeThatFunction(
 			Function&lt;T, R&gt; function, T input) {
 <span class="fc" id="L206">		return new AssertThatObjectImpl&lt;R&gt;(false, null,</span>
-				() -&gt; function.apply(input));
+<span class="fc" id="L207">				() -&gt; function.apply(input));</span>
 	}
 
 	/**
@@ -240,7 +240,7 @@ interface Assume {
 	default &lt;T, R&gt; AssertThatCastableObject&lt;R&gt; assumeThatFunction(String msg,
 			Function&lt;T, R&gt; function, T input) {
 <span class="fc" id="L242">		return new AssertThatObjectImpl&lt;R&gt;(false, msg,</span>
-				() -&gt; function.apply(input));
+<span class="fc" id="L243">				() -&gt; function.apply(input));</span>
 	}
 
 	/**
@@ -584,4 +584,4 @@ interface Assume {
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

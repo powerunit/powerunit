@@ -71,23 +71,23 @@ public class AssertThatObjectImpl&lt;T&gt; implements AssertThatObject&lt;T&gt;,
 <span class="fc" id="L71">			throw new InternalError(&quot;clazz argument can't be null&quot;);</span>
 		}
 <span class="fc" id="L73">		return new AssertThatObjectImpl&lt;P&gt;(assertion, msg, () -&gt; {</span>
-			T v = provider.get();
-			if (v == null) {
-				return null;
-			} else if (!clazz.isAssignableFrom(v.getClass())) {
-				if (assertion) {
-					throw new AssertionError((msg == null ? &quot;&quot; : msg + &quot;\n&quot;)
+<span class="fc" id="L74">			T v = provider.get();</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (v == null) {</span>
+<span class="nc" id="L76">				return null;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			} else if (!clazz.isAssignableFrom(v.getClass())) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">				if (assertion) {</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">					throw new AssertionError((msg == null ? &quot;&quot; : msg + &quot;\n&quot;)</span>
 							+ &quot;The value &quot; + v + &quot; can't be casted to &quot;
-							+ clazz.getName());
+<span class="fc" id="L81">							+ clazz.getName());</span>
 				} else {
-					throw new AssumptionError((msg == null ? &quot;&quot; : msg + &quot;\n&quot;)
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">					throw new AssumptionError((msg == null ? &quot;&quot; : msg + &quot;\n&quot;)</span>
 							+ &quot;The value &quot; + v + &quot; can't be casted to &quot;
-							+ clazz.getName());
+<span class="fc" id="L85">							+ clazz.getName());</span>
 				}
 			} else {
-				return (P) v;
+<span class="fc" id="L88">				return (P) v;</span>
 			}
 		});
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

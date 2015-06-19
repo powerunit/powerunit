@@ -96,11 +96,11 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 <span class="fc" id="L96">                .stream()</span>
 <span class="fc" id="L97">                .filter(c -&gt; c.isAnnotationPresent(Categories.class))</span>
 <span class="fc" id="L98">                .map(c -&gt; Arrays.stream(</span>
-                        c.getAnnotation(Categories.class).value()).collect(
-                        Collectors.toCollection(() -&gt; new HashSet&lt;&gt;())))
+<span class="fc" id="L99">                        c.getAnnotation(Categories.class).value()).collect(</span>
+<span class="fc" id="L100">                        Collectors.toCollection(() -&gt; new HashSet&lt;&gt;())))</span>
 <span class="fc" id="L101">                .reduce((o, n) -&gt; {</span>
-                    o.addAll(n);
-                    return o;
+<span class="nc" id="L102">                    o.addAll(n);</span>
+<span class="nc" id="L103">                    return o;</span>
 <span class="fc" id="L104">                }).orElse(new HashSet&lt;&gt;());</span>
 <span class="fc bfc" id="L105" title="All 2 branches covered.">        this.parentGroups = groups.isEmpty() ? TestResultListener.ALL_GROUPS</span>
 <span class="fc" id="L106">                : Arrays.toString(groups.toArray());</span>
@@ -113,11 +113,11 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 
 <span class="fc bfc" id="L114" title="All 2 branches covered.">        if (testClass.isAnnotationPresent(Ignore.class)) {</span>
 <span class="fc" id="L115">            executableTests.put(setName, p -&gt; {</span>
-                TestContextImpl&lt;Object&gt; ctx = new TestContextImpl&lt;&gt;(
+<span class="fc" id="L116">                TestContextImpl&lt;Object&gt; ctx = new TestContextImpl&lt;&gt;(</span>
                         targetObject, setName, setName, null, parentGroups);
-                notifyStartTest(ctx);
-                notifyEndSkippedTest(ctx);
-            });
+<span class="fc" id="L118">                notifyStartTest(ctx);</span>
+<span class="fc" id="L119">                notifyEndSkippedTest(ctx);</span>
+<span class="fc" id="L120">            });</span>
 <span class="fc" id="L121">            return;</span>
         }
 <span class="fc" id="L123">        findTestsMethod(targetObject, testClass, parentGroups);</span>
@@ -204,58 +204,58 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 <span class="fc" id="L204">                .forEach(</span>
                         singleTest -&gt; {
                             try {
-                                boolean run = true;
-                                String tname = singleTest.getKey();
-                                if (filterParameterField != null) {
-                                    run = ((BiFunction&lt;String, Object, Boolean&gt;) filterParameterField
-                                            .get(targetObject)).apply(
-                                            testMethods.get(tname).getName(),
+<span class="fc" id="L207">                                boolean run = true;</span>
+<span class="fc" id="L208">                                String tname = singleTest.getKey();</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">                                if (filterParameterField != null) {</span>
+<span class="fc" id="L210">                                    run = ((BiFunction&lt;String, Object, Boolean&gt;) filterParameterField</span>
+<span class="fc" id="L211">                                            .get(targetObject)).apply(</span>
+<span class="fc" id="L212">                                            testMethods.get(tname).getName(),</span>
                                             parameters);
                                 }
-                                if (run) {
-                                    if (parameters.length &gt; 0) {
-                                        tname = MessageFormat.format(tname,
+<span class="fc bfc" id="L215" title="All 2 branches covered.">                                if (run) {</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">                                    if (parameters.length &gt; 0) {</span>
+<span class="fc" id="L217">                                        tname = MessageFormat.format(tname,</span>
                                                 parameters);
                                     }
-                                    singleTest.getValue().run(
+<span class="fc" id="L220">                                    singleTest.getValue().run(</span>
                                             new TestContextImpl&lt;Object&gt;(
                                                     targetObject, setName,
                                                     tname, name, parentGroups));
                                 }
-                            } catch (Throwable e) {// NOSONAR
+<span class="nc" id="L225">                            } catch (Throwable e) {// NOSONAR</span>
                                 // As we really want all error
-                                throw new InternalError(&quot;Unexpected error &quot;
-                                        + e.getMessage(), e);
-                            }
-                        });
+<span class="nc" id="L227">                                throw new InternalError(&quot;Unexpected error &quot;</span>
+<span class="nc" id="L228">                                        + e.getMessage(), e);</span>
+<span class="fc" id="L229">                            }</span>
+<span class="fc" id="L230">                        });</span>
 <span class="fc" id="L231">        delegateTests</span>
 <span class="fc" id="L232">                .entrySet()</span>
 <span class="fc" id="L233">                .forEach(</span>
                         singleTest -&gt; {
                             try {
-                                boolean run = true;
-                                String tname = singleTest.getKey();
-                                if (filterParameterField != null) {
-                                    run = ((BiFunction&lt;String, Object, Boolean&gt;) filterParameterField
-                                            .get(targetObject)).apply(tname,
+<span class="fc" id="L236">                                boolean run = true;</span>
+<span class="fc" id="L237">                                String tname = singleTest.getKey();</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">                                if (filterParameterField != null) {</span>
+<span class="nc" id="L239">                                    run = ((BiFunction&lt;String, Object, Boolean&gt;) filterParameterField</span>
+<span class="nc" id="L240">                                            .get(targetObject)).apply(tname,</span>
                                             parameters);
                                 }
-                                if (run) {
-                                    if (parameters.length &gt; 0) {
-                                        tname = MessageFormat.format(tname,
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">                                if (run) {</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">                                    if (parameters.length &gt; 0) {</span>
+<span class="nc" id="L245">                                        tname = MessageFormat.format(tname,</span>
                                                 parameters);
                                     }
-                                    singleTest.getValue().run(
+<span class="fc" id="L248">                                    singleTest.getValue().run(</span>
                                             new TestContextImpl&lt;Object&gt;(
                                                     targetObject, setName,
                                                     tname, name, parentGroups));
                                 }
-                            } catch (Throwable e) {// NOSONAR
+<span class="nc" id="L253">                            } catch (Throwable e) {// NOSONAR</span>
                                 // As we really want all error
-                                throw new InternalError(&quot;Unexpected error &quot;
-                                        + e.getMessage(), e);
-                            }
-                        });
+<span class="nc" id="L255">                                throw new InternalError(&quot;Unexpected error &quot;</span>
+<span class="nc" id="L256">                                        + e.getMessage(), e);</span>
+<span class="fc" id="L257">                            }</span>
+<span class="fc" id="L258">                        });</span>
 <span class="fc" id="L259">    }</span>
 
 <span class="fc" id="L261">    private final Map&lt;String, Method&gt; testMethods = new HashMap&lt;&gt;();</span>
@@ -278,46 +278,46 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 <span class="fc" id="L278">        findClass(testClass)</span>
 <span class="fc" id="L279">                .stream()</span>
 <span class="fc" id="L280">                .forEach(</span>
-                        cls -&gt; Arrays
-                                .stream(cls.getDeclaredFields())
-                                .filter(f -&gt; f
-                                        .isAnnotationPresent(TestDelegate.class))
-                                .forEach(
+<span class="fc" id="L281">                        cls -&gt; Arrays</span>
+<span class="fc" id="L282">                                .stream(cls.getDeclaredFields())</span>
+<span class="fc" id="L283">                                .filter(f -&gt; f</span>
+<span class="fc" id="L284">                                        .isAnnotationPresent(TestDelegate.class))</span>
+<span class="fc" id="L285">                                .forEach(</span>
                                         f -&gt; {
-                                            checkTestDelegateAnnotationForField(f);
-                                            if (Supplier.class
-                                                    .isAssignableFrom(f
-                                                            .getType())) {
+<span class="fc" id="L287">                                            checkTestDelegateAnnotationForField(f);</span>
+<span class="fc" id="L288">                                            if (Supplier.class</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">                                                    .isAssignableFrom(f</span>
+<span class="fc" id="L290">                                                            .getType())) {</span>
                                                 try {
-                                                    delegateTest.put(
-                                                            f.getName(),
+<span class="fc" id="L292">                                                    delegateTest.put(</span>
+<span class="fc" id="L293">                                                            f.getName(),</span>
                                                             (Supplier&lt;Object&gt;) f
-                                                                    .get(targetObject));
-                                                    return;
-                                                } catch (
+<span class="fc" id="L295">                                                                    .get(targetObject));</span>
+<span class="fc" id="L296">                                                    return;</span>
+<span class="nc" id="L297">                                                } catch (</span>
                                                         IllegalAccessException
                                                         | IllegalArgumentException e) {
-                                                    throw new InternalError(
+<span class="nc" id="L300">                                                    throw new InternalError(</span>
                                                             &quot;Unexpected error &quot;
-                                                                    + e.getMessage(),
+<span class="nc" id="L302">                                                                    + e.getMessage(),</span>
                                                             e);
                                                 }
                                             }
-                                            delegateTest.put(
-                                                    f.getName(),
+<span class="fc" id="L306">                                            delegateTest.put(</span>
+<span class="fc" id="L307">                                                    f.getName(),</span>
                                                     (Supplier&lt;Object&gt;) () -&gt; {
                                                         try {
-                                                            return f.get(targetObject);
-                                                        } catch (
+<span class="fc" id="L310">                                                            return f.get(targetObject);</span>
+<span class="nc" id="L311">                                                        } catch (</span>
                                                                 IllegalAccessException
                                                                 | IllegalArgumentException e) {
-                                                            throw new InternalError(
+<span class="nc" id="L314">                                                            throw new InternalError(</span>
                                                                     &quot;Unexpected error &quot;
-                                                                            + e.getMessage(),
+<span class="nc" id="L316">                                                                            + e.getMessage(),</span>
                                                                     e);
                                                         }
                                                     });
-                                        }));
+<span class="fc" id="L320">                                        }));</span>
 
 <span class="fc" id="L322">    }</span>
 
@@ -327,27 +327,27 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 <span class="fc" id="L327">                .filter(m -&gt; m.isAnnotationPresent(Parameters.class))</span>
 <span class="fc" id="L328">                .peek(m -&gt; checkParametersAnnotationForMethod(m))</span>
 <span class="fc" id="L329">                .reduce((o, n) -&gt; {</span>
-                    throw new InternalError(
+<span class="fc" id="L330">                    throw new InternalError(</span>
                             &quot;@Parameters method can't only be once&quot;);
 <span class="fc" id="L332">                }).orElse(null);</span>
 <span class="fc" id="L333">        parameterFields = Arrays</span>
 <span class="fc" id="L334">                .stream(testClass.getDeclaredFields())</span>
 <span class="fc" id="L335">                .filter(f -&gt; f.isAnnotationPresent(Parameter.class))</span>
 <span class="fc" id="L336">                .peek(f -&gt; {</span>
-                    if (parameters == null) {
-                        throw new InternalError(
+<span class="fc bfc" id="L337" title="All 2 branches covered.">                    if (parameters == null) {</span>
+<span class="fc" id="L338">                        throw new InternalError(</span>
                                 &quot;@Parameter can't be used without @Parameters method&quot;);
                     }
-                })
+<span class="fc" id="L341">                })</span>
 <span class="fc" id="L342">                .peek(f -&gt; checkParameterAnnotationForField(f))</span>
 <span class="fc" id="L343">                .collect(</span>
                         Collectors
 <span class="fc" id="L345">                                .&lt;Field, Integer, Field&gt; toMap(</span>
-                                        (Field f) -&gt; f.getAnnotation(
-                                                Parameter.class).value(),
-                                        (Field f) -&gt; f,
+<span class="fc" id="L346">                                        (Field f) -&gt; f.getAnnotation(</span>
+<span class="fc" id="L347">                                                Parameter.class).value(),</span>
+<span class="fc" id="L348">                                        (Field f) -&gt; f,</span>
                                         (f1, f2) -&gt; {
-                                            throw new InternalError(
+<span class="fc" id="L350">                                            throw new InternalError(</span>
                                                     &quot;@Parameter can't be used twice with the same value number&quot;);
                                         }));
 <span class="fc bfc" id="L353" title="All 2 branches covered.">        if (parameters != null) {</span>
@@ -367,21 +367,21 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 <span class="fc" id="L367">                    .stream()</span>
 <span class="fc" id="L368">                    .forEach(</span>
                             f -&gt; {
-                                Parameter p = f.getAnnotation(Parameter.class);
-                                if (p.filter()) {
-                                    if (filterParameterField != null) {
-                                        throw new InternalError(
+<span class="fc" id="L370">                                Parameter p = f.getAnnotation(Parameter.class);</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">                                if (p.filter()) {</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">                                    if (filterParameterField != null) {</span>
+<span class="fc" id="L373">                                        throw new InternalError(</span>
                                                 &quot;@Parameter filter attribute can only be used once per test class.&quot;);
                                     }
-                                    if (!BiFunction.class.isAssignableFrom(f
-                                            .getType())) {
-                                        throw new InternalError(
+<span class="fc bfc" id="L376" title="All 2 branches covered.">                                    if (!BiFunction.class.isAssignableFrom(f</span>
+<span class="fc" id="L377">                                            .getType())) {</span>
+<span class="fc" id="L378">                                        throw new InternalError(</span>
                                                 &quot;@Parameter filter attribute can only be use on BiFunction.&quot;);
                                     }
-                                    filterParameterField = f;
+<span class="fc" id="L381">                                    filterParameterField = f;</span>
 
                                 }
-                            });
+<span class="fc" id="L384">                            });</span>
         }
 <span class="fc" id="L386">    }</span>
 
@@ -389,46 +389,46 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
             String parentGroup) {
 <span class="fc" id="L390">        findClass(testClass).forEach(</span>
                 cls -&gt; {
-                    Arrays.stream(cls.getDeclaredMethods())
-                            .filter(m -&gt; m.isAnnotationPresent(Test.class))
-                            .filter(m -&gt; singleMethod == null
-                                    || singleMethod.equals(m)).forEach(m -&gt; {
-                                checkTestAnnotationForMethod(m);
-                                Test annotation = m.getAnnotation(Test.class);
-                                String testName = m.getName();
-                                if (!&quot;&quot;.equals(annotation.name())) {
-                                    testName = annotation.name();
+<span class="fc" id="L392">                    Arrays.stream(cls.getDeclaredMethods())</span>
+<span class="fc" id="L393">                            .filter(m -&gt; m.isAnnotationPresent(Test.class))</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">                            .filter(m -&gt; singleMethod == null</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">                                    || singleMethod.equals(m)).forEach(m -&gt; {</span>
+<span class="fc" id="L396">                                checkTestAnnotationForMethod(m);</span>
+<span class="fc" id="L397">                                Test annotation = m.getAnnotation(Test.class);</span>
+<span class="fc" id="L398">                                String testName = m.getName();</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">                                if (!&quot;&quot;.equals(annotation.name())) {</span>
+<span class="fc" id="L400">                                    testName = annotation.name();</span>
                                 }
-                                testMethods.put(testName, m);
-                            });
-                });
+<span class="fc" id="L402">                                testMethods.put(testName, m);</span>
+<span class="fc" id="L403">                            });</span>
+<span class="fc" id="L404">                });</span>
 <span class="fc" id="L405">    }</span>
 
     private void findTestsRule(T targetObject, Class&lt;T&gt; testClass) {
 <span class="fc" id="L408">        testRules = findClass(testClass)</span>
 <span class="fc" id="L409">                .stream()</span>
 <span class="fc" id="L410">                .map(cls -&gt; Arrays</span>
-                        .stream(cls.getDeclaredFields())
-                        .filter(f -&gt; f.isAnnotationPresent(Rule.class))
-                        .map(f -&gt; {
-                            checkRuleAnnotationForField(f);
+<span class="fc" id="L411">                        .stream(cls.getDeclaredFields())</span>
+<span class="fc" id="L412">                        .filter(f -&gt; f.isAnnotationPresent(Rule.class))</span>
+<span class="fc" id="L413">                        .map(f -&gt; {</span>
+<span class="fc" id="L414">                            checkRuleAnnotationForField(f);</span>
                             try {
-                                TestRule tr1 = (TestRule) f.get(targetObject);
-                                if (tr1 == null) {
-                                    throw new InternalError(
+<span class="fc" id="L416">                                TestRule tr1 = (TestRule) f.get(targetObject);</span>
+<span class="fc bfc" id="L417" title="All 2 branches covered.">                                if (tr1 == null) {</span>
+<span class="fc" id="L418">                                    throw new InternalError(</span>
                                             &quot;@Rule annotation is used on a null field. This is not allowed&quot;);
                                 }
-                                return tr1;
-                            } catch (IllegalAccessException
+<span class="fc" id="L421">                                return tr1;</span>
+<span class="nc" id="L422">                            } catch (IllegalAccessException</span>
                                     | IllegalArgumentException e) {
-                                throw new InternalError(&quot;Unexpected error &quot;
-                                        + e.getMessage(), e);
+<span class="nc" id="L424">                                throw new InternalError(&quot;Unexpected error &quot;</span>
+<span class="nc" id="L425">                                        + e.getMessage(), e);</span>
                             }
                         })
-                        .reduce((o, n) -&gt; {
-                            throw new InternalError(
+<span class="fc" id="L428">                        .reduce((o, n) -&gt; {</span>
+<span class="fc" id="L429">                            throw new InternalError(</span>
                                     &quot;@Rule annotation can only be used once on field&quot;);
-<span class="fc" id="L431">                        }).orElse(null)).filter(i -&gt; i != null)</span>
+<span class="fc bfc" id="L431" title="All 2 branches covered.">                        }).orElse(null)).filter(i -&gt; i != null)</span>
 <span class="fc" id="L432">                .reduce((o, n) -&gt; o.around(n)).orElse(null);</span>
 
 <span class="fc" id="L434">    }</span>
@@ -449,48 +449,48 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 <span class="fc" id="L449">                .stream()</span>
 <span class="fc" id="L450">                .collect(</span>
 <span class="fc" id="L451">                        Collectors.toMap(</span>
-                                test -&gt; test.getKey(),
+<span class="fc" id="L452">                                test -&gt; test.getKey(),</span>
                                 test -&gt; {
                                     Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; stest;
-                                    if (test.getValue().isAnnotationPresent(
+<span class="fc bfc" id="L455" title="All 2 branches covered.">                                    if (test.getValue().isAnnotationPresent(</span>
                                             Ignore.class)) {
-                                        stest = p -&gt; {
-                                            throw new AssumptionError(
+<span class="fc" id="L457">                                        stest = p -&gt; {</span>
+<span class="fc" id="L458">                                            throw new AssumptionError(</span>
                                                     &quot;Test method is annotated with @Ignore&quot;);
                                         };
                                     } else {
-                                        Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; itest = p -&gt; {
-                                            Statement
-                                                    .&lt;TestContext&lt;Object&gt;, Throwable&gt; reflectionMethod(
+<span class="fc" id="L462">                                        Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; itest = p -&gt; {</span>
+<span class="fc" id="L463">                                            Statement</span>
+<span class="fc" id="L464">                                                    .&lt;TestContext&lt;Object&gt;, Throwable&gt; reflectionMethod(</span>
                                                             targetObject,
-                                                            test.getValue())
-                                                    .run(p);
-                                        };
-                                        if (testRules != null) {
-                                            stest = p -&gt; testRules
-                                                    .computeStatement(itest)
-                                                    .run(p);
+<span class="fc" id="L466">                                                            test.getValue())</span>
+<span class="fc" id="L467">                                                    .run(p);</span>
+<span class="fc" id="L468">                                        };</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">                                        if (testRules != null) {</span>
+<span class="fc" id="L470">                                            stest = p -&gt; testRules</span>
+<span class="fc" id="L471">                                                    .computeStatement(itest)</span>
+<span class="fc" id="L472">                                                    .run(p);</span>
                                         } else {
-                                            stest = itest;
+<span class="fc" id="L474">                                            stest = itest;</span>
                                         }
 
                                     }
-                                    return p -&gt; {
-                                        notifyStartTest(p);
+<span class="fc" id="L478">                                    return p -&gt; {</span>
+<span class="fc" id="L479">                                        notifyStartTest(p);</span>
                                         try {
-                                            stest.run(p);
-                                            notifyEndSuccessTest(p);
-                                        } catch (InternalError e) {
-                                            notifyEndFailureTest(p, e);
-                                        } catch (AssertionError e) {
-                                            notifyEndFailureTest(p, e);
-                                        } catch (AssumptionError e) {
-                                            notifyEndSkippedTest(p);
-                                        } catch (Throwable e) {// NOSONAR
+<span class="fc" id="L481">                                            stest.run(p);</span>
+<span class="fc" id="L482">                                            notifyEndSuccessTest(p);</span>
+<span class="nc" id="L483">                                        } catch (InternalError e) {</span>
+<span class="nc" id="L484">                                            notifyEndFailureTest(p, e);</span>
+<span class="fc" id="L485">                                        } catch (AssertionError e) {</span>
+<span class="fc" id="L486">                                            notifyEndFailureTest(p, e);</span>
+<span class="fc" id="L487">                                        } catch (AssumptionError e) {</span>
+<span class="fc" id="L488">                                            notifyEndSkippedTest(p);</span>
+<span class="fc" id="L489">                                        } catch (Throwable e) {// NOSONAR</span>
                                             // As we really want all error
-                                            notifyEndFailureTest(p, e);
-                                        }
-                                    };
+<span class="fc" id="L491">                                            notifyEndFailureTest(p, e);</span>
+<span class="pc" id="L492">                                        }</span>
+<span class="fc" id="L493">                                    };</span>
                                 }));
 <span class="fc" id="L495">    }</span>
 
@@ -498,7 +498,7 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 <span class="fc" id="L498">        delegateTests = delegateTest.entrySet().stream()</span>
 <span class="fc" id="L499">                .collect(Collectors.toMap(test -&gt; test.getKey(), test -&gt; {</span>
                     Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; stest;
-                    Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; itest = p -&gt; {
+<span class="fc" id="L501">                    Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; itest = p -&gt; {</span>
 <span class="fc" id="L502">                        new Statement&lt;TestContext&lt;Object&gt;, Throwable&gt;() {</span>
 
                             @Override
@@ -520,32 +520,32 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
                             public String getName() {
 <span class="nc" id="L521">                                return test.getKey();</span>
                             }
-                        }.run(p);
-                    };
-                    if (testRules != null) {
-                        stest = p -&gt; testRules.computeStatement(itest).run(p);
+<span class="fc" id="L523">                        }.run(p);</span>
+<span class="fc" id="L524">                    };</span>
+<span class="pc bpc" id="L525" title="1 of 2 branches missed.">                    if (testRules != null) {</span>
+<span class="nc" id="L526">                        stest = p -&gt; testRules.computeStatement(itest).run(p);</span>
                     } else {
-                        stest = itest;
+<span class="fc" id="L528">                        stest = itest;</span>
                     }
 
-                    return p -&gt; {
+<span class="fc" id="L531">                    return p -&gt; {</span>
                         try {
-                            stest.run(p);
-                        } catch (InternalError e) {
-                            notifyStartTest(p);
-                            notifyEndFailureTest(p, e);
-                        } catch (AssertionError e) {
-                            notifyStartTest(p);
-                            notifyEndFailureTest(p, e);
-                        } catch (AssumptionError e) {
-                            notifyStartTest(p);
-                            notifyEndSkippedTest(p);
-                        } catch (Throwable e) {// NOSONAR
+<span class="fc" id="L533">                            stest.run(p);</span>
+<span class="nc" id="L534">                        } catch (InternalError e) {</span>
+<span class="nc" id="L535">                            notifyStartTest(p);</span>
+<span class="nc" id="L536">                            notifyEndFailureTest(p, e);</span>
+<span class="nc" id="L537">                        } catch (AssertionError e) {</span>
+<span class="nc" id="L538">                            notifyStartTest(p);</span>
+<span class="nc" id="L539">                            notifyEndFailureTest(p, e);</span>
+<span class="nc" id="L540">                        } catch (AssumptionError e) {</span>
+<span class="nc" id="L541">                            notifyStartTest(p);</span>
+<span class="nc" id="L542">                            notifyEndSkippedTest(p);</span>
+<span class="nc" id="L543">                        } catch (Throwable e) {// NOSONAR</span>
                             // As we really want all error
-                            notifyStartTest(p);
-                            notifyEndFailureTest(p, e);
-                        }
-                    };
+<span class="nc" id="L545">                            notifyStartTest(p);</span>
+<span class="nc" id="L546">                            notifyEndFailureTest(p, e);</span>
+<span class="pc" id="L547">                        }</span>
+<span class="fc" id="L548">                    };</span>
                 }));
 <span class="fc" id="L550">    }</span>
 
@@ -680,4 +680,4 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

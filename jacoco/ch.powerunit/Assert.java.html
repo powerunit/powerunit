@@ -198,7 +198,7 @@ interface Assert {
 	default &lt;T, R&gt; AssertThatCastableObject&lt;R&gt; assertThatFunction(
 			Function&lt;T, R&gt; function, T input) {
 <span class="fc" id="L200">		return new AssertThatObjectImpl&lt;R&gt;(true, null,</span>
-				() -&gt; function.apply(input));
+<span class="fc" id="L201">				() -&gt; function.apply(input));</span>
 	}
 
 	/**
@@ -233,7 +233,7 @@ interface Assert {
 	default &lt;T, R&gt; AssertThatCastableObject&lt;R&gt; assertThatFunction(String msg,
 			Function&lt;T, R&gt; function, T input) {
 <span class="fc" id="L235">		return new AssertThatObjectImpl&lt;R&gt;(true, msg,</span>
-				() -&gt; function.apply(input));
+<span class="fc" id="L236">				() -&gt; function.apply(input));</span>
 	}
 
 	/**
@@ -461,7 +461,7 @@ interface Assert {
 	 */
 	default &lt;P, T extends RuntimeException&gt; AssertThatException&lt;T&gt; assertWhenFunction(
 			String msg, Function&lt;P, ?&gt; function, P param) {
-<span class="fc" id="L464">		return assertWhen(msg,(p)-&gt;function.apply(p),param);</span>
+<span class="pc" id="L464">		return assertWhen(msg,(p)-&gt;function.apply(p),param);</span>
 	}
 
 	/**
@@ -609,4 +609,4 @@ interface Assert {
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

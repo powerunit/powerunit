@@ -130,24 +130,24 @@ public interface TestListenerRule extends TestRule {
             Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; inner) {
 <span class="fc" id="L131">        return (p) -&gt; {</span>
             try {
-                onStart(p);
-                inner.run(p);
-            } catch (AssertionError af) {
-                onFailure(p, af);
-                throw af;
-            } catch (InternalError ie) {
-                onError(p, ie);
-                throw ie;
-            } catch (AssumptionError ie) {
-                onAssumptionSkip(p, ie);
-                throw ie;
-            } catch (Throwable t) {
-                onError(p, t);
-                throw t;
+<span class="fc" id="L133">                onStart(p);</span>
+<span class="fc" id="L134">                inner.run(p);</span>
+<span class="nc" id="L135">            } catch (AssertionError af) {</span>
+<span class="nc" id="L136">                onFailure(p, af);</span>
+<span class="nc" id="L137">                throw af;</span>
+<span class="nc" id="L138">            } catch (InternalError ie) {</span>
+<span class="nc" id="L139">                onError(p, ie);</span>
+<span class="nc" id="L140">                throw ie;</span>
+<span class="nc" id="L141">            } catch (AssumptionError ie) {</span>
+<span class="nc" id="L142">                onAssumptionSkip(p, ie);</span>
+<span class="nc" id="L143">                throw ie;</span>
+<span class="nc" id="L144">            } catch (Throwable t) {</span>
+<span class="nc" id="L145">                onError(p, t);</span>
+<span class="nc" id="L146">                throw t;</span>
             } finally {
-                onEnd(p);
-            }
-        };
+<span class="pc" id="L148">                onEnd(p);</span>
+<span class="fc" id="L149">            }</span>
+<span class="fc" id="L150">        };</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

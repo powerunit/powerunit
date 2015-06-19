@@ -75,11 +75,11 @@ public interface Statement&lt;P, T extends Throwable&gt; {
 <span class="fc" id="L75">        Objects.requireNonNull(after);</span>
 <span class="fc" id="L76">        return (p) -&gt; {</span>
             try {
-                run(p);
+<span class="fc" id="L78">                run(p);</span>
             } finally {
-                after.run(p);
-            }
-        };
+<span class="pc" id="L80">                after.run(p);</span>
+<span class="fc" id="L81">            }</span>
+<span class="fc" id="L82">        };</span>
     }
 
     /**
@@ -93,9 +93,9 @@ public interface Statement&lt;P, T extends Throwable&gt; {
     default Statement&lt;P, T&gt; andThenOnlySuccess(Statement&lt;P, T&gt; after) {
 <span class="fc" id="L94">        Objects.requireNonNull(after);</span>
 <span class="fc" id="L95">        return (p) -&gt; {</span>
-            run(p);
-            after.run(p);
-        };
+<span class="fc" id="L96">            run(p);</span>
+<span class="fc" id="L97">            after.run(p);</span>
+<span class="fc" id="L98">        };</span>
     }
 
     /**
@@ -193,4 +193,4 @@ public interface Statement&lt;P, T extends Throwable&gt; {
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

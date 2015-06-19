@@ -90,7 +90,7 @@ public final class SystemPropertiesRule implements ExternalResource {
             String propertyName, Supplier&lt;String&gt; propertyValue) {
 <span class="fc" id="L91">        return new SystemPropertiesRule(propertyName).around(TestRule</span>
 <span class="fc" id="L92">                .before(() -&gt; System.setProperty(propertyName,</span>
-                        propertyValue.get())));
+<span class="fc" id="L93">                        propertyValue.get())));</span>
     }
 
     /**
@@ -105,8 +105,8 @@ public final class SystemPropertiesRule implements ExternalResource {
     public static TestRule setSystemPropertyBeforeTestAndRestoreAfter(
             String propertyName, String propertyValue) {
 <span class="fc" id="L107">        return setSystemPropertyBeforeTestAndRestoreAfter(propertyName,</span>
-                () -&gt; propertyValue);
+<span class="fc" id="L108">                () -&gt; propertyValue);</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

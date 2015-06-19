@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MatcherTester.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.matchers</a> &gt; <span class="el_source">MatcherTester.java</span></div><h1>MatcherTester.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.matchers;
+
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
+
+import ch.powerunit.TestInterface;
+import ch.powerunit.matchers.impl.MatcherAssertionImpl;
+import ch.powerunit.matchers.impl.MatcherTesterImpl;
+import ch.powerunit.matchers.impl.RejectImpl;
+import ch.powerunit.matchers.lang.MatcherAssertion;
+import ch.powerunit.matchers.lang.MatcherTesterDSL1;
+import ch.powerunit.matchers.lang.MatcherTesterDSL2;
+import ch.powerunit.matchers.lang.MatcherTesterDSL3;
+import ch.powerunit.matchers.lang.MatcherAssertion.Reject;
+
+/**
+ * This class provide the support for tester of Matcher.
+ * 
+ * @author borettim
+ * @since 0.3.0
+ * @see #of(Class) To start the DSL.
+ */
+@TestInterface(MatcherTesterImpl.class)
+public final class MatcherTester&lt;T extends Matcher&lt;?&gt;&gt; {
+	/**
+	 * Start the creation of a tester definition for a matcher.
+	 * &lt;p&gt;
+	 * For instance :
+	 * 
+	 * &lt;pre&gt;
+	 * &amp;#064;TestDelegate
+	 * public final MatcherTester&amp;lt;TestMatcher&amp;gt; tester = MatcherTester.of(
+	 * 		TestMatcher.class).with(
+	 * 		matcher(new TestMatcher(null)).describedAs(&amp;quot;is null&amp;quot;).nullAccepted()
+	 * 				.rejecting(value(&amp;quot;x&amp;quot;).withMessage(&amp;quot; was \&amp;quot;x\&amp;quot;&amp;quot;)),
+	 * 		matcher(new TestMatcher(&amp;quot;x&amp;quot;)).describedAs(&amp;quot;is \&amp;quot;x\&amp;quot;&amp;quot;)
+	 * 				.nullRejected(&amp;quot; was null&amp;quot;).accepting(&amp;quot;x&amp;quot;)
+	 * 				.rejecting(value(&amp;quot;y&amp;quot;).withMessage(&amp;quot; was \&amp;quot;y\&amp;quot;&amp;quot;)),
+	 * 		matcher(new TestMatcher(&amp;quot;y&amp;quot;)).describedAs(&amp;quot;is \&amp;quot;y\&amp;quot;&amp;quot;)
+	 * 				.nullRejected(&amp;quot; was null&amp;quot;).accepting(&amp;quot;y&amp;quot;)
+	 * 				.rejecting(value(&amp;quot;x&amp;quot;).withMessage(&amp;quot; was \&amp;quot;x\&amp;quot;&amp;quot;)));
+	 * &lt;/pre&gt;
+	 * 
+	 * @param matcherClass
+	 *            the class of the matcher
+	 * @return the next step of the DSL
+	 * @see ch.powerunit.matchers.lang.MatcherTesterDSL1#with(MatcherAssertion...)
+	 */
+	public static &lt;T extends Matcher&lt;?&gt;&gt; MatcherTesterDSL1&lt;T&gt; of(
+			Class&lt;T&gt; matcherClass) {
+<span class="fc" id="L70">		return new MatcherTesterDSL1&lt;T&gt;() {</span>
+
+			@Override
+			public MatcherTester&lt;T&gt; with(MatcherAssertion&lt;T&gt;... assertions) {
+<span class="fc" id="L74">				return new MatcherTester&lt;T&gt;(matcherClass, assertions);</span>
+			}
+
+			@SuppressWarnings(&quot;unchecked&quot;)
+			@Override
+			public MatcherTester&lt;T&gt; with(MatcherAssertion&lt;T&gt; first) {
+<span class="nc" id="L80">				return with(new MatcherAssertion[] { first });</span>
+			}
+
+			@SuppressWarnings(&quot;unchecked&quot;)
+			@Override
+			public MatcherTester&lt;T&gt; with(MatcherAssertion&lt;T&gt; first,
+					MatcherAssertion&lt;T&gt; second) {
+<span class="nc" id="L87">				return with(new MatcherAssertion[] { first, second });</span>
+			}
+
+			@SuppressWarnings(&quot;unchecked&quot;)
+			@Override
+			public MatcherTester&lt;T&gt; with(MatcherAssertion&lt;T&gt; first,
+					MatcherAssertion&lt;T&gt; second, MatcherAssertion&lt;T&gt; third) {
+<span class="fc" id="L94">				return with(new MatcherAssertion[] { first, second, third });</span>
+			}
+
+			@SuppressWarnings(&quot;unchecked&quot;)
+			@Override
+			public MatcherTester&lt;T&gt; with(MatcherAssertion&lt;T&gt; first,
+					MatcherAssertion&lt;T&gt; second, MatcherAssertion&lt;T&gt; third,
+					MatcherAssertion&lt;T&gt; fourth) {
+<span class="nc" id="L102">				return with(new MatcherAssertion[] { first, second, third,</span>
+						fourth });
+			}
+
+			@SuppressWarnings(&quot;unchecked&quot;)
+			@Override
+			public MatcherTester&lt;T&gt; with(MatcherAssertion&lt;T&gt; first,
+					MatcherAssertion&lt;T&gt; second, MatcherAssertion&lt;T&gt; third,
+					MatcherAssertion&lt;T&gt; fourth, MatcherAssertion&lt;T&gt; fifth) {
+<span class="nc" id="L111">				return with(new MatcherAssertion[] { first, second, third,</span>
+						fourth, fifth });
+			}
+
+			@SuppressWarnings(&quot;unchecked&quot;)
+			@Override
+			public MatcherTester&lt;T&gt; with(MatcherAssertion&lt;T&gt; first,
+					MatcherAssertion&lt;T&gt; second, MatcherAssertion&lt;T&gt; third,
+					MatcherAssertion&lt;T&gt; fourth, MatcherAssertion&lt;T&gt; fifth,
+					MatcherAssertion&lt;T&gt; sixth) {
+<span class="nc" id="L121">				return with(new MatcherAssertion[] { first, second, third,</span>
+						fourth, fifth, sixth });
+			}
+		};
+	}
+
+	/**
+	 * Use this method to start the definition of one entry to be passed into
+	 * the &lt;code&gt;with&lt;/code&gt; created by {@link #of(Class)}.
+	 * 
+	 * @param matcher
+	 *            The instance of the matcher to be tested.
+	 * @return the next step of the DSL
+	 * @see ch.powerunit.matchers.lang.MatcherTesterDSL2
+	 */
+	public static &lt;T extends Matcher&lt;?&gt;&gt; MatcherTesterDSL2&lt;T&gt; matcher(T matcher) {
+<span class="fc" id="L137">		return new MatcherTesterDSL2&lt;T&gt;() {</span>
+
+			@Override
+			public MatcherAssertion&lt;T&gt; describedAs(Matcher&lt;String&gt; expected) {
+<span class="fc" id="L141">				return new MatcherAssertionImpl&lt;T&gt;(matcher, expected);</span>
+			}
+
+			@Override
+			public MatcherAssertion&lt;T&gt; describedAs(String expected) {
+<span class="fc" id="L146">				return describedAs(Matchers.equalTo(expected));</span>
+			}
+
+		};
+	}
+
+	/**
+	 * Use this method inside the
+	 * {@link ch.powerunit.matchers.lang.MatcherAssertion#rejecting(Reject...)}
+	 * to start the definition of a rejecting object.
+	 * 
+	 * @param value
+	 *            The rejected value
+	 * @return the next step of the DSL
+	 * @see ch.powerunit.matchers.lang.MatcherTesterDSL3
+	 */
+	public static MatcherTesterDSL3 value(Object value) {
+<span class="fc" id="L163">		return new MatcherTesterDSL3() {</span>
+
+			@Override
+			public Reject withMessage(Matcher&lt;String&gt; message) {
+<span class="fc" id="L167">				return new RejectImpl(value, message);</span>
+			}
+
+			@Override
+			public Reject withMessage(String message) {
+<span class="fc" id="L172">				return withMessage(Matchers.equalTo(message));</span>
+			}
+		};
+	}
+
+	private final Class&lt;T&gt; matcherClass;
+
+	private final MatcherAssertion&lt;T&gt; assertions[];
+
+	/**
+	 * @param matcherClass
+	 * @param assertions
+	 */
+	private MatcherTester(Class&lt;T&gt; matcherClass,
+<span class="fc" id="L186">			MatcherAssertion&lt;T&gt;[] assertions) {</span>
+<span class="fc" id="L187">		this.matcherClass = matcherClass;</span>
+<span class="fc" id="L188">		this.assertions = assertions;</span>
+<span class="fc" id="L189">	}</span>
+
+	/**
+	 * &lt;b&gt;Used internally&lt;/b&gt;.
+	 * 
+	 * @return the matcherClass
+	 */
+	public Class&lt;T&gt; getMatcherClass() {
+<span class="fc" id="L197">		return matcherClass;</span>
+	}
+
+	/**
+	 * &lt;b&gt;Used internally&lt;/b&gt;.
+	 * 
+	 * @return the assertions
+	 */
+	public MatcherAssertion&lt;T&gt;[] getAssertions() {
+<span class="fc" id="L206">		return assertions;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

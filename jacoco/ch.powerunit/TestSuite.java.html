@@ -93,7 +93,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
      */
     default TestRule before(Runnable... befores) {
 <span class="fc" id="L95">        return Arrays.stream(befores).map(TestRule::before)</span>
-<span class="fc" id="L96">                .reduce((prev, next) -&gt; prev.around(next)).get();</span>
+<span class="pc" id="L96">                .reduce((prev, next) -&gt; prev.around(next)).get();</span>
     }
 
     /**
@@ -117,7 +117,7 @@ public interface TestSuite extends Assert, Assume, Matchers {
      */
     default TestRule after(Runnable... afters) {
 <span class="fc" id="L119">        return Arrays.stream(afters).map(TestRule::after)</span>
-<span class="fc" id="L120">                .reduce((prev, next) -&gt; prev.around(next)).get();</span>
+<span class="pc" id="L120">                .reduce((prev, next) -&gt; prev.around(next)).get();</span>
     }
 
     /**
@@ -334,4 +334,4 @@ public interface TestSuite extends Assert, Assume, Matchers {
 <span class="fc" id="L334">        return matcher::matches;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

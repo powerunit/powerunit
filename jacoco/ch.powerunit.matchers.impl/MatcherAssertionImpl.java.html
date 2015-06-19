@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MatcherAssertionImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.matchers.impl</a> &gt; <span class="el_source">MatcherAssertionImpl.java</span></div><h1>MatcherAssertionImpl.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.matchers.impl;
+
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
+
+import ch.powerunit.matchers.lang.MatcherAssertion;
+
+/**
+ * @author borettim
+ * @since 0.3.0
+ */
+public class MatcherAssertionImpl&lt;T extends Matcher&lt;?&gt;&gt; implements
+		MatcherAssertion&lt;T&gt; {
+
+	private final T matcher;
+	private final Matcher&lt;String&gt; expected;
+	private Boolean nullRejected; // As null is accepted
+	private Matcher&lt;String&gt; nullRejectedMessage;
+	private Object acceptedValues[];
+	private Reject[] rejectedValue;
+
+	@Override
+	public MatcherAssertion&lt;T&gt; nullAccepted() {
+<span class="fc" id="L43">		nullRejected = false;</span>
+<span class="fc" id="L44">		return this;</span>
+	}
+
+	@Override
+	public MatcherAssertion&lt;T&gt; nullRejected(Matcher&lt;String&gt; rejectedMessage) {
+<span class="fc" id="L49">		nullRejected = true;</span>
+<span class="fc" id="L50">		nullRejectedMessage = rejectedMessage;</span>
+<span class="fc" id="L51">		return this;</span>
+	}
+
+	@Override
+	public MatcherAssertion&lt;T&gt; nullRejected(String rejectedMessage) {
+<span class="fc" id="L56">		return nullRejected(Matchers.equalTo(rejectedMessage));</span>
+	}
+
+	@Override
+	public MatcherAssertion&lt;T&gt; accepting(Object... values) {
+<span class="fc" id="L61">		this.acceptedValues = values;</span>
+<span class="fc" id="L62">		return this;</span>
+	}
+
+	@Override
+	public MatcherAssertion&lt;T&gt; rejecting(Reject... reject) {
+<span class="fc" id="L67">		this.rejectedValue = reject;</span>
+<span class="fc" id="L68">		return this;</span>
+	}
+
+	/**
+	 * @param matcher
+	 * @param expected
+	 */
+<span class="fc" id="L75">	public MatcherAssertionImpl(T matcher, Matcher&lt;String&gt; expected) {</span>
+<span class="fc" id="L76">		this.matcher = matcher;</span>
+<span class="fc" id="L77">		this.expected = expected;</span>
+<span class="fc" id="L78">	}</span>
+
+	/**
+	 * @return the matcher
+	 */
+	public T getMatcher() {
+<span class="fc" id="L84">		return matcher;</span>
+	}
+
+	/**
+	 * @return the expected
+	 */
+	public Matcher&lt;String&gt; getExpected() {
+<span class="fc" id="L91">		return expected;</span>
+	}
+
+	/**
+	 * @return the nullRejected
+	 */
+	public Boolean getNullRejected() {
+<span class="fc" id="L98">		return nullRejected;</span>
+	}
+
+	/**
+	 * @return the nullRejectedMessage
+	 */
+	public Matcher&lt;String&gt; getNullRejectedMessage() {
+<span class="fc" id="L105">		return nullRejectedMessage;</span>
+	}
+
+	/**
+	 * @return the acceptedValues
+	 */
+	public Object[] getAcceptedValues() {
+<span class="fc" id="L112">		return acceptedValues;</span>
+	}
+
+	/**
+	 * @return the rejectedValue
+	 */
+	public Reject[] getRejectedValue() {
+<span class="fc" id="L119">		return rejectedValue;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
