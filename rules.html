@@ -251,8 +251,7 @@ public class MyBeanTest implements TestSuite {
         bean.setField1(&quot;x&quot;);
         assertThat(bean.getField1()).is(&quot;x&quot;);
     }
-}
-</pre></div>
+}</pre></div>
 <p>This test class use a test rule to define action to be done before and after every test method. To do so, the rule chain is started by using the <tt>before</tt> method, passing as parameter a reference to the method <tt>prepare</tt>. This method return a chainable rule that provides the around method, which receive as a parameter another rule that is to be executed <i>inside</i> the previous one. This new rules is defined by using the <tt>after</tt> method. From a field initialization perspective, this will :</p>
 <ul>
 <li>Create a first rule that will execute the method <tt>prepare</tt> before every test.</li>
