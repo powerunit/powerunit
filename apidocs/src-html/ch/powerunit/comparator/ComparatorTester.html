@@ -242,58 +242,59 @@
 <span class="sourceLineNo">234</span>         *            The object of the comparator<a name="line.234"></a>
 <span class="sourceLineNo">235</span>         * @param &lt;C&gt;<a name="line.235"></a>
 <span class="sourceLineNo">236</span>         *            The comparator undertest<a name="line.236"></a>
-<span class="sourceLineNo">237</span>         */<a name="line.237"></a>
-<span class="sourceLineNo">238</span>        public static &lt;O, C extends Comparator&lt;O&gt;&gt; ComparatorTesterDSLStart&lt;O, C&gt; of(<a name="line.238"></a>
-<span class="sourceLineNo">239</span>                        final Class&lt;C&gt; clazzUnderTest) {<a name="line.239"></a>
-<span class="sourceLineNo">240</span>                Objects.requireNonNull(clazzUnderTest, "clazzUnderTest can't be null");<a name="line.240"></a>
-<span class="sourceLineNo">241</span>                return new ComparatorTesterDSL&lt;O, C&gt;(clazzUnderTest);<a name="line.241"></a>
-<span class="sourceLineNo">242</span>        }<a name="line.242"></a>
-<span class="sourceLineNo">243</span><a name="line.243"></a>
-<span class="sourceLineNo">244</span>        /**<a name="line.244"></a>
-<span class="sourceLineNo">245</span>         * Used by the framework.<a name="line.245"></a>
-<span class="sourceLineNo">246</span>         * <a name="line.246"></a>
-<span class="sourceLineNo">247</span>         * @return the comparatorClass<a name="line.247"></a>
-<span class="sourceLineNo">248</span>         */<a name="line.248"></a>
-<span class="sourceLineNo">249</span>        public Class&lt;C&gt; getComparatorClass() {<a name="line.249"></a>
-<span class="sourceLineNo">250</span>                return comparatorClass;<a name="line.250"></a>
-<span class="sourceLineNo">251</span>        }<a name="line.251"></a>
-<span class="sourceLineNo">252</span><a name="line.252"></a>
-<span class="sourceLineNo">253</span>        /**<a name="line.253"></a>
-<span class="sourceLineNo">254</span>         * Used by the framework.<a name="line.254"></a>
-<span class="sourceLineNo">255</span>         * <a name="line.255"></a>
-<span class="sourceLineNo">256</span>         * @return the lessSamples<a name="line.256"></a>
-<span class="sourceLineNo">257</span>         */<a name="line.257"></a>
-<span class="sourceLineNo">258</span>        public Supplier&lt;O[]&gt; getLessSamples() {<a name="line.258"></a>
-<span class="sourceLineNo">259</span>                return lessSamples;<a name="line.259"></a>
-<span class="sourceLineNo">260</span>        }<a name="line.260"></a>
-<span class="sourceLineNo">261</span><a name="line.261"></a>
-<span class="sourceLineNo">262</span>        /**<a name="line.262"></a>
-<span class="sourceLineNo">263</span>         * Used by the framework.<a name="line.263"></a>
-<span class="sourceLineNo">264</span>         * <a name="line.264"></a>
-<span class="sourceLineNo">265</span>         * @return the equalSamples<a name="line.265"></a>
-<span class="sourceLineNo">266</span>         */<a name="line.266"></a>
-<span class="sourceLineNo">267</span>        public Supplier&lt;O[]&gt; getEqualSamples() {<a name="line.267"></a>
-<span class="sourceLineNo">268</span>                return equalSamples;<a name="line.268"></a>
-<span class="sourceLineNo">269</span>        }<a name="line.269"></a>
-<span class="sourceLineNo">270</span><a name="line.270"></a>
-<span class="sourceLineNo">271</span>        /**<a name="line.271"></a>
-<span class="sourceLineNo">272</span>         * Used by the framework.<a name="line.272"></a>
-<span class="sourceLineNo">273</span>         * <a name="line.273"></a>
-<span class="sourceLineNo">274</span>         * @return the greaterSamples<a name="line.274"></a>
-<span class="sourceLineNo">275</span>         */<a name="line.275"></a>
-<span class="sourceLineNo">276</span>        public Supplier&lt;O[]&gt; getGreaterSamples() {<a name="line.276"></a>
-<span class="sourceLineNo">277</span>                return greaterSamples;<a name="line.277"></a>
-<span class="sourceLineNo">278</span>        }<a name="line.278"></a>
-<span class="sourceLineNo">279</span><a name="line.279"></a>
-<span class="sourceLineNo">280</span>        /**<a name="line.280"></a>
-<span class="sourceLineNo">281</span>         * Used by the framework.<a name="line.281"></a>
-<span class="sourceLineNo">282</span>         * <a name="line.282"></a>
-<span class="sourceLineNo">283</span>         * @return the underTest<a name="line.283"></a>
-<span class="sourceLineNo">284</span>         */<a name="line.284"></a>
-<span class="sourceLineNo">285</span>        public Supplier&lt;C&gt; getUnderTest() {<a name="line.285"></a>
-<span class="sourceLineNo">286</span>                return underTest;<a name="line.286"></a>
-<span class="sourceLineNo">287</span>        }<a name="line.287"></a>
-<span class="sourceLineNo">288</span>}<a name="line.288"></a>
+<span class="sourceLineNo">237</span>         * @see ch.powerunit.TestDelegate<a name="line.237"></a>
+<span class="sourceLineNo">238</span>         */<a name="line.238"></a>
+<span class="sourceLineNo">239</span>        public static &lt;O, C extends Comparator&lt;O&gt;&gt; ComparatorTesterDSLStart&lt;O, C&gt; of(<a name="line.239"></a>
+<span class="sourceLineNo">240</span>                        final Class&lt;C&gt; clazzUnderTest) {<a name="line.240"></a>
+<span class="sourceLineNo">241</span>                Objects.requireNonNull(clazzUnderTest, "clazzUnderTest can't be null");<a name="line.241"></a>
+<span class="sourceLineNo">242</span>                return new ComparatorTesterDSL&lt;O, C&gt;(clazzUnderTest);<a name="line.242"></a>
+<span class="sourceLineNo">243</span>        }<a name="line.243"></a>
+<span class="sourceLineNo">244</span><a name="line.244"></a>
+<span class="sourceLineNo">245</span>        /**<a name="line.245"></a>
+<span class="sourceLineNo">246</span>         * Used by the framework.<a name="line.246"></a>
+<span class="sourceLineNo">247</span>         * <a name="line.247"></a>
+<span class="sourceLineNo">248</span>         * @return the comparatorClass<a name="line.248"></a>
+<span class="sourceLineNo">249</span>         */<a name="line.249"></a>
+<span class="sourceLineNo">250</span>        public Class&lt;C&gt; getComparatorClass() {<a name="line.250"></a>
+<span class="sourceLineNo">251</span>                return comparatorClass;<a name="line.251"></a>
+<span class="sourceLineNo">252</span>        }<a name="line.252"></a>
+<span class="sourceLineNo">253</span><a name="line.253"></a>
+<span class="sourceLineNo">254</span>        /**<a name="line.254"></a>
+<span class="sourceLineNo">255</span>         * Used by the framework.<a name="line.255"></a>
+<span class="sourceLineNo">256</span>         * <a name="line.256"></a>
+<span class="sourceLineNo">257</span>         * @return the lessSamples<a name="line.257"></a>
+<span class="sourceLineNo">258</span>         */<a name="line.258"></a>
+<span class="sourceLineNo">259</span>        public Supplier&lt;O[]&gt; getLessSamples() {<a name="line.259"></a>
+<span class="sourceLineNo">260</span>                return lessSamples;<a name="line.260"></a>
+<span class="sourceLineNo">261</span>        }<a name="line.261"></a>
+<span class="sourceLineNo">262</span><a name="line.262"></a>
+<span class="sourceLineNo">263</span>        /**<a name="line.263"></a>
+<span class="sourceLineNo">264</span>         * Used by the framework.<a name="line.264"></a>
+<span class="sourceLineNo">265</span>         * <a name="line.265"></a>
+<span class="sourceLineNo">266</span>         * @return the equalSamples<a name="line.266"></a>
+<span class="sourceLineNo">267</span>         */<a name="line.267"></a>
+<span class="sourceLineNo">268</span>        public Supplier&lt;O[]&gt; getEqualSamples() {<a name="line.268"></a>
+<span class="sourceLineNo">269</span>                return equalSamples;<a name="line.269"></a>
+<span class="sourceLineNo">270</span>        }<a name="line.270"></a>
+<span class="sourceLineNo">271</span><a name="line.271"></a>
+<span class="sourceLineNo">272</span>        /**<a name="line.272"></a>
+<span class="sourceLineNo">273</span>         * Used by the framework.<a name="line.273"></a>
+<span class="sourceLineNo">274</span>         * <a name="line.274"></a>
+<span class="sourceLineNo">275</span>         * @return the greaterSamples<a name="line.275"></a>
+<span class="sourceLineNo">276</span>         */<a name="line.276"></a>
+<span class="sourceLineNo">277</span>        public Supplier&lt;O[]&gt; getGreaterSamples() {<a name="line.277"></a>
+<span class="sourceLineNo">278</span>                return greaterSamples;<a name="line.278"></a>
+<span class="sourceLineNo">279</span>        }<a name="line.279"></a>
+<span class="sourceLineNo">280</span><a name="line.280"></a>
+<span class="sourceLineNo">281</span>        /**<a name="line.281"></a>
+<span class="sourceLineNo">282</span>         * Used by the framework.<a name="line.282"></a>
+<span class="sourceLineNo">283</span>         * <a name="line.283"></a>
+<span class="sourceLineNo">284</span>         * @return the underTest<a name="line.284"></a>
+<span class="sourceLineNo">285</span>         */<a name="line.285"></a>
+<span class="sourceLineNo">286</span>        public Supplier&lt;C&gt; getUnderTest() {<a name="line.286"></a>
+<span class="sourceLineNo">287</span>                return underTest;<a name="line.287"></a>
+<span class="sourceLineNo">288</span>        }<a name="line.288"></a>
+<span class="sourceLineNo">289</span>}<a name="line.289"></a>
 
 
 

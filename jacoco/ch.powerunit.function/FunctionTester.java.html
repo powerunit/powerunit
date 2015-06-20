@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FunctionTester.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.function</a> &gt; <span class="el_source">FunctionTester.java</span></div><h1>FunctionTester.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.function;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+import org.hamcrest.Matcher;
+
+import ch.powerunit.TestInterface;
+import ch.powerunit.function.impl.FunctionTesterImpl;
+import ch.powerunit.function.impl.SupplierEqualsToMatcher;
+import ch.powerunit.function.lang.FunctionTesterDefineDSL;
+import ch.powerunit.function.lang.FunctionTesterEndDSL;
+import ch.powerunit.function.lang.FunctionTesterNextDSL;
+import ch.powerunit.function.lang.FunctionTesterStartDSL;
+
+/**
+ * Tester for function.
+ * 
+ * @author borettim
+ * @since 0.3.0
+ */
+@TestInterface(FunctionTesterImpl.class)
+public final class FunctionTester&lt;T, R&gt; {
+	private final Function&lt;T, R&gt; underTest;
+	private final List&lt;Supplier&lt;T&gt;&gt; input;
+	private final List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; result;
+	private final List&lt;Supplier&lt;String&gt;&gt; name;
+
+	private static class FunctionTesterDSL&lt;T, R&gt; implements
+			FunctionTesterDefineDSL&lt;T, R&gt;, FunctionTesterEndDSL&lt;T, R&gt;,
+			FunctionTesterNextDSL&lt;T, R&gt;, FunctionTesterStartDSL&lt;T, R&gt; {
+
+		private final Function&lt;T, R&gt; underTest;
+
+<span class="fc" id="L58">		private List&lt;Supplier&lt;T&gt;&gt; tmpInput = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L60">		private List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; tmpResult = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L62">		private List&lt;Supplier&lt;String&gt;&gt; tmpName = new ArrayList&lt;&gt;();</span>
+
+		private void finalizeCase() {
+<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (tmpName.size() &lt; tmpInput.size()) {</span>
+<span class="fc" id="L66">				tmpName.add(() -&gt; &quot;&quot;);</span>
+			}
+<span class="fc" id="L68">		}</span>
+
+<span class="fc" id="L70">		public FunctionTesterDSL(Function&lt;T, R&gt; underTest) {</span>
+<span class="fc" id="L71">			this.underTest = underTest;</span>
+<span class="fc" id="L72">		}</span>
+
+		@Override
+		public FunctionTesterDefineDSL&lt;T, R&gt; passingAsParameter(T input) {
+<span class="fc" id="L76">			return passingAsParameter(() -&gt; input);</span>
+		}
+
+		@Override
+		public FunctionTesterDefineDSL&lt;T, R&gt; passingAsParameter(
+				Supplier&lt;T&gt; input) {
+<span class="fc" id="L82">			Objects.requireNonNull(input, &quot;input can't be null&quot;);</span>
+<span class="fc" id="L83">			finalizeCase();</span>
+<span class="fc" id="L84">			tmpInput.add(input);</span>
+<span class="fc" id="L85">			return this;</span>
+		}
+
+		@Override
+		public FunctionTesterNextDSL&lt;T, R&gt; thenExpectingResult(R result) {
+<span class="fc" id="L90">			return thenExpectingResult(() -&gt; result);</span>
+		}
+
+		@Override
+		public FunctionTesterNextDSL&lt;T, R&gt; thenExpectingResult(
+				Supplier&lt;R&gt; result) {
+<span class="fc" id="L96">			Objects.requireNonNull(result, &quot;matching can't be null&quot;);</span>
+<span class="fc" id="L97">			return thenExpectingResultThat(new SupplierEqualsToMatcher&lt;R&gt;(</span>
+					result));
+		}
+
+		@Override
+		public FunctionTesterNextDSL&lt;T, R&gt; thenExpectingResultThat(
+				Matcher&lt;? super R&gt; matching) {
+<span class="fc" id="L104">			Objects.requireNonNull(matching, &quot;matching can't be null&quot;);</span>
+<span class="fc" id="L105">			return thenExpectingResultThat(() -&gt; matching);</span>
+		}
+
+		@Override
+		public FunctionTesterNextDSL&lt;T, R&gt; thenExpectingResultThat(
+				Supplier&lt;Matcher&lt;? super R&gt;&gt; matching) {
+<span class="fc" id="L111">			Objects.requireNonNull(matching, &quot;matching can't be null&quot;);</span>
+<span class="fc" id="L112">			tmpResult.add(matching);</span>
+<span class="fc" id="L113">			return this;</span>
+		}
+
+		@Override
+		public FunctionTesterEndDSL&lt;T, R&gt; testNamed(String name) {
+<span class="fc" id="L118">			return testNamed(() -&gt; name);</span>
+		}
+
+		@Override
+		public FunctionTesterEndDSL&lt;T, R&gt; testNamed(Supplier&lt;String&gt; name) {
+<span class="fc" id="L123">			Objects.requireNonNull(name, &quot;name can't be null&quot;);</span>
+<span class="fc" id="L124">			tmpName.add(name);</span>
+<span class="fc" id="L125">			return this;</span>
+		}
+
+		@Override
+		public FunctionTester&lt;T, R&gt; build() {
+<span class="fc" id="L130">			finalizeCase();</span>
+<span class="fc" id="L131">			return new FunctionTester&lt;T, R&gt;(underTest, tmpInput, tmpResult,</span>
+					tmpName);
+		}
+
+	}
+
+	private FunctionTester(Function&lt;T, R&gt; underTest,
+			List&lt;Supplier&lt;T&gt;&gt; tmpInput,
+			List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; tmpResult,
+<span class="fc" id="L140">			List&lt;Supplier&lt;String&gt;&gt; tmpName) {</span>
+<span class="fc" id="L141">		this.underTest = underTest;</span>
+<span class="fc" id="L142">		this.input = tmpInput;</span>
+<span class="fc" id="L143">		this.result = tmpResult;</span>
+<span class="fc" id="L144">		this.name = tmpName;</span>
+<span class="fc" id="L145">	}</span>
+
+	/**
+	 * Start the creation of a tester of function.
+	 * 
+	 * @param functionUnderTest
+	 *            the function to be tested
+	 * @return {@link FunctionTesterStartDSL the DSL}
+	 * @throws NullPointerException
+	 *             when functionUnderTest is null
+	 * @param &lt;T&gt;
+	 *            the input argument type
+	 * @param &lt;T&gt;
+	 *            the result type
+	 * @see ch.powerunit.TestDelegate
+	 */
+	public static &lt;T, R&gt; FunctionTesterStartDSL&lt;T, R&gt; of(
+			Function&lt;T, R&gt; functionUnderTest) {
+<span class="fc" id="L163">		Objects.requireNonNull(functionUnderTest,</span>
+				&quot;functionUnderTest can't be null&quot;);
+<span class="fc" id="L165">		return new FunctionTesterDSL&lt;T, R&gt;(functionUnderTest);</span>
+	}
+
+	/**
+	 * Used by the framework.
+	 * 
+	 * @return the underTest
+	 */
+	public Function&lt;T, R&gt; getUnderTest() {
+<span class="fc" id="L174">		return underTest;</span>
+	}
+
+	/**
+	 * Used by the framework.
+	 * 
+	 * @return the input
+	 */
+	public List&lt;Supplier&lt;T&gt;&gt; getInput() {
+<span class="fc" id="L183">		return Collections.unmodifiableList(input);</span>
+	}
+
+	/**
+	 * Used by the framework.
+	 * 
+	 * @return the result
+	 */
+	public List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; getResult() {
+<span class="fc" id="L192">		return Collections.unmodifiableList(result);</span>
+	}
+
+	/**
+	 * Used by the framework.
+	 * 
+	 * @return the name
+	 */
+	public List&lt;Supplier&lt;String&gt;&gt; getName() {
+<span class="fc" id="L201">		return Collections.unmodifiableList(name);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

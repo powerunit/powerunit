@@ -1,7 +1,11 @@
 ch.powerunit
+ch.powerunit.bifunction
+ch.powerunit.bifunction.lang
 ch.powerunit.comparator
 ch.powerunit.comparator.lang
 ch.powerunit.exception
+ch.powerunit.function
+ch.powerunit.function.lang
 ch.powerunit.helpers
 ch.powerunit.rules
 ch.powerunit.surefire

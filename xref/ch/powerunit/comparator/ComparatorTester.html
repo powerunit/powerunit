@@ -242,58 +242,59 @@
 <a class="jxr_linenumber" name="L234" href="#L234">234</a> <em class="jxr_javadoccomment">	 *            The object of the comparator</em>
 <a class="jxr_linenumber" name="L235" href="#L235">235</a> <em class="jxr_javadoccomment">	 * @param &lt;C&gt;</em>
 <a class="jxr_linenumber" name="L236" href="#L236">236</a> <em class="jxr_javadoccomment">	 *            The comparator undertest</em>
-<a class="jxr_linenumber" name="L237" href="#L237">237</a> <em class="jxr_javadoccomment">	 */</em>
-<a class="jxr_linenumber" name="L238" href="#L238">238</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> &lt;O, C <strong class="jxr_keyword">extends</strong> Comparator&lt;O&gt;&gt; ComparatorTesterDSLStart&lt;O, C&gt; of(
-<a class="jxr_linenumber" name="L239" href="#L239">239</a> 			<strong class="jxr_keyword">final</strong> Class&lt;C&gt; clazzUnderTest) {
-<a class="jxr_linenumber" name="L240" href="#L240">240</a> 		Objects.requireNonNull(clazzUnderTest, <span class="jxr_string">"clazzUnderTest can't be null"</span>);
-<a class="jxr_linenumber" name="L241" href="#L241">241</a> 		<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> ComparatorTesterDSL&lt;O, C&gt;(clazzUnderTest);
-<a class="jxr_linenumber" name="L242" href="#L242">242</a> 	}
-<a class="jxr_linenumber" name="L243" href="#L243">243</a> 
-<a class="jxr_linenumber" name="L244" href="#L244">244</a> 	<em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L245" href="#L245">245</a> <em class="jxr_javadoccomment">	 * Used by the framework.</em>
-<a class="jxr_linenumber" name="L246" href="#L246">246</a> <em class="jxr_javadoccomment">	 * </em>
-<a class="jxr_linenumber" name="L247" href="#L247">247</a> <em class="jxr_javadoccomment">	 * @return the comparatorClass</em>
-<a class="jxr_linenumber" name="L248" href="#L248">248</a> <em class="jxr_javadoccomment">	 */</em>
-<a class="jxr_linenumber" name="L249" href="#L249">249</a> 	<strong class="jxr_keyword">public</strong> Class&lt;C&gt; getComparatorClass() {
-<a class="jxr_linenumber" name="L250" href="#L250">250</a> 		<strong class="jxr_keyword">return</strong> comparatorClass;
-<a class="jxr_linenumber" name="L251" href="#L251">251</a> 	}
-<a class="jxr_linenumber" name="L252" href="#L252">252</a> 
-<a class="jxr_linenumber" name="L253" href="#L253">253</a> 	<em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L254" href="#L254">254</a> <em class="jxr_javadoccomment">	 * Used by the framework.</em>
-<a class="jxr_linenumber" name="L255" href="#L255">255</a> <em class="jxr_javadoccomment">	 * </em>
-<a class="jxr_linenumber" name="L256" href="#L256">256</a> <em class="jxr_javadoccomment">	 * @return the lessSamples</em>
-<a class="jxr_linenumber" name="L257" href="#L257">257</a> <em class="jxr_javadoccomment">	 */</em>
-<a class="jxr_linenumber" name="L258" href="#L258">258</a> 	<strong class="jxr_keyword">public</strong> Supplier&lt;O[]&gt; getLessSamples() {
-<a class="jxr_linenumber" name="L259" href="#L259">259</a> 		<strong class="jxr_keyword">return</strong> lessSamples;
-<a class="jxr_linenumber" name="L260" href="#L260">260</a> 	}
-<a class="jxr_linenumber" name="L261" href="#L261">261</a> 
-<a class="jxr_linenumber" name="L262" href="#L262">262</a> 	<em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L263" href="#L263">263</a> <em class="jxr_javadoccomment">	 * Used by the framework.</em>
-<a class="jxr_linenumber" name="L264" href="#L264">264</a> <em class="jxr_javadoccomment">	 * </em>
-<a class="jxr_linenumber" name="L265" href="#L265">265</a> <em class="jxr_javadoccomment">	 * @return the equalSamples</em>
-<a class="jxr_linenumber" name="L266" href="#L266">266</a> <em class="jxr_javadoccomment">	 */</em>
-<a class="jxr_linenumber" name="L267" href="#L267">267</a> 	<strong class="jxr_keyword">public</strong> Supplier&lt;O[]&gt; getEqualSamples() {
-<a class="jxr_linenumber" name="L268" href="#L268">268</a> 		<strong class="jxr_keyword">return</strong> equalSamples;
-<a class="jxr_linenumber" name="L269" href="#L269">269</a> 	}
-<a class="jxr_linenumber" name="L270" href="#L270">270</a> 
-<a class="jxr_linenumber" name="L271" href="#L271">271</a> 	<em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L272" href="#L272">272</a> <em class="jxr_javadoccomment">	 * Used by the framework.</em>
-<a class="jxr_linenumber" name="L273" href="#L273">273</a> <em class="jxr_javadoccomment">	 * </em>
-<a class="jxr_linenumber" name="L274" href="#L274">274</a> <em class="jxr_javadoccomment">	 * @return the greaterSamples</em>
-<a class="jxr_linenumber" name="L275" href="#L275">275</a> <em class="jxr_javadoccomment">	 */</em>
-<a class="jxr_linenumber" name="L276" href="#L276">276</a> 	<strong class="jxr_keyword">public</strong> Supplier&lt;O[]&gt; getGreaterSamples() {
-<a class="jxr_linenumber" name="L277" href="#L277">277</a> 		<strong class="jxr_keyword">return</strong> greaterSamples;
-<a class="jxr_linenumber" name="L278" href="#L278">278</a> 	}
-<a class="jxr_linenumber" name="L279" href="#L279">279</a> 
-<a class="jxr_linenumber" name="L280" href="#L280">280</a> 	<em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L281" href="#L281">281</a> <em class="jxr_javadoccomment">	 * Used by the framework.</em>
-<a class="jxr_linenumber" name="L282" href="#L282">282</a> <em class="jxr_javadoccomment">	 * </em>
-<a class="jxr_linenumber" name="L283" href="#L283">283</a> <em class="jxr_javadoccomment">	 * @return the underTest</em>
-<a class="jxr_linenumber" name="L284" href="#L284">284</a> <em class="jxr_javadoccomment">	 */</em>
-<a class="jxr_linenumber" name="L285" href="#L285">285</a> 	<strong class="jxr_keyword">public</strong> Supplier&lt;C&gt; getUnderTest() {
-<a class="jxr_linenumber" name="L286" href="#L286">286</a> 		<strong class="jxr_keyword">return</strong> underTest;
-<a class="jxr_linenumber" name="L287" href="#L287">287</a> 	}
-<a class="jxr_linenumber" name="L288" href="#L288">288</a> }
+<a class="jxr_linenumber" name="L237" href="#L237">237</a> <em class="jxr_javadoccomment">	 * @see ch.powerunit.TestDelegate</em>
+<a class="jxr_linenumber" name="L238" href="#L238">238</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L239" href="#L239">239</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> &lt;O, C <strong class="jxr_keyword">extends</strong> Comparator&lt;O&gt;&gt; ComparatorTesterDSLStart&lt;O, C&gt; of(
+<a class="jxr_linenumber" name="L240" href="#L240">240</a> 			<strong class="jxr_keyword">final</strong> Class&lt;C&gt; clazzUnderTest) {
+<a class="jxr_linenumber" name="L241" href="#L241">241</a> 		Objects.requireNonNull(clazzUnderTest, <span class="jxr_string">"clazzUnderTest can't be null"</span>);
+<a class="jxr_linenumber" name="L242" href="#L242">242</a> 		<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> ComparatorTesterDSL&lt;O, C&gt;(clazzUnderTest);
+<a class="jxr_linenumber" name="L243" href="#L243">243</a> 	}
+<a class="jxr_linenumber" name="L244" href="#L244">244</a> 
+<a class="jxr_linenumber" name="L245" href="#L245">245</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L246" href="#L246">246</a> <em class="jxr_javadoccomment">	 * Used by the framework.</em>
+<a class="jxr_linenumber" name="L247" href="#L247">247</a> <em class="jxr_javadoccomment">	 * </em>
+<a class="jxr_linenumber" name="L248" href="#L248">248</a> <em class="jxr_javadoccomment">	 * @return the comparatorClass</em>
+<a class="jxr_linenumber" name="L249" href="#L249">249</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L250" href="#L250">250</a> 	<strong class="jxr_keyword">public</strong> Class&lt;C&gt; getComparatorClass() {
+<a class="jxr_linenumber" name="L251" href="#L251">251</a> 		<strong class="jxr_keyword">return</strong> comparatorClass;
+<a class="jxr_linenumber" name="L252" href="#L252">252</a> 	}
+<a class="jxr_linenumber" name="L253" href="#L253">253</a> 
+<a class="jxr_linenumber" name="L254" href="#L254">254</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L255" href="#L255">255</a> <em class="jxr_javadoccomment">	 * Used by the framework.</em>
+<a class="jxr_linenumber" name="L256" href="#L256">256</a> <em class="jxr_javadoccomment">	 * </em>
+<a class="jxr_linenumber" name="L257" href="#L257">257</a> <em class="jxr_javadoccomment">	 * @return the lessSamples</em>
+<a class="jxr_linenumber" name="L258" href="#L258">258</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L259" href="#L259">259</a> 	<strong class="jxr_keyword">public</strong> Supplier&lt;O[]&gt; getLessSamples() {
+<a class="jxr_linenumber" name="L260" href="#L260">260</a> 		<strong class="jxr_keyword">return</strong> lessSamples;
+<a class="jxr_linenumber" name="L261" href="#L261">261</a> 	}
+<a class="jxr_linenumber" name="L262" href="#L262">262</a> 
+<a class="jxr_linenumber" name="L263" href="#L263">263</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L264" href="#L264">264</a> <em class="jxr_javadoccomment">	 * Used by the framework.</em>
+<a class="jxr_linenumber" name="L265" href="#L265">265</a> <em class="jxr_javadoccomment">	 * </em>
+<a class="jxr_linenumber" name="L266" href="#L266">266</a> <em class="jxr_javadoccomment">	 * @return the equalSamples</em>
+<a class="jxr_linenumber" name="L267" href="#L267">267</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L268" href="#L268">268</a> 	<strong class="jxr_keyword">public</strong> Supplier&lt;O[]&gt; getEqualSamples() {
+<a class="jxr_linenumber" name="L269" href="#L269">269</a> 		<strong class="jxr_keyword">return</strong> equalSamples;
+<a class="jxr_linenumber" name="L270" href="#L270">270</a> 	}
+<a class="jxr_linenumber" name="L271" href="#L271">271</a> 
+<a class="jxr_linenumber" name="L272" href="#L272">272</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L273" href="#L273">273</a> <em class="jxr_javadoccomment">	 * Used by the framework.</em>
+<a class="jxr_linenumber" name="L274" href="#L274">274</a> <em class="jxr_javadoccomment">	 * </em>
+<a class="jxr_linenumber" name="L275" href="#L275">275</a> <em class="jxr_javadoccomment">	 * @return the greaterSamples</em>
+<a class="jxr_linenumber" name="L276" href="#L276">276</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L277" href="#L277">277</a> 	<strong class="jxr_keyword">public</strong> Supplier&lt;O[]&gt; getGreaterSamples() {
+<a class="jxr_linenumber" name="L278" href="#L278">278</a> 		<strong class="jxr_keyword">return</strong> greaterSamples;
+<a class="jxr_linenumber" name="L279" href="#L279">279</a> 	}
+<a class="jxr_linenumber" name="L280" href="#L280">280</a> 
+<a class="jxr_linenumber" name="L281" href="#L281">281</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L282" href="#L282">282</a> <em class="jxr_javadoccomment">	 * Used by the framework.</em>
+<a class="jxr_linenumber" name="L283" href="#L283">283</a> <em class="jxr_javadoccomment">	 * </em>
+<a class="jxr_linenumber" name="L284" href="#L284">284</a> <em class="jxr_javadoccomment">	 * @return the underTest</em>
+<a class="jxr_linenumber" name="L285" href="#L285">285</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L286" href="#L286">286</a> 	<strong class="jxr_keyword">public</strong> Supplier&lt;C&gt; getUnderTest() {
+<a class="jxr_linenumber" name="L287" href="#L287">287</a> 		<strong class="jxr_keyword">return</strong> underTest;
+<a class="jxr_linenumber" name="L288" href="#L288">288</a> 	}
+<a class="jxr_linenumber" name="L289" href="#L289">289</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2015. All rights reserved.</div>

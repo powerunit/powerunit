@@ -234,11 +234,12 @@ public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
 	 *            The object of the comparator
 	 * @param &lt;C&gt;
 	 *            The comparator undertest
+	 * @see ch.powerunit.TestDelegate
 	 */
 	public static &lt;O, C extends Comparator&lt;O&gt;&gt; ComparatorTesterDSLStart&lt;O, C&gt; of(
 			final Class&lt;C&gt; clazzUnderTest) {
-<span class="fc" id="L240">		Objects.requireNonNull(clazzUnderTest, &quot;clazzUnderTest can't be null&quot;);</span>
-<span class="fc" id="L241">		return new ComparatorTesterDSL&lt;O, C&gt;(clazzUnderTest);</span>
+<span class="fc" id="L241">		Objects.requireNonNull(clazzUnderTest, &quot;clazzUnderTest can't be null&quot;);</span>
+<span class="fc" id="L242">		return new ComparatorTesterDSL&lt;O, C&gt;(clazzUnderTest);</span>
 	}
 
 	/**
@@ -247,7 +248,7 @@ public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
 	 * @return the comparatorClass
 	 */
 	public Class&lt;C&gt; getComparatorClass() {
-<span class="fc" id="L250">		return comparatorClass;</span>
+<span class="fc" id="L251">		return comparatorClass;</span>
 	}
 
 	/**
@@ -256,7 +257,7 @@ public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
 	 * @return the lessSamples
 	 */
 	public Supplier&lt;O[]&gt; getLessSamples() {
-<span class="fc" id="L259">		return lessSamples;</span>
+<span class="fc" id="L260">		return lessSamples;</span>
 	}
 
 	/**
@@ -265,7 +266,7 @@ public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
 	 * @return the equalSamples
 	 */
 	public Supplier&lt;O[]&gt; getEqualSamples() {
-<span class="fc" id="L268">		return equalSamples;</span>
+<span class="fc" id="L269">		return equalSamples;</span>
 	}
 
 	/**
@@ -274,7 +275,7 @@ public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
 	 * @return the greaterSamples
 	 */
 	public Supplier&lt;O[]&gt; getGreaterSamples() {
-<span class="fc" id="L277">		return greaterSamples;</span>
+<span class="fc" id="L278">		return greaterSamples;</span>
 	}
 
 	/**
@@ -283,7 +284,7 @@ public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
 	 * @return the underTest
 	 */
 	public Supplier&lt;C&gt; getUnderTest() {
-<span class="fc" id="L286">		return underTest;</span>
+<span class="fc" id="L287">		return underTest;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

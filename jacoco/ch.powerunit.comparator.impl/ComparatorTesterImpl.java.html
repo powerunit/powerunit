@@ -39,7 +39,7 @@ import ch.powerunit.comparator.ComparatorTester;
 <span class="fc" id="L39">public class ComparatorTesterImpl&lt;O, C extends Comparator&lt;O&gt;&gt; implements</span>
 		TestSuite {
 	@Parameters
-	public static &lt;O, C extends Comparator&lt;O&gt;&gt; Stream&lt;Object[]&gt; getParameter(
+	public static &lt;O, C extends Comparator&lt;O&gt;&gt; Stream&lt;Object[]&gt; getParameters(
 			ComparatorTester&lt;O, C&gt; input) {
 <span class="fc" id="L44">		Builder&lt;Object[]&gt; b = Stream.builder();</span>
 <span class="fc" id="L45">		O less[] = input.getLessSamples().get();</span>

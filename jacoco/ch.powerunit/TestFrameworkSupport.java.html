@@ -20,11 +20,17 @@
 package ch.powerunit;
 
 import java.util.Comparator;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import org.hamcrest.Matcher;
 
+import ch.powerunit.bifunction.BiFunctionTester;
+import ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL;
 import ch.powerunit.comparator.ComparatorTester;
 import ch.powerunit.comparator.lang.ComparatorTesterDSLStart;
+import ch.powerunit.function.FunctionTester;
+import ch.powerunit.function.lang.FunctionTesterStartDSL;
 import ch.powerunit.matchers.MatcherTester;
 import ch.powerunit.matchers.lang.MatcherTesterDSL1;
 
@@ -44,13 +50,14 @@ interface TestFrameworkSupport {
 	 *            the class of the Matcher.
 	 * @return {@link MatcherTesterDSL1 The DSL}
 	 * @see MatcherTester#of(Class)
+	 * @see ch.powerunit.TestDelegate
 	 * @since 0.3.0
 	 * @param &lt;T&gt;
 	 *            The matcher class
 	 */
 	default &lt;T extends Matcher&lt;?&gt;&gt; MatcherTesterDSL1&lt;T&gt; testerOfMatcher(
 			Class&lt;T&gt; matcherClass) {
-<span class="nc" id="L53">		return MatcherTester.of(matcherClass);</span>
+<span class="nc" id="L60">		return MatcherTester.of(matcherClass);</span>
 	}
 
 	/**
@@ -63,6 +70,7 @@ interface TestFrameworkSupport {
 	 *            the class of the Comparator
 	 * @return {@link ComparatorTesterDSLStart the DSL}
 	 * @see ComparatorTester#of(Class)
+	 * @see ch.powerunit.TestDelegate
 	 * @since 0.3.0
 	 * @param &lt;O&gt;
 	 *            The object of the comparator
@@ -71,7 +79,53 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;O, C extends Comparator&lt;O&gt;&gt; ComparatorTesterDSLStart&lt;O, C&gt; testerOfComparator(
 			Class&lt;C&gt; comparatorClass) {
-<span class="fc" id="L74">		return ComparatorTester.of(comparatorClass);</span>
+<span class="fc" id="L82">		return ComparatorTester.of(comparatorClass);</span>
+	}
+
+	/**
+	 * Use this method to start the DSL to test a function.
+	 * &lt;p&gt;
+	 * &lt;b&gt;{@link FunctionTester#of(Function) Please refer to the complete
+	 * documentation}&lt;/b&gt;
+	 * 
+	 * @param functionUnderTest
+	 *            the function to be tested
+	 * @return {@link FunctionTesterStartDSL the DSL}
+	 * @see FunctionTester#of(Function)
+	 * @see ch.powerunit.TestDelegate
+	 * @since 0.3.0
+	 * @param &lt;T&gt;
+	 *            The input argument type
+	 * @param &lt;R&gt;
+	 *            The result type
+	 */
+	default &lt;T, R&gt; FunctionTesterStartDSL&lt;T, R&gt; testerOfFunction(
+			Function&lt;T, R&gt; functionUnderTest) {
+<span class="nc" id="L104">		return FunctionTester.of(functionUnderTest);</span>
+	}
+
+	/**
+	 * Use this method to start the DSL to test a bifunction.
+	 * &lt;p&gt;
+	 * &lt;b&gt;{@link BiFunctionTester#of(BiFunction) Please refer to the complete
+	 * documentation}&lt;/b&gt;
+	 * 
+	 * @param bifunctionUnderTest
+	 *            the bifunction to be tested
+	 * @return {@link BiFunctionTesterStartDSL the DSL}
+	 * @see BiFunctionTester#of(BiFunction)
+	 * @see ch.powerunit.TestDelegate
+	 * @since 0.3.0
+	 * @param &lt;T&gt;
+	 *            The first input argument type
+	 * @param &lt;U&gt;
+	 *            the second input argument type
+	 * @param &lt;R&gt;
+	 *            The result type
+	 */
+	default &lt;T, U, R&gt; BiFunctionTesterStartDSL&lt;T, U, R&gt; testerOfBiFunction(
+			BiFunction&lt;T, U, R&gt; bifunctionUnderTest) {
+<span class="nc" id="L128">		return BiFunctionTester.of(bifunctionUnderTest);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

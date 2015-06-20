@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BiFunctionTesterImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.bifunction.impl</a> &gt; <span class="el_source">BiFunctionTesterImpl.java</span></div><h1>BiFunctionTesterImpl.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.bifunction.impl;
+
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.stream.Stream;
+import java.util.stream.Stream.Builder;
+
+import org.hamcrest.Matcher;
+
+import ch.powerunit.Parameter;
+import ch.powerunit.Parameters;
+import ch.powerunit.Test;
+import ch.powerunit.TestDelegator;
+import ch.powerunit.TestSuite;
+import ch.powerunit.bifunction.BiFunctionTester;
+
+/**
+ * @author borettim
+ *
+ */
+@TestDelegator
+<span class="fc" id="L41">public class BiFunctionTesterImpl&lt;T, U, R&gt; implements TestSuite {</span>
+	@Parameters
+	public static &lt;T, U, R&gt; Stream&lt;Object[]&gt; getParameters(
+			BiFunctionTester&lt;T, U, R&gt; input) {
+<span class="fc" id="L45">		Builder&lt;Object[]&gt; b = Stream.builder();</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		for (int i = 0; i &lt; input.getInput1().size(); i++) {</span>
+<span class="fc" id="L47">			Matcher&lt;? super R&gt; result = input.getResult().get(i).get();</span>
+<span class="fc" id="L48">			T param1 = input.getInput1().get(i).get();</span>
+<span class="fc" id="L49">			U param2 = input.getInput2().get(i).get();</span>
+<span class="fc" id="L50">			String name = input.getName().get(i).get();</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">			if (&quot;&quot;.equals(name)) {</span>
+<span class="fc" id="L52">				name = &quot;Passing `&quot; + param1 + &quot;` and `&quot; + param2 + &quot;`&quot;</span>
+						+ &quot; then &quot; + result + &quot; is expected&quot;;
+			}
+<span class="fc" id="L55">			b.add(new Object[] { name, param1, param2, result,</span>
+<span class="fc" id="L56">					input.getUnderTest() });</span>
+		}
+<span class="fc" id="L58">		return b.build();</span>
+	}
+
+	@Parameter(0)
+	public String name;
+
+	@Parameter(1)
+	public T input1;
+
+	@Parameter(2)
+	public U input2;
+
+	@Parameter(3)
+	public Matcher&lt;? super R&gt; expectedResult;
+
+	@Parameter(4)
+	public BiFunction&lt;T, U, R&gt; function;
+
+	@Test(name = &quot;{0}&quot;)
+	public void testFunction() {
+<span class="fc" id="L78">		assertThatBiFunction(function, input1, input2).is(expectedResult);</span>
+<span class="fc" id="L79">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
