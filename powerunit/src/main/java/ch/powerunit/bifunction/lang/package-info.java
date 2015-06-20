@@ -18,7 +18,8 @@
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * Language package for bifuction tester.
+ * Language package for bifunction tester.
+ * 
  * @author borettim
  * @since 0.3.0
  */

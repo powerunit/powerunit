@@ -18,6 +18,8 @@
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
 /**
+ * Language package for function tester.
+ * 
  * @author borettim
  * @since 0.3.0
  */
