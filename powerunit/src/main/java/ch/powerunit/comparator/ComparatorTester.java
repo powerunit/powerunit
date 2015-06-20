@@ -234,6 +234,7 @@ public final class ComparatorTester<O, C extends Comparator<O>> {
 	 *            The object of the comparator
 	 * @param <C>
 	 *            The comparator undertest
+	 * @see ch.powerunit.TestDelegate
 	 */
 	public static <O, C extends Comparator<O>> ComparatorTesterDSLStart<O, C> of(
 			final Class<C> clazzUnderTest) {

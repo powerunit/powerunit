@@ -20,11 +20,17 @@
 package ch.powerunit;
 
 import java.util.Comparator;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import org.hamcrest.Matcher;
 
+import ch.powerunit.bifunction.BiFunctionTester;
+import ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL;
 import ch.powerunit.comparator.ComparatorTester;
 import ch.powerunit.comparator.lang.ComparatorTesterDSLStart;
+import ch.powerunit.function.FunctionTester;
+import ch.powerunit.function.lang.FunctionTesterStartDSL;
 import ch.powerunit.matchers.MatcherTester;
 import ch.powerunit.matchers.lang.MatcherTesterDSL1;
 
@@ -44,6 +50,7 @@ interface TestFrameworkSupport {
 	 *            the class of the Matcher.
 	 * @return {@link MatcherTesterDSL1 The DSL}
 	 * @see MatcherTester#of(Class)
+	 * @see ch.powerunit.TestDelegate
 	 * @since 0.3.0
 	 * @param <T>
 	 *            The matcher class
@@ -63,6 +70,7 @@ interface TestFrameworkSupport {
 	 *            the class of the Comparator
 	 * @return {@link ComparatorTesterDSLStart the DSL}
 	 * @see ComparatorTester#of(Class)
+	 * @see ch.powerunit.TestDelegate
 	 * @since 0.3.0
 	 * @param <O>
 	 *            The object of the comparator
@@ -72,5 +80,51 @@ interface TestFrameworkSupport {
 	default <O, C extends Comparator<O>> ComparatorTesterDSLStart<O, C> testerOfComparator(
 			Class<C> comparatorClass) {
 		return ComparatorTester.of(comparatorClass);
+	}
+
+	/**
+	 * Use this method to start the DSL to test a function.
+	 * <p>
+	 * <b>{@link FunctionTester#of(Function) Please refer to the complete
+	 * documentation}</b>
+	 * 
+	 * @param functionUnderTest
+	 *            the function to be tested
+	 * @return {@link FunctionTesterStartDSL the DSL}
+	 * @see FunctionTester#of(Function)
+	 * @see ch.powerunit.TestDelegate
+	 * @since 0.3.0
+	 * @param <T>
+	 *            The input argument type
+	 * @param <R>
+	 *            The result type
+	 */
+	default <T, R> FunctionTesterStartDSL<T, R> testerOfFunction(
+			Function<T, R> functionUnderTest) {
+		return FunctionTester.of(functionUnderTest);
+	}
+
+	/**
+	 * Use this method to start the DSL to test a bifunction.
+	 * <p>
+	 * <b>{@link BiFunctionTester#of(BiFunction) Please refer to the complete
+	 * documentation}</b>
+	 * 
+	 * @param bifunctionUnderTest
+	 *            the bifunction to be tested
+	 * @return {@link BiFunctionTesterStartDSL the DSL}
+	 * @see BiFunctionTester#of(BiFunction)
+	 * @see ch.powerunit.TestDelegate
+	 * @since 0.3.0
+	 * @param <T>
+	 *            The first input argument type
+	 * @param <U>
+	 *            the second input argument type
+	 * @param <R>
+	 *            The result type
+	 */
+	default <T, U, R> BiFunctionTesterStartDSL<T, U, R> testerOfBiFunction(
+			BiFunction<T, U, R> bifunctionUnderTest) {
+		return BiFunctionTester.of(bifunctionUnderTest);
 	}
 }
