@@ -45,13 +45,13 @@ interface TestFrameworkSupport {
 	/**
 	 * Start the creation of a tester definition for a matcher.
 	 * &lt;p&gt;
-	 * &lt;b&gt;{@link MatcherTester#of(Class) Please refer to the complete
+	 * &lt;b&gt;{@link ch.powerunit.matchers.MatcherTester#of(Class) Please refer to the complete
 	 * documentation}&lt;/b&gt;
 	 * 
 	 * @param matcherClass
 	 *            the class of the Matcher.
-	 * @return {@link MatcherTesterDSL1 The DSL}
-	 * @see MatcherTester#of(Class)
+	 * @return {@link ch.powerunit.matchers.lang.MatcherTesterDSL1 The DSL}
+	 * @see ch.powerunit.matchers.MatcherTester#of(Class)
 	 * @see ch.powerunit.TestDelegate
 	 * @since 0.3.0
 	 * @param &lt;T&gt;
@@ -65,13 +65,13 @@ interface TestFrameworkSupport {
 	/**
 	 * Use this method to start the DSL to test a comparator.
 	 * &lt;p&gt;
-	 * &lt;b&gt;{@link ComparatorTester#of(Class) Please refer to the complete
+	 * &lt;b&gt;{@link ch.powerunit.comparator.ComparatorTester#of(Class) Please refer to the complete
 	 * documentation}&lt;/b&gt;
 	 * 
 	 * @param comparatorClass
 	 *            the class of the Comparator
-	 * @return {@link ComparatorTesterDSLStart the DSL}
-	 * @see ComparatorTester#of(Class)
+	 * @return {@link ch.powerunit.comparator.lang.ComparatorTesterDSLStart the DSL}
+	 * @see ch.powerunit.comparator.ComparatorTester#of(Class)
 	 * @see ch.powerunit.TestDelegate
 	 * @since 0.3.0
 	 * @param &lt;O&gt;
@@ -87,13 +87,13 @@ interface TestFrameworkSupport {
 	/**
 	 * Use this method to start the DSL to test a function.
 	 * &lt;p&gt;
-	 * &lt;b&gt;{@link FunctionTester#of(Function) Please refer to the complete
+	 * &lt;b&gt;{@link ch.powerunit.function.FunctionTester#of(Function) Please refer to the complete
 	 * documentation}&lt;/b&gt;
 	 * 
 	 * @param functionUnderTest
 	 *            the function to be tested
-	 * @return {@link FunctionTesterStartDSL the DSL}
-	 * @see FunctionTester#of(Function)
+	 * @return {@link ch.powerunit.function.lang.FunctionTesterStartDSL the DSL}
+	 * @see ch.powerunit.function.FunctionTester#of(Function)
 	 * @see ch.powerunit.TestDelegate
 	 * @since 0.3.0
 	 * @param &lt;T&gt;
@@ -109,13 +109,13 @@ interface TestFrameworkSupport {
 	/**
 	 * Use this method to start the DSL to test a bifunction.
 	 * &lt;p&gt;
-	 * &lt;b&gt;{@link BiFunctionTester#of(BiFunction) Please refer to the complete
+	 * &lt;b&gt;{@link ch.powerunit.bifunction.BiFunctionTester#of(BiFunction) Please refer to the complete
 	 * documentation}&lt;/b&gt;
 	 * 
 	 * @param bifunctionUnderTest
 	 *            the bifunction to be tested
-	 * @return {@link BiFunctionTesterStartDSL the DSL}
-	 * @see BiFunctionTester#of(BiFunction)
+	 * @return {@link ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL the DSL}
+	 * @see ch.powerunit.bifunction.BiFunctionTester#of(BiFunction)
 	 * @see ch.powerunit.TestDelegate
 	 * @since 0.3.0
 	 * @param &lt;T&gt;
