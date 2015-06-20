@@ -54,6 +54,10 @@ import ch.powerunit.rules.impl.TemporaryFolderImpl;
  * <li><code>{@link #parametersMap(int, Function)}</code> to create Map function
  * to be used on the stream to be provided by the {@link Parameters
  * &#64;Parameters}. Other variants of this method may exist.</li>
+ * <li>Severals method of the form <code>tester...</code> (for instance
+ * <code>{@link #testerOfMatcher(Class)}</code>) that can be used with the
+ * <code>@{@link TestDelegate}</code> annotation to test some standard classes
+ * (like Matchers, Comparator, Function, etc).
  * </ul>
  *
  * @author borettim

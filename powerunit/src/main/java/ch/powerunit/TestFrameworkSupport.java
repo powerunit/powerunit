@@ -35,6 +35,8 @@ import ch.powerunit.matchers.MatcherTester;
 import ch.powerunit.matchers.lang.MatcherTesterDSL1;
 
 /**
+ * This is the interface for the test support.
+ * 
  * @author borettim
  * @since 0.3.0
  */
