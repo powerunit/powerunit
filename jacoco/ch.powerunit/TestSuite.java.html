@@ -54,6 +54,10 @@ import ch.powerunit.rules.impl.TemporaryFolderImpl;
  * &lt;li&gt;&lt;code&gt;{@link #parametersMap(int, Function)}&lt;/code&gt; to create Map function
  * to be used on the stream to be provided by the {@link Parameters
  * &amp;#64;Parameters}. Other variants of this method may exist.&lt;/li&gt;
+ * &lt;li&gt;Severals method of the form &lt;code&gt;tester...&lt;/code&gt; (for instance
+ * &lt;code&gt;{@link #testerOfMatcher(Class)}&lt;/code&gt;) that can be used with the
+ * &lt;code&gt;@{@link TestDelegate}&lt;/code&gt; annotation to test some standard classes
+ * (like Matchers, Comparator, Function, etc).
  * &lt;/ul&gt;
  *
  * @author borettim
@@ -70,7 +74,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * {@link Parameters &amp;#64;Parameters} annotated method, has this method must
 	 * be static.
 	 */
-<span class="fc" id="L73">	static TestSuite DSL = new TestSuite() {</span>
+<span class="fc" id="L77">	static TestSuite DSL = new TestSuite() {</span>
 	};
 
 	/**
@@ -93,8 +97,8 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule before(Runnable... befores) {
-<span class="fc" id="L96">		return Arrays.stream(befores).map(TestRule::before)</span>
-<span class="pc" id="L97">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
+<span class="fc" id="L100">		return Arrays.stream(befores).map(TestRule::before)</span>
+<span class="pc" id="L101">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
 	}
 
 	/**
@@ -117,8 +121,8 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule after(Runnable... afters) {
-<span class="fc" id="L120">		return Arrays.stream(afters).map(TestRule::after)</span>
-<span class="pc" id="L121">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
+<span class="fc" id="L124">		return Arrays.stream(afters).map(TestRule::after)</span>
+<span class="pc" id="L125">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
 	}
 
 	/**
@@ -130,7 +134,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule mockitoRule() {
-<span class="fc" id="L133">		return TestRule.mockitoRule();</span>
+<span class="fc" id="L137">		return TestRule.mockitoRule();</span>
 	}
 
 	/**
@@ -157,7 +161,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TemporaryFolder temporaryFolder() {
-<span class="fc" id="L160">		return temporaryFolderBuilder().build();</span>
+<span class="fc" id="L164">		return temporaryFolderBuilder().build();</span>
 	}
 
 	/**
@@ -187,7 +191,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TemporaryFolderBuilder temporaryFolderBuilder() {
-<span class="fc" id="L190">		return new TemporaryFolderImpl.TemporaryFolderBuilderImpl();</span>
+<span class="fc" id="L194">		return new TemporaryFolderImpl.TemporaryFolderBuilderImpl();</span>
 	}
 
 	/**
@@ -199,7 +203,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule systemPropertiesRule(String... propertiesName) {
-<span class="fc" id="L202">		return new SystemPropertiesRule(propertiesName);</span>
+<span class="fc" id="L206">		return new SystemPropertiesRule(propertiesName);</span>
 	}
 
 	/**
@@ -214,7 +218,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default TestRule systemProperty(String propertyName,
 			Supplier&lt;String&gt; propertyValue) {
-<span class="nc" id="L217">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
+<span class="nc" id="L221">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
 				propertyName, propertyValue);
 	}
 
@@ -229,7 +233,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule systemProperty(String propertyName, String propertyValue) {
-<span class="fc" id="L232">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
+<span class="fc" id="L236">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
 				propertyName, propertyValue);
 	}
 
@@ -250,7 +254,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default &lt;T, R&gt; StreamParametersMapFunction&lt;T&gt; parametersMap(int idx,
 			Function&lt;T, R&gt; mapFunction) {
-<span class="nc" id="L253">		return StreamParametersMapFunction.map(idx, mapFunction);</span>
+<span class="nc" id="L257">		return StreamParametersMapFunction.map(idx, mapFunction);</span>
 	}
 
 	/**
@@ -291,7 +295,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default StreamParametersMapFunction&lt;String&gt; stringToParameterMap(
 			Class&lt;?&gt; testClass) {
-<span class="fc" id="L294">		return StreamParametersMapFunction.stringToParameterMap(testClass);</span>
+<span class="fc" id="L298">		return StreamParametersMapFunction.stringToParameterMap(testClass);</span>
 	}
 
 	/**
@@ -306,7 +310,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 *            The object type to be added.
 	 */
 	default &lt;T&gt; Function&lt;Object[], Object[]&gt; addFieldToEachEntry(T field) {
-<span class="fc" id="L309">		return StreamParametersMapFunction.addFieldToEachEntry(field);</span>
+<span class="fc" id="L313">		return StreamParametersMapFunction.addFieldToEachEntry(field);</span>
 	}
 
 	/**
@@ -319,7 +323,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default Predicate&lt;Object[]&gt; parametersFilterUsingMatcher(
 			Matcher&lt;Object[]&gt; matcher) {
-<span class="fc" id="L322">		return matcherPredicate(matcher);</span>
+<span class="fc" id="L326">		return matcherPredicate(matcher);</span>
 	}
 
 	/**
@@ -332,7 +336,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 *            The target object type
 	 */
 	default &lt;T&gt; Predicate&lt;T&gt; matcherPredicate(Matcher&lt;T&gt; matcher) {
-<span class="fc" id="L335">		return matcher::matches;</span>
+<span class="fc" id="L339">		return matcher::matches;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

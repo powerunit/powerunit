@@ -238,7 +238,8 @@ public class MyComparatorTest implements TestSuite {
   public final ComparatorTester&lt;Integer, MyComparator&gt; providedSampler = ComparatorTester
       .of(MyComparator.class).withLessSamples(-6, -4)
       .withEqualSamples(12).withGreaterSamples(16, 18).build();
-}</pre></div>
+}
+</pre></div>
 <p>The DSL is provided by the class <tt>ComparatorTester</tt> and start by the call to <tt>of</tt> specifying the class of the <tt>Comparator</tt> to be tested. If the <tt>Comparator</tt> doesn't provide a 0-args public constructor, it is required to provide an instance to be tested, by using, as first step of the DSL, the method <tt>usingInstance</tt>.</p>
 <p>In very specific case, the framework may be able to build sample for the test ; But in real world it is most probably necessary to specify samples for the <tt>Comparator</tt>. To do so, a sequence of the three methods <tt>withLessSamples</tt>, <tt>withEqualSamples</tt> and <tt>withGreaterSamples</tt> is required to specify samples. When several less or greater samples are provided, they must be provided in the correct order, from the smallest to the biggest.</p>
 <p>The previous examples will generate the following test cases :</p>
@@ -266,10 +267,12 @@ Having `18` &gt; `12` Then result should be &gt;0 for the Comparator class class
 Having `12` = `12` Then result should be 0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
 Having `12` = `12` Then result should be 0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
 Having `16` &lt; `18` Then result should be &lt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
-Having `18` &gt; `16` Then result should be &gt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest</pre></div>
+Having `18` &gt; `16` Then result should be &gt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+</pre></div>
 <p>In the case of error in the test, the result will look like (for one single test cases) :</p>
 <div class="source">
-<pre>Having `-6` &lt; `12` Then result should be &lt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest caused by expecting a value less than &lt;0&gt; but &lt;1&gt; was greater than &lt;0&gt;</pre></div></div>
+<pre>Having `-6` &lt; `12` Then result should be &lt;0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest caused by expecting a value less than &lt;0&gt; but &lt;1&gt; was greater than &lt;0&gt;
+</pre></div></div>
                   </div>
             </div>
           </div>

@@ -35,6 +35,8 @@ import ch.powerunit.matchers.MatcherTester;
 import ch.powerunit.matchers.lang.MatcherTesterDSL1;
 
 /**
+ * This is the interface for the test support.
+ * 
  * @author borettim
  * @since 0.3.0
  */
@@ -57,7 +59,7 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;T extends Matcher&lt;?&gt;&gt; MatcherTesterDSL1&lt;T&gt; testerOfMatcher(
 			Class&lt;T&gt; matcherClass) {
-<span class="nc" id="L60">		return MatcherTester.of(matcherClass);</span>
+<span class="nc" id="L62">		return MatcherTester.of(matcherClass);</span>
 	}
 
 	/**
@@ -79,7 +81,7 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;O, C extends Comparator&lt;O&gt;&gt; ComparatorTesterDSLStart&lt;O, C&gt; testerOfComparator(
 			Class&lt;C&gt; comparatorClass) {
-<span class="fc" id="L82">		return ComparatorTester.of(comparatorClass);</span>
+<span class="fc" id="L84">		return ComparatorTester.of(comparatorClass);</span>
 	}
 
 	/**
@@ -101,7 +103,7 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;T, R&gt; FunctionTesterStartDSL&lt;T, R&gt; testerOfFunction(
 			Function&lt;T, R&gt; functionUnderTest) {
-<span class="nc" id="L104">		return FunctionTester.of(functionUnderTest);</span>
+<span class="nc" id="L106">		return FunctionTester.of(functionUnderTest);</span>
 	}
 
 	/**
@@ -125,7 +127,7 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;T, U, R&gt; BiFunctionTesterStartDSL&lt;T, U, R&gt; testerOfBiFunction(
 			BiFunction&lt;T, U, R&gt; bifunctionUnderTest) {
-<span class="fc" id="L128">		return BiFunctionTester.of(bifunctionUnderTest);</span>
+<span class="fc" id="L130">		return BiFunctionTester.of(bifunctionUnderTest);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
