@@ -35,31 +35,34 @@ public class MyComparatorTest implements TestSuite {
  The previous examples will generate the following test cases :
  
 +-----
-Having `-6` < `12` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `12` > `-6` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `-6` < `16` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `16` > `-6` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `-6` < `18` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `18` > `-6` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `-6` < `-4` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `-4` > `-6` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `-4` < `12` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `12` > `-4` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `-4` < `16` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `16` > `-4` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `-4` < `18` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `18` > `-4` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `12` < `16` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `16` > `12` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `12` < `18` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `18` > `12` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `12` = `12` Then result should be 0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
-Having `12` = `12` Then result should be 0 for the Comparator class class ...MyComparator (with instance ...MyComparator@501edcf1) of ...MyComparatorTest
+Having `-6` = `-6` Then result should be 0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `-6` < `12` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `12` > `-6` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `-6` < `16` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `16` > `-6` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `-6` < `18` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `18` > `-6` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `-6` < `-4` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `-4` > `-6` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `-4` = `-4` Then result should be 0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `-4` < `12` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `12` > `-4` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `-4` < `16` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `16` > `-4` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `-4` < `18` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `18` > `-4` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `12` < `16` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `16` > `12` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `12` < `18` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `18` > `12` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `12` = `12` Then result should be 0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `12` = `12` Then result should be 0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `16` < `18` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
+Having `18` > `16` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest
 +-----
 
  In the case of error in the test, the result will look like (for one single test cases) :
  
 +-----
-Failure of test ch.powerunit.examples.ComparatorTesterTest:Having `0` > `-3` Then result should be >0 for the Comparator class class ...MyComparator (with instance ...MyComparator@7692d9cc) because of Comparaison is positive
-expecting a value greater than <0> but <-1> was less than <0>
+Having `-6` < `12` Then result should be <0 for the Comparator class class ...MyComparator (with instance ...MyComparator@25d250c6) of ...MyComparatorTest caused by expecting a value less than <0> but <1> was greater than <0>
 +-----

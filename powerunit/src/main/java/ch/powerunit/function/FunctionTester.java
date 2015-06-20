@@ -154,7 +154,7 @@ public final class FunctionTester<T, R> {
 	 *             when functionUnderTest is null
 	 * @param <T>
 	 *            the input argument type
-	 * @param <T>
+	 * @param <R>
 	 *            the result type
 	 * @see ch.powerunit.TestDelegate
 	 */
