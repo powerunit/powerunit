@@ -69,3 +69,8 @@ The Powerunit framework
 ** Version 0.2.0
 
  The 0.2.0 version provides support for better eclipse integration and test framework.
+ 
+** Version 0.3.0
+
+ The 0.3.0 version provides additionnal support for tester (comparator, etc) and framework.
+ 
