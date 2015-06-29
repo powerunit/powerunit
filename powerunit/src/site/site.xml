@@ -23,6 +23,9 @@
           img="http://www.powerunit.ch/powerunit/logo.png"/>
     <logo name="Travis-ci" href="https://travis-ci.org/powerunit/powerunit"
           img="https://travis-ci.org/powerunit/powerunit.svg?branch=master"/>
+    <logo href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2412591" 
+    	  name="Drag to your running Eclipse workspace to install PowerUnit Eclipse Integration"
+    	  img="https://marketplace.eclipse.org/sites/all/themes/solstice/_themes/solstice_marketplace/public/images/btn-install.png"/>
   </poweredBy>
   <body>
   	<head>
