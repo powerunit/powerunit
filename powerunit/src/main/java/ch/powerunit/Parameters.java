@@ -45,25 +45,25 @@ import java.lang.annotation.Target;
  * 
  * public class FunctionParameterTest&lt;T, R&gt; implements TestSuite {
  * 
- *     &#064;Parameters(&quot;{0} on {1} expecting {2}&quot;)
- *     public static Stream&lt;Object[]&gt; getDatas() {
- *         return Arrays.stream(new Object[][] { {
- *                 (Function&lt;String, Integer&gt;) Integer::valueOf, &quot;1&quot;, 1 } });
- *     }
+ * 	&#064;Parameters(&quot;%1$s on %2$s expecting %3$s&quot;)
+ * 	public static Stream&lt;Object[]&gt; getDatas() {
+ * 		return Arrays.stream(new Object[][] { {
+ * 				(Function&lt;String, Integer&gt;) Integer::valueOf, &quot;1&quot;, 1 } });
+ * 	}
  * 
- *     &#064;Parameter(0)
- *     public Function&lt;T, R&gt; function;
+ * 	&#064;Parameter(0)
+ * 	public Function&lt;T, R&gt; function;
  * 
- *     &#064;Parameter(1)
- *     public T input;
+ * 	&#064;Parameter(1)
+ * 	public T input;
  * 
- *     &#064;Parameter(2)
- *     public R expected;
+ * 	&#064;Parameter(2)
+ * 	public R expected;
  * 
- *     &#064;Test
- *     public void testAFunction() {
- *         assertThatFunction(function, input).is(expected);
- *     }
+ * 	&#064;Test
+ * 	public void testAFunction() {
+ * 		assertThatFunction(function, input).is(expected);
+ * 	}
  * }
  *
  * </pre>
@@ -91,12 +91,35 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Parameters {
-    /**
-     * Define an optional name of the test parameters. use {n} to refer to the
-     * parameter.
-     * 
-     * @return the name.
-     * @see java.text.MessageFormat#format(String, Object...) The formatter used
-     */
-    String value() default "";
+	/**
+	 * Define an optional name of the test parameters. use the syntax defined by
+	 * {@link java.lang.String#format(String, Object...)} to refer to the
+	 * parameter.
+	 * <p>
+	 * <b>The syntax for the formatted string has change since the version
+	 * 0.4.0.</b>. At the moment, both syntax are supported, but the old one may
+	 * be removed in a future release.
+	 * <br>
+	 * <h3>Normal syntax</h3>
+	 * The syntax defined by {@link java.lang.String#format(String, Object...)}
+	 * is used. Each parameter is available. It is here required to be careful
+	 * with the numbering of the argument ; {@link Parameter} index are numbered
+	 * starting from 0, but in the string format the numbering start from 1. In
+	 * the easy form, the parameter can be passed with the syntax
+	 * <code>%1$s</code> which for instance will use the first parameter (0
+	 * parameter), as a String. 
+	 * <br>
+	 * <h3>Old syntax</h3>
+	 * The old syntax is defined by
+	 * {@link java.text.MessageFormat#format(String, Object...)} ; This syntax
+	 * is enabled when the passed string format contains the regular expression
+	 * <code>\{[0-9]+\}</code>.
+	 * 
+	 * @return the name.
+	 * @see java.text.MessageFormat#format(String, Object...) The formatter used
+	 *      for parameterized test. For version before 0.4.0.
+	 * @see java.lang.String#format(String, Object...) The formatter used for
+	 *      parameterized test, since version 0.4.0.
+	 */
+	String value() default "";
 }

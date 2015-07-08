@@ -82,7 +82,7 @@ public class TestDelegateTests {
         @Parameter(0)
         public String field1;
 
-        @Test(name = "name={0}")
+        @Test(name = "name=%1$s")
         public void test() {
             assertThat(field1).is(anything());
         }

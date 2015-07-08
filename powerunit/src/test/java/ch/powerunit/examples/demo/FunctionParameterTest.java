@@ -32,7 +32,7 @@ import ch.powerunit.TestSuite;
 @Categories({ "example", "demo" })
 public class FunctionParameterTest<T, R> implements TestSuite {
 
-    @Parameters("{0} on {1} expecting {2}")
+    @Parameters("%1$s on %2$s expecting %3$s")
     public static Stream<Object[]> getDatas() {
         return Arrays.stream(new Object[][] { {
                 (Function<String, Integer>) Integer::valueOf, "1", 1 } });

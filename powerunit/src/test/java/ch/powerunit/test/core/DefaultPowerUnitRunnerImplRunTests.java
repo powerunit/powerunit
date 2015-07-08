@@ -40,6 +40,16 @@ public class DefaultPowerUnitRunnerImplRunTests {
         testRun();
         testRunError();
         testRunClassIgnore();
+        testNameProvider();
+    }
+    
+    public static void testNameProvider() {
+    	AllTests.testNoException("testNameProvider", ()->{
+    		TestSuite.DSL.assertThat(DefaultPowerUnitRunnerImpl.computeTestName("noparam")).is("noparam");
+    		TestSuite.DSL.assertThat(DefaultPowerUnitRunnerImpl.computeTestName("one param old format {0}","ctx")).is("one param old format ctx");
+    		TestSuite.DSL.assertThat(DefaultPowerUnitRunnerImpl.computeTestName("one param new format %1$s","ctx")).is("one param new format ctx");
+    		TestSuite.DSL.assertThat(DefaultPowerUnitRunnerImpl.computeTestName("one param new format strange %1$s","()")).is("one param new format strange ()");
+    	});
     }
 
     public static void testRun() {

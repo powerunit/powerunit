@@ -30,7 +30,7 @@ import ch.powerunit.TestSuite;
 
 @Categories({ "example" })
 public class HelloWorldParameterTest implements TestSuite {
-    @Parameters("Input string is {0}, subString idx is {1}, expected result is {2}")
+    @Parameters("Input string is %1$s, subString idx is %2$s, expected result is %3$s")
     public static Stream<Object[]> getDatas() {
         return Arrays.stream(new Object[][] { { "ab", 0, "ab" },
                 { "ab", 1, "b" } });
@@ -45,7 +45,7 @@ public class HelloWorldParameterTest implements TestSuite {
     @Parameter(2)
     public String expectedString;
 
-    @Test(name = "Test substring : Input string is {0}, subString idx is {1}, expected result is {2}")
+    @Test(name = "Test substring : Input string is %1$s, subString idx is %2$s, expected result is %3$s")
     public void testSubString() {
         assertThat(inputString.substring(inputIndex)).is(expectedString);
     }

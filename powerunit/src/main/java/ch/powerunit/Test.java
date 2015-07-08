@@ -37,16 +37,19 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Test {
-    /**
-     * Define an alternative name for the test.
-     * <p>
-     * If not used, the test name will be based on the method name. In case of
-     * parameterized test, the name will be formatted in the same way that the
-     * {@link Parameters @Parameters} annotation will be.
-     * 
-     * @return the name
-     * @see java.text.MessageFormat#format(String, Object...) The formatter used
-     *      for parameterized test.
-     */
-    String name() default "";
+	/**
+	 * Define an alternative name for the test.
+	 * <p>
+	 * If not used, the test name will be based on the method name. In case of
+	 * parameterized test, the name will be formatted in the same way that the
+	 * {@link Parameters @Parameters} annotation will be.
+	 * 
+	 * @return the name
+	 * @see Parameters#value() For the exact syntax of the name model.
+	 * @see java.text.MessageFormat#format(String, Object...) The formatter used
+	 *      for parameterized test. For version before 0.4.0.
+	 * @see java.lang.String#format(String, Object...) The formatter used for
+	 *      parameterized test, since version 0.4.0.
+	 */
+	String name() default "";
 }

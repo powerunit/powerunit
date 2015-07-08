@@ -31,7 +31,7 @@ import ch.powerunit.TestSuite;
 
 public class FunctionParameterTest implements TestSuite {
 
-    @Parameters("{0} expecting {1}")
+    @Parameters("%1$s expecting %2$s")
     public static Stream<Object[]> getDatas() {
         return Arrays.stream(new Object[][] { { "1", 1 }, { "2", 2} });
     }

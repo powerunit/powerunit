@@ -31,7 +31,7 @@ import ch.powerunit.TestSuite;
 @Categories({ "example", "demo" })
 public class FiboTest implements TestSuite {
 
-    @Parameters("{0}->{1} ; Exception = {2}")
+    @Parameters("%1$s->%2$s ; Exception = %3$s")
     public static Stream<Object[]> getDatas() {
         return Arrays.stream(new Object[][] { { 0, 0, null }, { 1, 1, null },
                 { 2, 1, null }, { 3, 2, null }, { 4, 3, null },

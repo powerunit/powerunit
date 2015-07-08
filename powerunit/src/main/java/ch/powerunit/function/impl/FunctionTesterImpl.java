@@ -67,7 +67,7 @@ public class FunctionTesterImpl<T, R> implements TestSuite {
 	@Parameter(3)
 	public Function<T, R> function;
 
-	@Test(name = "{0}")
+	@Test(name = "%1$s")
 	public void testFunction() {
 		assertThatFunction(function, input).is(expectedResult);
 	}

@@ -73,7 +73,7 @@ public class BiFunctionTesterImpl<T, U, R> implements TestSuite {
 	@Parameter(4)
 	public BiFunction<T, U, R> function;
 
-	@Test(name = "{0}")
+	@Test(name = "%1$s")
 	public void testFunction() {
 		assertThatBiFunction(function, input1, input2).is(expectedResult);
 	}

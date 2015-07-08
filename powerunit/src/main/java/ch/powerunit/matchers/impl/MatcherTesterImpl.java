@@ -144,7 +144,7 @@ public final class MatcherTesterImpl<T extends Matcher<?>> implements TestSuite 
 		return true;
 	}
 
-	@Test(name = "Validate that for the matcher of class {11} the expectedDescription is correct ({1} then {3})")
+	@Test(name = "Validate that for the matcher of class %12$s the expectedDescription is correct (%2$s then %4$s)")
 	public void testMatcherForExpectedValue() {
 		StringDescription d = new StringDescription();
 		assertion.getMatcher().describeTo(d);
@@ -152,7 +152,7 @@ public final class MatcherTesterImpl<T extends Matcher<?>> implements TestSuite 
 				.is(expectedDescription);
 	}
 
-	@Test(name = "Validate that null is rejected for the matcher of class {11} ({1} then {6})")
+	@Test(name = "Validate that null is rejected for the matcher of class %12$s (%2$s then %7$s)")
 	public void testMatcherForNullIsRejected() {
 		assertThat("Validate null is rejected by this matcher",
 				assertion.getMatcher().matches(null)).is(false);
@@ -163,20 +163,20 @@ public final class MatcherTesterImpl<T extends Matcher<?>> implements TestSuite 
 
 	}
 
-	@Test(name = "Validate that null is accepted for the matcher of class {11} ({1})")
+	@Test(name = "Validate that null is accepted for the matcher of class %12$s (%2$s)")
 	public void testMatcherForNullIsAccepted() {
 		assertThat("Validate null is accepted by this matcher",
 				assertion.getMatcher().matches(null)).is(true);
 	}
 
-	@Test(name = "Validate that a value ({7}) is accepted for the matcher of class {11} ({1})")
+	@Test(name = "Validate that a value (%8$s) is accepted for the matcher of class %12$s (%2$s)")
 	public void testMatcherForValueIsAccepted() {
 		assertThat(
 				"Validate " + acceptedValue + " is accepted by this matcher",
 				assertion.getMatcher().matches(acceptedValue)).is(true);
 	}
 
-	@Test(name = "Validate that a value ({8}) is rejected for the matcher of class {11} ({1} then {10})")
+	@Test(name = "Validate that a value (%9$s) is rejected for the matcher of class %12$s (%2$s then %11$s)")
 	public void testMatcherForValueIsRejected() {
 		assertThat(
 				"Validate " + rejectedValue + " is rejected by this matcher",
