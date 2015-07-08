@@ -70,12 +70,12 @@
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>      @Parameter(value = 3, filter = <strong class="jxr_keyword">true</strong>)
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">public</strong> BiFunction&lt;String, Object[], Boolean&gt; filter;
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>      @Test(name = <span class="jxr_string">"validate the fib suite : {0}-&gt;{1}"</span>)
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      @Test(name = <span class="jxr_string">"validate the fib suite : %1$s-&gt;%2$s"</span>)
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFib() {
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>          assertThatFunction(Fibo::fibo, x).is(y);
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>      }
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>  
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>      @Test(name = <span class="jxr_string">"Validate exception is {2}"</span>)
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      @Test(name = <span class="jxr_string">"Validate exception is %3$s"</span>)
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFibException() {
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          assertWhen((p) -&gt; Fibo.fibo(p), x).throwException(
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>                  instanceOf(expectedException));

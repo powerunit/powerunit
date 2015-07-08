@@ -144,7 +144,7 @@ import ch.powerunit.matchers.lang.MatcherAssertion;
 <span class="fc" id="L144">		return true;</span>
 	}
 
-	@Test(name = &quot;Validate that for the matcher of class {11} the expectedDescription is correct ({1} then {3})&quot;)
+	@Test(name = &quot;Validate that for the matcher of class %12$s the expectedDescription is correct (%2$s then %4$s)&quot;)
 	public void testMatcherForExpectedValue() {
 <span class="fc" id="L149">		StringDescription d = new StringDescription();</span>
 <span class="fc" id="L150">		assertion.getMatcher().describeTo(d);</span>
@@ -152,7 +152,7 @@ import ch.powerunit.matchers.lang.MatcherAssertion;
 <span class="fc" id="L152">				.is(expectedDescription);</span>
 <span class="fc" id="L153">	}</span>
 
-	@Test(name = &quot;Validate that null is rejected for the matcher of class {11} ({1} then {6})&quot;)
+	@Test(name = &quot;Validate that null is rejected for the matcher of class %12$s (%2$s then %7$s)&quot;)
 	public void testMatcherForNullIsRejected() {
 <span class="fc" id="L157">		assertThat(&quot;Validate null is rejected by this matcher&quot;,</span>
 <span class="fc" id="L158">				assertion.getMatcher().matches(null)).is(false);</span>
@@ -163,20 +163,20 @@ import ch.powerunit.matchers.lang.MatcherAssertion;
 
 <span class="fc" id="L164">	}</span>
 
-	@Test(name = &quot;Validate that null is accepted for the matcher of class {11} ({1})&quot;)
+	@Test(name = &quot;Validate that null is accepted for the matcher of class %12$s (%2$s)&quot;)
 	public void testMatcherForNullIsAccepted() {
 <span class="fc" id="L168">		assertThat(&quot;Validate null is accepted by this matcher&quot;,</span>
 <span class="fc" id="L169">				assertion.getMatcher().matches(null)).is(true);</span>
 <span class="fc" id="L170">	}</span>
 
-	@Test(name = &quot;Validate that a value ({7}) is accepted for the matcher of class {11} ({1})&quot;)
+	@Test(name = &quot;Validate that a value (%8$s) is accepted for the matcher of class %12$s (%2$s)&quot;)
 	public void testMatcherForValueIsAccepted() {
 <span class="fc" id="L174">		assertThat(</span>
 				&quot;Validate &quot; + acceptedValue + &quot; is accepted by this matcher&quot;,
 <span class="fc" id="L176">				assertion.getMatcher().matches(acceptedValue)).is(true);</span>
 <span class="fc" id="L177">	}</span>
 
-	@Test(name = &quot;Validate that a value ({8}) is rejected for the matcher of class {11} ({1} then {10})&quot;)
+	@Test(name = &quot;Validate that a value (%9$s) is rejected for the matcher of class %12$s (%2$s then %11$s)&quot;)
 	public void testMatcherForValueIsRejected() {
 <span class="fc" id="L181">		assertThat(</span>
 				&quot;Validate &quot; + rejectedValue + &quot; is rejected by this matcher&quot;,

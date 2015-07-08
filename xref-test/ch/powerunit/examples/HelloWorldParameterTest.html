@@ -38,7 +38,7 @@
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  @Categories({ <span class="jxr_string">"example"</span> })
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../ch/powerunit/examples/HelloWorldParameterTest.html">HelloWorldParameterTest</a> <strong class="jxr_keyword">implements</strong> TestSuite {
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>      @Parameters(<span class="jxr_string">"Input string is {0}, subString idx is {1}, expected result is {2}"</span>)
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>      @Parameters(<span class="jxr_string">"Input string is %1$s, subString idx is %2$s, expected result is %3$s"</span>)
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> Stream&lt;Object[]&gt; getDatas() {
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>          <strong class="jxr_keyword">return</strong> Arrays.stream(<strong class="jxr_keyword">new</strong> Object[][] { { <span class="jxr_string">"ab"</span>, 0, <span class="jxr_string">"ab"</span> },
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>                  { <span class="jxr_string">"ab"</span>, 1, <span class="jxr_string">"b"</span> } });
@@ -53,7 +53,7 @@
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>      @Parameter(2)
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">public</strong> String expectedString;
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>      @Test(name = <span class="jxr_string">"Test substring : Input string is {0}, subString idx is {1}, expected result is {2}"</span>)
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      @Test(name = <span class="jxr_string">"Test substring : Input string is %1$s, subString idx is %2$s, expected result is %3$s"</span>)
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testSubString() {
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>          assertThat(inputString.substring(inputIndex)).is(expectedString);
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      }

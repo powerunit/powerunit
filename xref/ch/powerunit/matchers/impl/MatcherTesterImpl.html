@@ -152,7 +152,7 @@
 <a class="jxr_linenumber" name="L144" href="#L144">144</a> 		<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="L145" href="#L145">145</a> 	}
 <a class="jxr_linenumber" name="L146" href="#L146">146</a> 
-<a class="jxr_linenumber" name="L147" href="#L147">147</a> 	@Test(name = <span class="jxr_string">"Validate that for the matcher of class {11} the expectedDescription is correct ({1} then {3})"</span>)
+<a class="jxr_linenumber" name="L147" href="#L147">147</a> 	@Test(name = <span class="jxr_string">"Validate that for the matcher of class %12$s the expectedDescription is correct (%2$s then %4$s)"</span>)
 <a class="jxr_linenumber" name="L148" href="#L148">148</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMatcherForExpectedValue() {
 <a class="jxr_linenumber" name="L149" href="#L149">149</a> 		StringDescription d = <strong class="jxr_keyword">new</strong> StringDescription();
 <a class="jxr_linenumber" name="L150" href="#L150">150</a> 		assertion.getMatcher().describeTo(d);
@@ -160,7 +160,7 @@
 <a class="jxr_linenumber" name="L152" href="#L152">152</a> 				.is(expectedDescription);
 <a class="jxr_linenumber" name="L153" href="#L153">153</a> 	}
 <a class="jxr_linenumber" name="L154" href="#L154">154</a> 
-<a class="jxr_linenumber" name="L155" href="#L155">155</a> 	@Test(name = <span class="jxr_string">"Validate that null is rejected for the matcher of class {11} ({1} then {6})"</span>)
+<a class="jxr_linenumber" name="L155" href="#L155">155</a> 	@Test(name = <span class="jxr_string">"Validate that null is rejected for the matcher of class %12$s (%2$s then %7$s)"</span>)
 <a class="jxr_linenumber" name="L156" href="#L156">156</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMatcherForNullIsRejected() {
 <a class="jxr_linenumber" name="L157" href="#L157">157</a> 		assertThat(<span class="jxr_string">"Validate null is rejected by this matcher"</span>,
 <a class="jxr_linenumber" name="L158" href="#L158">158</a> 				assertion.getMatcher().matches(<strong class="jxr_keyword">null</strong>)).is(false);
@@ -171,20 +171,20 @@
 <a class="jxr_linenumber" name="L163" href="#L163">163</a> 
 <a class="jxr_linenumber" name="L164" href="#L164">164</a> 	}
 <a class="jxr_linenumber" name="L165" href="#L165">165</a> 
-<a class="jxr_linenumber" name="L166" href="#L166">166</a> 	@Test(name = <span class="jxr_string">"Validate that null is accepted for the matcher of class {11} ({1})"</span>)
+<a class="jxr_linenumber" name="L166" href="#L166">166</a> 	@Test(name = <span class="jxr_string">"Validate that null is accepted for the matcher of class %12$s (%2$s)"</span>)
 <a class="jxr_linenumber" name="L167" href="#L167">167</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMatcherForNullIsAccepted() {
 <a class="jxr_linenumber" name="L168" href="#L168">168</a> 		assertThat(<span class="jxr_string">"Validate null is accepted by this matcher"</span>,
 <a class="jxr_linenumber" name="L169" href="#L169">169</a> 				assertion.getMatcher().matches(<strong class="jxr_keyword">null</strong>)).is(<strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L170" href="#L170">170</a> 	}
 <a class="jxr_linenumber" name="L171" href="#L171">171</a> 
-<a class="jxr_linenumber" name="L172" href="#L172">172</a> 	@Test(name = <span class="jxr_string">"Validate that a value ({7}) is accepted for the matcher of class {11} ({1})"</span>)
+<a class="jxr_linenumber" name="L172" href="#L172">172</a> 	@Test(name = <span class="jxr_string">"Validate that a value (%8$s) is accepted for the matcher of class %12$s (%2$s)"</span>)
 <a class="jxr_linenumber" name="L173" href="#L173">173</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMatcherForValueIsAccepted() {
 <a class="jxr_linenumber" name="L174" href="#L174">174</a> 		assertThat(
 <a class="jxr_linenumber" name="L175" href="#L175">175</a> 				<span class="jxr_string">"Validate "</span> + acceptedValue + <span class="jxr_string">" is accepted by this matcher"</span>,
 <a class="jxr_linenumber" name="L176" href="#L176">176</a> 				assertion.getMatcher().matches(acceptedValue)).is(<strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L177" href="#L177">177</a> 	}
 <a class="jxr_linenumber" name="L178" href="#L178">178</a> 
-<a class="jxr_linenumber" name="L179" href="#L179">179</a> 	@Test(name = <span class="jxr_string">"Validate that a value ({8}) is rejected for the matcher of class {11} ({1} then {10})"</span>)
+<a class="jxr_linenumber" name="L179" href="#L179">179</a> 	@Test(name = <span class="jxr_string">"Validate that a value (%9$s) is rejected for the matcher of class %12$s (%2$s then %11$s)"</span>)
 <a class="jxr_linenumber" name="L180" href="#L180">180</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMatcherForValueIsRejected() {
 <a class="jxr_linenumber" name="L181" href="#L181">181</a> 		assertThat(
 <a class="jxr_linenumber" name="L182" href="#L182">182</a> 				<span class="jxr_string">"Validate "</span> + rejectedValue + <span class="jxr_string">" is rejected by this matcher"</span>,

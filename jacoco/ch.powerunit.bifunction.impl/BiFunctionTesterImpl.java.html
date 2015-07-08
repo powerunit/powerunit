@@ -73,7 +73,7 @@ import ch.powerunit.bifunction.BiFunctionTester;
 	@Parameter(4)
 	public BiFunction&lt;T, U, R&gt; function;
 
-	@Test(name = &quot;{0}&quot;)
+	@Test(name = &quot;%1$s&quot;)
 	public void testFunction() {
 <span class="fc" id="L78">		assertThatBiFunction(function, input1, input2).is(expectedResult);</span>
 <span class="fc" id="L79">	}</span>

@@ -53,25 +53,25 @@
 <span class="sourceLineNo">045</span> * <a name="line.45"></a>
 <span class="sourceLineNo">046</span> * public class FunctionParameterTest&amp;lt;T, R&amp;gt; implements TestSuite {<a name="line.46"></a>
 <span class="sourceLineNo">047</span> * <a name="line.47"></a>
-<span class="sourceLineNo">048</span> *     &amp;#064;Parameters(&amp;quot;{0} on {1} expecting {2}&amp;quot;)<a name="line.48"></a>
-<span class="sourceLineNo">049</span> *     public static Stream&amp;lt;Object[]&amp;gt; getDatas() {<a name="line.49"></a>
-<span class="sourceLineNo">050</span> *         return Arrays.stream(new Object[][] { {<a name="line.50"></a>
-<span class="sourceLineNo">051</span> *                 (Function&amp;lt;String, Integer&amp;gt;) Integer::valueOf, &amp;quot;1&amp;quot;, 1 } });<a name="line.51"></a>
-<span class="sourceLineNo">052</span> *     }<a name="line.52"></a>
+<span class="sourceLineNo">048</span> *      &amp;#064;Parameters(&amp;quot;%1$s on %2$s expecting %3$s&amp;quot;)<a name="line.48"></a>
+<span class="sourceLineNo">049</span> *      public static Stream&amp;lt;Object[]&amp;gt; getDatas() {<a name="line.49"></a>
+<span class="sourceLineNo">050</span> *              return Arrays.stream(new Object[][] { {<a name="line.50"></a>
+<span class="sourceLineNo">051</span> *                              (Function&amp;lt;String, Integer&amp;gt;) Integer::valueOf, &amp;quot;1&amp;quot;, 1 } });<a name="line.51"></a>
+<span class="sourceLineNo">052</span> *      }<a name="line.52"></a>
 <span class="sourceLineNo">053</span> * <a name="line.53"></a>
-<span class="sourceLineNo">054</span> *     &amp;#064;Parameter(0)<a name="line.54"></a>
-<span class="sourceLineNo">055</span> *     public Function&amp;lt;T, R&amp;gt; function;<a name="line.55"></a>
+<span class="sourceLineNo">054</span> *      &amp;#064;Parameter(0)<a name="line.54"></a>
+<span class="sourceLineNo">055</span> *      public Function&amp;lt;T, R&amp;gt; function;<a name="line.55"></a>
 <span class="sourceLineNo">056</span> * <a name="line.56"></a>
-<span class="sourceLineNo">057</span> *     &amp;#064;Parameter(1)<a name="line.57"></a>
-<span class="sourceLineNo">058</span> *     public T input;<a name="line.58"></a>
+<span class="sourceLineNo">057</span> *      &amp;#064;Parameter(1)<a name="line.57"></a>
+<span class="sourceLineNo">058</span> *      public T input;<a name="line.58"></a>
 <span class="sourceLineNo">059</span> * <a name="line.59"></a>
-<span class="sourceLineNo">060</span> *     &amp;#064;Parameter(2)<a name="line.60"></a>
-<span class="sourceLineNo">061</span> *     public R expected;<a name="line.61"></a>
+<span class="sourceLineNo">060</span> *      &amp;#064;Parameter(2)<a name="line.60"></a>
+<span class="sourceLineNo">061</span> *      public R expected;<a name="line.61"></a>
 <span class="sourceLineNo">062</span> * <a name="line.62"></a>
-<span class="sourceLineNo">063</span> *     &amp;#064;Test<a name="line.63"></a>
-<span class="sourceLineNo">064</span> *     public void testAFunction() {<a name="line.64"></a>
-<span class="sourceLineNo">065</span> *         assertThatFunction(function, input).is(expected);<a name="line.65"></a>
-<span class="sourceLineNo">066</span> *     }<a name="line.66"></a>
+<span class="sourceLineNo">063</span> *      &amp;#064;Test<a name="line.63"></a>
+<span class="sourceLineNo">064</span> *      public void testAFunction() {<a name="line.64"></a>
+<span class="sourceLineNo">065</span> *              assertThatFunction(function, input).is(expected);<a name="line.65"></a>
+<span class="sourceLineNo">066</span> *      }<a name="line.66"></a>
 <span class="sourceLineNo">067</span> * }<a name="line.67"></a>
 <span class="sourceLineNo">068</span> *<a name="line.68"></a>
 <span class="sourceLineNo">069</span> * &lt;/pre&gt;<a name="line.69"></a>
@@ -99,15 +99,38 @@
 <span class="sourceLineNo">091</span>@Retention(RetentionPolicy.RUNTIME)<a name="line.91"></a>
 <span class="sourceLineNo">092</span>@Target(ElementType.METHOD)<a name="line.92"></a>
 <span class="sourceLineNo">093</span>public @interface Parameters {<a name="line.93"></a>
-<span class="sourceLineNo">094</span>    /**<a name="line.94"></a>
-<span class="sourceLineNo">095</span>     * Define an optional name of the test parameters. use {n} to refer to the<a name="line.95"></a>
-<span class="sourceLineNo">096</span>     * parameter.<a name="line.96"></a>
-<span class="sourceLineNo">097</span>     * <a name="line.97"></a>
-<span class="sourceLineNo">098</span>     * @return the name.<a name="line.98"></a>
-<span class="sourceLineNo">099</span>     * @see java.text.MessageFormat#format(String, Object...) The formatter used<a name="line.99"></a>
-<span class="sourceLineNo">100</span>     */<a name="line.100"></a>
-<span class="sourceLineNo">101</span>    String value() default "";<a name="line.101"></a>
-<span class="sourceLineNo">102</span>}<a name="line.102"></a>
+<span class="sourceLineNo">094</span>        /**<a name="line.94"></a>
+<span class="sourceLineNo">095</span>         * Define an optional name of the test parameters. use the syntax defined by<a name="line.95"></a>
+<span class="sourceLineNo">096</span>         * {@link java.lang.String#format(String, Object...)} to refer to the<a name="line.96"></a>
+<span class="sourceLineNo">097</span>         * parameter.<a name="line.97"></a>
+<span class="sourceLineNo">098</span>         * &lt;p&gt;<a name="line.98"></a>
+<span class="sourceLineNo">099</span>         * &lt;b&gt;The syntax for the formatted string has change since the version<a name="line.99"></a>
+<span class="sourceLineNo">100</span>         * 0.4.0.&lt;/b&gt;. At the moment, both syntax are supported, but the old one may<a name="line.100"></a>
+<span class="sourceLineNo">101</span>         * be removed in a future release.<a name="line.101"></a>
+<span class="sourceLineNo">102</span>         * &lt;br&gt;<a name="line.102"></a>
+<span class="sourceLineNo">103</span>         * &lt;h3&gt;Normal syntax&lt;/h3&gt;<a name="line.103"></a>
+<span class="sourceLineNo">104</span>         * The syntax defined by {@link java.lang.String#format(String, Object...)}<a name="line.104"></a>
+<span class="sourceLineNo">105</span>         * is used. Each parameter is available. It is here required to be careful<a name="line.105"></a>
+<span class="sourceLineNo">106</span>         * with the numbering of the argument ; {@link Parameter} index are numbered<a name="line.106"></a>
+<span class="sourceLineNo">107</span>         * starting from 0, but in the string format the numbering start from 1. In<a name="line.107"></a>
+<span class="sourceLineNo">108</span>         * the easy form, the parameter can be passed with the syntax<a name="line.108"></a>
+<span class="sourceLineNo">109</span>         * &lt;code&gt;%1$s&lt;/code&gt; which for instance will use the first parameter (0<a name="line.109"></a>
+<span class="sourceLineNo">110</span>         * parameter), as a String. <a name="line.110"></a>
+<span class="sourceLineNo">111</span>         * &lt;br&gt;<a name="line.111"></a>
+<span class="sourceLineNo">112</span>         * &lt;h3&gt;Old syntax&lt;/h3&gt;<a name="line.112"></a>
+<span class="sourceLineNo">113</span>         * The old syntax is defined by<a name="line.113"></a>
+<span class="sourceLineNo">114</span>         * {@link java.text.MessageFormat#format(String, Object...)} ; This syntax<a name="line.114"></a>
+<span class="sourceLineNo">115</span>         * is enabled when the passed string format contains the regular expression<a name="line.115"></a>
+<span class="sourceLineNo">116</span>         * &lt;code&gt;\{[0-9]+\}&lt;/code&gt;.<a name="line.116"></a>
+<span class="sourceLineNo">117</span>         * <a name="line.117"></a>
+<span class="sourceLineNo">118</span>         * @return the name.<a name="line.118"></a>
+<span class="sourceLineNo">119</span>         * @see java.text.MessageFormat#format(String, Object...) The formatter used<a name="line.119"></a>
+<span class="sourceLineNo">120</span>         *      for parameterized test. For version before 0.4.0.<a name="line.120"></a>
+<span class="sourceLineNo">121</span>         * @see java.lang.String#format(String, Object...) The formatter used for<a name="line.121"></a>
+<span class="sourceLineNo">122</span>         *      parameterized test, since version 0.4.0.<a name="line.122"></a>
+<span class="sourceLineNo">123</span>         */<a name="line.123"></a>
+<span class="sourceLineNo">124</span>        String value() default "";<a name="line.124"></a>
+<span class="sourceLineNo">125</span>}<a name="line.125"></a>
 
 
 

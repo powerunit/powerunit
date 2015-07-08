@@ -67,7 +67,7 @@ import ch.powerunit.function.FunctionTester;
 	@Parameter(3)
 	public Function&lt;T, R&gt; function;
 
-	@Test(name = &quot;{0}&quot;)
+	@Test(name = &quot;%1$s&quot;)
 	public void testFunction() {
 <span class="fc" id="L72">		assertThatFunction(function, input).is(expectedResult);</span>
 <span class="fc" id="L73">	}</span>

@@ -40,7 +40,7 @@
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  @Categories({ <span class="jxr_string">"example"</span>, <span class="jxr_string">"demo"</span> })
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> FunctionParameterTest&lt;T, R&gt; <strong class="jxr_keyword">implements</strong> TestSuite {
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>      @Parameters(<span class="jxr_string">"{0} on {1} expecting {2}"</span>)
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      @Parameters(<span class="jxr_string">"%1$s on %2$s expecting %3$s"</span>)
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> Stream&lt;Object[]&gt; getDatas() {
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>          <strong class="jxr_keyword">return</strong> Arrays.stream(<strong class="jxr_keyword">new</strong> Object[][] { {
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>                  (Function&lt;String, Integer&gt;) Integer::valueOf, <span class="jxr_string">"1"</span>, 1 } });
