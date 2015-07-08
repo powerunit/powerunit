@@ -276,12 +276,12 @@ public class FiboUsingFilteringTester implements TestSuite {
     @Parameter(value = 3, filter = true)
     public BiFunction&lt;String, Object[], Boolean&gt; filter;
 
-    @Test(name = &quot;validate the fib suite : {0}-&gt;{1}&quot;)
+    @Test(name = &quot;validate the fib suite : %1$s-&gt;%2$s&quot;)
     public void testFib() {
         assertThatFunction(Fibo::fibo, x).is(y);
     }
 
-    @Test(name = &quot;Validate exception is {2}&quot;)
+    @Test(name = &quot;Validate exception is %3$s&quot;)
     public void testFibException() {
         assertWhen((p) -&gt; Fibo.fibo(p), x).throwException(
                 instanceOf(expectedException));
