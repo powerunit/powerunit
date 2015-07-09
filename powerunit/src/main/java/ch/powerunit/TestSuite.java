@@ -19,6 +19,7 @@
  */
 package ch.powerunit;
 
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -28,8 +29,11 @@ import org.hamcrest.Matcher;
 
 import ch.powerunit.helpers.StreamParametersMapFunction;
 import ch.powerunit.rules.SystemPropertiesRule;
+import ch.powerunit.rules.SystemStreamRule;
 import ch.powerunit.rules.TemporaryFolder;
 import ch.powerunit.rules.TemporaryFolder.TemporaryFolderBuilder;
+import ch.powerunit.rules.impl.NullOutputStream;
+import ch.powerunit.rules.impl.SystemStreamRuleImpl;
 import ch.powerunit.rules.impl.TemporaryFolderImpl;
 
 /**
@@ -337,5 +341,106 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default <T> Predicate<T> matcherPredicate(Matcher<T> matcher) {
 		return matcher::matches;
+	}
+
+	/**
+	 * Provide a test rule that suppress both {@link java.lang.System#err system
+	 * err} and {@link java.lang.System#out system out}.
+	 * 
+	 * @see ch.powerunit.rules.SystemStreamRule The complete description of the
+	 *      functionnality of the rule.
+	 * 
+	 * @return the test rule.
+	 * @since 0.4.0
+	 */
+	default SystemStreamRule disableBothStreams() {
+		return SystemStreamRule.disableBothStreams();
+	}
+
+	/**
+	 * Provide a test rule that replace both {@link java.lang.System#err system
+	 * err} and {@link java.lang.System#out system out} with the provided one.
+	 * 
+	 * @param outReplacement
+	 *            the replacement of the {@link java.lang.System#out system out}
+	 *            stream.
+	 * @param errRemplacement
+	 *            the replacement of the {@link java.lang.System#err system err}
+	 *            stream.
+	 * 
+	 * @see ch.powerunit.rules.SystemStreamRule The complete description of the
+	 *      functionnality of the rule.
+	 * 
+	 * @return the test rule.
+	 * @since 0.4.0
+	 */
+	default SystemStreamRule replaceBothStream(PrintStream outReplacement,
+			PrintStream errRemplacement) {
+		return SystemStreamRule.replaceBothStream(outReplacement,
+				errRemplacement);
+	}
+
+	/**
+	 * Provide a test rule that suppress the {@link java.lang.System#out system
+	 * out} stream.
+	 * 
+	 * @see ch.powerunit.rules.SystemStreamRule The complete description of the
+	 *      functionnality of the rule.
+	 * 
+	 * @return the test rule.
+	 * @since 0.4.0
+	 */
+	default SystemStreamRule disableOutStream() {
+		return SystemStreamRule.disableOutStream();
+	}
+
+	/**
+	 * Provide a test rule that suppress the {@link java.lang.System#err system
+	 * err} stream.
+	 * 
+	 * @see ch.powerunit.rules.SystemStreamRule The complete description of the
+	 *      functionnality of the rule.
+	 * 
+	 * @return the test rule.
+	 * @since 0.4.0
+	 */
+	default SystemStreamRule disableErrStream() {
+		return SystemStreamRule.disableErrStream();
+	}
+
+	/**
+	 * Privde a test rule that replace the {@link java.lang.System#out system
+	 * out} stream with the provided one
+	 * 
+	 * @param outReplacement
+	 *            the replacement of the {@link java.lang.System#out system out}
+	 *            stream.
+	 * 
+	 * @see ch.powerunit.rules.SystemStreamRule The complete description of the
+	 *      functionnality of the rule.
+	 * 
+	 * @return the test rule.
+	 * @since 0.4.0
+	 */
+	default SystemStreamRule replaceOutStream(PrintStream outReplacement) {
+		return SystemStreamRule.replaceOutStream(outReplacement);
+	}
+
+	/**
+	 * Privde a test rule that replace the {@link java.lang.System#err system
+	 * err} stream with the provided one
+	 * 
+	 * @param errReplacement
+	 *            the replacement of the {@link java.lang.System#err system err}
+	 *            stream.
+	 * 
+	 * @see ch.powerunit.rules.SystemStreamRule The complete description of the
+	 *      functionnality of the rule.
+	 * 
+	 * @return the test rule.
+	 * @since 0.4.0
+	 */
+	default SystemStreamRule replaceErrStream(PrintStream errReplacement) {
+		return SystemStreamRule.replaceErrStream(errReplacement);
 	}
 }

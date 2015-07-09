@@ -36,6 +36,7 @@ public class AllTests {
         MatchersTests.main(args);
         FileMatchersTests.main(args);
         TestDelegateTests.main(args);
+        SystemStreamRuleTests.main(args);
     }
 
 }
