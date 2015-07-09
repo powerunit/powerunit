@@ -19,6 +19,7 @@
  */
 package ch.powerunit;
 
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -28,8 +29,11 @@ import org.hamcrest.Matcher;
 
 import ch.powerunit.helpers.StreamParametersMapFunction;
 import ch.powerunit.rules.SystemPropertiesRule;
+import ch.powerunit.rules.SystemStreamRule;
 import ch.powerunit.rules.TemporaryFolder;
 import ch.powerunit.rules.TemporaryFolder.TemporaryFolderBuilder;
+import ch.powerunit.rules.impl.NullOutputStream;
+import ch.powerunit.rules.impl.SystemStreamRuleImpl;
 import ch.powerunit.rules.impl.TemporaryFolderImpl;
 
 /**
@@ -74,7 +78,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * {@link Parameters &amp;#64;Parameters} annotated method, has this method must
 	 * be static.
 	 */
-<span class="fc" id="L77">	static TestSuite DSL = new TestSuite() {</span>
+<span class="fc" id="L81">	static TestSuite DSL = new TestSuite() {</span>
 	};
 
 	/**
@@ -97,8 +101,8 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule before(Runnable... befores) {
-<span class="fc" id="L100">		return Arrays.stream(befores).map(TestRule::before)</span>
-<span class="pc" id="L101">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
+<span class="fc" id="L104">		return Arrays.stream(befores).map(TestRule::before)</span>
+<span class="pc" id="L105">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
 	}
 
 	/**
@@ -121,8 +125,8 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule after(Runnable... afters) {
-<span class="fc" id="L124">		return Arrays.stream(afters).map(TestRule::after)</span>
-<span class="pc" id="L125">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
+<span class="fc" id="L128">		return Arrays.stream(afters).map(TestRule::after)</span>
+<span class="pc" id="L129">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
 	}
 
 	/**
@@ -134,7 +138,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule mockitoRule() {
-<span class="fc" id="L137">		return TestRule.mockitoRule();</span>
+<span class="fc" id="L141">		return TestRule.mockitoRule();</span>
 	}
 
 	/**
@@ -161,7 +165,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TemporaryFolder temporaryFolder() {
-<span class="fc" id="L164">		return temporaryFolderBuilder().build();</span>
+<span class="fc" id="L168">		return temporaryFolderBuilder().build();</span>
 	}
 
 	/**
@@ -191,7 +195,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TemporaryFolderBuilder temporaryFolderBuilder() {
-<span class="fc" id="L194">		return new TemporaryFolderImpl.TemporaryFolderBuilderImpl();</span>
+<span class="fc" id="L198">		return new TemporaryFolderImpl.TemporaryFolderBuilderImpl();</span>
 	}
 
 	/**
@@ -203,7 +207,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule systemPropertiesRule(String... propertiesName) {
-<span class="fc" id="L206">		return new SystemPropertiesRule(propertiesName);</span>
+<span class="fc" id="L210">		return new SystemPropertiesRule(propertiesName);</span>
 	}
 
 	/**
@@ -218,7 +222,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default TestRule systemProperty(String propertyName,
 			Supplier&lt;String&gt; propertyValue) {
-<span class="nc" id="L221">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
+<span class="nc" id="L225">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
 				propertyName, propertyValue);
 	}
 
@@ -233,7 +237,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule systemProperty(String propertyName, String propertyValue) {
-<span class="fc" id="L236">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
+<span class="fc" id="L240">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
 				propertyName, propertyValue);
 	}
 
@@ -254,7 +258,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default &lt;T, R&gt; StreamParametersMapFunction&lt;T&gt; parametersMap(int idx,
 			Function&lt;T, R&gt; mapFunction) {
-<span class="nc" id="L257">		return StreamParametersMapFunction.map(idx, mapFunction);</span>
+<span class="nc" id="L261">		return StreamParametersMapFunction.map(idx, mapFunction);</span>
 	}
 
 	/**
@@ -295,7 +299,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default StreamParametersMapFunction&lt;String&gt; stringToParameterMap(
 			Class&lt;?&gt; testClass) {
-<span class="fc" id="L298">		return StreamParametersMapFunction.stringToParameterMap(testClass);</span>
+<span class="fc" id="L302">		return StreamParametersMapFunction.stringToParameterMap(testClass);</span>
 	}
 
 	/**
@@ -310,7 +314,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 *            The object type to be added.
 	 */
 	default &lt;T&gt; Function&lt;Object[], Object[]&gt; addFieldToEachEntry(T field) {
-<span class="fc" id="L313">		return StreamParametersMapFunction.addFieldToEachEntry(field);</span>
+<span class="fc" id="L317">		return StreamParametersMapFunction.addFieldToEachEntry(field);</span>
 	}
 
 	/**
@@ -323,7 +327,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default Predicate&lt;Object[]&gt; parametersFilterUsingMatcher(
 			Matcher&lt;Object[]&gt; matcher) {
-<span class="fc" id="L326">		return matcherPredicate(matcher);</span>
+<span class="fc" id="L330">		return matcherPredicate(matcher);</span>
 	}
 
 	/**
@@ -336,7 +340,108 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 *            The target object type
 	 */
 	default &lt;T&gt; Predicate&lt;T&gt; matcherPredicate(Matcher&lt;T&gt; matcher) {
-<span class="fc" id="L339">		return matcher::matches;</span>
+<span class="fc" id="L343">		return matcher::matches;</span>
+	}
+
+	/**
+	 * Provide a test rule that suppress both {@link java.lang.System#err system
+	 * err} and {@link java.lang.System#out system out}.
+	 * 
+	 * @see ch.powerunit.rules.SystemStreamRule The complete description of the
+	 *      functionnality of the rule.
+	 * 
+	 * @return the test rule.
+	 * @since 0.4.0
+	 */
+	default SystemStreamRule disableBothStreams() {
+<span class="nc" id="L357">		return SystemStreamRule.disableBothStreams();</span>
+	}
+
+	/**
+	 * Provide a test rule that replace both {@link java.lang.System#err system
+	 * err} and {@link java.lang.System#out system out} with the provided one.
+	 * 
+	 * @param outReplacement
+	 *            the replacement of the {@link java.lang.System#out system out}
+	 *            stream.
+	 * @param errRemplacement
+	 *            the replacement of the {@link java.lang.System#err system err}
+	 *            stream.
+	 * 
+	 * @see ch.powerunit.rules.SystemStreamRule The complete description of the
+	 *      functionnality of the rule.
+	 * 
+	 * @return the test rule.
+	 * @since 0.4.0
+	 */
+	default SystemStreamRule replaceBothStream(PrintStream outReplacement,
+			PrintStream errRemplacement) {
+<span class="fc" id="L379">		return SystemStreamRule.replaceBothStream(outReplacement,</span>
+				errRemplacement);
+	}
+
+	/**
+	 * Provide a test rule that suppress the {@link java.lang.System#out system
+	 * out} stream.
+	 * 
+	 * @see ch.powerunit.rules.SystemStreamRule The complete description of the
+	 *      functionnality of the rule.
+	 * 
+	 * @return the test rule.
+	 * @since 0.4.0
+	 */
+	default SystemStreamRule disableOutStream() {
+<span class="nc" id="L394">		return SystemStreamRule.disableOutStream();</span>
+	}
+
+	/**
+	 * Provide a test rule that suppress the {@link java.lang.System#err system
+	 * err} stream.
+	 * 
+	 * @see ch.powerunit.rules.SystemStreamRule The complete description of the
+	 *      functionnality of the rule.
+	 * 
+	 * @return the test rule.
+	 * @since 0.4.0
+	 */
+	default SystemStreamRule disableErrStream() {
+<span class="nc" id="L408">		return SystemStreamRule.disableErrStream();</span>
+	}
+
+	/**
+	 * Privde a test rule that replace the {@link java.lang.System#out system
+	 * out} stream with the provided one
+	 * 
+	 * @param outReplacement
+	 *            the replacement of the {@link java.lang.System#out system out}
+	 *            stream.
+	 * 
+	 * @see ch.powerunit.rules.SystemStreamRule The complete description of the
+	 *      functionnality of the rule.
+	 * 
+	 * @return the test rule.
+	 * @since 0.4.0
+	 */
+	default SystemStreamRule replaceOutStream(PrintStream outReplacement) {
+<span class="nc" id="L426">		return SystemStreamRule.replaceOutStream(outReplacement);</span>
+	}
+
+	/**
+	 * Privde a test rule that replace the {@link java.lang.System#err system
+	 * err} stream with the provided one
+	 * 
+	 * @param errReplacement
+	 *            the replacement of the {@link java.lang.System#err system err}
+	 *            stream.
+	 * 
+	 * @see ch.powerunit.rules.SystemStreamRule The complete description of the
+	 *      functionnality of the rule.
+	 * 
+	 * @return the test rule.
+	 * @since 0.4.0
+	 */
+	default SystemStreamRule replaceErrStream(PrintStream errReplacement) {
+<span class="nc" id="L444">		return SystemStreamRule.replaceErrStream(errReplacement);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
