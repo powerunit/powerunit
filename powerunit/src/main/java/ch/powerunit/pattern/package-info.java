@@ -18,7 +18,8 @@
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
 /**
+ * Support for Pattern tester.
  * @author borettim
- *
+ * @since 0.4.0
  */
 package ch.powerunit.pattern;
