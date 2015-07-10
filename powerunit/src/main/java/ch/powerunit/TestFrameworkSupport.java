@@ -22,6 +22,7 @@ package ch.powerunit;
 import java.util.Comparator;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 import org.hamcrest.Matcher;
 
@@ -33,6 +34,8 @@ import ch.powerunit.function.FunctionTester;
 import ch.powerunit.function.lang.FunctionTesterStartDSL;
 import ch.powerunit.matchers.MatcherTester;
 import ch.powerunit.matchers.lang.MatcherTesterDSL1;
+import ch.powerunit.pattern.PatternTester;
+import ch.powerunit.pattern.lang.PatternTester0;
 
 /**
  * This is the interface for the test support.
@@ -45,8 +48,8 @@ interface TestFrameworkSupport {
 	/**
 	 * Start the creation of a tester definition for a matcher.
 	 * <p>
-	 * <b>{@link ch.powerunit.matchers.MatcherTester#of(Class) Please refer to the complete
-	 * documentation}</b>
+	 * <b>{@link ch.powerunit.matchers.MatcherTester#of(Class) Please refer to
+	 * the complete documentation}</b>
 	 * 
 	 * @param matcherClass
 	 *            the class of the Matcher.
@@ -65,12 +68,13 @@ interface TestFrameworkSupport {
 	/**
 	 * Use this method to start the DSL to test a comparator.
 	 * <p>
-	 * <b>{@link ch.powerunit.comparator.ComparatorTester#of(Class) Please refer to the complete
-	 * documentation}</b>
+	 * <b>{@link ch.powerunit.comparator.ComparatorTester#of(Class) Please refer
+	 * to the complete documentation}</b>
 	 * 
 	 * @param comparatorClass
 	 *            the class of the Comparator
-	 * @return {@link ch.powerunit.comparator.lang.ComparatorTesterDSLStart the DSL}
+	 * @return {@link ch.powerunit.comparator.lang.ComparatorTesterDSLStart the
+	 *         DSL}
 	 * @see ch.powerunit.comparator.ComparatorTester#of(Class)
 	 * @see ch.powerunit.TestDelegate
 	 * @since 0.3.0
@@ -87,8 +91,8 @@ interface TestFrameworkSupport {
 	/**
 	 * Use this method to start the DSL to test a function.
 	 * <p>
-	 * <b>{@link ch.powerunit.function.FunctionTester#of(Function) Please refer to the complete
-	 * documentation}</b>
+	 * <b>{@link ch.powerunit.function.FunctionTester#of(Function) Please refer
+	 * to the complete documentation}</b>
 	 * 
 	 * @param functionUnderTest
 	 *            the function to be tested
@@ -109,12 +113,13 @@ interface TestFrameworkSupport {
 	/**
 	 * Use this method to start the DSL to test a bifunction.
 	 * <p>
-	 * <b>{@link ch.powerunit.bifunction.BiFunctionTester#of(BiFunction) Please refer to the complete
-	 * documentation}</b>
+	 * <b>{@link ch.powerunit.bifunction.BiFunctionTester#of(BiFunction) Please
+	 * refer to the complete documentation}</b>
 	 * 
 	 * @param bifunctionUnderTest
 	 *            the bifunction to be tested
-	 * @return {@link ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL the DSL}
+	 * @return {@link ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL the
+	 *         DSL}
 	 * @see ch.powerunit.bifunction.BiFunctionTester#of(BiFunction)
 	 * @see ch.powerunit.TestDelegate
 	 * @since 0.3.0
@@ -128,5 +133,51 @@ interface TestFrameworkSupport {
 	default <T, U, R> BiFunctionTesterStartDSL<T, U, R> testerOfBiFunction(
 			BiFunction<T, U, R> bifunctionUnderTest) {
 		return BiFunctionTester.of(bifunctionUnderTest);
+	}
+
+	/**
+	 * Start the DSL to create a tester of Pattern, based on a String.
+	 * <p>
+	 * The passed String will be compiled as a Pattern. <br>
+	 * For instance :
+	 * 
+	 * <pre>
+	 * &#064;TestDelegate
+	 * public final PatternTester sample1 = testerOfPattern(&quot;a+&quot;).receiving(&quot;b&quot;)
+	 * 		.thenNoMatching().receiving(&quot;aa&quot;).thenMatching().build();
+	 * </pre>
+	 * 
+	 * @param pattern
+	 *            the pattern, as a String
+	 * @return {@link PatternTester0#receiving(String) The next step of the
+	 *         DSL.}
+	 * @see #testerOfPattern(Pattern)
+	 * @see ch.powerunit.pattern.PatternTester
+	 * @since 0.4.0
+	 */
+	default PatternTester0 testerOfPattern(String pattern) {
+		return PatternTester.of(pattern);
+	}
+
+	/**
+	 * Start the DSL to create a tester of Pattern, based on a String.
+	 * <p>
+	 * For instance :
+	 * 
+	 * <pre>
+	 * &#064;TestDelegate
+	 * public final PatternTester sample1 = testerOfPattern(Pattern.compile(&quot;a+&quot;))
+	 * 		.receiving(&quot;b&quot;).thenNoMatching().receiving(&quot;aa&quot;).thenMatching().build();
+	 * </pre>
+	 * 
+	 * @param pattern
+	 *            the pattern.
+	 * @return {@link PatternTester0#receiving(String) The next step of the
+	 *         DSL.}
+	 * @see ch.powerunit.pattern.PatternTester
+	 * @since 0.4.0
+	 */
+	default PatternTester0 testerOfPattern(Pattern pattern) {
+		return PatternTester.of(pattern);
 	}
 }

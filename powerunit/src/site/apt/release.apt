@@ -17,4 +17,5 @@ Release principles
  
 * Planned release
 
- The release plan is not yet fully defined. 
+ The release plan is not yet fully defined. The version 0.4.0 is mainly oriented to add additional non core 
+ functions (like special tester).

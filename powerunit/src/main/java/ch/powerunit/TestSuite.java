@@ -32,8 +32,6 @@ import ch.powerunit.rules.SystemPropertiesRule;
 import ch.powerunit.rules.SystemStreamRule;
 import ch.powerunit.rules.TemporaryFolder;
 import ch.powerunit.rules.TemporaryFolder.TemporaryFolderBuilder;
-import ch.powerunit.rules.impl.NullOutputStream;
-import ch.powerunit.rules.impl.SystemStreamRuleImpl;
 import ch.powerunit.rules.impl.TemporaryFolderImpl;
 
 /**
