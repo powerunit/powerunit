@@ -22,6 +22,7 @@ package ch.powerunit;
 import java.util.Comparator;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 import org.hamcrest.Matcher;
 
@@ -33,6 +34,8 @@ import ch.powerunit.function.FunctionTester;
 import ch.powerunit.function.lang.FunctionTesterStartDSL;
 import ch.powerunit.matchers.MatcherTester;
 import ch.powerunit.matchers.lang.MatcherTesterDSL1;
+import ch.powerunit.pattern.PatternTester;
+import ch.powerunit.pattern.lang.PatternTester0;
 
 /**
  * This is the interface for the test support.
@@ -45,8 +48,8 @@ interface TestFrameworkSupport {
 	/**
 	 * Start the creation of a tester definition for a matcher.
 	 * &lt;p&gt;
-	 * &lt;b&gt;{@link ch.powerunit.matchers.MatcherTester#of(Class) Please refer to the complete
-	 * documentation}&lt;/b&gt;
+	 * &lt;b&gt;{@link ch.powerunit.matchers.MatcherTester#of(Class) Please refer to
+	 * the complete documentation}&lt;/b&gt;
 	 * 
 	 * @param matcherClass
 	 *            the class of the Matcher.
@@ -59,18 +62,19 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;T extends Matcher&lt;?&gt;&gt; MatcherTesterDSL1&lt;T&gt; testerOfMatcher(
 			Class&lt;T&gt; matcherClass) {
-<span class="nc" id="L62">		return MatcherTester.of(matcherClass);</span>
+<span class="nc" id="L65">		return MatcherTester.of(matcherClass);</span>
 	}
 
 	/**
 	 * Use this method to start the DSL to test a comparator.
 	 * &lt;p&gt;
-	 * &lt;b&gt;{@link ch.powerunit.comparator.ComparatorTester#of(Class) Please refer to the complete
-	 * documentation}&lt;/b&gt;
+	 * &lt;b&gt;{@link ch.powerunit.comparator.ComparatorTester#of(Class) Please refer
+	 * to the complete documentation}&lt;/b&gt;
 	 * 
 	 * @param comparatorClass
 	 *            the class of the Comparator
-	 * @return {@link ch.powerunit.comparator.lang.ComparatorTesterDSLStart the DSL}
+	 * @return {@link ch.powerunit.comparator.lang.ComparatorTesterDSLStart the
+	 *         DSL}
 	 * @see ch.powerunit.comparator.ComparatorTester#of(Class)
 	 * @see ch.powerunit.TestDelegate
 	 * @since 0.3.0
@@ -81,14 +85,14 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;O, C extends Comparator&lt;O&gt;&gt; ComparatorTesterDSLStart&lt;O, C&gt; testerOfComparator(
 			Class&lt;C&gt; comparatorClass) {
-<span class="fc" id="L84">		return ComparatorTester.of(comparatorClass);</span>
+<span class="fc" id="L88">		return ComparatorTester.of(comparatorClass);</span>
 	}
 
 	/**
 	 * Use this method to start the DSL to test a function.
 	 * &lt;p&gt;
-	 * &lt;b&gt;{@link ch.powerunit.function.FunctionTester#of(Function) Please refer to the complete
-	 * documentation}&lt;/b&gt;
+	 * &lt;b&gt;{@link ch.powerunit.function.FunctionTester#of(Function) Please refer
+	 * to the complete documentation}&lt;/b&gt;
 	 * 
 	 * @param functionUnderTest
 	 *            the function to be tested
@@ -103,18 +107,19 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;T, R&gt; FunctionTesterStartDSL&lt;T, R&gt; testerOfFunction(
 			Function&lt;T, R&gt; functionUnderTest) {
-<span class="nc" id="L106">		return FunctionTester.of(functionUnderTest);</span>
+<span class="nc" id="L110">		return FunctionTester.of(functionUnderTest);</span>
 	}
 
 	/**
 	 * Use this method to start the DSL to test a bifunction.
 	 * &lt;p&gt;
-	 * &lt;b&gt;{@link ch.powerunit.bifunction.BiFunctionTester#of(BiFunction) Please refer to the complete
-	 * documentation}&lt;/b&gt;
+	 * &lt;b&gt;{@link ch.powerunit.bifunction.BiFunctionTester#of(BiFunction) Please
+	 * refer to the complete documentation}&lt;/b&gt;
 	 * 
 	 * @param bifunctionUnderTest
 	 *            the bifunction to be tested
-	 * @return {@link ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL the DSL}
+	 * @return {@link ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL the
+	 *         DSL}
 	 * @see ch.powerunit.bifunction.BiFunctionTester#of(BiFunction)
 	 * @see ch.powerunit.TestDelegate
 	 * @since 0.3.0
@@ -127,7 +132,53 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;T, U, R&gt; BiFunctionTesterStartDSL&lt;T, U, R&gt; testerOfBiFunction(
 			BiFunction&lt;T, U, R&gt; bifunctionUnderTest) {
-<span class="fc" id="L130">		return BiFunctionTester.of(bifunctionUnderTest);</span>
+<span class="fc" id="L135">		return BiFunctionTester.of(bifunctionUnderTest);</span>
+	}
+
+	/**
+	 * Start the DSL to create a tester of Pattern, based on a String.
+	 * &lt;p&gt;
+	 * The passed String will be compiled as a Pattern. &lt;br&gt;
+	 * For instance :
+	 * 
+	 * &lt;pre&gt;
+	 * &amp;#064;TestDelegate
+	 * public final PatternTester sample1 = testerOfPattern(&amp;quot;a+&amp;quot;).receiving(&amp;quot;b&amp;quot;)
+	 * 		.thenNoMatching().receiving(&amp;quot;aa&amp;quot;).thenMatching().build();
+	 * &lt;/pre&gt;
+	 * 
+	 * @param pattern
+	 *            the pattern, as a String
+	 * @return {@link PatternTester0#receiving(String) The next step of the
+	 *         DSL.}
+	 * @see #testerOfPattern(Pattern)
+	 * @see ch.powerunit.pattern.PatternTester
+	 * @since 0.4.0
+	 */
+	default PatternTester0 testerOfPattern(String pattern) {
+<span class="fc" id="L159">		return PatternTester.of(pattern);</span>
+	}
+
+	/**
+	 * Start the DSL to create a tester of Pattern, based on a String.
+	 * &lt;p&gt;
+	 * For instance :
+	 * 
+	 * &lt;pre&gt;
+	 * &amp;#064;TestDelegate
+	 * public final PatternTester sample1 = testerOfPattern(Pattern.compile(&amp;quot;a+&amp;quot;))
+	 * 		.receiving(&amp;quot;b&amp;quot;).thenNoMatching().receiving(&amp;quot;aa&amp;quot;).thenMatching().build();
+	 * &lt;/pre&gt;
+	 * 
+	 * @param pattern
+	 *            the pattern.
+	 * @return {@link PatternTester0#receiving(String) The next step of the
+	 *         DSL.}
+	 * @see ch.powerunit.pattern.PatternTester
+	 * @since 0.4.0
+	 */
+	default PatternTester0 testerOfPattern(Pattern pattern) {
+<span class="nc" id="L181">		return PatternTester.of(pattern);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

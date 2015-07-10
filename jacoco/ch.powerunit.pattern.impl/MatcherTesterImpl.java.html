@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MatcherTesterImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.pattern.impl</a> &gt; <span class="el_source">MatcherTesterImpl.java</span></div><h1>MatcherTesterImpl.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.pattern.impl;
+
+import java.util.regex.Matcher;
+import java.util.stream.Stream;
+import java.util.stream.Stream.Builder;
+
+import org.hamcrest.StringDescription;
+
+import ch.powerunit.Parameter;
+import ch.powerunit.Parameters;
+import ch.powerunit.Test;
+import ch.powerunit.TestDelegator;
+import ch.powerunit.TestSuite;
+
+/**
+ * @author borettim
+ *
+ */
+@TestDelegator
+<span class="fc" id="L39">public class MatcherTesterImpl implements TestSuite {</span>
+	@Parameters
+	public static Stream&lt;Object[]&gt; getParameter(MatcherTester input) {
+<span class="fc" id="L42">		Builder&lt;Object[]&gt; builder = Stream.builder();</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		for (int i = 0; i &lt; input.getExpectedGroup().size(); i++) {</span>
+<span class="fc" id="L44">			StringDescription sd = new StringDescription();</span>
+<span class="fc" id="L45">			input.getExpectedGroup().get(i).describeTo(sd);</span>
+<span class="fc" id="L46">			builder.add(new Object[] { input.getMatcher(),</span>
+<span class="fc" id="L47">					input.getMatcher().pattern().pattern(), input.getInput(),</span>
+<span class="fc" id="L48">					input.getHavingGroup().get(i),</span>
+<span class="fc" id="L49">					input.getExpectedGroup().get(i), sd.toString() });</span>
+		}
+<span class="fc" id="L51">		return builder.build();</span>
+	}
+
+	@Parameter(0)
+	public Matcher underTest;
+
+	@Parameter(1)
+	public String patternAsString;
+
+	@Parameter(2)
+	public String inputString;
+
+	@Parameter(3)
+	public int number;
+
+	@Parameter(4)
+	public org.hamcrest.Matcher&lt;String&gt; expected;
+
+	@Parameter(5)
+	public String expectedDescription;
+
+	@Test(name = &quot;Validate that group `%4$s` matches %6$s for Pattern `%2$s` with input string `%3$s`&quot;)
+	public void testGroupN() {
+		try {
+<span class="fc" id="L75">			assertThat(underTest.group(number)).is(expected);</span>
+<span class="nc" id="L76">		} catch (IndexOutOfBoundsException e) {</span>
+<span class="nc" id="L77">			fail(&quot;Unable to find group &quot; + number,e);</span>
+<span class="nc" id="L78">		} catch (IllegalStateException e) {</span>
+<span class="nc" id="L79">			fail(&quot;No in a good state &quot;+e.getMessage(),e);</span>
+<span class="pc" id="L80">		}</span>
+<span class="fc" id="L81">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

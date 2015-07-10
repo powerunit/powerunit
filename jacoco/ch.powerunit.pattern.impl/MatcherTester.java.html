@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MatcherTester.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.pattern.impl</a> &gt; <span class="el_source">MatcherTester.java</span></div><h1>MatcherTester.java</h1><pre class="source lang-java linenums">package ch.powerunit.pattern.impl;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
+
+import ch.powerunit.TestInterface;
+
+@TestInterface(MatcherTesterImpl.class)
+final class MatcherTester {
+	private final Matcher matcher;
+
+	private final String input;
+
+	private final List&lt;Integer&gt; havingGroup;
+
+	private final List&lt;org.hamcrest.Matcher&lt;String&gt;&gt; expectedGroup;
+
+	/**
+	 * @param matcher
+	 * @param input
+	 * @param havingGroup
+	 * @param expectedGroup
+	 */
+	public MatcherTester(Matcher matcher, String input,
+			List&lt;Integer&gt; havingGroup,
+<span class="fc" id="L27">			List&lt;org.hamcrest.Matcher&lt;String&gt;&gt; expectedGroup) {</span>
+<span class="fc" id="L28">		this.matcher = matcher;</span>
+<span class="fc" id="L29">		this.input = input;</span>
+<span class="fc" id="L30">		this.havingGroup = havingGroup;</span>
+<span class="fc" id="L31">		this.expectedGroup = expectedGroup;</span>
+<span class="fc" id="L32">	}</span>
+
+	/**
+	 * @return the matcher
+	 */
+	public Matcher getMatcher() {
+<span class="fc" id="L38">		return matcher;</span>
+	}
+
+	/**
+	 * @return the havingGroup
+	 */
+	public List&lt;Integer&gt; getHavingGroup() {
+<span class="fc" id="L45">		return Collections.unmodifiableList(havingGroup);</span>
+	}
+
+	/**
+	 * @return the expectedGroup
+	 */
+	public List&lt;org.hamcrest.Matcher&lt;String&gt;&gt; getExpectedGroup() {
+<span class="fc" id="L52">		return Collections.unmodifiableList(expectedGroup);</span>
+	}
+
+	/**
+	 * @return the input
+	 */
+	public String getInput() {
+<span class="fc" id="L59">		return input;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -7,5 +7,7 @@ ch.powerunit.exception
 ch.powerunit.function
 ch.powerunit.function.lang
 ch.powerunit.helpers
+ch.powerunit.pattern
+ch.powerunit.pattern.lang
 ch.powerunit.rules
 ch.powerunit.surefire
