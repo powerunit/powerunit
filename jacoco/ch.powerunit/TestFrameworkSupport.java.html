@@ -23,11 +23,14 @@ import java.util.Comparator;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Pattern;
+import java.util.stream.Collector;
 
 import org.hamcrest.Matcher;
 
 import ch.powerunit.bifunction.BiFunctionTester;
 import ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL;
+import ch.powerunit.collector.CollectorTester;
+import ch.powerunit.collector.lang.CollectorTesterDSL0;
 import ch.powerunit.comparator.ComparatorTester;
 import ch.powerunit.comparator.lang.ComparatorTesterDSLStart;
 import ch.powerunit.function.FunctionTester;
@@ -62,7 +65,7 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;T extends Matcher&lt;?&gt;&gt; MatcherTesterDSL1&lt;T&gt; testerOfMatcher(
 			Class&lt;T&gt; matcherClass) {
-<span class="nc" id="L65">		return MatcherTester.of(matcherClass);</span>
+<span class="nc" id="L68">		return MatcherTester.of(matcherClass);</span>
 	}
 
 	/**
@@ -85,7 +88,7 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;O, C extends Comparator&lt;O&gt;&gt; ComparatorTesterDSLStart&lt;O, C&gt; testerOfComparator(
 			Class&lt;C&gt; comparatorClass) {
-<span class="fc" id="L88">		return ComparatorTester.of(comparatorClass);</span>
+<span class="fc" id="L91">		return ComparatorTester.of(comparatorClass);</span>
 	}
 
 	/**
@@ -107,7 +110,7 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;T, R&gt; FunctionTesterStartDSL&lt;T, R&gt; testerOfFunction(
 			Function&lt;T, R&gt; functionUnderTest) {
-<span class="nc" id="L110">		return FunctionTester.of(functionUnderTest);</span>
+<span class="nc" id="L113">		return FunctionTester.of(functionUnderTest);</span>
 	}
 
 	/**
@@ -132,7 +135,7 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;T, U, R&gt; BiFunctionTesterStartDSL&lt;T, U, R&gt; testerOfBiFunction(
 			BiFunction&lt;T, U, R&gt; bifunctionUnderTest) {
-<span class="fc" id="L135">		return BiFunctionTester.of(bifunctionUnderTest);</span>
+<span class="fc" id="L138">		return BiFunctionTester.of(bifunctionUnderTest);</span>
 	}
 
 	/**
@@ -156,7 +159,7 @@ interface TestFrameworkSupport {
 	 * @since 0.4.0
 	 */
 	default PatternTester0 testerOfPattern(String pattern) {
-<span class="fc" id="L159">		return PatternTester.of(pattern);</span>
+<span class="fc" id="L162">		return PatternTester.of(pattern);</span>
 	}
 
 	/**
@@ -178,7 +181,64 @@ interface TestFrameworkSupport {
 	 * @since 0.4.0
 	 */
 	default PatternTester0 testerOfPattern(Pattern pattern) {
-<span class="nc" id="L181">		return PatternTester.of(pattern);</span>
+<span class="nc" id="L184">		return PatternTester.of(pattern);</span>
+	}
+
+	/**
+	 * Return a builder to create a tester of {@link java.util.stream.Collector
+	 * Collector}.
+	 * &lt;p&gt;
+	 * &lt;b&gt;{@link ch.powerunit.collector.CollectorTester The documentation of the
+	 * tester for the exact that are applied.}&lt;/b&gt;
+	 * 
+	 * @param collectorToTest
+	 *            the {@link java.util.stream.Collector Collector} to be tested.
+	 * @param &lt;T&gt;
+	 *            the input type of the {@link java.util.stream.Collector
+	 *            Collector} .
+	 * 
+	 * @param &lt;R&gt;
+	 *            the return type of the {@link java.util.stream.Collector
+	 *            Collector}.
+	 * @return {@link CollectorTesterDSL0 the DSL to build the tester}
+	 * @since 0.4.0
+	 * @see #testerOfCollector(Class, Class, Collector)
+	 */
+	default &lt;T, R&gt; CollectorTesterDSL0&lt;T, ?, R&gt; testerOfCollector(
+			Collector&lt;T, ?, R&gt; collectorToTest) {
+<span class="fc" id="L209">		return CollectorTester.of(collectorToTest);</span>
+	}
+
+	/**
+	 * Return a builder to create a tester of {@link java.util.stream.Collector
+	 * Collector}.
+	 * &lt;p&gt;
+	 * &lt;b&gt;{@link ch.powerunit.collector.CollectorTester The documentation of the
+	 * tester for the exact that are applied.}&lt;/b&gt;
+	 * 
+	 * @param inputClass
+	 *            the class of the input of the
+	 *            {@link java.util.stream.Collector Collector}.
+	 * @param outputClass
+	 *            the class of the output of the
+	 *            {@link java.util.stream.Collector Collector}.
+	 * @param collectorToTest
+	 *            the {@link java.util.stream.Collector Collector} to be tested.
+	 * @param &lt;T&gt;
+	 *            the input type of the {@link java.util.stream.Collector
+	 *            Collector}.
+	 * 
+	 * @param &lt;R&gt;
+	 *            the return type of the {@link java.util.stream.Collector
+	 *            Collector}.
+	 * @return {@link CollectorTesterDSL0 the DSL to build the tester}
+	 * @since 0.4.0
+	 * @see #testerOfCollector(Collector)
+	 */
+	default &lt;T, R&gt; CollectorTesterDSL0&lt;T, ?, R&gt; testerOfCollector(
+			Class&lt;T&gt; inputClass, Class&lt;T&gt; outputClass,
+			Collector&lt;T, ?, R&gt; collectorToTest) {
+<span class="nc" id="L241">		return CollectorTester.of(collectorToTest);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

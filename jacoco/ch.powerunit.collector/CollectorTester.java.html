@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CollectorTester.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.collector</a> &gt; <span class="el_source">CollectorTester.java</span></div><h1>CollectorTester.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.collector;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collector;
+import java.util.stream.Collector.Characteristics;
+import java.util.stream.Stream;
+
+import org.hamcrest.Matcher;
+
+import ch.powerunit.TestInterface;
+import ch.powerunit.TestSuite;
+import ch.powerunit.collector.impl.CollectorTesterImpl;
+import ch.powerunit.collector.lang.CollectorTesterDSL0;
+import ch.powerunit.collector.lang.CollectorTesterDSL1;
+import ch.powerunit.collector.lang.CollectorTesterDSL2;
+import ch.powerunit.collector.lang.CollectorTesterDSL3;
+
+/**
+ * This is a tester for {@link Collector}.
+ * &lt;p&gt;
+ * The goal of this tester is to validate a {@link Collector}. The following
+ * tests are done :
+ * &lt;ol&gt;
+ * &lt;li&gt;&lt;code&gt;{@link Collector#accumulator() accumulator()}&lt;/code&gt; must return a
+ * not null result.&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;{@link Collector#combiner() combiner()}&lt;/code&gt; must return a not
+ * null result.&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;{@link Collector#finisher() finisher()}&lt;/code&gt; must return a not
+ * null result.&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;{@link Collector#supplier() supplier()}&lt;/code&gt; must return a not
+ * null result.&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;{@link Collector#characteristics() characteristics()}&lt;/code&gt; must
+ * return a not null result and be the same list that is specified in this
+ * tester.&lt;/li&gt;
+ * &lt;li&gt;For each received sample either use it -
+ * {@link ch.powerunit.collector.lang.CollectorTesterDSL0#withInput(Stream)
+ * withInput} - or create a stream -
+ * {@link ch.powerunit.collector.lang.CollectorTesterDSL0#withStreamFromList(List)
+ * withStreamFromList} or
+ * {@link ch.powerunit.collector.lang.CollectorTesterDSL0#withParallelStreamFromList(List)
+ * withParallelStreamFromList} - and then execute the method
+ * {@link java.util.stream.Stream#collect(Collector) collect} with the
+ * {@link Collector} under test and validate the returned result.&lt;/li&gt;
+ * &lt;/ol&gt;
+ * 
+ * @author borettim
+ * @since 0.4.0
+ * @param &lt;T&gt;
+ *            the input type of the {@link java.util.stream.Collector Collector}
+ *            .
+ * @param &lt;A&gt;
+ *            the accumulator type of the {@link java.util.stream.Collector
+ *            Collector}.
+ * @param &lt;R&gt;
+ *            the return type of the {@link java.util.stream.Collector
+ *            Collector}.
+ */
+@TestInterface(CollectorTesterImpl.class)
+public final class CollectorTester&lt;T, A, R&gt; {
+	private final Collector&lt;T, A, R&gt; collectorToTest;
+
+	private final List&lt;Stream&lt;T&gt;&gt; inputs;
+
+	private final List&lt;Matcher&lt;? super R&gt;&gt; results;
+
+	private final Matcher&lt;Iterable&lt;? extends Characteristics&gt;&gt; expectedCharacteristics;
+
+	private CollectorTester(Collector&lt;T, A, R&gt; collectorToTest,
+			List&lt;Stream&lt;T&gt;&gt; inputs, List&lt;Matcher&lt;? super R&gt;&gt; results,
+<span class="fc" id="L93">			Matcher&lt;Iterable&lt;? extends Characteristics&gt;&gt; expectedCharacteristics) {</span>
+<span class="fc" id="L94">		this.collectorToTest = collectorToTest;</span>
+<span class="fc" id="L95">		this.inputs = inputs;</span>
+<span class="fc" id="L96">		this.results = results;</span>
+<span class="fc" id="L97">		this.expectedCharacteristics = expectedCharacteristics;</span>
+<span class="fc" id="L98">	}</span>
+
+	/**
+	 * Return a builder to create a tester of {@link java.util.stream.Collector
+	 * Collector}.
+	 * 
+	 * @param collectorToTest
+	 *            the {@link java.util.stream.Collector Collector} to be tested.
+	 * @param &lt;T&gt;
+	 *            the input type of the {@link java.util.stream.Collector
+	 *            Collector} .
+	 * 
+	 * @param &lt;R&gt;
+	 *            the return type of the {@link java.util.stream.Collector
+	 *            Collector}.
+	 * @return {@link CollectorTesterDSL0 the DSL to build the tester}
+	 */
+	@SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
+	public static &lt;T, R&gt; CollectorTesterDSL0&lt;T, ?, R&gt; of(
+			Collector&lt;T, ?, R&gt; collectorToTest) {
+<span class="fc" id="L118">		return new CollectorTesterDSL(collectorToTest);</span>
+	}
+
+	/**
+	 * Return a builder to create a tester of {@link java.util.stream.Collector
+	 * Collector}.
+	 * 
+	 * @param inputClass
+	 *            the class of the input of the
+	 *            {@link java.util.stream.Collector Collector}.
+	 * @param outputClass
+	 *            the class of the output of the
+	 *            {@link java.util.stream.Collector Collector}.
+	 * @param collectorToTest
+	 *            the {@link java.util.stream.Collector Collector} to be tested.
+	 * @param &lt;T&gt;
+	 *            the input type of the {@link java.util.stream.Collector
+	 *            Collector}.
+	 * 
+	 * @param &lt;R&gt;
+	 *            the return type of the {@link java.util.stream.Collector
+	 *            Collector}.
+	 * @return {@link CollectorTesterDSL0 the DSL to build the tester}
+	 */
+	@SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
+	public static &lt;T, R&gt; CollectorTesterDSL0&lt;T, ?, R&gt; of(Class&lt;T&gt; inputClass,
+			Class&lt;T&gt; outputClass, Collector&lt;T, ?, R&gt; collectorToTest) {
+<span class="nc" id="L145">		return new CollectorTesterDSL(collectorToTest);</span>
+	}
+
+	private static class CollectorTesterDSL&lt;T, A, R&gt; implements
+			CollectorTesterDSL0&lt;T, A, R&gt;, CollectorTesterDSL1&lt;T, A, R&gt;,
+			CollectorTesterDSL2&lt;T, A, R&gt; {
+		private final Collector&lt;T, A, R&gt; collectorToTest;
+
+<span class="fc" id="L153">		private final List&lt;Stream&lt;T&gt;&gt; inputs = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L155">		private final List&lt;Matcher&lt;? super R&gt;&gt; results = new ArrayList&lt;&gt;();</span>
+
+		private Matcher&lt;Iterable&lt;? extends Characteristics&gt;&gt; expectedCharacteristics;
+
+<span class="fc" id="L159">		public CollectorTesterDSL(Collector&lt;T, A, R&gt; collectorToTest) {</span>
+<span class="fc" id="L160">			this.collectorToTest = collectorToTest;</span>
+<span class="fc" id="L161">		}</span>
+
+		@Override
+		public CollectorTesterDSL3&lt;T, A, R&gt; havingCharacteristics(
+				Characteristics... expectedCharacteristics) {
+<span class="fc" id="L166">			this.expectedCharacteristics = TestSuite.DSL</span>
+<span class="fc" id="L167">					.&lt;Collector.Characteristics&gt; containsInAnyOrder(expectedCharacteristics);</span>
+<span class="fc" id="L168">			return this;</span>
+		}
+
+		@Override
+		public CollectorTesterDSL2&lt;T, A, R&gt; withInput(Stream&lt;T&gt; input) {
+<span class="fc" id="L173">			inputs.add(Objects.requireNonNull(input, &quot;input can't be null&quot;));</span>
+<span class="fc" id="L174">			return this;</span>
+		}
+
+		@Override
+		public CollectorTesterDSL2&lt;T, A, R&gt; withStreamFromList(List&lt;T&gt; input) {
+<span class="fc" id="L179">			return withInput(Objects.requireNonNull(input,</span>
+<span class="fc" id="L180">					&quot;input can't be null&quot;).stream());</span>
+		}
+
+		@Override
+		public CollectorTesterDSL2&lt;T, A, R&gt; withParallelStreamFromList(
+				List&lt;T&gt; input) {
+<span class="fc" id="L186">			return withInput(Objects.requireNonNull(input,</span>
+<span class="fc" id="L187">					&quot;input can't be null&quot;).parallelStream());</span>
+		}
+
+		@Override
+		public CollectorTesterDSL2&lt;T, A, R&gt; withStreamFromArray(
+				@SuppressWarnings(&quot;unchecked&quot;) T... input) {
+<span class="fc" id="L193">			return withInput(Arrays.stream(input));</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public CollectorTesterDSL2&lt;T, A, R&gt; withStreamFromArray(T first) {
+<span class="nc" id="L199">			return withStreamFromArray((T[]) new Object[] { first });</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public CollectorTesterDSL2&lt;T, A, R&gt; withStreamFromArray(T first,
+				T second) {
+<span class="fc" id="L206">			return withStreamFromArray((T[]) new Object[] { first, second });</span>
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public CollectorTesterDSL2&lt;T, A, R&gt; withStreamFromArray(T first,
+				T second, T third) {
+<span class="nc" id="L213">			return withStreamFromArray((T[]) new Object[] { first, second,</span>
+					third });
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public CollectorTesterDSL2&lt;T, A, R&gt; withStreamFromArray(T first,
+				T second, T third, T fourth) {
+<span class="nc" id="L221">			return withStreamFromArray((T[]) new Object[] { first, second,</span>
+					third, fourth });
+		}
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		@Override
+		public CollectorTesterDSL2&lt;T, A, R&gt; withStreamFromArray(T first,
+				T second, T third, T fourth, T fifth) {
+<span class="nc" id="L229">			return withStreamFromArray((T[]) new Object[] { first, second,</span>
+					third, fourth, fifth });
+		}
+
+		@Override
+		public CollectorTesterDSL1&lt;T, A, R&gt; expecting(
+				Matcher&lt;? super R&gt; matching) {
+<span class="fc" id="L236">			results.add(Objects.requireNonNull(matching,</span>
+					&quot;matching can't be null&quot;));
+<span class="fc" id="L238">			return this;</span>
+		}
+
+		@Override
+		public CollectorTesterDSL1&lt;T, A, R&gt; expecting(R value) {
+<span class="fc" id="L243">			return expecting(TestSuite.DSL.equalTo(value));</span>
+		}
+
+		@Override
+		public CollectorTesterDSL1&lt;T, A, R&gt; expectingNull() {
+<span class="nc" id="L248">			return expecting(TestSuite.DSL.nullValue());</span>
+		}
+
+		@Override
+		public CollectorTester&lt;T, A, R&gt; build() {
+<span class="fc bfc" id="L253" title="All 2 branches covered.">			return new CollectorTester&lt;T, A, R&gt;(collectorToTest, inputs,</span>
+					results,
+					expectedCharacteristics == null ? TestSuite.DSL
+<span class="fc" id="L256">							.emptyIterable() : expectedCharacteristics);</span>
+		}
+
+	}
+
+	/**
+	 * Used by the framework.
+	 * 
+	 * @return the collectorToTest
+	 */
+	public Collector&lt;T, A, R&gt; getCollectorToTest() {
+<span class="fc" id="L267">		return collectorToTest;</span>
+	}
+
+	/**
+	 * Used by the framework.
+	 * 
+	 * @return the inputs
+	 */
+	public List&lt;Stream&lt;T&gt;&gt; getInputs() {
+<span class="fc" id="L276">		return Collections.unmodifiableList(inputs);</span>
+	}
+
+	/**
+	 * Used by the framework.
+	 * 
+	 * @return the results
+	 */
+	public List&lt;Matcher&lt;? super R&gt;&gt; getResults() {
+<span class="fc" id="L285">		return Collections.unmodifiableList(results);</span>
+	}
+
+	/**
+	 * Used by the framework.
+	 * 
+	 * @return the expectedCharacteristics
+	 */
+	public Matcher&lt;Iterable&lt;? extends Characteristics&gt;&gt; getExpectedCharacteristics() {
+<span class="fc" id="L294">		return expectedCharacteristics;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

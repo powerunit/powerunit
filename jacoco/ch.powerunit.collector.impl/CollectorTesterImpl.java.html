@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CollectorTesterImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.collector.impl</a> &gt; <span class="el_source">CollectorTesterImpl.java</span></div><h1>CollectorTesterImpl.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.collector.impl;
+
+import java.util.function.BiFunction;
+import java.util.stream.Collector;
+import java.util.stream.Stream;
+import java.util.stream.Collector.Characteristics;
+import java.util.stream.Stream.Builder;
+
+import org.hamcrest.Matcher;
+import org.hamcrest.StringDescription;
+
+import ch.powerunit.Parameter;
+import ch.powerunit.Parameters;
+import ch.powerunit.Test;
+import ch.powerunit.TestDelegator;
+import ch.powerunit.TestSuite;
+import ch.powerunit.collector.CollectorTester;
+
+/**
+ * @author borettim
+ *
+ */
+@TestDelegator
+<span class="fc" id="L43">public class CollectorTesterImpl&lt;T, A, R&gt; implements TestSuite {</span>
+	@Parameters
+	public static &lt;T, A, R&gt; Stream&lt;Object[]&gt; getDatas(
+			CollectorTester&lt;T, A, R&gt; input) {
+<span class="fc" id="L47">		StringDescription sdChar = new StringDescription();</span>
+<span class="fc" id="L48">		input.getExpectedCharacteristics().describeTo(sdChar);</span>
+<span class="fc" id="L49">		Builder&lt;Object[]&gt; builder = Stream.builder();</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		for (int i = 0; i &lt; input.getInputs().size(); i++) {</span>
+<span class="fc" id="L51">			StringDescription sd = new StringDescription();</span>
+<span class="fc" id="L52">			input.getResults().get(i).describeTo(sd);</span>
+<span class="fc" id="L53">			builder.add(new Object[] {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">					input.getCollectorToTest(),</span>
+<span class="fc" id="L55">					i == 0,</span>
+<span class="fc" id="L56">					input.getInputs().get(i),</span>
+<span class="fc" id="L57">					input.getResults().get(i),</span>
+<span class="fc" id="L58">					sd.toString(),</span>
+<span class="fc" id="L59">					input.getExpectedCharacteristics(),</span>
+<span class="fc" id="L60">					sdChar.toString(),</span>
+					(BiFunction&lt;String, Object[], Boolean&gt;) CollectorTesterImpl::filter });
+		}
+<span class="fc" id="L63">		return builder.build();</span>
+	}
+
+	@Parameter(0)
+	public Collector&lt;T, A, R&gt; underTest;
+
+	@Parameter(1)
+	public boolean generalTest;
+
+	@Parameter(2)
+	public Stream&lt;T&gt; input;
+
+	@Parameter(3)
+	public Matcher&lt;R&gt; expecting;
+
+	@Parameter(4)
+	public String expectingDescription;
+
+	@Parameter(5)
+	public Matcher&lt;Iterable&lt;? extends Characteristics&gt;&gt; expectingCharacteristics;
+
+	@Parameter(6)
+	public String expectingCharacteristicsDescription;
+
+	@Parameter(value = 7, filter = true)
+	public BiFunction&lt;String, Object[], Boolean&gt; filter;
+
+	private static boolean filter(String methodName, Object parameter[]) {
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (!(Boolean) parameter[1]</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">				&amp;&amp; (methodName.equals(&quot;testAccumulatorIsNotNull&quot;)</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">						|| methodName.equals(&quot;testCombinerIsNotNull&quot;)</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">						|| methodName.equals(&quot;testFinisherIsNotNull&quot;)</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">						|| methodName.equals(&quot;testSupplierIsNotNull&quot;) || methodName</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">							.equals(&quot;testCharacteristicsIsNotNull&quot;))) {</span>
+<span class="fc" id="L97">			return false;</span>
+		}
+<span class="fc" id="L99">		return true;</span>
+	}
+
+	@Test(name = &quot;Validate that accumulator() is not null for `%1$s`&quot;)
+	public void testAccumulatorIsNotNull() {
+<span class="fc" id="L104">		assertThat(underTest.accumulator()).isNotNull();</span>
+<span class="fc" id="L105">	}</span>
+
+	@Test(name = &quot;Validate that combiner() is not null for `%1$s`&quot;)
+	public void testCombinerIsNotNull() {
+<span class="fc" id="L109">		assertThat(underTest.combiner()).isNotNull();</span>
+<span class="fc" id="L110">	}</span>
+
+	@Test(name = &quot;Validate that finisher() is not null for `%1$s`&quot;)
+	public void testFinisherIsNotNull() {
+<span class="fc" id="L114">		assertThat(underTest.finisher()).isNotNull();</span>
+<span class="fc" id="L115">	}</span>
+
+	@Test(name = &quot;Validate that supplier() is not null for `%1$s`&quot;)
+	public void testSupplierIsNotNull() {
+<span class="fc" id="L119">		assertThat(underTest.supplier()).isNotNull();</span>
+<span class="fc" id="L120">	}</span>
+
+	@Test(name = &quot;Validate that characteristics() is not null for `%1$s`&quot;)
+	public void testCharacteristicsIsNotNull() {
+<span class="fc" id="L124">		assertThat(underTest.characteristics()).isNotNull();</span>
+<span class="fc" id="L125">	}</span>
+
+	@Test(name = &quot;Validate that characteristics() is %7$s&quot;)
+	public void testCharacteristicsIsASetOfValue() {
+<span class="fc" id="L129">		assertThat(underTest.characteristics()).is(expectingCharacteristics);</span>
+<span class="fc" id="L130">	}</span>
+
+	@Test(name = &quot;Validate that the stream `%3$s` with the collector under test result matches %5$s for `%1$s`&quot;)
+	public void testValidateFunction() {
+<span class="fc" id="L134">		assertThat(input.collect(underTest)).is(expecting);</span>
+<span class="fc" id="L135">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

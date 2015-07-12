@@ -1415,7 +1415,7 @@ interface HamcrestMatchers {
      * @return the matcher
      */
     default &lt;E&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;? extends E&gt;&gt; emptyIterable() {
-<span class="nc" id="L1418">        return org.hamcrest.collection.IsEmptyIterable.&lt;E&gt; emptyIterable();</span>
+<span class="fc" id="L1418">        return org.hamcrest.collection.IsEmptyIterable.&lt;E&gt; emptyIterable();</span>
     }
 
     /**
@@ -1571,8 +1571,8 @@ interface HamcrestMatchers {
      */
     default &lt;T&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;? extends T&gt;&gt; containsInAnyOrder(
             T... items) {
-<span class="nc" id="L1574">        return org.hamcrest.collection.IsIterableContainingInAnyOrder</span>
-<span class="nc" id="L1575">                .&lt;T&gt; containsInAnyOrder(items);</span>
+<span class="fc" id="L1574">        return org.hamcrest.collection.IsIterableContainingInAnyOrder</span>
+<span class="fc" id="L1575">                .&lt;T&gt; containsInAnyOrder(items);</span>
     }
 
     /**
@@ -1681,8 +1681,8 @@ interface HamcrestMatchers {
      */
     default &lt;E&gt; org.hamcrest.Matcher&lt;java.lang.Iterable&lt;E&gt;&gt; iterableWithSize(
             int size) {
-<span class="nc" id="L1684">        return org.hamcrest.collection.IsIterableWithSize</span>
-<span class="nc" id="L1685">                .&lt;E&gt; iterableWithSize(size);</span>
+<span class="fc" id="L1684">        return org.hamcrest.collection.IsIterableWithSize</span>
+<span class="fc" id="L1685">                .&lt;E&gt; iterableWithSize(size);</span>
     }
 
     /**
