@@ -19,6 +19,12 @@
  */
 package ch.powerunit.rules;
 
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
+import javax.jws.Oneway;
+
 import ch.powerunit.Statement;
 import ch.powerunit.TestContext;
 import ch.powerunit.TestRule;
@@ -58,95 +64,191 @@ import ch.powerunit.exception.AssumptionError;
  */
 public interface TestListenerRule extends TestRule {
 
-    /**
-     * Method used at the start of the test.
-     * <p>
-     * Default implementation is to do nothing.
-     * 
-     * @param context
-     *            the test context
-     */
-    default void onStart(TestContext<Object> context) {
-        // Do nothing as default
-    }
+	/**
+	 * Method used at the start of the test.
+	 * <p>
+	 * Default implementation is to do nothing.
+	 * 
+	 * @param context
+	 *            the test context
+	 */
+	default void onStart(TestContext<Object> context) {
+		// Do nothing as default
+	}
 
-    /**
-     * Method used when a failure happened.
-     * <p>
-     * Default implementation is to do nothing.
-     * 
-     * @param context
-     *            the test context
-     * @param af
-     *            the failure
-     */
-    default void onFailure(TestContext<Object> context, AssertionError af) {
-        // Do nothing as default
-    }
+	/**
+	 * Method used when a failure happened.
+	 * <p>
+	 * Default implementation is to do nothing.
+	 * 
+	 * @param context
+	 *            the test context
+	 * @param af
+	 *            the failure
+	 */
+	default void onFailure(TestContext<Object> context, AssertionError af) {
+		// Do nothing as default
+	}
 
-    /**
-     * Method used when an error happened.
-     * <p>
-     * Default implementation is to do nothing.
-     * 
-     * @param context
-     *            the test context
-     * @param error
-     *            the error
-     */
-    default void onError(TestContext<Object> context, Throwable error) {
-        // Do nothing as default
-    }
+	/**
+	 * Method used when an error happened.
+	 * <p>
+	 * Default implementation is to do nothing.
+	 * 
+	 * @param context
+	 *            the test context
+	 * @param error
+	 *            the error
+	 */
+	default void onError(TestContext<Object> context, Throwable error) {
+		// Do nothing as default
+	}
 
-    /**
-     * Method used when an assumption error happened.
-     * <p>
-     * Default implementation is to do nothing.
-     * 
-     * @param context
-     *            the test context
-     * @param error
-     *            the assumption error
-     */
-    default void onAssumptionSkip(TestContext<Object> context,
-            AssumptionError error) {
-        // Do nothing as default
-    }
+	/**
+	 * Method used when an assumption error happened.
+	 * <p>
+	 * Default implementation is to do nothing.
+	 * 
+	 * @param context
+	 *            the test context
+	 * @param error
+	 *            the assumption error
+	 */
+	default void onAssumptionSkip(TestContext<Object> context,
+			AssumptionError error) {
+		// Do nothing as default
+	}
 
-    /**
-     * Method used at the end of the test.
-     * <p>
-     * Default implementation is to do nothing.
-     * 
-     * @param context
-     *            the test context
-     */
-    default void onEnd(TestContext<Object> context) {
-        // Do nothing as default
-    }
+	/**
+	 * Method used at the end of the test.
+	 * <p>
+	 * Default implementation is to do nothing.
+	 * 
+	 * @param context
+	 *            the test context
+	 */
+	default void onEnd(TestContext<Object> context) {
+		// Do nothing as default
+	}
 
-    @Override
-    default Statement<TestContext<Object>, Throwable> computeStatement(
-            Statement<TestContext<Object>, Throwable> inner) {
-        return (p) -> {
-            try {
-                onStart(p);
-                inner.run(p);
-            } catch (AssertionError af) {
-                onFailure(p, af);
-                throw af;
-            } catch (InternalError ie) {
-                onError(p, ie);
-                throw ie;
-            } catch (AssumptionError ie) {
-                onAssumptionSkip(p, ie);
-                throw ie;
-            } catch (Throwable t) {
-                onError(p, t);
-                throw t;
-            } finally {
-                onEnd(p);
-            }
-        };
-    }
+	@Override
+	default Statement<TestContext<Object>, Throwable> computeStatement(
+			Statement<TestContext<Object>, Throwable> inner) {
+		return (p) -> {
+			try {
+				onStart(p);
+				inner.run(p);
+			} catch (AssertionError af) {
+				onFailure(p, af);
+				throw af;
+			} catch (InternalError ie) {
+				onError(p, ie);
+				throw ie;
+			} catch (AssumptionError ie) {
+				onAssumptionSkip(p, ie);
+				throw ie;
+			} catch (Throwable t) {
+				onError(p, t);
+				throw t;
+			} finally {
+				onEnd(p);
+			}
+		};
+	}
+
+	/**
+	 * Build a {@link TestListenerRule} based on the various method.
+	 * 
+	 * @param onStart
+	 *            {@link #onStart(TestContext) the action to be done before the
+	 *            test start}. If null, nothing is done.
+	 * @param onEnd
+	 *            {@link #onEnd(TestContext) the action to be done after the
+	 *            test end}. If null, nothing is done.
+	 * @param onFailure
+	 *            {@link #onFailure(TestContext, AssertionError) the action to
+	 *            be done in case of failure}. If null, nothing is done.
+	 * @param onError
+	 *            {@link #onError(TestContext, Throwable) the action to be done
+	 *            in case of error}. If null, nothing is done.
+	 * @param onAssumptionSkip
+	 *            {@link #onAssumptionSkip(TestContext, AssumptionError) the
+	 *            action to be done in case of assumption skipped}. If null
+	 *            nothing is done.
+	 * @return the Test Rule.
+	 * @since 0.4.0
+	 */
+	static TestListenerRule of(Consumer<TestContext<Object>> onStart,
+			Consumer<TestContext<Object>> onEnd,
+			BiConsumer<TestContext<Object>, AssertionError> onFailure,
+			BiConsumer<TestContext<Object>, Throwable> onError,
+			BiConsumer<TestContext<Object>, AssumptionError> onAssumptionSkip) {
+		return new TestListenerRule() {
+
+			@Override
+			public void onStart(TestContext<Object> context) {
+				if (onStart != null) {
+					onStart.accept(context);
+				}
+			}
+
+			@Override
+			public void onFailure(TestContext<Object> context, AssertionError af) {
+				if (onFailure != null) {
+					onFailure.accept(context, af);
+				}
+			}
+
+			@Override
+			public void onError(TestContext<Object> context, Throwable error) {
+				if (onError != null) {
+					onError.accept(context, error);
+				}
+			}
+
+			@Override
+			public void onAssumptionSkip(TestContext<Object> context,
+					AssumptionError error) {
+				if (onAssumptionSkip != null) {
+					onAssumptionSkip.accept(context, error);
+				}
+			}
+
+			@Override
+			public void onEnd(TestContext<Object> context) {
+				if (onEnd != null) {
+					onEnd.accept(context);
+				}
+			}
+
+		};
+	}
+
+	/**
+	 * Build a {@link TestListenerRule} with only an action at start.
+	 * 
+	 * @param onStart
+	 *            {@link #onStart(TestContext) the action to be done before the
+	 *            test start}.
+	 * @return the Test Rule.
+	 * @since 0.4.0
+	 */
+	static TestListenerRule onStart(Consumer<TestContext<Object>> onStart) {
+		return of(Objects.requireNonNull(onStart, "onStart can't be null"),
+				null, null, null, null);
+	}
+
+	/**
+	 * Build a {@link TestListenerRule} with only an action at end.
+	 * 
+	 * @param onEnd
+	 *            {@link #onEnd(TestContext) the action to be done after the
+	 *            test end}.
+	 * @return the Test Rule.
+	 * @since 0.4.0
+	 */
+	static TestListenerRule onEnd(Consumer<TestContext<Object>> onEnd) {
+		return of(null, Objects.requireNonNull(onEnd, "onEnd can't be null"),
+				null, null, null);
+	}
 }

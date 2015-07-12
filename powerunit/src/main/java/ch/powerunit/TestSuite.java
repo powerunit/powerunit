@@ -21,17 +21,21 @@ package ch.powerunit;
 
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import org.hamcrest.Matcher;
 
+import ch.powerunit.exception.AssumptionError;
 import ch.powerunit.helpers.StreamParametersMapFunction;
 import ch.powerunit.rules.SystemPropertiesRule;
 import ch.powerunit.rules.SystemStreamRule;
 import ch.powerunit.rules.TemporaryFolder;
 import ch.powerunit.rules.TemporaryFolder.TemporaryFolderBuilder;
+import ch.powerunit.rules.TestListenerRule;
 import ch.powerunit.rules.impl.TemporaryFolderImpl;
 
 /**
@@ -440,5 +444,66 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default SystemStreamRule replaceErrStream(PrintStream errReplacement) {
 		return SystemStreamRule.replaceErrStream(errReplacement);
+	}
+
+	/**
+	 * Build a {@link TestListenerRule} based on the various method.
+	 * 
+	 * @param onStart
+	 *            {@link TestListenerRule#onStart(TestContext) the action to be
+	 *            done before the test start}. If null, nothing is done.
+	 * @param onEnd
+	 *            {@link TestListenerRule#onEnd(TestContext) the action to be
+	 *            done after the test end}. If null, nothing is done.
+	 * @param onFailure
+	 *            {@link TestListenerRule#onFailure(TestContext, AssertionError)
+	 *            the action to be done in case of failure}. If null, nothing is
+	 *            done.
+	 * @param onError
+	 *            {@link TestListenerRule#onError(TestContext, Throwable) the
+	 *            action to be done in case of error}. If null, nothing is done.
+	 * @param onAssumptionSkip
+	 *            {@link TestListenerRule#onAssumptionSkip(TestContext, AssumptionError)
+	 *            the action to be done in case of assumption skipped}. If null
+	 *            nothing is done.
+	 * @return the Test Rule.
+	 * @since 0.4.0
+	 */
+	default TestListenerRule testListenerRuleOf(
+			Consumer<TestContext<Object>> onStart,
+			Consumer<TestContext<Object>> onEnd,
+			BiConsumer<TestContext<Object>, AssertionError> onFailure,
+			BiConsumer<TestContext<Object>, Throwable> onError,
+			BiConsumer<TestContext<Object>, AssumptionError> onAssumptionSkip) {
+		return TestListenerRule.of(onStart, onEnd, onFailure, onError,
+				onAssumptionSkip);
+	}
+
+	/**
+	 * Build a {@link TestListenerRule} with only an action at start.
+	 * 
+	 * @param onStart
+	 *            {@link TestListenerRule#onStart(TestContext) the action to be
+	 *            done before the test start}.
+	 * @return the Test Rule.
+	 * @since 0.4.0
+	 */
+	default TestListenerRule testListenerRuleOnStart(
+			Consumer<TestContext<Object>> onStart) {
+		return TestListenerRule.onStart(onStart);
+	}
+
+	/**
+	 * Build a {@link TestListenerRule} with only an action at end.
+	 * 
+	 * @param onEnd
+	 *            {@link TestListenerRule#onEnd(TestContext) the action to be
+	 *            done after the test end}.
+	 * @return the Test Rule.
+	 * @since 0.4.0
+	 */
+	default TestListenerRule testListenerRuleOnEnd(
+			Consumer<TestContext<Object>> onEnd) {
+		return TestListenerRule.onEnd(onEnd);
 	}
 }
