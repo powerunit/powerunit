@@ -23,11 +23,14 @@ import java.util.Comparator;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Pattern;
+import java.util.stream.Collector;
 
 import org.hamcrest.Matcher;
 
 import ch.powerunit.bifunction.BiFunctionTester;
 import ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL;
+import ch.powerunit.collector.CollectorTester;
+import ch.powerunit.collector.lang.CollectorTesterDSL0;
 import ch.powerunit.comparator.ComparatorTester;
 import ch.powerunit.comparator.lang.ComparatorTesterDSLStart;
 import ch.powerunit.function.FunctionTester;
@@ -179,5 +182,62 @@ interface TestFrameworkSupport {
 	 */
 	default PatternTester0 testerOfPattern(Pattern pattern) {
 		return PatternTester.of(pattern);
+	}
+
+	/**
+	 * Return a builder to create a tester of {@link java.util.stream.Collector
+	 * Collector}.
+	 * <p>
+	 * <b>{@link ch.powerunit.collector.CollectorTester The documentation of the
+	 * tester for the exact that are applied.}</b>
+	 * 
+	 * @param collectorToTest
+	 *            the {@link java.util.stream.Collector Collector} to be tested.
+	 * @param <T>
+	 *            the input type of the {@link java.util.stream.Collector
+	 *            Collector} .
+	 * 
+	 * @param <R>
+	 *            the return type of the {@link java.util.stream.Collector
+	 *            Collector}.
+	 * @return {@link CollectorTesterDSL0 the DSL to build the tester}
+	 * @since 0.4.0
+	 * @see #testerOfCollector(Class, Class, Collector)
+	 */
+	default <T, R> CollectorTesterDSL0<T, ?, R> testerOfCollector(
+			Collector<T, ?, R> collectorToTest) {
+		return CollectorTester.of(collectorToTest);
+	}
+
+	/**
+	 * Return a builder to create a tester of {@link java.util.stream.Collector
+	 * Collector}.
+	 * <p>
+	 * <b>{@link ch.powerunit.collector.CollectorTester The documentation of the
+	 * tester for the exact that are applied.}</b>
+	 * 
+	 * @param inputClass
+	 *            the class of the input of the
+	 *            {@link java.util.stream.Collector Collector}.
+	 * @param outputClass
+	 *            the class of the output of the
+	 *            {@link java.util.stream.Collector Collector}.
+	 * @param collectorToTest
+	 *            the {@link java.util.stream.Collector Collector} to be tested.
+	 * @param <T>
+	 *            the input type of the {@link java.util.stream.Collector
+	 *            Collector}.
+	 * 
+	 * @param <R>
+	 *            the return type of the {@link java.util.stream.Collector
+	 *            Collector}.
+	 * @return {@link CollectorTesterDSL0 the DSL to build the tester}
+	 * @since 0.4.0
+	 * @see #testerOfCollector(Collector)
+	 */
+	default <T, R> CollectorTesterDSL0<T, ?, R> testerOfCollector(
+			Class<T> inputClass, Class<T> outputClass,
+			Collector<T, ?, R> collectorToTest) {
+		return CollectorTester.of(collectorToTest);
 	}
 }
