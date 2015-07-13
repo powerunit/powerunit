@@ -21,17 +21,21 @@ package ch.powerunit;
 
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import org.hamcrest.Matcher;
 
+import ch.powerunit.exception.AssumptionError;
 import ch.powerunit.helpers.StreamParametersMapFunction;
 import ch.powerunit.rules.SystemPropertiesRule;
 import ch.powerunit.rules.SystemStreamRule;
 import ch.powerunit.rules.TemporaryFolder;
 import ch.powerunit.rules.TemporaryFolder.TemporaryFolderBuilder;
+import ch.powerunit.rules.TestListenerRule;
 import ch.powerunit.rules.impl.TemporaryFolderImpl;
 
 /**
@@ -76,7 +80,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * {@link Parameters &amp;#64;Parameters} annotated method, has this method must
 	 * be static.
 	 */
-<span class="fc" id="L79">	static TestSuite DSL = new TestSuite() {</span>
+<span class="fc" id="L83">	static TestSuite DSL = new TestSuite() {</span>
 	};
 
 	/**
@@ -99,8 +103,8 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule before(Runnable... befores) {
-<span class="fc" id="L102">		return Arrays.stream(befores).map(TestRule::before)</span>
-<span class="pc" id="L103">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
+<span class="fc" id="L106">		return Arrays.stream(befores).map(TestRule::before)</span>
+<span class="pc" id="L107">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
 	}
 
 	/**
@@ -123,8 +127,8 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule after(Runnable... afters) {
-<span class="fc" id="L126">		return Arrays.stream(afters).map(TestRule::after)</span>
-<span class="pc" id="L127">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
+<span class="fc" id="L130">		return Arrays.stream(afters).map(TestRule::after)</span>
+<span class="pc" id="L131">				.reduce((prev, next) -&gt; prev.around(next)).get();</span>
 	}
 
 	/**
@@ -136,7 +140,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule mockitoRule() {
-<span class="fc" id="L139">		return TestRule.mockitoRule();</span>
+<span class="fc" id="L143">		return TestRule.mockitoRule();</span>
 	}
 
 	/**
@@ -163,7 +167,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TemporaryFolder temporaryFolder() {
-<span class="fc" id="L166">		return temporaryFolderBuilder().build();</span>
+<span class="fc" id="L170">		return temporaryFolderBuilder().build();</span>
 	}
 
 	/**
@@ -193,7 +197,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TemporaryFolderBuilder temporaryFolderBuilder() {
-<span class="fc" id="L196">		return new TemporaryFolderImpl.TemporaryFolderBuilderImpl();</span>
+<span class="fc" id="L200">		return new TemporaryFolderImpl.TemporaryFolderBuilderImpl();</span>
 	}
 
 	/**
@@ -205,7 +209,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule systemPropertiesRule(String... propertiesName) {
-<span class="fc" id="L208">		return new SystemPropertiesRule(propertiesName);</span>
+<span class="fc" id="L212">		return new SystemPropertiesRule(propertiesName);</span>
 	}
 
 	/**
@@ -220,7 +224,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default TestRule systemProperty(String propertyName,
 			Supplier&lt;String&gt; propertyValue) {
-<span class="nc" id="L223">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
+<span class="nc" id="L227">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
 				propertyName, propertyValue);
 	}
 
@@ -235,7 +239,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule systemProperty(String propertyName, String propertyValue) {
-<span class="fc" id="L238">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
+<span class="fc" id="L242">		return SystemPropertiesRule.setSystemPropertyBeforeTestAndRestoreAfter(</span>
 				propertyName, propertyValue);
 	}
 
@@ -256,7 +260,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default &lt;T, R&gt; StreamParametersMapFunction&lt;T&gt; parametersMap(int idx,
 			Function&lt;T, R&gt; mapFunction) {
-<span class="nc" id="L259">		return StreamParametersMapFunction.map(idx, mapFunction);</span>
+<span class="nc" id="L263">		return StreamParametersMapFunction.map(idx, mapFunction);</span>
 	}
 
 	/**
@@ -297,7 +301,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default StreamParametersMapFunction&lt;String&gt; stringToParameterMap(
 			Class&lt;?&gt; testClass) {
-<span class="fc" id="L300">		return StreamParametersMapFunction.stringToParameterMap(testClass);</span>
+<span class="fc" id="L304">		return StreamParametersMapFunction.stringToParameterMap(testClass);</span>
 	}
 
 	/**
@@ -312,7 +316,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 *            The object type to be added.
 	 */
 	default &lt;T&gt; Function&lt;Object[], Object[]&gt; addFieldToEachEntry(T field) {
-<span class="fc" id="L315">		return StreamParametersMapFunction.addFieldToEachEntry(field);</span>
+<span class="fc" id="L319">		return StreamParametersMapFunction.addFieldToEachEntry(field);</span>
 	}
 
 	/**
@@ -325,7 +329,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default Predicate&lt;Object[]&gt; parametersFilterUsingMatcher(
 			Matcher&lt;Object[]&gt; matcher) {
-<span class="fc" id="L328">		return matcherPredicate(matcher);</span>
+<span class="fc" id="L332">		return matcherPredicate(matcher);</span>
 	}
 
 	/**
@@ -338,7 +342,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 *            The target object type
 	 */
 	default &lt;T&gt; Predicate&lt;T&gt; matcherPredicate(Matcher&lt;T&gt; matcher) {
-<span class="fc" id="L341">		return matcher::matches;</span>
+<span class="fc" id="L345">		return matcher::matches;</span>
 	}
 
 	/**
@@ -352,7 +356,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @since 0.4.0
 	 */
 	default SystemStreamRule disableBothStreams() {
-<span class="nc" id="L355">		return SystemStreamRule.disableBothStreams();</span>
+<span class="nc" id="L359">		return SystemStreamRule.disableBothStreams();</span>
 	}
 
 	/**
@@ -374,7 +378,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 */
 	default SystemStreamRule replaceBothStream(PrintStream outReplacement,
 			PrintStream errRemplacement) {
-<span class="fc" id="L377">		return SystemStreamRule.replaceBothStream(outReplacement,</span>
+<span class="fc" id="L381">		return SystemStreamRule.replaceBothStream(outReplacement,</span>
 				errRemplacement);
 	}
 
@@ -389,7 +393,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @since 0.4.0
 	 */
 	default SystemStreamRule disableOutStream() {
-<span class="nc" id="L392">		return SystemStreamRule.disableOutStream();</span>
+<span class="nc" id="L396">		return SystemStreamRule.disableOutStream();</span>
 	}
 
 	/**
@@ -403,7 +407,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @since 0.4.0
 	 */
 	default SystemStreamRule disableErrStream() {
-<span class="nc" id="L406">		return SystemStreamRule.disableErrStream();</span>
+<span class="nc" id="L410">		return SystemStreamRule.disableErrStream();</span>
 	}
 
 	/**
@@ -421,7 +425,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @since 0.4.0
 	 */
 	default SystemStreamRule replaceOutStream(PrintStream outReplacement) {
-<span class="nc" id="L424">		return SystemStreamRule.replaceOutStream(outReplacement);</span>
+<span class="nc" id="L428">		return SystemStreamRule.replaceOutStream(outReplacement);</span>
 	}
 
 	/**
@@ -439,7 +443,68 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @since 0.4.0
 	 */
 	default SystemStreamRule replaceErrStream(PrintStream errReplacement) {
-<span class="nc" id="L442">		return SystemStreamRule.replaceErrStream(errReplacement);</span>
+<span class="nc" id="L446">		return SystemStreamRule.replaceErrStream(errReplacement);</span>
+	}
+
+	/**
+	 * Build a {@link TestListenerRule} based on the various method.
+	 * 
+	 * @param onStart
+	 *            {@link TestListenerRule#onStart(TestContext) the action to be
+	 *            done before the test start}. If null, nothing is done.
+	 * @param onEnd
+	 *            {@link TestListenerRule#onEnd(TestContext) the action to be
+	 *            done after the test end}. If null, nothing is done.
+	 * @param onFailure
+	 *            {@link TestListenerRule#onFailure(TestContext, AssertionError)
+	 *            the action to be done in case of failure}. If null, nothing is
+	 *            done.
+	 * @param onError
+	 *            {@link TestListenerRule#onError(TestContext, Throwable) the
+	 *            action to be done in case of error}. If null, nothing is done.
+	 * @param onAssumptionSkip
+	 *            {@link TestListenerRule#onAssumptionSkip(TestContext, AssumptionError)
+	 *            the action to be done in case of assumption skipped}. If null
+	 *            nothing is done.
+	 * @return the Test Rule.
+	 * @since 0.4.0
+	 */
+	default TestListenerRule testListenerRuleOf(
+			Consumer&lt;TestContext&lt;Object&gt;&gt; onStart,
+			Consumer&lt;TestContext&lt;Object&gt;&gt; onEnd,
+			BiConsumer&lt;TestContext&lt;Object&gt;, AssertionError&gt; onFailure,
+			BiConsumer&lt;TestContext&lt;Object&gt;, Throwable&gt; onError,
+			BiConsumer&lt;TestContext&lt;Object&gt;, AssumptionError&gt; onAssumptionSkip) {
+<span class="nc" id="L478">		return TestListenerRule.of(onStart, onEnd, onFailure, onError,</span>
+				onAssumptionSkip);
+	}
+
+	/**
+	 * Build a {@link TestListenerRule} with only an action at start.
+	 * 
+	 * @param onStart
+	 *            {@link TestListenerRule#onStart(TestContext) the action to be
+	 *            done before the test start}.
+	 * @return the Test Rule.
+	 * @since 0.4.0
+	 */
+	default TestListenerRule testListenerRuleOnStart(
+			Consumer&lt;TestContext&lt;Object&gt;&gt; onStart) {
+<span class="nc" id="L493">		return TestListenerRule.onStart(onStart);</span>
+	}
+
+	/**
+	 * Build a {@link TestListenerRule} with only an action at end.
+	 * 
+	 * @param onEnd
+	 *            {@link TestListenerRule#onEnd(TestContext) the action to be
+	 *            done after the test end}.
+	 * @return the Test Rule.
+	 * @since 0.4.0
+	 */
+	default TestListenerRule testListenerRuleOnEnd(
+			Consumer&lt;TestContext&lt;Object&gt;&gt; onEnd) {
+<span class="nc" id="L507">		return TestListenerRule.onEnd(onEnd);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -26,9 +26,10 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers.optional,Op
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers.optional,OptionalPresentMatcher,0,10,0,0,0,3,0,2,0,2
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.rules,TestContextRule,0,10,0,0,0,4,0,3,0,3
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.rules,ExternalResource,0,8,0,0,0,6,0,4,0,4
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.rules,TestListenerRule,38,16,0,0,16,7,4,3,4,3
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.rules,TestListenerRule,67,16,0,0,19,7,7,3,7,3
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.rules,SystemStreamRule,38,6,0,0,5,1,5,1,5,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.rules,SystemPropertiesRule,0,101,0,6,0,19,0,10,0,7
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.rules,TestListenerRule.new TestListenerRule() {...},61,0,10,0,16,0,11,0,6,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.collector.impl,CollectorTesterImpl,0,173,0,16,0,38,0,18,0,10
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.comparator.impl,ComparatorTesterImpl,0,921,0,22,0,83,0,14,0,3
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.comparator.impl,SampleProvider,355,93,16,4,27,17,10,6,0,6
@@ -90,7 +91,7 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,Statement,17,56,0,0,
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,TestSuite.new TestSuite() {...},0,3,0,0,0,1,0,1,0,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,Assert,60,139,0,0,7,18,10,23,10,23
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,TestFrameworkSupport,12,12,0,0,4,4,4,4,4,4
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,TestSuite,28,62,0,0,7,15,9,13,9,13
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,TestSuite,41,62,0,0,10,15,12,13,12,13
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,HamcrestMatchers,290,47,0,0,116,18,85,16,85,16
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,TestRule,5,64,0,0,0,16,0,15,0,15
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,Matchers,10,133,0,0,2,17,2,17,2,17
