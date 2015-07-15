@@ -46,6 +46,7 @@
       	<item name="Tests framework" href="framework.html"/>
       	<item name="Tests support for hamcrest Matcher" href="matchertester.html"/>
       	<item name="Tests support for Comparator" href="comparatortester.html"/>
+      	<item name="Not fast failing test" href="multi.html"/>
       </item>
     </menu>
     <menu name="Linked projects">

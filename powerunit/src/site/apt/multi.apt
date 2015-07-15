@@ -1,0 +1,75 @@
+How to not fast failing a test
+
+* General idea
+
+ By default, all tests fail at the first error. It is a normal and perfectly adapted behavior of the majority
+ of unit test. In some case, it is required to not fail at the first assertion error, but to continue the execution
+ and produce an handful report at the end of the test. Of course, it will be the responsibility of the developer to
+ wrote a test that is safe to continue even in case of failure.
+ 
+ PowerUnit provides a out of the box support (starting version 0.4.0), to do so. Only expected failure (assertion on 
+ fail usage) are supported ; Unexpected error will still fail the build immediately. The annotation <<<@Test>>> 
+ support an attribute <<<fastFail>>> which is <<<true>>> by default ; When this attribute is set to <<<false>>> then
+ all assertions (<<<assertThatXXX>>>, <<<assertWhen>>> and <<<fail>>>) will not stop the test, but only return
+ <<<false>>>. Then, at the end of the test (but before the rule execution), all failures will be merged in one
+ single failure, describing all the failure.
+ 
+* Sample
+
++-----
+public class LaterFailureTest implements TestSuite {
+ @Test(fastFail = false)
+ public void test() {
+  assertThat(true).is(false);
+  assertWhen((p) -> {}).throwException(any(Throwable.class));
+  fail("demo");
+ }
+}
++-----
+
+ This test will provide a result like
+ 
++-----
+Multiple failures : 
+	Error : expecting <false> but was <true>
+	Error : An exception was expected, but none was thrown
+	Error : demo
+
+Original Stack Traces
+	expecting <false> but was <true>
+		ch.powerunit.impl.AssertThatObjectImpl.is(AssertThatObjectImpl.java:63)
+		...
+	An exception was expected, but none was thrown
+		ch.powerunit.impl.AssertThatExceptionImpl.throwException(AssertThatExceptionImpl.java:64)
+		...
+	demo
+		ch.powerunit.Assert.fail(Assert.java:578)
+		...
+
+ch.powerunit.impl.TestContextImpl.fail(TestContextImpl.java:115)
+ch.powerunit.impl.DefaultPowerUnitRunnerImpl.lambda$null$104(DefaultPowerUnitRunnerImpl.java:505)
+ch.powerunit.impl.DefaultPowerUnitRunnerImpl$$Lambda$38/665188480.run(Unknown Source)
+ch.powerunit.impl.DefaultPowerUnitRunnerImpl.lambda$runOne$73(DefaultPowerUnitRunnerImpl.java:226)
+ch.powerunit.impl.DefaultPowerUnitRunnerImpl$$Lambda$42/520022247.accept(Unknown Source)
+java.util.HashMap$EntrySet.forEach(HashMap.java:1035)
+ch.powerunit.impl.DefaultPowerUnitRunnerImpl.runOne(DefaultPowerUnitRunnerImpl.java:210)
+ch.powerunit.impl.DefaultPowerUnitRunnerImpl.run(DefaultPowerUnitRunnerImpl.java:144)
+ch.powerunit.PowerUnitMainRunner.main(PowerUnitMainRunner.java:82)
+ch.powerunit.suite.Suites.main(Suites.java:73)
+
++-----
+
+* When to use this feature
+
+ As a general best practice when implementing test based on xUnit pattern, tests should focus on only one single
+ validation ; Matchers provide easy way to express a complex condition in a clear way in one single assertion in a
+ lot of case. In case it is to complex to wrote this matcher and it make sense to to the validation at once, this not 
+ fast fail approach may be adapted.
+ 
+ In some cases, for example when writing end to end testing of test integration a lot of system under test (which is
+ not a good unit testing, but it a complement to them), it may be interesting to gather at much as possible results
+ before failures. For example would be for instance a end to end test of a provisioning flow. In this case, as the
+ complete flow is under test, all expecting results must be validate in one single test. In this case, it would be
+ better to evaluate all the expected results, and then provide a report at the end as to test each results and fail
+ at the first (because the result will only say that result X was not good, but the status of others expectation
+ will be unknown, leading to rerunning test several time before having him right).
