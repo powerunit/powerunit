@@ -56,7 +56,6 @@ ch.powerunit.impl.DefaultPowerUnitRunnerImpl.runOne(DefaultPowerUnitRunnerImpl.j
 ch.powerunit.impl.DefaultPowerUnitRunnerImpl.run(DefaultPowerUnitRunnerImpl.java:144)
 ch.powerunit.PowerUnitMainRunner.main(PowerUnitMainRunner.java:82)
 ch.powerunit.suite.Suites.main(Suites.java:73)
-
 +-----
 
 * When to use this feature

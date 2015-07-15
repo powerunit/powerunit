@@ -56,6 +56,57 @@ public @interface Test {
 	/**
 	 * Define if the test must fail at the first assertion/failure in error
 	 * (default) or only at the end (and accumulate all expected error).
+	 * <p>
+	 * The goal is here to change the fail assertion and failure work ; When set
+	 * to <code>false</code>. Assertion/failure will not stop the test, but
+	 * return false. It is up to the test itself to define what to be done based
+	 * on this return value (continue, return, etc). At the end of the test, if
+	 * any failure happened, a general failure will be produced, with detail
+	 * regarding all failures. <br>
+	 * For example, a test may look like :
+	 * 
+	 * <pre>
+	 * public class LaterFailureTest implements TestSuite {
+	 * 	&#064;Test(fastFail = false)
+	 * 	public void test() {
+	 * 		assertThat(true).is(false);
+	 * 		assertWhen((p) -&gt; {
+	 * 		}).throwException(any(Throwable.class));
+	 * 		fail(&quot;demo&quot;);
+	 * 	}
+	 * }
+	 * </pre>
+	 * 
+	 * And the result like:
+	 * 
+	 * <pre>
+	 * Multiple failures : 
+	 * 	Error : expecting &lt;false&gt; but was &lt;true&gt;
+	 * 	Error : An exception was expected, but none was thrown
+	 * 	Error : demo
+	 * 
+	 * Original Stack Traces
+	 * 	expecting &lt;false&gt; but was &lt;true&gt;
+	 * 		ch.powerunit.impl.AssertThatObjectImpl.is(AssertThatObjectImpl.java:63)
+	 * 		...
+	 * 	An exception was expected, but none was thrown
+	 * 		ch.powerunit.impl.AssertThatExceptionImpl.throwException(AssertThatExceptionImpl.java:64)
+	 * 		...
+	 * 	demo
+	 * 		ch.powerunit.Assert.fail(Assert.java:578)
+	 * 		...
+	 * 
+	 * ch.powerunit.impl.TestContextImpl.fail(TestContextImpl.java:115)
+	 * ch.powerunit.impl.DefaultPowerUnitRunnerImpl.lambda$null$104(DefaultPowerUnitRunnerImpl.java:505)
+	 * ch.powerunit.impl.DefaultPowerUnitRunnerImpl$$Lambda$38/665188480.run(Unknown Source)
+	 * ch.powerunit.impl.DefaultPowerUnitRunnerImpl.lambda$runOne$73(DefaultPowerUnitRunnerImpl.java:226)
+	 * ch.powerunit.impl.DefaultPowerUnitRunnerImpl$$Lambda$42/520022247.accept(Unknown Source)
+	 * java.util.HashMap$EntrySet.forEach(HashMap.java:1035)
+	 * ch.powerunit.impl.DefaultPowerUnitRunnerImpl.runOne(DefaultPowerUnitRunnerImpl.java:210)
+	 * ch.powerunit.impl.DefaultPowerUnitRunnerImpl.run(DefaultPowerUnitRunnerImpl.java:144)
+	 * ch.powerunit.PowerUnitMainRunner.main(PowerUnitMainRunner.java:82)
+	 * ch.powerunit.suite.Suites.main(Suites.java:73)
+	 * </pre>
 	 * 
 	 * @return true by default.
 	 * @since 0.4.0
