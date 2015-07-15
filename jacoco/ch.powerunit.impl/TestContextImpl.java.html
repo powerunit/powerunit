@@ -19,61 +19,100 @@
  */
 package ch.powerunit.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.powerunit.TestContext;
 
 public final class TestContextImpl&lt;T&gt; implements TestContext&lt;T&gt; {
 
-    public TestContextImpl(T testObject, String setName, String localName,
-<span class="fc" id="L27">            String parameterName, String categories) {</span>
-<span class="fc" id="L28">        this.setName = setName;</span>
-<span class="fc" id="L29">        this.localName = localName;</span>
-<span class="fc" id="L30">        this.parameterName = parameterName;</span>
-<span class="fc" id="L31">        this.categories = categories;</span>
-<span class="fc" id="L32">        this.testObject = testObject;</span>
-<span class="fc" id="L33">    }</span>
+	public TestContextImpl(T testObject, String setName, String localName,
+<span class="fc" id="L30">			String parameterName, String categories) {</span>
+<span class="fc" id="L31">		this.setName = setName;</span>
+<span class="fc" id="L32">		this.localName = localName;</span>
+<span class="fc" id="L33">		this.parameterName = parameterName;</span>
+<span class="fc" id="L34">		this.categories = categories;</span>
+<span class="fc" id="L35">		this.testObject = testObject;</span>
+<span class="fc" id="L36">	}</span>
 
-    private final String setName;
+	private final String setName;
 
-    private final String localName;
+	private final String localName;
 
-    private final String parameterName;
+	private final String parameterName;
 
-    private final String categories;
+	private final String categories;
 
-    private final T testObject;
+	private final T testObject;
 
-    @Override
-    public String getFullTestName() {
-<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (parameterName == null) {</span>
-<span class="fc" id="L48">            return setName + &quot;:&quot; + localName;</span>
-        } else {
-<span class="fc" id="L50">            return setName + &quot;:&quot; + localName + &quot;[&quot; + parameterName + &quot;]&quot;;</span>
-        }
-    }
+	private boolean fastFail;
 
-    @Override
-    public String getSetName() {
-<span class="fc" id="L56">        return setName;</span>
-    }
+<span class="fc" id="L50">	private final List&lt;AssertionError&gt; errors = new ArrayList&lt;&gt;();</span>
 
-    @Override
-    public String getLocalTestName() {
-<span class="fc" id="L61">        return localName;</span>
-    }
+	@Override
+	public String getFullTestName() {
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		if (parameterName == null) {</span>
+<span class="fc" id="L55">			return setName + &quot;:&quot; + localName;</span>
+		} else {
+<span class="fc" id="L57">			return setName + &quot;:&quot; + localName + &quot;[&quot; + parameterName + &quot;]&quot;;</span>
+		}
+	}
 
-    @Override
-    public String getParameterName() {
-<span class="fc" id="L66">        return parameterName;</span>
-    }
+	@Override
+	public String getSetName() {
+<span class="fc" id="L63">		return setName;</span>
+	}
 
-    @Override
-    public String getTestCategories() {
-<span class="fc" id="L71">        return categories;</span>
-    }
+	@Override
+	public String getLocalTestName() {
+<span class="fc" id="L68">		return localName;</span>
+	}
 
-    @Override
-    public T getTestSuiteObject() {
-<span class="fc" id="L76">        return testObject;</span>
-    }
+	@Override
+	public String getParameterName() {
+<span class="fc" id="L73">		return parameterName;</span>
+	}
+
+	@Override
+	public String getTestCategories() {
+<span class="fc" id="L78">		return categories;</span>
+	}
+
+	@Override
+	public T getTestSuiteObject() {
+<span class="fc" id="L83">		return testObject;</span>
+	}
+
+	boolean isFastFail() {
+<span class="fc" id="L87">		return fastFail;</span>
+	}
+
+	void setFastFail(boolean fastFail) {
+<span class="fc" id="L91">		this.fastFail = fastFail;</span>
+<span class="fc" id="L92">	}</span>
+
+	void addAssertionError(AssertionError e) {
+<span class="fc" id="L95">		errors.add(e);</span>
+<span class="fc" id="L96">	}</span>
+
+	boolean hasError() {
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		return !errors.isEmpty();</span>
+	}
+
+	void fail() {
+<span class="fc" id="L103">		StringBuilder sb = new StringBuilder(&quot;Multiple failures : \n&quot;);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (AssertionError e : errors) {</span>
+<span class="fc" id="L105">			sb.append(&quot;\tError : &quot;).append(e.getMessage()).append(&quot;\n&quot;);</span>
+<span class="fc" id="L106">		}</span>
+<span class="fc" id="L107">		sb.append(&quot;\nOriginal Stack Traces\n&quot;);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		for (AssertionError e : errors) {</span>
+<span class="fc" id="L109">			sb.append(&quot;\t&quot;).append(e.getMessage()).append(&quot;\n&quot;);</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			for (StackTraceElement ste : e.getStackTrace()) {</span>
+<span class="fc" id="L111">				sb.append(&quot;\t\t&quot;).append(ste.toString()).append(&quot;\n&quot;);</span>
+			}
+<span class="fc" id="L113">		}</span>
+
+<span class="fc" id="L115">		throw new AssertionError(sb.toString());</span>
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -33,68 +33,98 @@ import org.hamcrest.Matchers;
  *            the object type.
  */
 public interface AssertThatObject&lt;T&gt; {
-	
-    /**
-     * Check that the object is matching the passed matcher.
-     * 
-     * @param matching
-     *            the matcher.
-     */
-    void is(Matcher&lt;? super T&gt; matching);
 
-    /**
-     * Check that the object is the passed one (shortcut to Matcher.equalTo).
-     * 
-     * @param compareTo
-     *            the value.
-     */
-    default void is(T compareTo) {
-<span class="fc" id="L52">        is(Matchers.equalTo(compareTo));</span>
-<span class="fc" id="L53">    }</span>
+	/**
+	 * Check that the object is matching the passed matcher.
+	 * 
+	 * @param matching
+	 *            the matcher.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	boolean is(Matcher&lt;? super T&gt; matching);
 
-    /**
-     * Check that the object is not the passed one.
-     * 
-     * @param compareTo
-     *            the value
-     */
-    default void isNot(T compareTo) {
-<span class="fc" id="L62">        isNot(Matchers.equalTo(compareTo));</span>
-<span class="fc" id="L63">    }</span>
+	/**
+	 * Check that the object is the passed one (shortcut to Matcher.equalTo).
+	 * 
+	 * @param compareTo
+	 *            the value.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean is(T compareTo) {
+<span class="fc" id="L60">		return is(Matchers.equalTo(compareTo));</span>
+	}
 
-    /**
-     * Check that the object is not matching the passed matcher.
-     * 
-     * @param matching
-     *            the matcher
-     */
-    default void isNot(Matcher&lt;T&gt; matching) {
-<span class="fc" id="L72">        is(Matchers.not(matching));</span>
-<span class="fc" id="L73">    }</span>
+	/**
+	 * Check that the object is not the passed one.
+	 * 
+	 * @param compareTo
+	 *            the value
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean isNot(T compareTo) {
+<span class="fc" id="L74">		return isNot(Matchers.equalTo(compareTo));</span>
+	}
 
-    /**
-     * Check that the object is null.
-     */
-    default void isNull() {
-<span class="fc" id="L79">        is(Matchers.nullValue());</span>
-<span class="fc" id="L80">    }</span>
+	/**
+	 * Check that the object is not matching the passed matcher.
+	 * 
+	 * @param matching
+	 *            the matcher
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean isNot(Matcher&lt;T&gt; matching) {
+<span class="fc" id="L88">		return is(Matchers.not(matching));</span>
+	}
 
-    /**
-     * Check that the object is not null.
-     */
-    default void isNotNull() {
-<span class="fc" id="L86">        is(Matchers.notNullValue());</span>
-<span class="fc" id="L87">    }</span>
+	/**
+	 * Check that the object is null.
+	 * 
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean isNull() {
+<span class="fc" id="L100">		return is(Matchers.nullValue());</span>
+	}
 
-    /**
-     * Check that the object is of a specific class (or subclasses).
-     * 
-     * @param clazz
-     *            the class
-     */
-    default void isA(Class&lt;? super T&gt; clazz) {
-<span class="fc" id="L96">        is(Matchers.isA(clazz));</span>
-<span class="fc" id="L97">    }</span>
+	/**
+	 * Check that the object is not null.
+	 * 
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean isNotNull() {
+<span class="fc" id="L112">		return is(Matchers.notNullValue());</span>
+	}
+
+	/**
+	 * Check that the object is of a specific class (or subclasses).
+	 * 
+	 * @param clazz
+	 *            the class
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean isA(Class&lt;? super T&gt; clazz) {
+<span class="fc" id="L126">		return is(Matchers.isA(clazz));</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

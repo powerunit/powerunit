@@ -35,68 +35,93 @@ import org.hamcrest.Matchers;
  * @see AssertThatObject assertion on object are also available on iterable.
  */
 public interface AssertThatIterable&lt;T&gt; extends AssertThatObject&lt;Iterable&lt;T&gt;&gt; {
-    /**
-     * Check the size of the iterable.
-     * 
-     * @param size
-     *            the expected size.
-     */
-    @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
-    default void hasSize(int size) {
-<span class="fc" id="L46">        is((Matcher) Matchers.hasSize(size));</span>
-<span class="fc" id="L47">    }</span>
+	/**
+	 * Check the size of the iterable.
+	 * 
+	 * @param size
+	 *            the expected size.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	@SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+	default boolean hasSize(int size) {
+<span class="fc" id="L50">		return is((Matcher) Matchers.hasSize(size));</span>
+	}
 
-    /**
-     * Check the size is not the one passed.
-     * 
-     * @param size
-     *            the not expected size.
-     */
-    @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
-    default void hasNotSize(int size) {
-<span class="fc" id="L57">        isNot((Matcher) Matchers.hasSize(size));</span>
-<span class="fc" id="L58">    }</span>
+	/**
+	 * Check the size is not the one passed.
+	 * 
+	 * @param size
+	 *            the not expected size.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	@SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+	default boolean hasNotSize(int size) {
+<span class="fc" id="L65">		return isNot((Matcher) Matchers.hasSize(size));</span>
+	}
 
-    /**
-     * Check that the iterable contains the items.
-     * 
-     * @param items
-     *            the expected items.
-     */
-    default void contains(@SuppressWarnings(&quot;unchecked&quot;) T... items) {
-<span class="fc" id="L67">        is(Matchers.contains(items));</span>
-<span class="fc" id="L68">    }</span>
+	/**
+	 * Check that the iterable contains the items.
+	 * 
+	 * @param items
+	 *            the expected items.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean contains(@SuppressWarnings(&quot;unchecked&quot;) T... items) {
+<span class="fc" id="L79">		return is(Matchers.contains(items));</span>
+	}
 
-    /**
-     * Check that the iterable contains the items.
-     * 
-     * @param items
-     *            the matcher for each item.
-     */
-    default void containsMatching(
-            @SuppressWarnings(&quot;unchecked&quot;) Matcher&lt;? super T&gt;... items) {
-<span class="fc" id="L78">        is(Matchers.contains(items));</span>
-<span class="fc" id="L79">    }</span>
+	/**
+	 * Check that the iterable contains the items.
+	 * 
+	 * @param items
+	 *            the matcher for each item.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean containsMatching(
+			@SuppressWarnings(&quot;unchecked&quot;) Matcher&lt;? super T&gt;... items) {
+<span class="fc" id="L94">		return is(Matchers.contains(items));</span>
+	}
 
-    /**
-     * Check that the iterable contains the items in any order.
-     * 
-     * @param items
-     *            the expected items.
-     */
-    default void containsInAnyOrder(@SuppressWarnings(&quot;unchecked&quot;) T... items) {
-<span class="fc" id="L88">        is(Matchers.containsInAnyOrder(items));</span>
-<span class="fc" id="L89">    }</span>
+	/**
+	 * Check that the iterable contains the items in any order.
+	 * 
+	 * @param items
+	 *            the expected items.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean containsInAnyOrder(
+			@SuppressWarnings(&quot;unchecked&quot;) T... items) {
+<span class="fc" id="L109">		return is(Matchers.containsInAnyOrder(items));</span>
+	}
 
-    /**
-     * Check that the iterable contains the items in any order.
-     * 
-     * @param items
-     *            the matcher for each item.
-     */
-    default void containsInAnyOrderMatching(
-            @SuppressWarnings(&quot;unchecked&quot;) Matcher&lt;? super T&gt;... items) {
-<span class="fc" id="L99">        is(Matchers.containsInAnyOrder(items));</span>
-<span class="fc" id="L100">    }</span>
+	/**
+	 * Check that the iterable contains the items in any order.
+	 * 
+	 * @param items
+	 *            the matcher for each item.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean containsInAnyOrderMatching(
+			@SuppressWarnings(&quot;unchecked&quot;) Matcher&lt;? super T&gt;... items) {
+<span class="fc" id="L124">		return is(Matchers.containsInAnyOrder(items));</span>
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -27,45 +27,54 @@ import ch.powerunit.TestSuite;
 import ch.powerunit.exception.AssumptionError;
 
 public class AssertThatExceptionImpl&lt;P, T extends Throwable&gt; implements
-        AssertThatException&lt;T&gt;, TestSuite {
+		AssertThatException&lt;T&gt;, TestSuite {
 
-    private final boolean assertion;
+	private final boolean assertion;
 
-    public AssertThatExceptionImpl(boolean assertion, Statement&lt;P, T&gt; runnable,
-<span class="fc" id="L35">            P param, String msg) {</span>
-<span class="fc" id="L36">        this.runnable = runnable;</span>
-<span class="fc" id="L37">        this.msg = msg;</span>
-<span class="fc" id="L38">        this.param = param;</span>
-<span class="fc" id="L39">        this.assertion = assertion;</span>
-<span class="fc" id="L40">    }</span>
+	public AssertThatExceptionImpl(boolean assertion, Statement&lt;P, T&gt; runnable,
+<span class="fc" id="L35">			P param, String msg) {</span>
+<span class="fc" id="L36">		this.runnable = runnable;</span>
+<span class="fc" id="L37">		this.msg = msg;</span>
+<span class="fc" id="L38">		this.param = param;</span>
+<span class="fc" id="L39">		this.assertion = assertion;</span>
+<span class="fc" id="L40">	}</span>
 
-    private final Statement&lt;P, T&gt; runnable;
+	private final Statement&lt;P, T&gt; runnable;
 
-    private final String msg;
+	private final String msg;
 
-    private final P param;
+	private final P param;
 
-    @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
-    @Override
-    public void throwException(Matcher&lt;T&gt; matching) {
-        try {
-<span class="fc" id="L52">            runnable.run(param);</span>
-<span class="fc" id="L53">        } catch (Throwable t) {// NOSONAR</span>
-            // As we really want all error
-<span class="fc bfc" id="L55" title="All 2 branches covered.">            if (assertion) {</span>
-<span class="fc" id="L56">                assertThat(msg, t).is((Matcher) matching);</span>
-            } else {
-<span class="fc" id="L58">                assumeThat(msg, t).is((Matcher) matching);</span>
-            }
-<span class="fc" id="L60">            return;</span>
-<span class="fc" id="L61">        }</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (assertion) {</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">            throw new AssertionError((msg == null ? &quot;&quot; : msg + &quot;\n&quot;)</span>
-                    + &quot;An exception was expected, but none was thrown&quot;);
-        } else {
-<span class="fc bfc" id="L66" title="All 2 branches covered.">            throw new AssumptionError((msg == null ? &quot;&quot; : msg + &quot;\n&quot;)</span>
-                    + &quot;An exception was expected, but none was thrown&quot;);
-        }
-    }
+	@SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+	@Override
+	public boolean throwException(Matcher&lt;T&gt; matching) {
+		try {
+<span class="fc" id="L52">			runnable.run(param);</span>
+<span class="fc" id="L53">		} catch (Throwable t) {// NOSONAR</span>
+			// As we really want all error
+<span class="fc bfc" id="L55" title="All 2 branches covered.">			if (assertion) {</span>
+<span class="fc" id="L56">				return assertThat(msg, t).is((Matcher) matching);</span>
+			} else {
+<span class="fc" id="L58">				return assumeThat(msg, t).is((Matcher) matching);</span>
+			}
+<span class="fc" id="L60">		}</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (assertion) {</span>
+			TestContextImpl&lt;Object&gt; ctx = DefaultPowerUnitRunnerImpl
+<span class="fc" id="L63">					.getCurrentContext();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">			AssertionError e = new AssertionError((msg == null ? &quot;&quot; : msg</span>
+					+ &quot;\n&quot;)
+					+ &quot;An exception was expected, but none was thrown&quot;);
+<span class="pc bpc" id="L67" title="1 of 4 branches missed.">			if (ctx == null || ctx.isFastFail()) {</span>
+<span class="fc" id="L68">				throw e;</span>
+			} else {
+<span class="fc" id="L70">				ctx.addAssertionError(e);</span>
+<span class="fc" id="L71">				return false;</span>
+			}
+
+		} else {
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			throw new AssumptionError((msg == null ? &quot;&quot; : msg + &quot;\n&quot;)</span>
+					+ &quot;An exception was expected, but none was thrown&quot;);
+		}
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

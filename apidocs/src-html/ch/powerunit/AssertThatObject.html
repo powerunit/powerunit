@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<html lang="fr">
 <head>
 <title>Source code</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
@@ -41,70 +41,100 @@
 <span class="sourceLineNo">033</span> *            the object type.<a name="line.33"></a>
 <span class="sourceLineNo">034</span> */<a name="line.34"></a>
 <span class="sourceLineNo">035</span>public interface AssertThatObject&lt;T&gt; {<a name="line.35"></a>
-<span class="sourceLineNo">036</span>        <a name="line.36"></a>
-<span class="sourceLineNo">037</span>    /**<a name="line.37"></a>
-<span class="sourceLineNo">038</span>     * Check that the object is matching the passed matcher.<a name="line.38"></a>
-<span class="sourceLineNo">039</span>     * <a name="line.39"></a>
-<span class="sourceLineNo">040</span>     * @param matching<a name="line.40"></a>
-<span class="sourceLineNo">041</span>     *            the matcher.<a name="line.41"></a>
-<span class="sourceLineNo">042</span>     */<a name="line.42"></a>
-<span class="sourceLineNo">043</span>    void is(Matcher&lt;? super T&gt; matching);<a name="line.43"></a>
-<span class="sourceLineNo">044</span><a name="line.44"></a>
-<span class="sourceLineNo">045</span>    /**<a name="line.45"></a>
-<span class="sourceLineNo">046</span>     * Check that the object is the passed one (shortcut to Matcher.equalTo).<a name="line.46"></a>
-<span class="sourceLineNo">047</span>     * <a name="line.47"></a>
-<span class="sourceLineNo">048</span>     * @param compareTo<a name="line.48"></a>
-<span class="sourceLineNo">049</span>     *            the value.<a name="line.49"></a>
-<span class="sourceLineNo">050</span>     */<a name="line.50"></a>
-<span class="sourceLineNo">051</span>    default void is(T compareTo) {<a name="line.51"></a>
-<span class="sourceLineNo">052</span>        is(Matchers.equalTo(compareTo));<a name="line.52"></a>
-<span class="sourceLineNo">053</span>    }<a name="line.53"></a>
-<span class="sourceLineNo">054</span><a name="line.54"></a>
-<span class="sourceLineNo">055</span>    /**<a name="line.55"></a>
-<span class="sourceLineNo">056</span>     * Check that the object is not the passed one.<a name="line.56"></a>
-<span class="sourceLineNo">057</span>     * <a name="line.57"></a>
-<span class="sourceLineNo">058</span>     * @param compareTo<a name="line.58"></a>
-<span class="sourceLineNo">059</span>     *            the value<a name="line.59"></a>
-<span class="sourceLineNo">060</span>     */<a name="line.60"></a>
-<span class="sourceLineNo">061</span>    default void isNot(T compareTo) {<a name="line.61"></a>
-<span class="sourceLineNo">062</span>        isNot(Matchers.equalTo(compareTo));<a name="line.62"></a>
-<span class="sourceLineNo">063</span>    }<a name="line.63"></a>
-<span class="sourceLineNo">064</span><a name="line.64"></a>
-<span class="sourceLineNo">065</span>    /**<a name="line.65"></a>
-<span class="sourceLineNo">066</span>     * Check that the object is not matching the passed matcher.<a name="line.66"></a>
-<span class="sourceLineNo">067</span>     * <a name="line.67"></a>
-<span class="sourceLineNo">068</span>     * @param matching<a name="line.68"></a>
-<span class="sourceLineNo">069</span>     *            the matcher<a name="line.69"></a>
-<span class="sourceLineNo">070</span>     */<a name="line.70"></a>
-<span class="sourceLineNo">071</span>    default void isNot(Matcher&lt;T&gt; matching) {<a name="line.71"></a>
-<span class="sourceLineNo">072</span>        is(Matchers.not(matching));<a name="line.72"></a>
-<span class="sourceLineNo">073</span>    }<a name="line.73"></a>
-<span class="sourceLineNo">074</span><a name="line.74"></a>
-<span class="sourceLineNo">075</span>    /**<a name="line.75"></a>
-<span class="sourceLineNo">076</span>     * Check that the object is null.<a name="line.76"></a>
-<span class="sourceLineNo">077</span>     */<a name="line.77"></a>
-<span class="sourceLineNo">078</span>    default void isNull() {<a name="line.78"></a>
-<span class="sourceLineNo">079</span>        is(Matchers.nullValue());<a name="line.79"></a>
-<span class="sourceLineNo">080</span>    }<a name="line.80"></a>
-<span class="sourceLineNo">081</span><a name="line.81"></a>
-<span class="sourceLineNo">082</span>    /**<a name="line.82"></a>
-<span class="sourceLineNo">083</span>     * Check that the object is not null.<a name="line.83"></a>
-<span class="sourceLineNo">084</span>     */<a name="line.84"></a>
-<span class="sourceLineNo">085</span>    default void isNotNull() {<a name="line.85"></a>
-<span class="sourceLineNo">086</span>        is(Matchers.notNullValue());<a name="line.86"></a>
-<span class="sourceLineNo">087</span>    }<a name="line.87"></a>
-<span class="sourceLineNo">088</span><a name="line.88"></a>
-<span class="sourceLineNo">089</span>    /**<a name="line.89"></a>
-<span class="sourceLineNo">090</span>     * Check that the object is of a specific class (or subclasses).<a name="line.90"></a>
-<span class="sourceLineNo">091</span>     * <a name="line.91"></a>
-<span class="sourceLineNo">092</span>     * @param clazz<a name="line.92"></a>
-<span class="sourceLineNo">093</span>     *            the class<a name="line.93"></a>
-<span class="sourceLineNo">094</span>     */<a name="line.94"></a>
-<span class="sourceLineNo">095</span>    default void isA(Class&lt;? super T&gt; clazz) {<a name="line.95"></a>
-<span class="sourceLineNo">096</span>        is(Matchers.isA(clazz));<a name="line.96"></a>
-<span class="sourceLineNo">097</span>    }<a name="line.97"></a>
-<span class="sourceLineNo">098</span><a name="line.98"></a>
-<span class="sourceLineNo">099</span>}<a name="line.99"></a>
+<span class="sourceLineNo">036</span><a name="line.36"></a>
+<span class="sourceLineNo">037</span>        /**<a name="line.37"></a>
+<span class="sourceLineNo">038</span>         * Check that the object is matching the passed matcher.<a name="line.38"></a>
+<span class="sourceLineNo">039</span>         * <a name="line.39"></a>
+<span class="sourceLineNo">040</span>         * @param matching<a name="line.40"></a>
+<span class="sourceLineNo">041</span>         *            the matcher.<a name="line.41"></a>
+<span class="sourceLineNo">042</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.42"></a>
+<span class="sourceLineNo">043</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.43"></a>
+<span class="sourceLineNo">044</span>         *         fail the test, else, return false and the test will be failed<a name="line.44"></a>
+<span class="sourceLineNo">045</span>         *         later.<a name="line.45"></a>
+<span class="sourceLineNo">046</span>         */<a name="line.46"></a>
+<span class="sourceLineNo">047</span>        boolean is(Matcher&lt;? super T&gt; matching);<a name="line.47"></a>
+<span class="sourceLineNo">048</span><a name="line.48"></a>
+<span class="sourceLineNo">049</span>        /**<a name="line.49"></a>
+<span class="sourceLineNo">050</span>         * Check that the object is the passed one (shortcut to Matcher.equalTo).<a name="line.50"></a>
+<span class="sourceLineNo">051</span>         * <a name="line.51"></a>
+<span class="sourceLineNo">052</span>         * @param compareTo<a name="line.52"></a>
+<span class="sourceLineNo">053</span>         *            the value.<a name="line.53"></a>
+<span class="sourceLineNo">054</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.54"></a>
+<span class="sourceLineNo">055</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.55"></a>
+<span class="sourceLineNo">056</span>         *         fail the test, else, return false and the test will be failed<a name="line.56"></a>
+<span class="sourceLineNo">057</span>         *         later.<a name="line.57"></a>
+<span class="sourceLineNo">058</span>         */<a name="line.58"></a>
+<span class="sourceLineNo">059</span>        default boolean is(T compareTo) {<a name="line.59"></a>
+<span class="sourceLineNo">060</span>                return is(Matchers.equalTo(compareTo));<a name="line.60"></a>
+<span class="sourceLineNo">061</span>        }<a name="line.61"></a>
+<span class="sourceLineNo">062</span><a name="line.62"></a>
+<span class="sourceLineNo">063</span>        /**<a name="line.63"></a>
+<span class="sourceLineNo">064</span>         * Check that the object is not the passed one.<a name="line.64"></a>
+<span class="sourceLineNo">065</span>         * <a name="line.65"></a>
+<span class="sourceLineNo">066</span>         * @param compareTo<a name="line.66"></a>
+<span class="sourceLineNo">067</span>         *            the value<a name="line.67"></a>
+<span class="sourceLineNo">068</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.68"></a>
+<span class="sourceLineNo">069</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.69"></a>
+<span class="sourceLineNo">070</span>         *         fail the test, else, return false and the test will be failed<a name="line.70"></a>
+<span class="sourceLineNo">071</span>         *         later.<a name="line.71"></a>
+<span class="sourceLineNo">072</span>         */<a name="line.72"></a>
+<span class="sourceLineNo">073</span>        default boolean isNot(T compareTo) {<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                return isNot(Matchers.equalTo(compareTo));<a name="line.74"></a>
+<span class="sourceLineNo">075</span>        }<a name="line.75"></a>
+<span class="sourceLineNo">076</span><a name="line.76"></a>
+<span class="sourceLineNo">077</span>        /**<a name="line.77"></a>
+<span class="sourceLineNo">078</span>         * Check that the object is not matching the passed matcher.<a name="line.78"></a>
+<span class="sourceLineNo">079</span>         * <a name="line.79"></a>
+<span class="sourceLineNo">080</span>         * @param matching<a name="line.80"></a>
+<span class="sourceLineNo">081</span>         *            the matcher<a name="line.81"></a>
+<span class="sourceLineNo">082</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.82"></a>
+<span class="sourceLineNo">083</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.83"></a>
+<span class="sourceLineNo">084</span>         *         fail the test, else, return false and the test will be failed<a name="line.84"></a>
+<span class="sourceLineNo">085</span>         *         later.<a name="line.85"></a>
+<span class="sourceLineNo">086</span>         */<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        default boolean isNot(Matcher&lt;T&gt; matching) {<a name="line.87"></a>
+<span class="sourceLineNo">088</span>                return is(Matchers.not(matching));<a name="line.88"></a>
+<span class="sourceLineNo">089</span>        }<a name="line.89"></a>
+<span class="sourceLineNo">090</span><a name="line.90"></a>
+<span class="sourceLineNo">091</span>        /**<a name="line.91"></a>
+<span class="sourceLineNo">092</span>         * Check that the object is null.<a name="line.92"></a>
+<span class="sourceLineNo">093</span>         * <a name="line.93"></a>
+<span class="sourceLineNo">094</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.94"></a>
+<span class="sourceLineNo">095</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.95"></a>
+<span class="sourceLineNo">096</span>         *         fail the test, else, return false and the test will be failed<a name="line.96"></a>
+<span class="sourceLineNo">097</span>         *         later.<a name="line.97"></a>
+<span class="sourceLineNo">098</span>         */<a name="line.98"></a>
+<span class="sourceLineNo">099</span>        default boolean isNull() {<a name="line.99"></a>
+<span class="sourceLineNo">100</span>                return is(Matchers.nullValue());<a name="line.100"></a>
+<span class="sourceLineNo">101</span>        }<a name="line.101"></a>
+<span class="sourceLineNo">102</span><a name="line.102"></a>
+<span class="sourceLineNo">103</span>        /**<a name="line.103"></a>
+<span class="sourceLineNo">104</span>         * Check that the object is not null.<a name="line.104"></a>
+<span class="sourceLineNo">105</span>         * <a name="line.105"></a>
+<span class="sourceLineNo">106</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.106"></a>
+<span class="sourceLineNo">107</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.107"></a>
+<span class="sourceLineNo">108</span>         *         fail the test, else, return false and the test will be failed<a name="line.108"></a>
+<span class="sourceLineNo">109</span>         *         later.<a name="line.109"></a>
+<span class="sourceLineNo">110</span>         */<a name="line.110"></a>
+<span class="sourceLineNo">111</span>        default boolean isNotNull() {<a name="line.111"></a>
+<span class="sourceLineNo">112</span>                return is(Matchers.notNullValue());<a name="line.112"></a>
+<span class="sourceLineNo">113</span>        }<a name="line.113"></a>
+<span class="sourceLineNo">114</span><a name="line.114"></a>
+<span class="sourceLineNo">115</span>        /**<a name="line.115"></a>
+<span class="sourceLineNo">116</span>         * Check that the object is of a specific class (or subclasses).<a name="line.116"></a>
+<span class="sourceLineNo">117</span>         * <a name="line.117"></a>
+<span class="sourceLineNo">118</span>         * @param clazz<a name="line.118"></a>
+<span class="sourceLineNo">119</span>         *            the class<a name="line.119"></a>
+<span class="sourceLineNo">120</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.120"></a>
+<span class="sourceLineNo">121</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.121"></a>
+<span class="sourceLineNo">122</span>         *         fail the test, else, return false and the test will be failed<a name="line.122"></a>
+<span class="sourceLineNo">123</span>         *         later.<a name="line.123"></a>
+<span class="sourceLineNo">124</span>         */<a name="line.124"></a>
+<span class="sourceLineNo">125</span>        default boolean isA(Class&lt;? super T&gt; clazz) {<a name="line.125"></a>
+<span class="sourceLineNo">126</span>                return is(Matchers.isA(clazz));<a name="line.126"></a>
+<span class="sourceLineNo">127</span>        }<a name="line.127"></a>
+<span class="sourceLineNo">128</span><a name="line.128"></a>
+<span class="sourceLineNo">129</span>}<a name="line.129"></a>
 
 
 
