@@ -117,7 +117,10 @@ public interface AssertThatObject<T> {
 	 * 
 	 * @param clazz
 	 *            the class
-	 * 
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
 	 */
 	default boolean isA(Class<? super T> clazz) {
 		return is(Matchers.isA(clazz));
