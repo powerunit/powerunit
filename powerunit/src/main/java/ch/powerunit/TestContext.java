@@ -27,45 +27,45 @@ package ch.powerunit;
  *            the test object type.
  */
 public interface TestContext<T> {
-    /**
-     * Return the current testName
-     * 
-     * @return the testName
-     */
-    String getFullTestName();
+	/**
+	 * Return the current testName
+	 * 
+	 * @return the testName
+	 */
+	String getFullTestName();
 
-    /**
-     * Return the current SetName
-     * 
-     * @return the setName
-     */
-    String getSetName();
+	/**
+	 * Return the current SetName
+	 * 
+	 * @return the setName
+	 */
+	String getSetName();
 
-    /**
-     * Return the local test name
-     * 
-     * @return the localTestName
-     */
-    String getLocalTestName();
+	/**
+	 * Return the local test name
+	 * 
+	 * @return the localTestName
+	 */
+	String getLocalTestName();
 
-    /**
-     * Return the ParameterName
-     * 
-     * @return the parameterName or null if not applicable
-     */
-    String getParameterName();
+	/**
+	 * Return the ParameterName
+	 * 
+	 * @return the parameterName or null if not applicable
+	 */
+	String getParameterName();
 
-    /**
-     * Return the test categories
-     * 
-     * @return the test categories
-     */
-    String getTestCategories();
+	/**
+	 * Return the test categories
+	 * 
+	 * @return the test categories
+	 */
+	String getTestCategories();
 
-    /**
-     * Return the object used for the test suite.
-     * 
-     * @return the test object.
-     */
-    T getTestSuiteObject();
+	/**
+	 * Return the object used for the test suite.
+	 * 
+	 * @return the test object.
+	 */
+	T getTestSuiteObject();
 }

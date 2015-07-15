@@ -47,7 +47,7 @@ public class AssertThatObjectImpl<T> implements AssertThatObject<T>,
 	private final String msg;
 
 	@Override
-	public void is(Matcher<? super T> matching) {
+	public boolean is(Matcher<? super T> matching) {
 		Description message = new StringDescription();
 		message.appendText("expecting ");
 		matching.describeTo(message);
@@ -56,13 +56,23 @@ public class AssertThatObjectImpl<T> implements AssertThatObject<T>,
 		if (!matching.matches(obj)) {
 			matching.describeMismatch(obj, message);
 			if (assertion) {
-				throw new AssertionError((msg == null ? "" : msg + "\n")
+				TestContextImpl<Object> ctx = DefaultPowerUnitRunnerImpl
+						.getCurrentContext();
+				AssertionError e = new AssertionError((msg == null ? "" : msg
+						+ "\n")
 						+ message.toString());
+				if (ctx == null || ctx.isFastFail()) {
+					throw e;
+				} else {
+					ctx.addAssertionError(e);
+					return false;
+				}
 			} else {
 				throw new AssumptionError((msg == null ? "" : msg + "\n")
 						+ message.toString());
 			}
 		}
+		return true;
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import ch.powerunit.impl.AssertThatExceptionImpl;
 import ch.powerunit.impl.AssertThatIterableImpl;
 import ch.powerunit.impl.AssertThatObjectImpl;
 import ch.powerunit.impl.AssertThatStringImpl;
+import ch.powerunit.impl.FailureImpl;
 
 /**
  * This is the assert features.
@@ -192,8 +193,8 @@ interface Assert {
 	 *            the function
 	 * @param input
 	 *            the input to the function
-	 * @return {@link AssertThatCastableObject then assert DSL on the result of the
-	 *         function}
+	 * @return {@link AssertThatCastableObject then assert DSL on the result of
+	 *         the function}
 	 */
 	default <T, R> AssertThatCastableObject<R> assertThatFunction(
 			Function<T, R> function, T input) {
@@ -227,8 +228,8 @@ interface Assert {
 	 *            the function
 	 * @param input
 	 *            the input to the function
-	 * @return {@link AssertThatCastableObject then assert DSL on the result of the
-	 *         function}
+	 * @return {@link AssertThatCastableObject then assert DSL on the result of
+	 *         the function}
 	 */
 	default <T, R> AssertThatCastableObject<R> assertThatFunction(String msg,
 			Function<T, R> function, T input) {
@@ -264,8 +265,8 @@ interface Assert {
 	 *            the first input to the function
 	 * @param input2
 	 *            the second input to the function
-	 * @return {@link AssertThatCastableObject then assert DSL on the result of the
-	 *         bifunction}
+	 * @return {@link AssertThatCastableObject then assert DSL on the result of
+	 *         the bifunction}
 	 */
 	default <T, U, R> AssertThatCastableObject<R> assertThatBiFunction(
 			BiFunction<T, U, R> function, T input1, U input2) {
@@ -306,8 +307,8 @@ interface Assert {
 	 * @return {@link AssertThatObject then assert DSL on the result of the
 	 *         bifunction}
 	 */
-	default <T, U, R> AssertThatCastableObject<R> assertThatBiFunction(String msg,
-			BiFunction<T, U, R> function, T input1, U input2) {
+	default <T, U, R> AssertThatCastableObject<R> assertThatBiFunction(
+			String msg, BiFunction<T, U, R> function, T input1, U input2) {
 		return new AssertThatObjectImpl<R>(true, msg, () -> function.apply(
 				input1, input2));
 	}
@@ -461,7 +462,7 @@ interface Assert {
 	 */
 	default <P, T extends RuntimeException> AssertThatException<T> assertWhenFunction(
 			String msg, Function<P, ?> function, P param) {
-		return assertWhen(msg,(p)->function.apply(p),param);
+		return assertWhen(msg, (p) -> function.apply(p), param);
 	}
 
 	/**
@@ -482,9 +483,9 @@ interface Assert {
 	 */
 	default <P, T extends RuntimeException> AssertThatException<T> assertWhenFunction(
 			Function<P, ?> function, P param) {
-		return assertWhen((p)->function.apply(p),param);
+		return assertWhen((p) -> function.apply(p), param);
 	}
-	
+
 	/**
 	 * Assert that a bifunction throw an exception. As {@link BiFunction}
 	 * signature doesn't throws exception, it should be a RuntimeException.
@@ -547,9 +548,13 @@ interface Assert {
 	 * </pre>
 	 * 
 	 * will immediately fail the current test.
+	 * 
+	 * @return Depending on {@link Test#fastFail()} : If <code>true</code>, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
 	 */
-	default void fail() {
-		fail("Manual failure");
+	default boolean fail() {
+		return fail("Manual failure");
 	}
 
 	/**
@@ -565,9 +570,12 @@ interface Assert {
 	 * 
 	 * @param msg
 	 *            a message
+	 * @return Depending on {@link Test#fastFail()} : If <code>true</code>, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
 	 */
-	default void fail(String msg) {
-		throw new AssertionError(msg);
+	default boolean fail(String msg) {
+		return FailureImpl.fail(new AssertionError(msg));
 	}
 
 	/**
@@ -585,9 +593,12 @@ interface Assert {
 	 *            a message
 	 * @param innerError
 	 *            the error cause
+	 * @return Depending on {@link Test#fastFail()} : If <code>true</code>, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
 	 */
-	default void fail(String msg, Throwable innerError) {
-		throw new AssertionError(msg, innerError);
+	default boolean fail(String msg, Throwable innerError) {
+		return FailureImpl.fail(new AssertionError(msg, innerError));
 	}
 
 	/**
@@ -603,9 +614,13 @@ interface Assert {
 	 * 
 	 * @param innerError
 	 *            the error cause
+	 * @return Depending on {@link Test#fastFail()} : If <code>true</code>, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
 	 */
-	default void fail(Throwable innerError) {
-		throw new AssertionError(innerError.getMessage(), innerError);
+	default boolean fail(Throwable innerError) {
+		return FailureImpl.fail(new AssertionError(innerError.getMessage(),
+				innerError));
 	}
 
 }

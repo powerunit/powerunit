@@ -61,6 +61,8 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 		ParametersValidator, ParameterValidator, TestValidator, RuleValidator,
 		TestDelegateValidator {
 
+	private static final ThreadLocal<TestContextImpl<Object>> contexts = new ThreadLocal<>();
+
 	private final List<TestResultListener<Object>> listeners = new ArrayList<>();
 
 	private final String parentGroups;
@@ -72,6 +74,10 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 	private final Method singleMethod;
 
 	private final Object externalParameter;
+
+	static TestContextImpl<Object> getCurrentContext() {
+		return contexts.get();
+	}
 
 	DefaultPowerUnitRunnerImpl(Class<T> testClass, Object externalParameter) {
 		this(testClass, null, externalParameter);
@@ -258,7 +264,7 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 						});
 	}
 
-	//public for test purpose
+	// public for test purpose
 	public static String computeTestName(String formatter, Object... arguments) {
 		if (formatter.matches(".*\\{[0-9]+\\}.*")) {
 			return MessageFormat.format(formatter, arguments);
@@ -484,9 +490,20 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 
 									}
 									return p -> {
+										((TestContextImpl) p).setFastFail(test
+												.getValue()
+												.getAnnotation(Test.class)
+												.fastFail());
+										contexts.set((TestContextImpl) p);
 										notifyStartTest(p);
 										try {
 											stest.run(p);
+											if (((TestContextImpl) p)
+													.hasError()
+													&& !((TestContextImpl) p)
+															.isFastFail()) {
+												((TestContextImpl) p).fail();
+											}
 											notifyEndSuccessTest(p);
 										} catch (InternalError e) {
 											notifyEndFailureTest(p, e);
@@ -498,6 +515,7 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 											// As we really want all error
 											notifyEndFailureTest(p, e);
 										}
+										contexts.set(null);
 									};
 								}));
 	}

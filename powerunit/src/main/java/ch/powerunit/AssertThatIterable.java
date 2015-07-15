@@ -35,67 +35,92 @@ import org.hamcrest.Matchers;
  * @see AssertThatObject assertion on object are also available on iterable.
  */
 public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
-    /**
-     * Check the size of the iterable.
-     * 
-     * @param size
-     *            the expected size.
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    default void hasSize(int size) {
-        is((Matcher) Matchers.hasSize(size));
-    }
+	/**
+	 * Check the size of the iterable.
+	 * 
+	 * @param size
+	 *            the expected size.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	default boolean hasSize(int size) {
+		return is((Matcher) Matchers.hasSize(size));
+	}
 
-    /**
-     * Check the size is not the one passed.
-     * 
-     * @param size
-     *            the not expected size.
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    default void hasNotSize(int size) {
-        isNot((Matcher) Matchers.hasSize(size));
-    }
+	/**
+	 * Check the size is not the one passed.
+	 * 
+	 * @param size
+	 *            the not expected size.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	default boolean hasNotSize(int size) {
+		return isNot((Matcher) Matchers.hasSize(size));
+	}
 
-    /**
-     * Check that the iterable contains the items.
-     * 
-     * @param items
-     *            the expected items.
-     */
-    default void contains(@SuppressWarnings("unchecked") T... items) {
-        is(Matchers.contains(items));
-    }
+	/**
+	 * Check that the iterable contains the items.
+	 * 
+	 * @param items
+	 *            the expected items.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean contains(@SuppressWarnings("unchecked") T... items) {
+		return is(Matchers.contains(items));
+	}
 
-    /**
-     * Check that the iterable contains the items.
-     * 
-     * @param items
-     *            the matcher for each item.
-     */
-    default void containsMatching(
-            @SuppressWarnings("unchecked") Matcher<? super T>... items) {
-        is(Matchers.contains(items));
-    }
+	/**
+	 * Check that the iterable contains the items.
+	 * 
+	 * @param items
+	 *            the matcher for each item.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean containsMatching(
+			@SuppressWarnings("unchecked") Matcher<? super T>... items) {
+		return is(Matchers.contains(items));
+	}
 
-    /**
-     * Check that the iterable contains the items in any order.
-     * 
-     * @param items
-     *            the expected items.
-     */
-    default void containsInAnyOrder(@SuppressWarnings("unchecked") T... items) {
-        is(Matchers.containsInAnyOrder(items));
-    }
+	/**
+	 * Check that the iterable contains the items in any order.
+	 * 
+	 * @param items
+	 *            the expected items.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean containsInAnyOrder(
+			@SuppressWarnings("unchecked") T... items) {
+		return is(Matchers.containsInAnyOrder(items));
+	}
 
-    /**
-     * Check that the iterable contains the items in any order.
-     * 
-     * @param items
-     *            the matcher for each item.
-     */
-    default void containsInAnyOrderMatching(
-            @SuppressWarnings("unchecked") Matcher<? super T>... items) {
-        is(Matchers.containsInAnyOrder(items));
-    }
+	/**
+	 * Check that the iterable contains the items in any order.
+	 * 
+	 * @param items
+	 *            the matcher for each item.
+	 * @return true if the assertion is valid ; If the assertion is false,
+	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
+	 *         fail the test, else, return false and the test will be failed
+	 *         later.
+	 */
+	default boolean containsInAnyOrderMatching(
+			@SuppressWarnings("unchecked") Matcher<? super T>... items) {
+		return is(Matchers.containsInAnyOrder(items));
+	}
 }

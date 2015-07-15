@@ -17,33 +17,22 @@
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-package ch.powerunit;
-
-import org.hamcrest.Matcher;
+package ch.powerunit.impl;
 
 /**
- * DSL for assertion on exception result.
- * <p>
- * This interface is returned by the various methods
- * {@link TestSuite#assertWhen(Statement) assertWhen} exposed by
- * {@link TestSuite}.
- *
  * @author borettim
  *
- * @param <T>
- *            The exception type
  */
-public interface AssertThatException<T extends Throwable> {
+public final class FailureImpl {
 
-	/**
-	 * Define the matcher on the exception and execute the matcher validation.
-	 * 
-	 * @param matching
-	 *            the matcher.
-	 * @return true if the assertion is valid ; If the assertion is false,
-	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
-	 *         fail the test, else, return false and the test will be failed
-	 *         later.
-	 */
-	boolean throwException(Matcher<T> matching);
+	public static boolean fail(AssertionError msg) {
+		TestContextImpl<Object> ctx = DefaultPowerUnitRunnerImpl
+				.getCurrentContext();
+		if (ctx == null || ctx.isFastFail()) {
+			throw msg;
+		}
+		ctx.addAssertionError(msg);
+		return false;
+	}
+
 }

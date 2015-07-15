@@ -19,60 +19,99 @@
  */
 package ch.powerunit.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.powerunit.TestContext;
 
 public final class TestContextImpl<T> implements TestContext<T> {
 
-    public TestContextImpl(T testObject, String setName, String localName,
-            String parameterName, String categories) {
-        this.setName = setName;
-        this.localName = localName;
-        this.parameterName = parameterName;
-        this.categories = categories;
-        this.testObject = testObject;
-    }
+	public TestContextImpl(T testObject, String setName, String localName,
+			String parameterName, String categories) {
+		this.setName = setName;
+		this.localName = localName;
+		this.parameterName = parameterName;
+		this.categories = categories;
+		this.testObject = testObject;
+	}
 
-    private final String setName;
+	private final String setName;
 
-    private final String localName;
+	private final String localName;
 
-    private final String parameterName;
+	private final String parameterName;
 
-    private final String categories;
+	private final String categories;
 
-    private final T testObject;
+	private final T testObject;
 
-    @Override
-    public String getFullTestName() {
-        if (parameterName == null) {
-            return setName + ":" + localName;
-        } else {
-            return setName + ":" + localName + "[" + parameterName + "]";
-        }
-    }
+	private boolean fastFail;
 
-    @Override
-    public String getSetName() {
-        return setName;
-    }
+	private final List<AssertionError> errors = new ArrayList<>();
 
-    @Override
-    public String getLocalTestName() {
-        return localName;
-    }
+	@Override
+	public String getFullTestName() {
+		if (parameterName == null) {
+			return setName + ":" + localName;
+		} else {
+			return setName + ":" + localName + "[" + parameterName + "]";
+		}
+	}
 
-    @Override
-    public String getParameterName() {
-        return parameterName;
-    }
+	@Override
+	public String getSetName() {
+		return setName;
+	}
 
-    @Override
-    public String getTestCategories() {
-        return categories;
-    }
+	@Override
+	public String getLocalTestName() {
+		return localName;
+	}
 
-    @Override
-    public T getTestSuiteObject() {
-        return testObject;
-    }
+	@Override
+	public String getParameterName() {
+		return parameterName;
+	}
+
+	@Override
+	public String getTestCategories() {
+		return categories;
+	}
+
+	@Override
+	public T getTestSuiteObject() {
+		return testObject;
+	}
+
+	boolean isFastFail() {
+		return fastFail;
+	}
+
+	void setFastFail(boolean fastFail) {
+		this.fastFail = fastFail;
+	}
+
+	void addAssertionError(AssertionError e) {
+		errors.add(e);
+	}
+
+	boolean hasError() {
+		return !errors.isEmpty();
+	}
+
+	void fail() {
+		StringBuilder sb = new StringBuilder("Multiple failures : \n");
+		for (AssertionError e : errors) {
+			sb.append("\tError : ").append(e.getMessage()).append("\n");
+		}
+		sb.append("\nOriginal Stack Traces\n");
+		for (AssertionError e : errors) {
+			sb.append("\t").append(e.getMessage()).append("\n");
+			for (StackTraceElement ste : e.getStackTrace()) {
+				sb.append("\t\t").append(ste.toString()).append("\n");
+			}
+		}
+
+		throw new AssertionError(sb.toString());
+	}
 }

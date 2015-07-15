@@ -52,4 +52,13 @@ public @interface Test {
 	 *      parameterized test, since version 0.4.0.
 	 */
 	String name() default "";
+
+	/**
+	 * Define if the test must fail at the first assertion/failure in error
+	 * (default) or only at the end (and accumulate all expected error).
+	 * 
+	 * @return true by default.
+	 * @since 0.4.0
+	 */
+	boolean fastFail() default true;
 }
