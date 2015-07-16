@@ -23,8 +23,6 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import javax.jws.Oneway;
-
 import ch.powerunit.Statement;
 import ch.powerunit.TestContext;
 import ch.powerunit.TestRule;

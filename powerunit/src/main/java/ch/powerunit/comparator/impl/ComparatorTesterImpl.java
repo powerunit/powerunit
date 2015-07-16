@@ -20,17 +20,14 @@
 package ch.powerunit.comparator.impl;
 
 import java.util.Comparator;
-import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 import java.util.stream.Stream.Builder;
 
 import org.hamcrest.Matcher;
-import org.mockito.internal.matchers.LessThan;
 
 import ch.powerunit.Parameter;
 import ch.powerunit.Parameters;
-import ch.powerunit.Test;
 import ch.powerunit.TestDelegate;
 import ch.powerunit.TestDelegator;
 import ch.powerunit.TestSuite;

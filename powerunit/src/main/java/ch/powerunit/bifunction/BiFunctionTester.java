@@ -24,18 +24,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.hamcrest.Matcher;
 
 import ch.powerunit.TestInterface;
 import ch.powerunit.bifunction.impl.BiFunctionTesterImpl;
-import ch.powerunit.function.impl.SupplierEqualsToMatcher;
 import ch.powerunit.bifunction.lang.BiFunctionTesterDefineDSL;
 import ch.powerunit.bifunction.lang.BiFunctionTesterEndDSL;
 import ch.powerunit.bifunction.lang.BiFunctionTesterNextDSL;
 import ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL;
+import ch.powerunit.function.impl.SupplierEqualsToMatcher;
 
 /**
  * Tester for function.

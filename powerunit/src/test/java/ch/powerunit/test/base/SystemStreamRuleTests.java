@@ -21,18 +21,10 @@ package ch.powerunit.test.base;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Arrays;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 import ch.powerunit.Categories;
-import ch.powerunit.Parameter;
-import ch.powerunit.Parameters;
 import ch.powerunit.Rule;
 import ch.powerunit.Test;
-import ch.powerunit.TestDelegate;
-import ch.powerunit.TestDelegator;
-import ch.powerunit.TestInterface;
 import ch.powerunit.TestSuite;
 import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
 import ch.powerunit.rules.SystemStreamRule;
@@ -67,14 +59,14 @@ public class SystemStreamRuleTests {
 			System.out.flush();
 			assertThat(out.toString()).is(String.format("testout%n"));
 		}
-		
+
 		@Test
 		public void testErr() {
 			System.err.println("testerr");
 			System.err.flush();
 			assertThat(err.toString()).is(String.format("testerr%n"));
 		}
-		
+
 		@Test
 		public void testDiff() {
 			assertThat(System.out).isNot(rule.getRealSystemOut());

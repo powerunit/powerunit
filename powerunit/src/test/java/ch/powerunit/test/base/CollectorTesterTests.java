@@ -29,7 +29,6 @@ import ch.powerunit.Categories;
 import ch.powerunit.TestDelegate;
 import ch.powerunit.TestSuite;
 import ch.powerunit.collector.CollectorTester;
-import ch.powerunit.collector.lang.CollectorTesterDSL3;
 import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
 
 /**
