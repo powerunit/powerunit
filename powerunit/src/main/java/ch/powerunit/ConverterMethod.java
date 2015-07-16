@@ -101,6 +101,6 @@ interface ConverterMethod {
 	 */
 	default <K, V> Function<Map<K, V>, V> mapToValue(K key) {
 		Objects.requireNonNull(key, "key can't be null");
-		return nullToNullConverter((Map<K, V> p) -> p.get(key));
+		return nullToNullConverter((Map<K, V> p) -> p.getOrDefault(key, null));
 	}
 }
