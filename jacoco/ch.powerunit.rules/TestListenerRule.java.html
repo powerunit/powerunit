@@ -23,8 +23,6 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import javax.jws.Oneway;
-
 import ch.powerunit.Statement;
 import ch.powerunit.TestContext;
 import ch.powerunit.TestRule;
@@ -74,7 +72,7 @@ public interface TestListenerRule extends TestRule {
 	 */
 	default void onStart(TestContext&lt;Object&gt; context) {
 		// Do nothing as default
-<span class="nc" id="L77">	}</span>
+<span class="nc" id="L75">	}</span>
 
 	/**
 	 * Method used when a failure happened.
@@ -88,7 +86,7 @@ public interface TestListenerRule extends TestRule {
 	 */
 	default void onFailure(TestContext&lt;Object&gt; context, AssertionError af) {
 		// Do nothing as default
-<span class="nc" id="L91">	}</span>
+<span class="nc" id="L89">	}</span>
 
 	/**
 	 * Method used when an error happened.
@@ -102,7 +100,7 @@ public interface TestListenerRule extends TestRule {
 	 */
 	default void onError(TestContext&lt;Object&gt; context, Throwable error) {
 		// Do nothing as default
-<span class="nc" id="L105">	}</span>
+<span class="nc" id="L103">	}</span>
 
 	/**
 	 * Method used when an assumption error happened.
@@ -117,7 +115,7 @@ public interface TestListenerRule extends TestRule {
 	default void onAssumptionSkip(TestContext&lt;Object&gt; context,
 			AssumptionError error) {
 		// Do nothing as default
-<span class="nc" id="L120">	}</span>
+<span class="nc" id="L118">	}</span>
 
 	/**
 	 * Method used at the end of the test.
@@ -129,31 +127,31 @@ public interface TestListenerRule extends TestRule {
 	 */
 	default void onEnd(TestContext&lt;Object&gt; context) {
 		// Do nothing as default
-<span class="fc" id="L132">	}</span>
+<span class="fc" id="L130">	}</span>
 
 	@Override
 	default Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; computeStatement(
 			Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; inner) {
-<span class="fc" id="L137">		return (p) -&gt; {</span>
+<span class="fc" id="L135">		return (p) -&gt; {</span>
 			try {
-<span class="fc" id="L139">				onStart(p);</span>
-<span class="fc" id="L140">				inner.run(p);</span>
-<span class="nc" id="L141">			} catch (AssertionError af) {</span>
-<span class="nc" id="L142">				onFailure(p, af);</span>
-<span class="nc" id="L143">				throw af;</span>
-<span class="nc" id="L144">			} catch (InternalError ie) {</span>
-<span class="nc" id="L145">				onError(p, ie);</span>
-<span class="nc" id="L146">				throw ie;</span>
-<span class="nc" id="L147">			} catch (AssumptionError ie) {</span>
-<span class="nc" id="L148">				onAssumptionSkip(p, ie);</span>
-<span class="nc" id="L149">				throw ie;</span>
-<span class="nc" id="L150">			} catch (Throwable t) {</span>
-<span class="nc" id="L151">				onError(p, t);</span>
-<span class="nc" id="L152">				throw t;</span>
+<span class="fc" id="L137">				onStart(p);</span>
+<span class="fc" id="L138">				inner.run(p);</span>
+<span class="nc" id="L139">			} catch (AssertionError af) {</span>
+<span class="nc" id="L140">				onFailure(p, af);</span>
+<span class="nc" id="L141">				throw af;</span>
+<span class="nc" id="L142">			} catch (InternalError ie) {</span>
+<span class="nc" id="L143">				onError(p, ie);</span>
+<span class="nc" id="L144">				throw ie;</span>
+<span class="nc" id="L145">			} catch (AssumptionError ie) {</span>
+<span class="nc" id="L146">				onAssumptionSkip(p, ie);</span>
+<span class="nc" id="L147">				throw ie;</span>
+<span class="nc" id="L148">			} catch (Throwable t) {</span>
+<span class="nc" id="L149">				onError(p, t);</span>
+<span class="nc" id="L150">				throw t;</span>
 			} finally {
-<span class="pc" id="L154">				onEnd(p);</span>
-<span class="fc" id="L155">			}</span>
-<span class="fc" id="L156">		};</span>
+<span class="pc" id="L152">				onEnd(p);</span>
+<span class="fc" id="L153">			}</span>
+<span class="fc" id="L154">		};</span>
 	}
 
 	/**
@@ -183,43 +181,43 @@ public interface TestListenerRule extends TestRule {
 			BiConsumer&lt;TestContext&lt;Object&gt;, AssertionError&gt; onFailure,
 			BiConsumer&lt;TestContext&lt;Object&gt;, Throwable&gt; onError,
 			BiConsumer&lt;TestContext&lt;Object&gt;, AssumptionError&gt; onAssumptionSkip) {
-<span class="nc" id="L186">		return new TestListenerRule() {</span>
+<span class="nc" id="L184">		return new TestListenerRule() {</span>
 
 			@Override
 			public void onStart(TestContext&lt;Object&gt; context) {
-<span class="nc bnc" id="L190" title="All 2 branches missed.">				if (onStart != null) {</span>
-<span class="nc" id="L191">					onStart.accept(context);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">				if (onStart != null) {</span>
+<span class="nc" id="L189">					onStart.accept(context);</span>
 				}
-<span class="nc" id="L193">			}</span>
+<span class="nc" id="L191">			}</span>
 
 			@Override
 			public void onFailure(TestContext&lt;Object&gt; context, AssertionError af) {
-<span class="nc bnc" id="L197" title="All 2 branches missed.">				if (onFailure != null) {</span>
-<span class="nc" id="L198">					onFailure.accept(context, af);</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">				if (onFailure != null) {</span>
+<span class="nc" id="L196">					onFailure.accept(context, af);</span>
 				}
-<span class="nc" id="L200">			}</span>
+<span class="nc" id="L198">			}</span>
 
 			@Override
 			public void onError(TestContext&lt;Object&gt; context, Throwable error) {
-<span class="nc bnc" id="L204" title="All 2 branches missed.">				if (onError != null) {</span>
-<span class="nc" id="L205">					onError.accept(context, error);</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">				if (onError != null) {</span>
+<span class="nc" id="L203">					onError.accept(context, error);</span>
 				}
-<span class="nc" id="L207">			}</span>
+<span class="nc" id="L205">			}</span>
 
 			@Override
 			public void onAssumptionSkip(TestContext&lt;Object&gt; context,
 					AssumptionError error) {
-<span class="nc bnc" id="L212" title="All 2 branches missed.">				if (onAssumptionSkip != null) {</span>
-<span class="nc" id="L213">					onAssumptionSkip.accept(context, error);</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">				if (onAssumptionSkip != null) {</span>
+<span class="nc" id="L211">					onAssumptionSkip.accept(context, error);</span>
 				}
-<span class="nc" id="L215">			}</span>
+<span class="nc" id="L213">			}</span>
 
 			@Override
 			public void onEnd(TestContext&lt;Object&gt; context) {
-<span class="nc bnc" id="L219" title="All 2 branches missed.">				if (onEnd != null) {</span>
-<span class="nc" id="L220">					onEnd.accept(context);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">				if (onEnd != null) {</span>
+<span class="nc" id="L218">					onEnd.accept(context);</span>
 				}
-<span class="nc" id="L222">			}</span>
+<span class="nc" id="L220">			}</span>
 
 		};
 	}
@@ -234,7 +232,7 @@ public interface TestListenerRule extends TestRule {
 	 * @since 0.4.0
 	 */
 	static TestListenerRule onStart(Consumer&lt;TestContext&lt;Object&gt;&gt; onStart) {
-<span class="nc" id="L237">		return of(Objects.requireNonNull(onStart, &quot;onStart can't be null&quot;),</span>
+<span class="nc" id="L235">		return of(Objects.requireNonNull(onStart, &quot;onStart can't be null&quot;),</span>
 				null, null, null, null);
 	}
 
@@ -248,7 +246,7 @@ public interface TestListenerRule extends TestRule {
 	 * @since 0.4.0
 	 */
 	static TestListenerRule onEnd(Consumer&lt;TestContext&lt;Object&gt;&gt; onEnd) {
-<span class="nc" id="L251">		return of(null, Objects.requireNonNull(onEnd, &quot;onEnd can't be null&quot;),</span>
+<span class="nc" id="L249">		return of(null, Objects.requireNonNull(onEnd, &quot;onEnd can't be null&quot;),</span>
 				null, null, null);
 	}
 }

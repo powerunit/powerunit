@@ -253,7 +253,8 @@
   assertWhen((p) -&gt; {}).throwException(any(Throwable.class));
   fail(&quot;demo&quot;);
  }
-}</pre></div>
+}
+</pre></div>
 <p>This test will provide a result like</p>
 <div class="source">
 <pre>Multiple failures : 
@@ -281,7 +282,8 @@ java.util.HashMap$EntrySet.forEach(HashMap.java:1035)
 ch.powerunit.impl.DefaultPowerUnitRunnerImpl.runOne(DefaultPowerUnitRunnerImpl.java:210)
 ch.powerunit.impl.DefaultPowerUnitRunnerImpl.run(DefaultPowerUnitRunnerImpl.java:144)
 ch.powerunit.PowerUnitMainRunner.main(PowerUnitMainRunner.java:82)
-ch.powerunit.suite.Suites.main(Suites.java:73)</pre></div></div>
+ch.powerunit.suite.Suites.main(Suites.java:73)
+</pre></div></div>
 <div class="section">
 <h3><a name="When_to_use_this_feature"></a>When to use this feature</h3>
 <p>As a general best practice when implementing test based on xUnit pattern, tests should focus on only one single validation ; Matchers provide easy way to express a complex condition in a clear way in one single assertion in a lot of case. In case it is to complex to wrote this matcher and it make sense to to the validation at once, this not fast fail approach may be adapted.</p>

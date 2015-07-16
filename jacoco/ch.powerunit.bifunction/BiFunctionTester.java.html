@@ -24,18 +24,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.hamcrest.Matcher;
 
 import ch.powerunit.TestInterface;
 import ch.powerunit.bifunction.impl.BiFunctionTesterImpl;
-import ch.powerunit.function.impl.SupplierEqualsToMatcher;
 import ch.powerunit.bifunction.lang.BiFunctionTesterDefineDSL;
 import ch.powerunit.bifunction.lang.BiFunctionTesterEndDSL;
 import ch.powerunit.bifunction.lang.BiFunctionTesterNextDSL;
 import ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL;
+import ch.powerunit.function.impl.SupplierEqualsToMatcher;
 
 /**
  * Tester for function.
@@ -58,85 +57,85 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 
 		private final BiFunction&lt;T, U, R&gt; underTest;
 
-<span class="fc" id="L61">		private List&lt;Supplier&lt;T&gt;&gt; tmpInput1 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L60">		private List&lt;Supplier&lt;T&gt;&gt; tmpInput1 = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L63">		private List&lt;Supplier&lt;U&gt;&gt; tmpInput2 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L62">		private List&lt;Supplier&lt;U&gt;&gt; tmpInput2 = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L65">		private List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; tmpResult = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L64">		private List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; tmpResult = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L67">		private List&lt;Supplier&lt;String&gt;&gt; tmpName = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L66">		private List&lt;Supplier&lt;String&gt;&gt; tmpName = new ArrayList&lt;&gt;();</span>
 
 		private void finalizeCase() {
-<span class="fc bfc" id="L70" title="All 2 branches covered.">			if (tmpName.size() &lt; tmpInput1.size()) {</span>
-<span class="fc" id="L71">				tmpName.add(() -&gt; &quot;&quot;);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">			if (tmpName.size() &lt; tmpInput1.size()) {</span>
+<span class="fc" id="L70">				tmpName.add(() -&gt; &quot;&quot;);</span>
 			}
-<span class="fc" id="L73">		}</span>
+<span class="fc" id="L72">		}</span>
 
-<span class="fc" id="L75">		public BiFunctionTesterDSL(BiFunction&lt;T, U, R&gt; underTest) {</span>
-<span class="fc" id="L76">			this.underTest = underTest;</span>
-<span class="fc" id="L77">		}</span>
+<span class="fc" id="L74">		public BiFunctionTesterDSL(BiFunction&lt;T, U, R&gt; underTest) {</span>
+<span class="fc" id="L75">			this.underTest = underTest;</span>
+<span class="fc" id="L76">		}</span>
 
 		@Override
 		public BiFunctionTesterDefineDSL&lt;T, U, R&gt; passingAsParameter(T input1,
 				U input2) {
-<span class="fc" id="L82">			return passingAsParameter(() -&gt; input1, () -&gt; input2);</span>
+<span class="fc" id="L81">			return passingAsParameter(() -&gt; input1, () -&gt; input2);</span>
 		}
 
 		@Override
 		public BiFunctionTesterDefineDSL&lt;T, U, R&gt; passingAsParameter(
 				Supplier&lt;T&gt; input1, Supplier&lt;U&gt; input2) {
-<span class="fc" id="L88">			Objects.requireNonNull(input1, &quot;input1 can't be null&quot;);</span>
-<span class="fc" id="L89">			Objects.requireNonNull(input2, &quot;input2 can't be null&quot;);</span>
-<span class="fc" id="L90">			finalizeCase();</span>
-<span class="fc" id="L91">			tmpInput1.add(input1);</span>
-<span class="fc" id="L92">			tmpInput2.add(input2);</span>
-<span class="fc" id="L93">			return this;</span>
+<span class="fc" id="L87">			Objects.requireNonNull(input1, &quot;input1 can't be null&quot;);</span>
+<span class="fc" id="L88">			Objects.requireNonNull(input2, &quot;input2 can't be null&quot;);</span>
+<span class="fc" id="L89">			finalizeCase();</span>
+<span class="fc" id="L90">			tmpInput1.add(input1);</span>
+<span class="fc" id="L91">			tmpInput2.add(input2);</span>
+<span class="fc" id="L92">			return this;</span>
 		}
 
 		@Override
 		public BiFunctionTesterNextDSL&lt;T, U, R&gt; thenExpectingResult(R result) {
-<span class="fc" id="L98">			return thenExpectingResult(() -&gt; result);</span>
+<span class="fc" id="L97">			return thenExpectingResult(() -&gt; result);</span>
 		}
 
 		@Override
 		public BiFunctionTesterNextDSL&lt;T, U, R&gt; thenExpectingResult(
 				Supplier&lt;R&gt; result) {
-<span class="fc" id="L104">			Objects.requireNonNull(result, &quot;matching can't be null&quot;);</span>
-<span class="fc" id="L105">			return thenExpectingResultThat(new SupplierEqualsToMatcher&lt;R&gt;(</span>
+<span class="fc" id="L103">			Objects.requireNonNull(result, &quot;matching can't be null&quot;);</span>
+<span class="fc" id="L104">			return thenExpectingResultThat(new SupplierEqualsToMatcher&lt;R&gt;(</span>
 					result));
 		}
 
 		@Override
 		public BiFunctionTesterNextDSL&lt;T, U, R&gt; thenExpectingResultThat(
 				Matcher&lt;? super R&gt; matching) {
-<span class="fc" id="L112">			Objects.requireNonNull(matching, &quot;matching can't be null&quot;);</span>
-<span class="fc" id="L113">			return thenExpectingResultThat(() -&gt; matching);</span>
+<span class="fc" id="L111">			Objects.requireNonNull(matching, &quot;matching can't be null&quot;);</span>
+<span class="fc" id="L112">			return thenExpectingResultThat(() -&gt; matching);</span>
 		}
 
 		@Override
 		public BiFunctionTesterNextDSL&lt;T, U, R&gt; thenExpectingResultThat(
 				Supplier&lt;Matcher&lt;? super R&gt;&gt; matching) {
-<span class="fc" id="L119">			Objects.requireNonNull(matching, &quot;matching can't be null&quot;);</span>
-<span class="fc" id="L120">			tmpResult.add(matching);</span>
-<span class="fc" id="L121">			return this;</span>
+<span class="fc" id="L118">			Objects.requireNonNull(matching, &quot;matching can't be null&quot;);</span>
+<span class="fc" id="L119">			tmpResult.add(matching);</span>
+<span class="fc" id="L120">			return this;</span>
 		}
 
 		@Override
 		public BiFunctionTesterEndDSL&lt;T, U, R&gt; testNamed(String name) {
-<span class="fc" id="L126">			return testNamed(() -&gt; name);</span>
+<span class="fc" id="L125">			return testNamed(() -&gt; name);</span>
 		}
 
 		@Override
 		public BiFunctionTesterEndDSL&lt;T, U, R&gt; testNamed(Supplier&lt;String&gt; name) {
-<span class="fc" id="L131">			Objects.requireNonNull(name, &quot;name can't be null&quot;);</span>
-<span class="fc" id="L132">			tmpName.add(name);</span>
-<span class="fc" id="L133">			return this;</span>
+<span class="fc" id="L130">			Objects.requireNonNull(name, &quot;name can't be null&quot;);</span>
+<span class="fc" id="L131">			tmpName.add(name);</span>
+<span class="fc" id="L132">			return this;</span>
 		}
 
 		@Override
 		public BiFunctionTester&lt;T, U, R&gt; build() {
-<span class="fc" id="L138">			finalizeCase();</span>
-<span class="fc" id="L139">			return new BiFunctionTester&lt;T, U, R&gt;(underTest, tmpInput1,</span>
+<span class="fc" id="L137">			finalizeCase();</span>
+<span class="fc" id="L138">			return new BiFunctionTester&lt;T, U, R&gt;(underTest, tmpInput1,</span>
 					tmpInput2, tmpResult, tmpName);
 		}
 	}
@@ -144,13 +143,13 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 	private BiFunctionTester(BiFunction&lt;T, U, R&gt; underTest,
 			List&lt;Supplier&lt;T&gt;&gt; tmpInput1, List&lt;Supplier&lt;U&gt;&gt; tmpInput2,
 			List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; tmpResult,
-<span class="fc" id="L147">			List&lt;Supplier&lt;String&gt;&gt; tmpName) {</span>
-<span class="fc" id="L148">		this.underTest = underTest;</span>
-<span class="fc" id="L149">		this.input1 = tmpInput1;</span>
-<span class="fc" id="L150">		this.input2 = tmpInput2;</span>
-<span class="fc" id="L151">		this.result = tmpResult;</span>
-<span class="fc" id="L152">		this.name = tmpName;</span>
-<span class="fc" id="L153">	}</span>
+<span class="fc" id="L146">			List&lt;Supplier&lt;String&gt;&gt; tmpName) {</span>
+<span class="fc" id="L147">		this.underTest = underTest;</span>
+<span class="fc" id="L148">		this.input1 = tmpInput1;</span>
+<span class="fc" id="L149">		this.input2 = tmpInput2;</span>
+<span class="fc" id="L150">		this.result = tmpResult;</span>
+<span class="fc" id="L151">		this.name = tmpName;</span>
+<span class="fc" id="L152">	}</span>
 
 	/**
 	 * Start the creation of a tester of function.
@@ -170,9 +169,9 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 	 */
 	public static &lt;T, U, R&gt; BiFunctionTesterStartDSL&lt;T, U, R&gt; of(
 			BiFunction&lt;T, U, R&gt; bifunctionUnderTest) {
-<span class="fc" id="L173">		Objects.requireNonNull(bifunctionUnderTest,</span>
+<span class="fc" id="L172">		Objects.requireNonNull(bifunctionUnderTest,</span>
 				&quot;bifunctionUnderTest can't be null&quot;);
-<span class="fc" id="L175">		return new BiFunctionTesterDSL&lt;T, U, R&gt;(bifunctionUnderTest);</span>
+<span class="fc" id="L174">		return new BiFunctionTesterDSL&lt;T, U, R&gt;(bifunctionUnderTest);</span>
 	}
 
 	/**
@@ -181,7 +180,7 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 	 * @return the underTest
 	 */
 	public BiFunction&lt;T, U, R&gt; getUnderTest() {
-<span class="fc" id="L184">		return underTest;</span>
+<span class="fc" id="L183">		return underTest;</span>
 	}
 
 	/**
@@ -190,7 +189,7 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 	 * @return the first input
 	 */
 	public List&lt;Supplier&lt;T&gt;&gt; getInput1() {
-<span class="fc" id="L193">		return Collections.unmodifiableList(input1);</span>
+<span class="fc" id="L192">		return Collections.unmodifiableList(input1);</span>
 	}
 
 	/**
@@ -199,7 +198,7 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 	 * @return the first input
 	 */
 	public List&lt;Supplier&lt;U&gt;&gt; getInput2() {
-<span class="fc" id="L202">		return Collections.unmodifiableList(input2);</span>
+<span class="fc" id="L201">		return Collections.unmodifiableList(input2);</span>
 	}
 
 	/**
@@ -208,7 +207,7 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 	 * @return the result
 	 */
 	public List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; getResult() {
-<span class="fc" id="L211">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L210">		return Collections.unmodifiableList(result);</span>
 	}
 
 	/**
@@ -217,7 +216,7 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 	 * @return the name
 	 */
 	public List&lt;Supplier&lt;String&gt;&gt; getName() {
-<span class="fc" id="L220">		return Collections.unmodifiableList(name);</span>
+<span class="fc" id="L219">		return Collections.unmodifiableList(name);</span>
 	}
 
 }

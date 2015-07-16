@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<html lang="fr">
 <head>
 <title>Source code</title>
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
@@ -32,203 +32,202 @@
 <span class="sourceLineNo">024</span>import java.util.List;<a name="line.24"></a>
 <span class="sourceLineNo">025</span>import java.util.Objects;<a name="line.25"></a>
 <span class="sourceLineNo">026</span>import java.util.function.BiFunction;<a name="line.26"></a>
-<span class="sourceLineNo">027</span>import java.util.function.Function;<a name="line.27"></a>
-<span class="sourceLineNo">028</span>import java.util.function.Supplier;<a name="line.28"></a>
-<span class="sourceLineNo">029</span><a name="line.29"></a>
-<span class="sourceLineNo">030</span>import org.hamcrest.Matcher;<a name="line.30"></a>
-<span class="sourceLineNo">031</span><a name="line.31"></a>
-<span class="sourceLineNo">032</span>import ch.powerunit.TestInterface;<a name="line.32"></a>
-<span class="sourceLineNo">033</span>import ch.powerunit.bifunction.impl.BiFunctionTesterImpl;<a name="line.33"></a>
-<span class="sourceLineNo">034</span>import ch.powerunit.function.impl.SupplierEqualsToMatcher;<a name="line.34"></a>
-<span class="sourceLineNo">035</span>import ch.powerunit.bifunction.lang.BiFunctionTesterDefineDSL;<a name="line.35"></a>
-<span class="sourceLineNo">036</span>import ch.powerunit.bifunction.lang.BiFunctionTesterEndDSL;<a name="line.36"></a>
-<span class="sourceLineNo">037</span>import ch.powerunit.bifunction.lang.BiFunctionTesterNextDSL;<a name="line.37"></a>
-<span class="sourceLineNo">038</span>import ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL;<a name="line.38"></a>
-<span class="sourceLineNo">039</span><a name="line.39"></a>
-<span class="sourceLineNo">040</span>/**<a name="line.40"></a>
-<span class="sourceLineNo">041</span> * Tester for function.<a name="line.41"></a>
-<span class="sourceLineNo">042</span> * <a name="line.42"></a>
-<span class="sourceLineNo">043</span> * @author borettim<a name="line.43"></a>
-<span class="sourceLineNo">044</span> * @since 0.3.0<a name="line.44"></a>
-<span class="sourceLineNo">045</span> */<a name="line.45"></a>
-<span class="sourceLineNo">046</span>@TestInterface(BiFunctionTesterImpl.class)<a name="line.46"></a>
-<span class="sourceLineNo">047</span>public final class BiFunctionTester&lt;T, U, R&gt; {<a name="line.47"></a>
-<span class="sourceLineNo">048</span>        private final BiFunction&lt;T, U, R&gt; underTest;<a name="line.48"></a>
-<span class="sourceLineNo">049</span>        private final List&lt;Supplier&lt;T&gt;&gt; input1;<a name="line.49"></a>
-<span class="sourceLineNo">050</span>        private final List&lt;Supplier&lt;U&gt;&gt; input2;<a name="line.50"></a>
-<span class="sourceLineNo">051</span>        private final List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; result;<a name="line.51"></a>
-<span class="sourceLineNo">052</span>        private final List&lt;Supplier&lt;String&gt;&gt; name;<a name="line.52"></a>
-<span class="sourceLineNo">053</span><a name="line.53"></a>
-<span class="sourceLineNo">054</span>        private static class BiFunctionTesterDSL&lt;T, U, R&gt; implements<a name="line.54"></a>
-<span class="sourceLineNo">055</span>                        BiFunctionTesterDefineDSL&lt;T, U, R&gt;,<a name="line.55"></a>
-<span class="sourceLineNo">056</span>                        BiFunctionTesterEndDSL&lt;T, U, R&gt;, BiFunctionTesterNextDSL&lt;T, U, R&gt;,<a name="line.56"></a>
-<span class="sourceLineNo">057</span>                        BiFunctionTesterStartDSL&lt;T, U, R&gt; {<a name="line.57"></a>
-<span class="sourceLineNo">058</span><a name="line.58"></a>
-<span class="sourceLineNo">059</span>                private final BiFunction&lt;T, U, R&gt; underTest;<a name="line.59"></a>
-<span class="sourceLineNo">060</span><a name="line.60"></a>
-<span class="sourceLineNo">061</span>                private List&lt;Supplier&lt;T&gt;&gt; tmpInput1 = new ArrayList&lt;&gt;();<a name="line.61"></a>
-<span class="sourceLineNo">062</span><a name="line.62"></a>
-<span class="sourceLineNo">063</span>                private List&lt;Supplier&lt;U&gt;&gt; tmpInput2 = new ArrayList&lt;&gt;();<a name="line.63"></a>
-<span class="sourceLineNo">064</span><a name="line.64"></a>
-<span class="sourceLineNo">065</span>                private List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; tmpResult = new ArrayList&lt;&gt;();<a name="line.65"></a>
-<span class="sourceLineNo">066</span><a name="line.66"></a>
-<span class="sourceLineNo">067</span>                private List&lt;Supplier&lt;String&gt;&gt; tmpName = new ArrayList&lt;&gt;();<a name="line.67"></a>
-<span class="sourceLineNo">068</span><a name="line.68"></a>
-<span class="sourceLineNo">069</span>                private void finalizeCase() {<a name="line.69"></a>
-<span class="sourceLineNo">070</span>                        if (tmpName.size() &lt; tmpInput1.size()) {<a name="line.70"></a>
-<span class="sourceLineNo">071</span>                                tmpName.add(() -&gt; "");<a name="line.71"></a>
-<span class="sourceLineNo">072</span>                        }<a name="line.72"></a>
-<span class="sourceLineNo">073</span>                }<a name="line.73"></a>
-<span class="sourceLineNo">074</span><a name="line.74"></a>
-<span class="sourceLineNo">075</span>                public BiFunctionTesterDSL(BiFunction&lt;T, U, R&gt; underTest) {<a name="line.75"></a>
-<span class="sourceLineNo">076</span>                        this.underTest = underTest;<a name="line.76"></a>
-<span class="sourceLineNo">077</span>                }<a name="line.77"></a>
-<span class="sourceLineNo">078</span><a name="line.78"></a>
-<span class="sourceLineNo">079</span>                @Override<a name="line.79"></a>
-<span class="sourceLineNo">080</span>                public BiFunctionTesterDefineDSL&lt;T, U, R&gt; passingAsParameter(T input1,<a name="line.80"></a>
-<span class="sourceLineNo">081</span>                                U input2) {<a name="line.81"></a>
-<span class="sourceLineNo">082</span>                        return passingAsParameter(() -&gt; input1, () -&gt; input2);<a name="line.82"></a>
-<span class="sourceLineNo">083</span>                }<a name="line.83"></a>
-<span class="sourceLineNo">084</span><a name="line.84"></a>
-<span class="sourceLineNo">085</span>                @Override<a name="line.85"></a>
-<span class="sourceLineNo">086</span>                public BiFunctionTesterDefineDSL&lt;T, U, R&gt; passingAsParameter(<a name="line.86"></a>
-<span class="sourceLineNo">087</span>                                Supplier&lt;T&gt; input1, Supplier&lt;U&gt; input2) {<a name="line.87"></a>
-<span class="sourceLineNo">088</span>                        Objects.requireNonNull(input1, "input1 can't be null");<a name="line.88"></a>
-<span class="sourceLineNo">089</span>                        Objects.requireNonNull(input2, "input2 can't be null");<a name="line.89"></a>
-<span class="sourceLineNo">090</span>                        finalizeCase();<a name="line.90"></a>
-<span class="sourceLineNo">091</span>                        tmpInput1.add(input1);<a name="line.91"></a>
-<span class="sourceLineNo">092</span>                        tmpInput2.add(input2);<a name="line.92"></a>
-<span class="sourceLineNo">093</span>                        return this;<a name="line.93"></a>
-<span class="sourceLineNo">094</span>                }<a name="line.94"></a>
-<span class="sourceLineNo">095</span><a name="line.95"></a>
-<span class="sourceLineNo">096</span>                @Override<a name="line.96"></a>
-<span class="sourceLineNo">097</span>                public BiFunctionTesterNextDSL&lt;T, U, R&gt; thenExpectingResult(R result) {<a name="line.97"></a>
-<span class="sourceLineNo">098</span>                        return thenExpectingResult(() -&gt; result);<a name="line.98"></a>
-<span class="sourceLineNo">099</span>                }<a name="line.99"></a>
-<span class="sourceLineNo">100</span><a name="line.100"></a>
-<span class="sourceLineNo">101</span>                @Override<a name="line.101"></a>
-<span class="sourceLineNo">102</span>                public BiFunctionTesterNextDSL&lt;T, U, R&gt; thenExpectingResult(<a name="line.102"></a>
-<span class="sourceLineNo">103</span>                                Supplier&lt;R&gt; result) {<a name="line.103"></a>
-<span class="sourceLineNo">104</span>                        Objects.requireNonNull(result, "matching can't be null");<a name="line.104"></a>
-<span class="sourceLineNo">105</span>                        return thenExpectingResultThat(new SupplierEqualsToMatcher&lt;R&gt;(<a name="line.105"></a>
-<span class="sourceLineNo">106</span>                                        result));<a name="line.106"></a>
-<span class="sourceLineNo">107</span>                }<a name="line.107"></a>
-<span class="sourceLineNo">108</span><a name="line.108"></a>
-<span class="sourceLineNo">109</span>                @Override<a name="line.109"></a>
-<span class="sourceLineNo">110</span>                public BiFunctionTesterNextDSL&lt;T, U, R&gt; thenExpectingResultThat(<a name="line.110"></a>
-<span class="sourceLineNo">111</span>                                Matcher&lt;? super R&gt; matching) {<a name="line.111"></a>
-<span class="sourceLineNo">112</span>                        Objects.requireNonNull(matching, "matching can't be null");<a name="line.112"></a>
-<span class="sourceLineNo">113</span>                        return thenExpectingResultThat(() -&gt; matching);<a name="line.113"></a>
-<span class="sourceLineNo">114</span>                }<a name="line.114"></a>
-<span class="sourceLineNo">115</span><a name="line.115"></a>
-<span class="sourceLineNo">116</span>                @Override<a name="line.116"></a>
-<span class="sourceLineNo">117</span>                public BiFunctionTesterNextDSL&lt;T, U, R&gt; thenExpectingResultThat(<a name="line.117"></a>
-<span class="sourceLineNo">118</span>                                Supplier&lt;Matcher&lt;? super R&gt;&gt; matching) {<a name="line.118"></a>
-<span class="sourceLineNo">119</span>                        Objects.requireNonNull(matching, "matching can't be null");<a name="line.119"></a>
-<span class="sourceLineNo">120</span>                        tmpResult.add(matching);<a name="line.120"></a>
-<span class="sourceLineNo">121</span>                        return this;<a name="line.121"></a>
-<span class="sourceLineNo">122</span>                }<a name="line.122"></a>
-<span class="sourceLineNo">123</span><a name="line.123"></a>
-<span class="sourceLineNo">124</span>                @Override<a name="line.124"></a>
-<span class="sourceLineNo">125</span>                public BiFunctionTesterEndDSL&lt;T, U, R&gt; testNamed(String name) {<a name="line.125"></a>
-<span class="sourceLineNo">126</span>                        return testNamed(() -&gt; name);<a name="line.126"></a>
-<span class="sourceLineNo">127</span>                }<a name="line.127"></a>
-<span class="sourceLineNo">128</span><a name="line.128"></a>
-<span class="sourceLineNo">129</span>                @Override<a name="line.129"></a>
-<span class="sourceLineNo">130</span>                public BiFunctionTesterEndDSL&lt;T, U, R&gt; testNamed(Supplier&lt;String&gt; name) {<a name="line.130"></a>
-<span class="sourceLineNo">131</span>                        Objects.requireNonNull(name, "name can't be null");<a name="line.131"></a>
-<span class="sourceLineNo">132</span>                        tmpName.add(name);<a name="line.132"></a>
-<span class="sourceLineNo">133</span>                        return this;<a name="line.133"></a>
-<span class="sourceLineNo">134</span>                }<a name="line.134"></a>
-<span class="sourceLineNo">135</span><a name="line.135"></a>
-<span class="sourceLineNo">136</span>                @Override<a name="line.136"></a>
-<span class="sourceLineNo">137</span>                public BiFunctionTester&lt;T, U, R&gt; build() {<a name="line.137"></a>
-<span class="sourceLineNo">138</span>                        finalizeCase();<a name="line.138"></a>
-<span class="sourceLineNo">139</span>                        return new BiFunctionTester&lt;T, U, R&gt;(underTest, tmpInput1,<a name="line.139"></a>
-<span class="sourceLineNo">140</span>                                        tmpInput2, tmpResult, tmpName);<a name="line.140"></a>
-<span class="sourceLineNo">141</span>                }<a name="line.141"></a>
-<span class="sourceLineNo">142</span>        }<a name="line.142"></a>
-<span class="sourceLineNo">143</span><a name="line.143"></a>
-<span class="sourceLineNo">144</span>        private BiFunctionTester(BiFunction&lt;T, U, R&gt; underTest,<a name="line.144"></a>
-<span class="sourceLineNo">145</span>                        List&lt;Supplier&lt;T&gt;&gt; tmpInput1, List&lt;Supplier&lt;U&gt;&gt; tmpInput2,<a name="line.145"></a>
-<span class="sourceLineNo">146</span>                        List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; tmpResult,<a name="line.146"></a>
-<span class="sourceLineNo">147</span>                        List&lt;Supplier&lt;String&gt;&gt; tmpName) {<a name="line.147"></a>
-<span class="sourceLineNo">148</span>                this.underTest = underTest;<a name="line.148"></a>
-<span class="sourceLineNo">149</span>                this.input1 = tmpInput1;<a name="line.149"></a>
-<span class="sourceLineNo">150</span>                this.input2 = tmpInput2;<a name="line.150"></a>
-<span class="sourceLineNo">151</span>                this.result = tmpResult;<a name="line.151"></a>
-<span class="sourceLineNo">152</span>                this.name = tmpName;<a name="line.152"></a>
-<span class="sourceLineNo">153</span>        }<a name="line.153"></a>
-<span class="sourceLineNo">154</span><a name="line.154"></a>
-<span class="sourceLineNo">155</span>        /**<a name="line.155"></a>
-<span class="sourceLineNo">156</span>         * Start the creation of a tester of function.<a name="line.156"></a>
-<span class="sourceLineNo">157</span>         * <a name="line.157"></a>
-<span class="sourceLineNo">158</span>         * @param bifunctionUnderTest<a name="line.158"></a>
-<span class="sourceLineNo">159</span>         *            the function to be tested<a name="line.159"></a>
-<span class="sourceLineNo">160</span>         * @return {@link BiFunctionTesterStartDSL the DSL}<a name="line.160"></a>
-<span class="sourceLineNo">161</span>         * @throws NullPointerException<a name="line.161"></a>
-<span class="sourceLineNo">162</span>         *             when bifunctionUnderTest is null<a name="line.162"></a>
-<span class="sourceLineNo">163</span>         * @param &lt;T&gt;<a name="line.163"></a>
-<span class="sourceLineNo">164</span>         *            the first input argument type<a name="line.164"></a>
-<span class="sourceLineNo">165</span>         * @param &lt;U&gt;<a name="line.165"></a>
-<span class="sourceLineNo">166</span>         *            the second input argument type<a name="line.166"></a>
-<span class="sourceLineNo">167</span>         * @param &lt;R&gt;<a name="line.167"></a>
-<span class="sourceLineNo">168</span>         *            the result type<a name="line.168"></a>
-<span class="sourceLineNo">169</span>         * @see ch.powerunit.TestDelegate<a name="line.169"></a>
-<span class="sourceLineNo">170</span>         */<a name="line.170"></a>
-<span class="sourceLineNo">171</span>        public static &lt;T, U, R&gt; BiFunctionTesterStartDSL&lt;T, U, R&gt; of(<a name="line.171"></a>
-<span class="sourceLineNo">172</span>                        BiFunction&lt;T, U, R&gt; bifunctionUnderTest) {<a name="line.172"></a>
-<span class="sourceLineNo">173</span>                Objects.requireNonNull(bifunctionUnderTest,<a name="line.173"></a>
-<span class="sourceLineNo">174</span>                                "bifunctionUnderTest can't be null");<a name="line.174"></a>
-<span class="sourceLineNo">175</span>                return new BiFunctionTesterDSL&lt;T, U, R&gt;(bifunctionUnderTest);<a name="line.175"></a>
-<span class="sourceLineNo">176</span>        }<a name="line.176"></a>
-<span class="sourceLineNo">177</span><a name="line.177"></a>
-<span class="sourceLineNo">178</span>        /**<a name="line.178"></a>
-<span class="sourceLineNo">179</span>         * Used by the framework.<a name="line.179"></a>
-<span class="sourceLineNo">180</span>         * <a name="line.180"></a>
-<span class="sourceLineNo">181</span>         * @return the underTest<a name="line.181"></a>
-<span class="sourceLineNo">182</span>         */<a name="line.182"></a>
-<span class="sourceLineNo">183</span>        public BiFunction&lt;T, U, R&gt; getUnderTest() {<a name="line.183"></a>
-<span class="sourceLineNo">184</span>                return underTest;<a name="line.184"></a>
-<span class="sourceLineNo">185</span>        }<a name="line.185"></a>
-<span class="sourceLineNo">186</span><a name="line.186"></a>
-<span class="sourceLineNo">187</span>        /**<a name="line.187"></a>
-<span class="sourceLineNo">188</span>         * Used by the framework.<a name="line.188"></a>
-<span class="sourceLineNo">189</span>         * <a name="line.189"></a>
-<span class="sourceLineNo">190</span>         * @return the first input<a name="line.190"></a>
-<span class="sourceLineNo">191</span>         */<a name="line.191"></a>
-<span class="sourceLineNo">192</span>        public List&lt;Supplier&lt;T&gt;&gt; getInput1() {<a name="line.192"></a>
-<span class="sourceLineNo">193</span>                return Collections.unmodifiableList(input1);<a name="line.193"></a>
-<span class="sourceLineNo">194</span>        }<a name="line.194"></a>
-<span class="sourceLineNo">195</span><a name="line.195"></a>
-<span class="sourceLineNo">196</span>        /**<a name="line.196"></a>
-<span class="sourceLineNo">197</span>         * Used by the framework.<a name="line.197"></a>
-<span class="sourceLineNo">198</span>         * <a name="line.198"></a>
-<span class="sourceLineNo">199</span>         * @return the first input<a name="line.199"></a>
-<span class="sourceLineNo">200</span>         */<a name="line.200"></a>
-<span class="sourceLineNo">201</span>        public List&lt;Supplier&lt;U&gt;&gt; getInput2() {<a name="line.201"></a>
-<span class="sourceLineNo">202</span>                return Collections.unmodifiableList(input2);<a name="line.202"></a>
-<span class="sourceLineNo">203</span>        }<a name="line.203"></a>
-<span class="sourceLineNo">204</span><a name="line.204"></a>
-<span class="sourceLineNo">205</span>        /**<a name="line.205"></a>
-<span class="sourceLineNo">206</span>         * Used by the framework.<a name="line.206"></a>
-<span class="sourceLineNo">207</span>         * <a name="line.207"></a>
-<span class="sourceLineNo">208</span>         * @return the result<a name="line.208"></a>
-<span class="sourceLineNo">209</span>         */<a name="line.209"></a>
-<span class="sourceLineNo">210</span>        public List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; getResult() {<a name="line.210"></a>
-<span class="sourceLineNo">211</span>                return Collections.unmodifiableList(result);<a name="line.211"></a>
-<span class="sourceLineNo">212</span>        }<a name="line.212"></a>
-<span class="sourceLineNo">213</span><a name="line.213"></a>
-<span class="sourceLineNo">214</span>        /**<a name="line.214"></a>
-<span class="sourceLineNo">215</span>         * Used by the framework.<a name="line.215"></a>
-<span class="sourceLineNo">216</span>         * <a name="line.216"></a>
-<span class="sourceLineNo">217</span>         * @return the name<a name="line.217"></a>
-<span class="sourceLineNo">218</span>         */<a name="line.218"></a>
-<span class="sourceLineNo">219</span>        public List&lt;Supplier&lt;String&gt;&gt; getName() {<a name="line.219"></a>
-<span class="sourceLineNo">220</span>                return Collections.unmodifiableList(name);<a name="line.220"></a>
-<span class="sourceLineNo">221</span>        }<a name="line.221"></a>
-<span class="sourceLineNo">222</span><a name="line.222"></a>
-<span class="sourceLineNo">223</span>}<a name="line.223"></a>
+<span class="sourceLineNo">027</span>import java.util.function.Supplier;<a name="line.27"></a>
+<span class="sourceLineNo">028</span><a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.hamcrest.Matcher;<a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30"></a>
+<span class="sourceLineNo">031</span>import ch.powerunit.TestInterface;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import ch.powerunit.bifunction.impl.BiFunctionTesterImpl;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import ch.powerunit.bifunction.lang.BiFunctionTesterDefineDSL;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import ch.powerunit.bifunction.lang.BiFunctionTesterEndDSL;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import ch.powerunit.bifunction.lang.BiFunctionTesterNextDSL;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import ch.powerunit.function.impl.SupplierEqualsToMatcher;<a name="line.37"></a>
+<span class="sourceLineNo">038</span><a name="line.38"></a>
+<span class="sourceLineNo">039</span>/**<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * Tester for function.<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * <a name="line.41"></a>
+<span class="sourceLineNo">042</span> * @author borettim<a name="line.42"></a>
+<span class="sourceLineNo">043</span> * @since 0.3.0<a name="line.43"></a>
+<span class="sourceLineNo">044</span> */<a name="line.44"></a>
+<span class="sourceLineNo">045</span>@TestInterface(BiFunctionTesterImpl.class)<a name="line.45"></a>
+<span class="sourceLineNo">046</span>public final class BiFunctionTester&lt;T, U, R&gt; {<a name="line.46"></a>
+<span class="sourceLineNo">047</span>        private final BiFunction&lt;T, U, R&gt; underTest;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>        private final List&lt;Supplier&lt;T&gt;&gt; input1;<a name="line.48"></a>
+<span class="sourceLineNo">049</span>        private final List&lt;Supplier&lt;U&gt;&gt; input2;<a name="line.49"></a>
+<span class="sourceLineNo">050</span>        private final List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; result;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>        private final List&lt;Supplier&lt;String&gt;&gt; name;<a name="line.51"></a>
+<span class="sourceLineNo">052</span><a name="line.52"></a>
+<span class="sourceLineNo">053</span>        private static class BiFunctionTesterDSL&lt;T, U, R&gt; implements<a name="line.53"></a>
+<span class="sourceLineNo">054</span>                        BiFunctionTesterDefineDSL&lt;T, U, R&gt;,<a name="line.54"></a>
+<span class="sourceLineNo">055</span>                        BiFunctionTesterEndDSL&lt;T, U, R&gt;, BiFunctionTesterNextDSL&lt;T, U, R&gt;,<a name="line.55"></a>
+<span class="sourceLineNo">056</span>                        BiFunctionTesterStartDSL&lt;T, U, R&gt; {<a name="line.56"></a>
+<span class="sourceLineNo">057</span><a name="line.57"></a>
+<span class="sourceLineNo">058</span>                private final BiFunction&lt;T, U, R&gt; underTest;<a name="line.58"></a>
+<span class="sourceLineNo">059</span><a name="line.59"></a>
+<span class="sourceLineNo">060</span>                private List&lt;Supplier&lt;T&gt;&gt; tmpInput1 = new ArrayList&lt;&gt;();<a name="line.60"></a>
+<span class="sourceLineNo">061</span><a name="line.61"></a>
+<span class="sourceLineNo">062</span>                private List&lt;Supplier&lt;U&gt;&gt; tmpInput2 = new ArrayList&lt;&gt;();<a name="line.62"></a>
+<span class="sourceLineNo">063</span><a name="line.63"></a>
+<span class="sourceLineNo">064</span>                private List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; tmpResult = new ArrayList&lt;&gt;();<a name="line.64"></a>
+<span class="sourceLineNo">065</span><a name="line.65"></a>
+<span class="sourceLineNo">066</span>                private List&lt;Supplier&lt;String&gt;&gt; tmpName = new ArrayList&lt;&gt;();<a name="line.66"></a>
+<span class="sourceLineNo">067</span><a name="line.67"></a>
+<span class="sourceLineNo">068</span>                private void finalizeCase() {<a name="line.68"></a>
+<span class="sourceLineNo">069</span>                        if (tmpName.size() &lt; tmpInput1.size()) {<a name="line.69"></a>
+<span class="sourceLineNo">070</span>                                tmpName.add(() -&gt; "");<a name="line.70"></a>
+<span class="sourceLineNo">071</span>                        }<a name="line.71"></a>
+<span class="sourceLineNo">072</span>                }<a name="line.72"></a>
+<span class="sourceLineNo">073</span><a name="line.73"></a>
+<span class="sourceLineNo">074</span>                public BiFunctionTesterDSL(BiFunction&lt;T, U, R&gt; underTest) {<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                        this.underTest = underTest;<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                }<a name="line.76"></a>
+<span class="sourceLineNo">077</span><a name="line.77"></a>
+<span class="sourceLineNo">078</span>                @Override<a name="line.78"></a>
+<span class="sourceLineNo">079</span>                public BiFunctionTesterDefineDSL&lt;T, U, R&gt; passingAsParameter(T input1,<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                                U input2) {<a name="line.80"></a>
+<span class="sourceLineNo">081</span>                        return passingAsParameter(() -&gt; input1, () -&gt; input2);<a name="line.81"></a>
+<span class="sourceLineNo">082</span>                }<a name="line.82"></a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span>                @Override<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                public BiFunctionTesterDefineDSL&lt;T, U, R&gt; passingAsParameter(<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                                Supplier&lt;T&gt; input1, Supplier&lt;U&gt; input2) {<a name="line.86"></a>
+<span class="sourceLineNo">087</span>                        Objects.requireNonNull(input1, "input1 can't be null");<a name="line.87"></a>
+<span class="sourceLineNo">088</span>                        Objects.requireNonNull(input2, "input2 can't be null");<a name="line.88"></a>
+<span class="sourceLineNo">089</span>                        finalizeCase();<a name="line.89"></a>
+<span class="sourceLineNo">090</span>                        tmpInput1.add(input1);<a name="line.90"></a>
+<span class="sourceLineNo">091</span>                        tmpInput2.add(input2);<a name="line.91"></a>
+<span class="sourceLineNo">092</span>                        return this;<a name="line.92"></a>
+<span class="sourceLineNo">093</span>                }<a name="line.93"></a>
+<span class="sourceLineNo">094</span><a name="line.94"></a>
+<span class="sourceLineNo">095</span>                @Override<a name="line.95"></a>
+<span class="sourceLineNo">096</span>                public BiFunctionTesterNextDSL&lt;T, U, R&gt; thenExpectingResult(R result) {<a name="line.96"></a>
+<span class="sourceLineNo">097</span>                        return thenExpectingResult(() -&gt; result);<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                }<a name="line.98"></a>
+<span class="sourceLineNo">099</span><a name="line.99"></a>
+<span class="sourceLineNo">100</span>                @Override<a name="line.100"></a>
+<span class="sourceLineNo">101</span>                public BiFunctionTesterNextDSL&lt;T, U, R&gt; thenExpectingResult(<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                                Supplier&lt;R&gt; result) {<a name="line.102"></a>
+<span class="sourceLineNo">103</span>                        Objects.requireNonNull(result, "matching can't be null");<a name="line.103"></a>
+<span class="sourceLineNo">104</span>                        return thenExpectingResultThat(new SupplierEqualsToMatcher&lt;R&gt;(<a name="line.104"></a>
+<span class="sourceLineNo">105</span>                                        result));<a name="line.105"></a>
+<span class="sourceLineNo">106</span>                }<a name="line.106"></a>
+<span class="sourceLineNo">107</span><a name="line.107"></a>
+<span class="sourceLineNo">108</span>                @Override<a name="line.108"></a>
+<span class="sourceLineNo">109</span>                public BiFunctionTesterNextDSL&lt;T, U, R&gt; thenExpectingResultThat(<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                                Matcher&lt;? super R&gt; matching) {<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                        Objects.requireNonNull(matching, "matching can't be null");<a name="line.111"></a>
+<span class="sourceLineNo">112</span>                        return thenExpectingResultThat(() -&gt; matching);<a name="line.112"></a>
+<span class="sourceLineNo">113</span>                }<a name="line.113"></a>
+<span class="sourceLineNo">114</span><a name="line.114"></a>
+<span class="sourceLineNo">115</span>                @Override<a name="line.115"></a>
+<span class="sourceLineNo">116</span>                public BiFunctionTesterNextDSL&lt;T, U, R&gt; thenExpectingResultThat(<a name="line.116"></a>
+<span class="sourceLineNo">117</span>                                Supplier&lt;Matcher&lt;? super R&gt;&gt; matching) {<a name="line.117"></a>
+<span class="sourceLineNo">118</span>                        Objects.requireNonNull(matching, "matching can't be null");<a name="line.118"></a>
+<span class="sourceLineNo">119</span>                        tmpResult.add(matching);<a name="line.119"></a>
+<span class="sourceLineNo">120</span>                        return this;<a name="line.120"></a>
+<span class="sourceLineNo">121</span>                }<a name="line.121"></a>
+<span class="sourceLineNo">122</span><a name="line.122"></a>
+<span class="sourceLineNo">123</span>                @Override<a name="line.123"></a>
+<span class="sourceLineNo">124</span>                public BiFunctionTesterEndDSL&lt;T, U, R&gt; testNamed(String name) {<a name="line.124"></a>
+<span class="sourceLineNo">125</span>                        return testNamed(() -&gt; name);<a name="line.125"></a>
+<span class="sourceLineNo">126</span>                }<a name="line.126"></a>
+<span class="sourceLineNo">127</span><a name="line.127"></a>
+<span class="sourceLineNo">128</span>                @Override<a name="line.128"></a>
+<span class="sourceLineNo">129</span>                public BiFunctionTesterEndDSL&lt;T, U, R&gt; testNamed(Supplier&lt;String&gt; name) {<a name="line.129"></a>
+<span class="sourceLineNo">130</span>                        Objects.requireNonNull(name, "name can't be null");<a name="line.130"></a>
+<span class="sourceLineNo">131</span>                        tmpName.add(name);<a name="line.131"></a>
+<span class="sourceLineNo">132</span>                        return this;<a name="line.132"></a>
+<span class="sourceLineNo">133</span>                }<a name="line.133"></a>
+<span class="sourceLineNo">134</span><a name="line.134"></a>
+<span class="sourceLineNo">135</span>                @Override<a name="line.135"></a>
+<span class="sourceLineNo">136</span>                public BiFunctionTester&lt;T, U, R&gt; build() {<a name="line.136"></a>
+<span class="sourceLineNo">137</span>                        finalizeCase();<a name="line.137"></a>
+<span class="sourceLineNo">138</span>                        return new BiFunctionTester&lt;T, U, R&gt;(underTest, tmpInput1,<a name="line.138"></a>
+<span class="sourceLineNo">139</span>                                        tmpInput2, tmpResult, tmpName);<a name="line.139"></a>
+<span class="sourceLineNo">140</span>                }<a name="line.140"></a>
+<span class="sourceLineNo">141</span>        }<a name="line.141"></a>
+<span class="sourceLineNo">142</span><a name="line.142"></a>
+<span class="sourceLineNo">143</span>        private BiFunctionTester(BiFunction&lt;T, U, R&gt; underTest,<a name="line.143"></a>
+<span class="sourceLineNo">144</span>                        List&lt;Supplier&lt;T&gt;&gt; tmpInput1, List&lt;Supplier&lt;U&gt;&gt; tmpInput2,<a name="line.144"></a>
+<span class="sourceLineNo">145</span>                        List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; tmpResult,<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                        List&lt;Supplier&lt;String&gt;&gt; tmpName) {<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                this.underTest = underTest;<a name="line.147"></a>
+<span class="sourceLineNo">148</span>                this.input1 = tmpInput1;<a name="line.148"></a>
+<span class="sourceLineNo">149</span>                this.input2 = tmpInput2;<a name="line.149"></a>
+<span class="sourceLineNo">150</span>                this.result = tmpResult;<a name="line.150"></a>
+<span class="sourceLineNo">151</span>                this.name = tmpName;<a name="line.151"></a>
+<span class="sourceLineNo">152</span>        }<a name="line.152"></a>
+<span class="sourceLineNo">153</span><a name="line.153"></a>
+<span class="sourceLineNo">154</span>        /**<a name="line.154"></a>
+<span class="sourceLineNo">155</span>         * Start the creation of a tester of function.<a name="line.155"></a>
+<span class="sourceLineNo">156</span>         * <a name="line.156"></a>
+<span class="sourceLineNo">157</span>         * @param bifunctionUnderTest<a name="line.157"></a>
+<span class="sourceLineNo">158</span>         *            the function to be tested<a name="line.158"></a>
+<span class="sourceLineNo">159</span>         * @return {@link BiFunctionTesterStartDSL the DSL}<a name="line.159"></a>
+<span class="sourceLineNo">160</span>         * @throws NullPointerException<a name="line.160"></a>
+<span class="sourceLineNo">161</span>         *             when bifunctionUnderTest is null<a name="line.161"></a>
+<span class="sourceLineNo">162</span>         * @param &lt;T&gt;<a name="line.162"></a>
+<span class="sourceLineNo">163</span>         *            the first input argument type<a name="line.163"></a>
+<span class="sourceLineNo">164</span>         * @param &lt;U&gt;<a name="line.164"></a>
+<span class="sourceLineNo">165</span>         *            the second input argument type<a name="line.165"></a>
+<span class="sourceLineNo">166</span>         * @param &lt;R&gt;<a name="line.166"></a>
+<span class="sourceLineNo">167</span>         *            the result type<a name="line.167"></a>
+<span class="sourceLineNo">168</span>         * @see ch.powerunit.TestDelegate<a name="line.168"></a>
+<span class="sourceLineNo">169</span>         */<a name="line.169"></a>
+<span class="sourceLineNo">170</span>        public static &lt;T, U, R&gt; BiFunctionTesterStartDSL&lt;T, U, R&gt; of(<a name="line.170"></a>
+<span class="sourceLineNo">171</span>                        BiFunction&lt;T, U, R&gt; bifunctionUnderTest) {<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                Objects.requireNonNull(bifunctionUnderTest,<a name="line.172"></a>
+<span class="sourceLineNo">173</span>                                "bifunctionUnderTest can't be null");<a name="line.173"></a>
+<span class="sourceLineNo">174</span>                return new BiFunctionTesterDSL&lt;T, U, R&gt;(bifunctionUnderTest);<a name="line.174"></a>
+<span class="sourceLineNo">175</span>        }<a name="line.175"></a>
+<span class="sourceLineNo">176</span><a name="line.176"></a>
+<span class="sourceLineNo">177</span>        /**<a name="line.177"></a>
+<span class="sourceLineNo">178</span>         * Used by the framework.<a name="line.178"></a>
+<span class="sourceLineNo">179</span>         * <a name="line.179"></a>
+<span class="sourceLineNo">180</span>         * @return the underTest<a name="line.180"></a>
+<span class="sourceLineNo">181</span>         */<a name="line.181"></a>
+<span class="sourceLineNo">182</span>        public BiFunction&lt;T, U, R&gt; getUnderTest() {<a name="line.182"></a>
+<span class="sourceLineNo">183</span>                return underTest;<a name="line.183"></a>
+<span class="sourceLineNo">184</span>        }<a name="line.184"></a>
+<span class="sourceLineNo">185</span><a name="line.185"></a>
+<span class="sourceLineNo">186</span>        /**<a name="line.186"></a>
+<span class="sourceLineNo">187</span>         * Used by the framework.<a name="line.187"></a>
+<span class="sourceLineNo">188</span>         * <a name="line.188"></a>
+<span class="sourceLineNo">189</span>         * @return the first input<a name="line.189"></a>
+<span class="sourceLineNo">190</span>         */<a name="line.190"></a>
+<span class="sourceLineNo">191</span>        public List&lt;Supplier&lt;T&gt;&gt; getInput1() {<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                return Collections.unmodifiableList(input1);<a name="line.192"></a>
+<span class="sourceLineNo">193</span>        }<a name="line.193"></a>
+<span class="sourceLineNo">194</span><a name="line.194"></a>
+<span class="sourceLineNo">195</span>        /**<a name="line.195"></a>
+<span class="sourceLineNo">196</span>         * Used by the framework.<a name="line.196"></a>
+<span class="sourceLineNo">197</span>         * <a name="line.197"></a>
+<span class="sourceLineNo">198</span>         * @return the first input<a name="line.198"></a>
+<span class="sourceLineNo">199</span>         */<a name="line.199"></a>
+<span class="sourceLineNo">200</span>        public List&lt;Supplier&lt;U&gt;&gt; getInput2() {<a name="line.200"></a>
+<span class="sourceLineNo">201</span>                return Collections.unmodifiableList(input2);<a name="line.201"></a>
+<span class="sourceLineNo">202</span>        }<a name="line.202"></a>
+<span class="sourceLineNo">203</span><a name="line.203"></a>
+<span class="sourceLineNo">204</span>        /**<a name="line.204"></a>
+<span class="sourceLineNo">205</span>         * Used by the framework.<a name="line.205"></a>
+<span class="sourceLineNo">206</span>         * <a name="line.206"></a>
+<span class="sourceLineNo">207</span>         * @return the result<a name="line.207"></a>
+<span class="sourceLineNo">208</span>         */<a name="line.208"></a>
+<span class="sourceLineNo">209</span>        public List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; getResult() {<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                return Collections.unmodifiableList(result);<a name="line.210"></a>
+<span class="sourceLineNo">211</span>        }<a name="line.211"></a>
+<span class="sourceLineNo">212</span><a name="line.212"></a>
+<span class="sourceLineNo">213</span>        /**<a name="line.213"></a>
+<span class="sourceLineNo">214</span>         * Used by the framework.<a name="line.214"></a>
+<span class="sourceLineNo">215</span>         * <a name="line.215"></a>
+<span class="sourceLineNo">216</span>         * @return the name<a name="line.216"></a>
+<span class="sourceLineNo">217</span>         */<a name="line.217"></a>
+<span class="sourceLineNo">218</span>        public List&lt;Supplier&lt;String&gt;&gt; getName() {<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                return Collections.unmodifiableList(name);<a name="line.219"></a>
+<span class="sourceLineNo">220</span>        }<a name="line.220"></a>
+<span class="sourceLineNo">221</span><a name="line.221"></a>
+<span class="sourceLineNo">222</span>}<a name="line.222"></a>
 
 
 

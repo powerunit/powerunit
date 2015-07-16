@@ -20,7 +20,6 @@
 package ch.powerunit.bifunction.impl;
 
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.stream.Stream;
 import java.util.stream.Stream.Builder;
 
@@ -38,24 +37,24 @@ import ch.powerunit.bifunction.BiFunctionTester;
  *
  */
 @TestDelegator
-<span class="fc" id="L41">public class BiFunctionTesterImpl&lt;T, U, R&gt; implements TestSuite {</span>
+<span class="fc" id="L40">public class BiFunctionTesterImpl&lt;T, U, R&gt; implements TestSuite {</span>
 	@Parameters
 	public static &lt;T, U, R&gt; Stream&lt;Object[]&gt; getParameters(
 			BiFunctionTester&lt;T, U, R&gt; input) {
-<span class="fc" id="L45">		Builder&lt;Object[]&gt; b = Stream.builder();</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">		for (int i = 0; i &lt; input.getInput1().size(); i++) {</span>
-<span class="fc" id="L47">			Matcher&lt;? super R&gt; result = input.getResult().get(i).get();</span>
-<span class="fc" id="L48">			T param1 = input.getInput1().get(i).get();</span>
-<span class="fc" id="L49">			U param2 = input.getInput2().get(i).get();</span>
-<span class="fc" id="L50">			String name = input.getName().get(i).get();</span>
-<span class="fc bfc" id="L51" title="All 2 branches covered.">			if (&quot;&quot;.equals(name)) {</span>
-<span class="fc" id="L52">				name = &quot;Passing `&quot; + param1 + &quot;` and `&quot; + param2 + &quot;`&quot;</span>
+<span class="fc" id="L44">		Builder&lt;Object[]&gt; b = Stream.builder();</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		for (int i = 0; i &lt; input.getInput1().size(); i++) {</span>
+<span class="fc" id="L46">			Matcher&lt;? super R&gt; result = input.getResult().get(i).get();</span>
+<span class="fc" id="L47">			T param1 = input.getInput1().get(i).get();</span>
+<span class="fc" id="L48">			U param2 = input.getInput2().get(i).get();</span>
+<span class="fc" id="L49">			String name = input.getName().get(i).get();</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">			if (&quot;&quot;.equals(name)) {</span>
+<span class="fc" id="L51">				name = &quot;Passing `&quot; + param1 + &quot;` and `&quot; + param2 + &quot;`&quot;</span>
 						+ &quot; then &quot; + result + &quot; is expected&quot;;
 			}
-<span class="fc" id="L55">			b.add(new Object[] { name, param1, param2, result,</span>
-<span class="fc" id="L56">					input.getUnderTest() });</span>
+<span class="fc" id="L54">			b.add(new Object[] { name, param1, param2, result,</span>
+<span class="fc" id="L55">					input.getUnderTest() });</span>
 		}
-<span class="fc" id="L58">		return b.build();</span>
+<span class="fc" id="L57">		return b.build();</span>
 	}
 
 	@Parameter(0)
@@ -75,7 +74,7 @@ import ch.powerunit.bifunction.BiFunctionTester;
 
 	@Test(name = &quot;%1$s&quot;)
 	public void testFunction() {
-<span class="fc" id="L78">		assertThatBiFunction(function, input1, input2).is(expectedResult);</span>
-<span class="fc" id="L79">	}</span>
+<span class="fc" id="L77">		assertThatBiFunction(function, input1, input2).is(expectedResult);</span>
+<span class="fc" id="L78">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
