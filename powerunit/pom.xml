@@ -19,6 +19,11 @@
 			<url>http://www.gnu.org/licenses/gpl.txt</url>
 		</license>
 	</licenses>
+	
+	<organization>
+		<name>Powerunit</name>
+		<url>http://www.powerunit.ch</url>
+	</organization>
 
 	<distributionManagement>
 		<snapshotRepository>

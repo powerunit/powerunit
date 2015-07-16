@@ -14,7 +14,7 @@ The Powerunit framework
  
  * Some additional matcher are available to support new capabilities of the JDK 1.8, for instance the Optional class.
  
- * By default the system use a fast fail approach, but it is possible to switch to {{{fail at end approach}multi.html}}
+ * By default the system use a fast fail approach, but it is possible to switch to {{{./multi.html}fail at end approach}}
  (since version 0.4.0).
  
  []
