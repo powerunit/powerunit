@@ -120,6 +120,12 @@ public class AssertThatTests {
 					TestSuite.DSL.assertThat((Number) Integer.valueOf(0))
 							.as(Double.class).is(0d);
 				}, "The value 0 can't be casted to java.lang.Double");
+		AllTests.testNoException("testAssertThatAsConverterOK", () -> {
+			TestSuite.DSL.assertThat(0).as(Integer.class, (p) -> p + 1).is(1);
+		});
+		AllTests.testException("testAssertThatAsConverterKONull", () -> {
+			TestSuite.DSL.assertThat(0).as(null, (p) -> p + 1);
+		}, "targetClass argument can't be null");
 	}
 
 }

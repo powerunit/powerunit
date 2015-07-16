@@ -19,6 +19,7 @@
  */
 package ch.powerunit.impl;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.hamcrest.Description;
@@ -98,5 +99,15 @@ public class AssertThatObjectImpl<T> implements AssertThatObject<T>,
 				return (P) v;
 			}
 		});
+	}
+
+	@Override
+	public <P> AssertThatCastableObject<P> as(Class<P> targetClass,
+			Function<T, P> converter) {
+		if (targetClass == null) {
+			throw new InternalError("targetClass argument can't be null");
+		}
+		return new AssertThatObjectImpl<P>(assertion, msg,
+				() -> converter.apply(provider.get()));
 	}
 }

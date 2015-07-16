@@ -19,6 +19,8 @@
  */
 package ch.powerunit;
 
+import java.util.function.Function;
+
 /**
  * This is an intermediate and optional step on assertion to cast an object into
  * a sub-object.
@@ -41,4 +43,21 @@ public interface AssertThatCastableObject<T> extends AssertThatObject<T> {
 	 *            The subtype for the conversion
 	 */
 	<P extends T> AssertThatObject<P> as(Class<P> clazz);
+
+	/**
+	 * Convert a received object into another one, based on a passed converter.
+	 * 
+	 * @param targetClass
+	 *            he target class
+	 * @param converter
+	 *            the converter to be used to converter the object to the target
+	 *            class.
+	 * @return {@link AssertThatCastableObject the assertion on the result of
+	 *         the conversion}.
+	 * @param <P>
+	 *            the target type
+	 * @since 0.4.0
+	 */
+	<P> AssertThatCastableObject<P> as(Class<P> targetClass,
+			Function<T, P> converter);
 }
