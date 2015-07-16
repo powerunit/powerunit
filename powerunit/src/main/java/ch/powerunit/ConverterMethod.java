@@ -21,6 +21,7 @@ package ch.powerunit;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -39,6 +40,10 @@ interface ConverterMethod {
 	 * @param converter
 	 *            the converter to be used if the received is not null.
 	 * @return the converter that support the null value.
+	 * @param <T>
+	 *            input type of the converter.
+	 * @param <R>
+	 *            output type of the converter.
 	 * @since 0.4.0
 	 */
 	default <T, R> Function<T, R> nullToNullConverter(Function<T, R> converter) {
@@ -79,5 +84,23 @@ interface ConverterMethod {
 	 */
 	default Function<Calendar, Date> calendarToDate() {
 		return nullToNullConverter((p) -> p.getTime());
+	}
+
+	/**
+	 * Return a function that get a value from a {@link Map}, as converter.
+	 * 
+	 * @param key
+	 *            the key to be used to retrieve the value from the {@link Map}
+	 *            ; Can't be null.
+	 * @return a {@link Function} to get a value from a {@link Map}.
+	 * @param <K>
+	 *            the type of the Key.
+	 * @param <V>
+	 *            the type of the Value.
+	 * @since 0.4.0
+	 */
+	default <K, V> Function<Map<K, V>, V> mapToValue(K key) {
+		Objects.requireNonNull(key, "key can't be null");
+		return nullToNullConverter((Map<K, V> p) -> p.get(key));
 	}
 }
