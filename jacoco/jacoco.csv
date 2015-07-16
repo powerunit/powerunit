@@ -52,7 +52,7 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.processor,PowerUnitP
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers.impl,MatcherTesterImpl,0,453,1,35,0,65,1,26,0,9
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers.impl,RejectImpl,0,15,0,0,0,6,0,3,0,3
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers.impl,MatcherAssertionImpl,0,57,0,0,0,20,0,12,0,12
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatObjectImpl,20,190,3,21,1,35,3,13,0,4
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatObjectImpl,20,214,3,23,1,39,3,16,0,6
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultPowerUnitRunnerImpl,244,1135,12,68,42,293,13,109,3,79
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatStringImpl,0,6,0,0,0,2,0,1,0,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,FailureImpl,3,14,1,3,1,5,2,2,1,1
