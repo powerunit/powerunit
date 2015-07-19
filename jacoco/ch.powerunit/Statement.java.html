@@ -42,155 +42,155 @@ import ch.powerunit.exception.InternalError;
 @FunctionalInterface
 public interface Statement&lt;P, T extends Throwable&gt; {
 
-    /**
-     * Executable code.
-     * 
-     * @param parameter
-     *            A parameter for the statement
-     * @throws Throwable
-     *             in case of error.
-     */
-    void run(P parameter) throws Throwable;// should be T, but T seem to produce
-                                           // a bug in the compiler
+	/**
+	 * Executable code.
+	 * 
+	 * @param parameter
+	 *            A parameter for the statement
+	 * @throws Throwable
+	 *             in case of error.
+	 */
+	void run(P parameter) throws Throwable;// should be T, but T seem to produce
+											// a bug in the compiler
 
-    /**
-     * Used to provide a name (for internal use purpose).
-     * 
-     * @return the string, by default null.
-     * @since 0.1.0
-     */
-    default String getName() {
-<span class="nc" id="L63">        return null;</span>
-    }
+	/**
+	 * Used to provide a name (for internal use purpose).
+	 * 
+	 * @return the string, by default null.
+	 * @since 0.1.0
+	 */
+	default String getName() {
+<span class="nc" id="L63">		return null;</span>
+	}
 
-    /**
-     * Aggregate this statement and then the following. The second statement is
-     * done, even in case of exception in the first one.
-     * 
-     * @param after
-     *            the next statement
-     * @return the new statement
-     */
-    default Statement&lt;P, T&gt; andThenAlways(Statement&lt;P, T&gt; after) {
-<span class="fc" id="L75">        Objects.requireNonNull(after);</span>
-<span class="fc" id="L76">        return (p) -&gt; {</span>
-            try {
-<span class="fc" id="L78">                run(p);</span>
-            } finally {
-<span class="pc" id="L80">                after.run(p);</span>
-<span class="fc" id="L81">            }</span>
-<span class="fc" id="L82">        };</span>
-    }
+	/**
+	 * Aggregate this statement and then the following. The second statement is
+	 * done, even in case of exception in the first one.
+	 * 
+	 * @param after
+	 *            the next statement
+	 * @return the new statement
+	 */
+	default Statement&lt;P, T&gt; andThenAlways(Statement&lt;P, T&gt; after) {
+<span class="fc" id="L75">		Objects.requireNonNull(after);</span>
+<span class="fc" id="L76">		return (p) -&gt; {</span>
+			try {
+<span class="fc" id="L78">				run(p);</span>
+			} finally {
+<span class="pc" id="L80">				after.run(p);</span>
+<span class="fc" id="L81">			}</span>
+<span class="fc" id="L82">		};</span>
+	}
 
-    /**
-     * Aggregate this statement and then the following. The second statement is
-     * done except in case of exception in the first one.
-     * 
-     * @param after
-     *            the next statement
-     * @return the new statement
-     */
-    default Statement&lt;P, T&gt; andThenOnlySuccess(Statement&lt;P, T&gt; after) {
-<span class="fc" id="L94">        Objects.requireNonNull(after);</span>
-<span class="fc" id="L95">        return (p) -&gt; {</span>
-<span class="fc" id="L96">            run(p);</span>
-<span class="fc" id="L97">            after.run(p);</span>
-<span class="fc" id="L98">        };</span>
-    }
+	/**
+	 * Aggregate this statement and then the following. The second statement is
+	 * done except in case of exception in the first one.
+	 * 
+	 * @param after
+	 *            the next statement
+	 * @return the new statement
+	 */
+	default Statement&lt;P, T&gt; andThenOnlySuccess(Statement&lt;P, T&gt; after) {
+<span class="fc" id="L94">		Objects.requireNonNull(after);</span>
+<span class="fc" id="L95">		return (p) -&gt; {</span>
+<span class="fc" id="L96">			run(p);</span>
+<span class="fc" id="L97">			after.run(p);</span>
+<span class="fc" id="L98">		};</span>
+	}
 
-    /**
-     * Build a around statement (do something, then something others, and after
-     * one a third statement, event in case of exception.
-     * 
-     * @param internal
-     *            the internal part
-     * @param before
-     *            the first statement
-     * @param after
-     *            the last statement, done event in case of exception.
-     * @return the new statement.
-     * @param &lt;P&gt;
-     *            The type of the parameter
-     * @param &lt;T&gt;
-     *            the exception type
-     */
-    static &lt;P, T extends Throwable&gt; Statement&lt;P, T&gt; around(
-            Statement&lt;P, T&gt; internal, Statement&lt;P, T&gt; before,
-            Statement&lt;P, T&gt; after) {
-<span class="fc" id="L120">        Objects.requireNonNull(internal);</span>
-<span class="fc" id="L121">        Objects.requireNonNull(before);</span>
-<span class="fc" id="L122">        Objects.requireNonNull(after);</span>
-<span class="fc" id="L123">        return before.andThenOnlySuccess(internal).andThenAlways(after);</span>
-    }
+	/**
+	 * Build a around statement (do something, then something others, and after
+	 * one a third statement, event in case of exception.
+	 * 
+	 * @param internal
+	 *            the internal part
+	 * @param before
+	 *            the first statement
+	 * @param after
+	 *            the last statement, done event in case of exception.
+	 * @return the new statement.
+	 * @param &lt;P&gt;
+	 *            The type of the parameter
+	 * @param &lt;T&gt;
+	 *            the exception type
+	 */
+	static &lt;P, T extends Throwable&gt; Statement&lt;P, T&gt; around(
+			Statement&lt;P, T&gt; internal, Statement&lt;P, T&gt; before,
+			Statement&lt;P, T&gt; after) {
+<span class="fc" id="L120">		Objects.requireNonNull(internal);</span>
+<span class="fc" id="L121">		Objects.requireNonNull(before);</span>
+<span class="fc" id="L122">		Objects.requireNonNull(after);</span>
+<span class="fc" id="L123">		return before.andThenOnlySuccess(internal).andThenAlways(after);</span>
+	}
 
-    /**
-     * Build a statement based on a method-
-     * 
-     * @param target
-     *            the target object
-     * @param method
-     *            the method
-     * @return the new statement.
-     * @param &lt;P&gt;
-     *            The type of the parameter
-     * @param &lt;T&gt;
-     *            the exception type
-     */
-    static &lt;P, T extends Throwable&gt; Statement&lt;P, T&gt; reflectionMethod(
-            Object target, Method method) {
-<span class="fc" id="L141">        Objects.requireNonNull(target);</span>
-<span class="fc" id="L142">        Objects.requireNonNull(method);</span>
-<span class="fc" id="L143">        return new Statement&lt;P, T&gt;() {</span>
+	/**
+	 * Build a statement based on a method-
+	 * 
+	 * @param target
+	 *            the target object
+	 * @param method
+	 *            the method
+	 * @return the new statement.
+	 * @param &lt;P&gt;
+	 *            The type of the parameter
+	 * @param &lt;T&gt;
+	 *            the exception type
+	 */
+	static &lt;P, T extends Throwable&gt; Statement&lt;P, T&gt; reflectionMethod(
+			Object target, Method method) {
+<span class="fc" id="L141">		Objects.requireNonNull(target);</span>
+<span class="fc" id="L142">		Objects.requireNonNull(method);</span>
+<span class="fc" id="L143">		return new Statement&lt;P, T&gt;() {</span>
 
-            @Override
-            public void run(P parameter) throws Throwable {
-                try {
-<span class="fc" id="L148">                    method.invoke(target);</span>
-<span class="fc" id="L149">                } catch (InvocationTargetException e) {</span>
-<span class="fc" id="L150">                    throw e.getCause();</span>
-<span class="nc" id="L151">                } catch (IllegalAccessException | IllegalArgumentException e) {</span>
-<span class="nc" id="L152">                    throw new InternalError(&quot;Unexpected error &quot;</span>
-<span class="nc" id="L153">                            + e.getMessage(), e);</span>
-<span class="fc" id="L154">                }</span>
-<span class="fc" id="L155">            }</span>
+			@Override
+			public void run(P parameter) throws Throwable {
+				try {
+<span class="fc" id="L148">					method.invoke(target);</span>
+<span class="fc" id="L149">				} catch (InvocationTargetException e) {</span>
+<span class="fc" id="L150">					throw e.getCause();</span>
+<span class="nc" id="L151">				} catch (IllegalAccessException | IllegalArgumentException e) {</span>
+<span class="nc" id="L152">					throw new InternalError(&quot;Unexpected error &quot;</span>
+<span class="nc" id="L153">							+ e.getMessage(), e);</span>
+<span class="fc" id="L154">				}</span>
+<span class="fc" id="L155">			}</span>
 
-            @Override
-            public String getName() {
-<span class="nc" id="L159">                return method.getName();</span>
-            }
-        };
-    }
+			@Override
+			public String getName() {
+<span class="nc" id="L159">				return method.getName();</span>
+			}
+		};
+	}
 
-    /**
-     * Build a statement based on a method-
-     * 
-     * @param method
-     *            the method
-     * @param param
-     *            the param
-     * @return the new statement.
-     * @param &lt;P&gt;
-     *            The type of the parameter
-     * @param &lt;T&gt;
-     *            the exception type
-     * @since 0.2.0
-     */
-    static &lt;P, T extends Throwable&gt; Statement&lt;P, T&gt; reflectionMethod(
-            Consumer&lt;Object&gt; method, Object param) {
-<span class="nc" id="L180">        Objects.requireNonNull(method);</span>
-<span class="nc" id="L181">        return new Statement&lt;P, T&gt;() {</span>
+	/**
+	 * Build a statement based on a method-
+	 * 
+	 * @param method
+	 *            the method
+	 * @param param
+	 *            the param
+	 * @return the new statement.
+	 * @param &lt;P&gt;
+	 *            The type of the parameter
+	 * @param &lt;T&gt;
+	 *            the exception type
+	 * @since 0.2.0
+	 */
+	static &lt;P, T extends Throwable&gt; Statement&lt;P, T&gt; reflectionMethod(
+			Consumer&lt;Object&gt; method, Object param) {
+<span class="nc" id="L180">		Objects.requireNonNull(method);</span>
+<span class="nc" id="L181">		return new Statement&lt;P, T&gt;() {</span>
 
-            @Override
-            public void run(P parameter) throws Throwable {
-<span class="nc" id="L185">                method.accept(param);</span>
-<span class="nc" id="L186">            }</span>
+			@Override
+			public void run(P parameter) throws Throwable {
+<span class="nc" id="L185">				method.accept(param);</span>
+<span class="nc" id="L186">			}</span>
 
-            @Override
-            public String getName() {
-<span class="nc" id="L190">                return &quot;N/A&quot;;</span>
-            }
-        };
-    }
+			@Override
+			public String getName() {
+<span class="nc" id="L190">				return &quot;N/A&quot;;</span>
+			}
+		};
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

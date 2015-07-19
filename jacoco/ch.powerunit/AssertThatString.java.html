@@ -32,10 +32,12 @@ import org.hamcrest.Matchers;
  * @author borettim
  *
  */
-public interface AssertThatString extends AssertThatObject&lt;String&gt; {
+public interface AssertThatString extends AssertThatCastableObject&lt;String&gt; {
 	/**
 	 * Check that a string another string.
 	 * &lt;p&gt;
+	 * This method is a shortcut to &lt;code&gt;is(containsString(substring))&lt;/code&gt;.
+	 * &lt;br&gt;
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -54,12 +56,13 @@ public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	 *      done by this assertion.
 	 */
 	default boolean containsString(String substring) {
-<span class="fc" id="L57">		return is(Matchers.containsString(substring));</span>
+<span class="fc" id="L59">		return is(Matchers.containsString(substring));</span>
 	}
 
 	/**
 	 * Check that a string starts with another one.
 	 * &lt;p&gt;
+	 * This method is a shortcut to &lt;code&gt;is(startsWith(prefix))&lt;/code&gt;. &lt;br&gt;
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -78,12 +81,13 @@ public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	 *      done by this assertion.
 	 */
 	default boolean startsWith(String prefix) {
-<span class="fc" id="L81">		return is(Matchers.startsWith(prefix));</span>
+<span class="fc" id="L84">		return is(Matchers.startsWith(prefix));</span>
 	}
 
 	/**
 	 * Check that a string ends with another one.
 	 * &lt;p&gt;
+	 * This method is a shortcut to &lt;code&gt;is(endsWith(prefix))&lt;/code&gt;. &lt;br&gt;
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -102,12 +106,13 @@ public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	 *      done by this assertion.
 	 */
 	default boolean endsWith(String prefix) {
-<span class="fc" id="L105">		return is(Matchers.endsWith(prefix));</span>
+<span class="fc" id="L109">		return is(Matchers.endsWith(prefix));</span>
 	}
 
 	/**
 	 * Validate a string with a {@link java.util.regex.Pattern}.
 	 * &lt;p&gt;
+	 * This method is a shortcut to &lt;code&gt;is(matchesRegex(pattern))&lt;/code&gt;. &lt;br&gt;
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -126,12 +131,13 @@ public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	 *      done by this assertion.
 	 */
 	default boolean matchesRegex(Pattern pattern) {
-<span class="nc" id="L129">		return is(TestSuite.DSL.matchesRegex(pattern));</span>
+<span class="nc" id="L134">		return is(TestSuite.DSL.matchesRegex(pattern));</span>
 	}
 
 	/**
 	 * Validate a string with a regex.
 	 * &lt;p&gt;
+	 * This method is a shortcut to &lt;code&gt;is(matchesRegex(regex))&lt;/code&gt;. &lt;br&gt;
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -151,7 +157,7 @@ public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	 *      done by this assertion.
 	 */
 	default boolean matchesRegex(String regex) {
-<span class="nc" id="L154">		return is(TestSuite.DSL.matchesRegex(regex));</span>
+<span class="nc" id="L160">		return is(TestSuite.DSL.matchesRegex(regex));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

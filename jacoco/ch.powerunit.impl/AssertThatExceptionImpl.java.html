@@ -50,7 +50,7 @@ public class AssertThatExceptionImpl&lt;P, T extends Throwable&gt; implements
 
 	@SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
 	@Override
-	public boolean throwException(Matcher&lt;T&gt; matching) {
+	public boolean throwException(Matcher&lt;? super T&gt; matching) {
 		try {
 <span class="fc" id="L55">			runnable.run(param);</span>
 <span class="fc" id="L56">		} catch (Throwable t) {// NOSONAR</span>

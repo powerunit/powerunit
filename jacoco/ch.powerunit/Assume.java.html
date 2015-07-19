@@ -19,6 +19,7 @@
  */
 package ch.powerunit;
 
+import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -59,7 +60,7 @@ interface Assume {
 	 * @return {@link AssertThatCastableObject the assert DSL on this object}
 	 */
 	default &lt;T&gt; AssertThatCastableObject&lt;T&gt; assumeThat(T obj) {
-<span class="fc" id="L62">		return assumeThat(null, obj);</span>
+<span class="fc" id="L63">		return assumeThat(null, obj);</span>
 	}
 
 	/**
@@ -87,7 +88,7 @@ interface Assume {
 	 * @return {@link AssertThatCastableObject the assert DSL on this object}
 	 */
 	default &lt;T&gt; AssertThatCastableObject&lt;T&gt; assumeThat(String msg, T obj) {
-<span class="fc" id="L90">		return new AssertThatObjectImpl&lt;T&gt;(this, false, msg, () -&gt; obj);</span>
+<span class="fc" id="L91">		return new AssertThatObjectImpl&lt;T&gt;(this, false, msg, () -&gt; obj);</span>
 	}
 
 	/**
@@ -110,7 +111,7 @@ interface Assume {
 	 * @return {@link AssertThatString the assert DSL on this object}
 	 */
 	default AssertThatString assumeThat(String obj) {
-<span class="fc" id="L113">		return assumeThat(null, obj);</span>
+<span class="fc" id="L114">		return assumeThat(null, obj);</span>
 	}
 
 	/**
@@ -135,7 +136,7 @@ interface Assume {
 	 * @return {@link AssertThatString the assert DSL on this object}
 	 */
 	default AssertThatString assumeThat(String msg, String obj) {
-<span class="fc" id="L138">		return new AssertThatStringImpl(this, true, msg, () -&gt; obj);</span>
+<span class="fc" id="L139">		return new AssertThatStringImpl(this, true, msg, () -&gt; obj);</span>
 	}
 
 	/**
@@ -160,7 +161,7 @@ interface Assume {
 	 * @return {@link AssertThatIterable the assert DSL on this iterable}
 	 */
 	default &lt;T&gt; AssertThatIterable&lt;T&gt; assumeThatIterable(Iterable&lt;T&gt; obj) {
-<span class="fc" id="L163">		return assumeThatIterable(null, obj);</span>
+<span class="fc" id="L164">		return assumeThatIterable(null, obj);</span>
 	}
 
 	/**
@@ -188,7 +189,7 @@ interface Assume {
 	 */
 	default &lt;T&gt; AssertThatIterable&lt;T&gt; assumeThatIterable(String msg,
 			Iterable&lt;T&gt; obj) {
-<span class="fc" id="L191">		return new AssertThatIterableImpl&lt;T&gt;(this, false, msg, () -&gt; obj);</span>
+<span class="fc" id="L192">		return new AssertThatIterableImpl&lt;T&gt;(this, false, msg, () -&gt; obj);</span>
 	}
 
 	/**
@@ -224,8 +225,8 @@ interface Assume {
 	 */
 	default &lt;T, R&gt; AssertThatCastableObject&lt;R&gt; assumeThatFunction(
 			Function&lt;T, R&gt; function, T input) {
-<span class="fc" id="L227">		return new AssertThatObjectImpl&lt;R&gt;(this, false, null,</span>
-<span class="fc" id="L228">				() -&gt; function.apply(input));</span>
+<span class="fc" id="L228">		return new AssertThatObjectImpl&lt;R&gt;(this, false, null,</span>
+<span class="fc" id="L229">				() -&gt; function.apply(input));</span>
 	}
 
 	/**
@@ -263,8 +264,8 @@ interface Assume {
 	 */
 	default &lt;T, R&gt; AssertThatCastableObject&lt;R&gt; assumeThatFunction(String msg,
 			Function&lt;T, R&gt; function, T input) {
-<span class="fc" id="L266">		return new AssertThatObjectImpl&lt;R&gt;(this, false, msg,</span>
-<span class="fc" id="L267">				() -&gt; function.apply(input));</span>
+<span class="fc" id="L267">		return new AssertThatObjectImpl&lt;R&gt;(this, false, msg,</span>
+<span class="fc" id="L268">				() -&gt; function.apply(input));</span>
 	}
 
 	/**
@@ -303,8 +304,8 @@ interface Assume {
 	 */
 	default &lt;T, U, R&gt; AssertThatCastableObject&lt;R&gt; assumeThatBiFunction(
 			BiFunction&lt;T, U, R&gt; function, T input1, U input2) {
-<span class="nc" id="L306">		return new AssertThatObjectImpl&lt;R&gt;(this, false, null,</span>
-<span class="nc" id="L307">				() -&gt; function.apply(input1, input2));</span>
+<span class="nc" id="L307">		return new AssertThatObjectImpl&lt;R&gt;(this, false, null,</span>
+<span class="nc" id="L308">				() -&gt; function.apply(input1, input2));</span>
 	}
 
 	/**
@@ -345,8 +346,8 @@ interface Assume {
 	 */
 	default &lt;T, U, R&gt; AssertThatCastableObject&lt;R&gt; assumeThatBiFunction(
 			String msg, BiFunction&lt;T, U, R&gt; function, T input1, U input2) {
-<span class="nc" id="L348">		return new AssertThatObjectImpl&lt;R&gt;(this, false, msg,</span>
-<span class="nc" id="L349">				() -&gt; function.apply(input1, input2));</span>
+<span class="nc" id="L349">		return new AssertThatObjectImpl&lt;R&gt;(this, false, msg,</span>
+<span class="nc" id="L350">				() -&gt; function.apply(input1, input2));</span>
 	}
 
 	/**
@@ -378,7 +379,30 @@ interface Assume {
 	 */
 	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(
 			Statement&lt;?, T&gt; underTest) {
-<span class="fc" id="L381">		return assumeWhen(null, underTest, null);</span>
+<span class="fc" id="L382">		return assumeWhen(null, underTest, null);</span>
+	}
+
+	/**
+	 * Assume that a statement (a piece of code) throw an exception. This is
+	 * used to skipped the test if the assumption fail.
+	 * &lt;p&gt;
+	 * The goal of &lt;code&gt;assumeWhen&lt;/code&gt; is to provide a way to validate that
+	 * an exception is thrown. &lt;br&gt;
+	 * &lt;i&gt;By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.&lt;/i&gt;
+	 * 
+	 * @param underTest
+	 *            the {@link Callable}
+	 * @return {@link AssertThatException the assert DSL on the exception}
+	 * @param &lt;T&gt;
+	 *            the exception type
+	 * @since 0.4.0
+	 */
+	default &lt;T extends Exception&gt; AssertThatException&lt;T&gt; assumeWhen(
+			Callable&lt;?&gt; underTest) {
+<span class="nc" id="L403">		return assumeWhen(null, (p) -&gt; {</span>
+<span class="nc" id="L404">			underTest.call();</span>
+<span class="nc" id="L405">		}, null);</span>
 	}
 
 	/**
@@ -416,7 +440,7 @@ interface Assume {
 	 */
 	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(
 			Statement&lt;P, T&gt; underTest, P param) {
-<span class="nc" id="L419">		return assumeWhen(null, underTest, param);</span>
+<span class="nc" id="L443">		return assumeWhen(null, underTest, param);</span>
 	}
 
 	/**
@@ -450,7 +474,30 @@ interface Assume {
 	 */
 	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(String msg,
 			Statement&lt;?, T&gt; underTest) {
-<span class="fc" id="L453">		return assumeWhen(msg, underTest, null);</span>
+<span class="fc" id="L477">		return assumeWhen(msg, underTest, null);</span>
+	}
+
+	/**
+	 * Assume that a statement (a piece of code) throw an exception. This is
+	 * used to skipped the test if the assumption fail.
+	 * &lt;p&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.&lt;/i&gt;
+	 * 
+	 * @param msg
+	 *            a message
+	 * @param underTest
+	 *            the callable
+	 * @return {@link AssertThatException the assert DSL on the exception}
+	 * @param &lt;T&gt;
+	 *            the exception type
+	 */
+	default &lt;T extends Exception&gt; AssertThatException&lt;T&gt; assumeWhen(String msg,
+			Callable&lt;?&gt; underTest) {
+<span class="nc" id="L498">		return assumeWhen(msg, (p) -&gt; {</span>
+<span class="nc" id="L499">			underTest.call();</span>
+<span class="nc" id="L500">		}, null);</span>
 	}
 
 	/**
@@ -491,7 +538,7 @@ interface Assume {
 	 */
 	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assumeWhen(
 			String msg, Statement&lt;P, T&gt; underTest, P param) {
-<span class="fc" id="L494">		return new AssertThatExceptionImpl&lt;P, T&gt;(this, false, underTest, param,</span>
+<span class="fc" id="L541">		return new AssertThatExceptionImpl&lt;P, T&gt;(this, false, underTest, param,</span>
 				msg);
 	}
 
@@ -519,7 +566,7 @@ interface Assume {
 	 */
 	default &lt;P, T extends RuntimeException&gt; AssertThatException&lt;T&gt; assumeWhenFunction(
 			String msg, Function&lt;P, ?&gt; function, P param) {
-<span class="nc" id="L522">		return assumeWhen(msg, (p) -&gt; function.apply(p), param);</span>
+<span class="nc" id="L569">		return assumeWhen(msg, (p) -&gt; function.apply(p), param);</span>
 	}
 
 	/**
@@ -544,7 +591,7 @@ interface Assume {
 	 */
 	default &lt;P, T extends RuntimeException&gt; AssertThatException&lt;T&gt; assumeWhenFunction(
 			Function&lt;P, ?&gt; function, P param) {
-<span class="nc" id="L547">		return assumeWhen((p) -&gt; function.apply(p), param);</span>
+<span class="nc" id="L594">		return assumeWhen((p) -&gt; function.apply(p), param);</span>
 	}
 
 	/**
@@ -574,7 +621,7 @@ interface Assume {
 	 */
 	default &lt;P1, P2, T extends RuntimeException&gt; AssertThatException&lt;T&gt; assumeWhenBiFunction(
 			String msg, BiFunction&lt;P1, P2, ?&gt; bifunction, P1 param1, P2 param2) {
-<span class="nc" id="L577">		return assumeWhen(msg, (p) -&gt; bifunction.apply(param1, param2));</span>
+<span class="nc" id="L624">		return assumeWhen(msg, (p) -&gt; bifunction.apply(param1, param2));</span>
 	}
 
 	/**
@@ -602,7 +649,7 @@ interface Assume {
 	 */
 	default &lt;P1, P2, T extends RuntimeException&gt; AssertThatException&lt;T&gt; assumeWhenBiFunction(
 			BiFunction&lt;P1, P2, ?&gt; bifunction, P1 param1, P2 param2) {
-<span class="nc" id="L605">		return assumeWhen((p) -&gt; bifunction.apply(param1, param2));</span>
+<span class="nc" id="L652">		return assumeWhen((p) -&gt; bifunction.apply(param1, param2));</span>
 	}
 
 	/**
@@ -620,8 +667,8 @@ interface Assume {
 	 * When used from another thread, the assumption will be lost.&lt;/i&gt;
 	 */
 	default void skip() {
-<span class="nc" id="L623">		skip(&quot;Manual skip&quot;);</span>
-<span class="nc" id="L624">	}</span>
+<span class="nc" id="L670">		skip(&quot;Manual skip&quot;);</span>
+<span class="nc" id="L671">	}</span>
 
 	/**
 	 * Always produce a skip.
@@ -641,7 +688,7 @@ interface Assume {
 	 *            a message
 	 */
 	default void skip(String msg) {
-<span class="nc" id="L644">		throw new AssumptionError(msg);</span>
+<span class="nc" id="L691">		throw new AssumptionError(msg);</span>
 	}
 
 }

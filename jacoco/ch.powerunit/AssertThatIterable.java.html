@@ -38,6 +38,13 @@ public interface AssertThatIterable&lt;T&gt; extends AssertThatObject&lt;Iterabl
 	/**
 	 * Check the size of the iterable.
 	 * &lt;p&gt;
+	 * 
+	 * For instance :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThatIterable(myCollection).hasSize(3);
+	 * &lt;/pre&gt;
+	 * 
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -54,12 +61,18 @@ public interface AssertThatIterable&lt;T&gt; extends AssertThatObject&lt;Iterabl
 	 */
 	@SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
 	default boolean hasSize(int size) {
-<span class="fc" id="L57">		return is((Matcher) Matchers.hasSize(size));</span>
+<span class="fc" id="L64">		return is((Matcher) Matchers.hasSize(size));</span>
 	}
 
 	/**
 	 * Check the size is not the one passed.
 	 * &lt;p&gt;
+	 * For instance :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThatIterable(myCollection).hasNotSize(4);
+	 * &lt;/pre&gt;
+	 * 
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -79,12 +92,18 @@ public interface AssertThatIterable&lt;T&gt; extends AssertThatObject&lt;Iterabl
 	 */
 	@SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
 	default boolean hasNotSize(int size) {
-<span class="fc" id="L82">		return isNot((Matcher) Matchers.hasSize(size));</span>
+<span class="fc" id="L95">		return isNot((Matcher) Matchers.hasSize(size));</span>
 	}
 
 	/**
 	 * Check that the iterable contains the items.
 	 * &lt;p&gt;
+	 * For instance :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThatIterable(myList).contains(1, 3, 5);
+	 * &lt;/pre&gt;
+	 * 
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -103,12 +122,18 @@ public interface AssertThatIterable&lt;T&gt; extends AssertThatObject&lt;Iterabl
 	 *      done by this assertion.
 	 */
 	default boolean contains(@SuppressWarnings(&quot;unchecked&quot;) T... items) {
-<span class="fc" id="L106">		return is(Matchers.contains(items));</span>
+<span class="fc" id="L125">		return is(Matchers.contains(items));</span>
 	}
 
 	/**
 	 * Check that the iterable contains the items.
 	 * &lt;p&gt;
+	 * For instance
+	 * 
+	 * &lt;pre&gt;
+	 * assertThatIterable(myList).containsMatching(equalTo(1), equalTo(3), equalTo(5));
+	 * &lt;/pre&gt;
+	 * 
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -128,12 +153,18 @@ public interface AssertThatIterable&lt;T&gt; extends AssertThatObject&lt;Iterabl
 	 */
 	default boolean containsMatching(
 			@SuppressWarnings(&quot;unchecked&quot;) Matcher&lt;? super T&gt;... items) {
-<span class="fc" id="L131">		return is(Matchers.contains(items));</span>
+<span class="fc" id="L156">		return is(Matchers.contains(items));</span>
 	}
 
 	/**
 	 * Check that the iterable contains the items in any order.
 	 * &lt;p&gt;
+	 * For instance :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThatIterable(myCollection).containsInAnyOrder(5, 3, 1);
+	 * &lt;/pre&gt;
+	 * 
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -153,12 +184,19 @@ public interface AssertThatIterable&lt;T&gt; extends AssertThatObject&lt;Iterabl
 	 */
 	default boolean containsInAnyOrder(
 			@SuppressWarnings(&quot;unchecked&quot;) T... items) {
-<span class="fc" id="L156">		return is(Matchers.containsInAnyOrder(items));</span>
+<span class="fc" id="L187">		return is(Matchers.containsInAnyOrder(items));</span>
 	}
 
 	/**
 	 * Check that the iterable contains the items in any order.
 	 * &lt;p&gt;
+	 * For instance :
+	 * 
+	 * &lt;pre&gt;
+	 * assertThatIterable(myCollection).containsInAnyOrderMatching(equalTo(5),
+	 * 		equalTo(3), equalTo(1));
+	 * &lt;/pre&gt;
+	 * 
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -178,7 +216,7 @@ public interface AssertThatIterable&lt;T&gt; extends AssertThatObject&lt;Iterabl
 	 */
 	default boolean containsInAnyOrderMatching(
 			@SuppressWarnings(&quot;unchecked&quot;) Matcher&lt;? super T&gt;... items) {
-<span class="fc" id="L181">		return is(Matchers.containsInAnyOrder(items));</span>
+<span class="fc" id="L219">		return is(Matchers.containsInAnyOrder(items));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

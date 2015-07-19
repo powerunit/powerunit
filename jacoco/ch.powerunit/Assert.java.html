@@ -19,6 +19,7 @@
  */
 package ch.powerunit;
 
+import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -64,7 +65,7 @@ interface Assert {
 	 *      done by this assertion.
 	 */
 	default &lt;T&gt; AssertThatCastableObject&lt;T&gt; assertThat(T obj) {
-<span class="fc" id="L67">		return assertThat(null, obj);</span>
+<span class="fc" id="L68">		return assertThat(null, obj);</span>
 	}
 
 	/**
@@ -97,7 +98,7 @@ interface Assert {
 	 *      done by this assertion.
 	 */
 	default &lt;T&gt; AssertThatCastableObject&lt;T&gt; assertThat(String msg, T obj) {
-<span class="fc" id="L100">		return new AssertThatObjectImpl&lt;T&gt;(this, true, msg, () -&gt; obj);</span>
+<span class="fc" id="L101">		return new AssertThatObjectImpl&lt;T&gt;(this, true, msg, () -&gt; obj);</span>
 	}
 
 	/**
@@ -126,7 +127,7 @@ interface Assert {
 	 *      done by this assertion.
 	 */
 	default AssertThatString assertThat(String obj) {
-<span class="fc" id="L129">		return assertThat(null, obj);</span>
+<span class="fc" id="L130">		return assertThat(null, obj);</span>
 	}
 
 	/**
@@ -157,7 +158,7 @@ interface Assert {
 	 *      done by this assertion.
 	 */
 	default AssertThatString assertThat(String msg, String obj) {
-<span class="fc" id="L160">		return new AssertThatStringImpl(this, true, msg, () -&gt; obj);</span>
+<span class="fc" id="L161">		return new AssertThatStringImpl(this, true, msg, () -&gt; obj);</span>
 	}
 
 	/**
@@ -187,7 +188,7 @@ interface Assert {
 	 *      done by this assertion.
 	 */
 	default &lt;T&gt; AssertThatIterable&lt;T&gt; assertThatIterable(Iterable&lt;T&gt; obj) {
-<span class="fc" id="L190">		return assertThatIterable(null, obj);</span>
+<span class="fc" id="L191">		return assertThatIterable(null, obj);</span>
 	}
 
 	/**
@@ -220,7 +221,7 @@ interface Assert {
 	 */
 	default &lt;T&gt; AssertThatIterable&lt;T&gt; assertThatIterable(String msg,
 			Iterable&lt;T&gt; obj) {
-<span class="fc" id="L223">		return new AssertThatIterableImpl&lt;T&gt;(this, true, msg, () -&gt; obj);</span>
+<span class="fc" id="L224">		return new AssertThatIterableImpl&lt;T&gt;(this, true, msg, () -&gt; obj);</span>
 	}
 
 	/**
@@ -261,8 +262,8 @@ interface Assert {
 	 */
 	default &lt;T, R&gt; AssertThatCastableObject&lt;R&gt; assertThatFunction(
 			Function&lt;T, R&gt; function, T input) {
-<span class="fc" id="L264">		return new AssertThatObjectImpl&lt;R&gt;(this, true, null,</span>
-<span class="fc" id="L265">				() -&gt; function.apply(input));</span>
+<span class="fc" id="L265">		return new AssertThatObjectImpl&lt;R&gt;(this, true, null,</span>
+<span class="fc" id="L266">				() -&gt; function.apply(input));</span>
 	}
 
 	/**
@@ -305,8 +306,8 @@ interface Assert {
 	 */
 	default &lt;T, R&gt; AssertThatCastableObject&lt;R&gt; assertThatFunction(String msg,
 			Function&lt;T, R&gt; function, T input) {
-<span class="fc" id="L308">		return new AssertThatObjectImpl&lt;R&gt;(this, true, msg,</span>
-<span class="fc" id="L309">				() -&gt; function.apply(input));</span>
+<span class="fc" id="L309">		return new AssertThatObjectImpl&lt;R&gt;(this, true, msg,</span>
+<span class="fc" id="L310">				() -&gt; function.apply(input));</span>
 	}
 
 	/**
@@ -351,8 +352,8 @@ interface Assert {
 	 */
 	default &lt;T, U, R&gt; AssertThatCastableObject&lt;R&gt; assertThatBiFunction(
 			BiFunction&lt;T, U, R&gt; function, T input1, U input2) {
-<span class="fc" id="L354">		return new AssertThatObjectImpl&lt;R&gt;(this, true, null,</span>
-<span class="fc" id="L355">				() -&gt; function.apply(input1, input2));</span>
+<span class="fc" id="L355">		return new AssertThatObjectImpl&lt;R&gt;(this, true, null,</span>
+<span class="fc" id="L356">				() -&gt; function.apply(input1, input2));</span>
 	}
 
 	/**
@@ -399,8 +400,8 @@ interface Assert {
 	 */
 	default &lt;T, U, R&gt; AssertThatCastableObject&lt;R&gt; assertThatBiFunction(
 			String msg, BiFunction&lt;T, U, R&gt; function, T input1, U input2) {
-<span class="fc" id="L402">		return new AssertThatObjectImpl&lt;R&gt;(this, true, msg,</span>
-<span class="fc" id="L403">				() -&gt; function.apply(input1, input2));</span>
+<span class="fc" id="L403">		return new AssertThatObjectImpl&lt;R&gt;(this, true, msg,</span>
+<span class="fc" id="L404">				() -&gt; function.apply(input1, input2));</span>
 	}
 
 	/**
@@ -437,7 +438,40 @@ interface Assert {
 	 */
 	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
 			Statement&lt;?, T&gt; underTest) {
-<span class="fc" id="L440">		return assertWhen(null, underTest, null);</span>
+<span class="fc" id="L441">		return assertWhen(null, underTest, null);</span>
+	}
+
+	/**
+	 * Assert that a statement (a piece of code) throw an exception.
+	 * &lt;p&gt;
+	 * The goal of &lt;code&gt;assertWhen&lt;/code&gt; is to provide a way to validate that
+	 * an exception is thrown.
+	 * &lt;p&gt;
+	 * 
+	 * Will run a piece of code that always thrown an exception and then
+	 * validate that the message of the exception is &lt;code&gt;test&lt;/code&gt;. &lt;br&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
+	 * 
+	 * @param underTest
+	 *            the {@link Callable}
+	 * @return {@link AssertThatException the assert DSL on the exception}
+	 * @param &lt;T&gt;
+	 *            the exception type
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
+	 * @since 0.4.0
+	 */
+	default &lt;T extends Exception&gt; AssertThatException&lt;T&gt; assertWhen(
+			Callable&lt;?&gt; underTest) {
+<span class="nc" id="L472">		return assertWhen(null, (p) -&gt; {</span>
+<span class="nc" id="L473">			underTest.call();</span>
+<span class="nc" id="L474">		}, null);</span>
 	}
 
 	/**
@@ -480,7 +514,7 @@ interface Assert {
 	 */
 	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
 			Statement&lt;P, T&gt; underTest, P param) {
-<span class="fc" id="L483">		return assertWhen(null, underTest, param);</span>
+<span class="fc" id="L517">		return assertWhen(null, underTest, param);</span>
 	}
 
 	/**
@@ -519,7 +553,42 @@ interface Assert {
 	 */
 	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(String msg,
 			Statement&lt;?, T&gt; underTest) {
-<span class="fc" id="L522">		return assertWhen(msg, underTest, null);</span>
+<span class="fc" id="L556">		return assertWhen(msg, underTest, null);</span>
+	}
+
+	/**
+	 * Assert that a statement (a piece of code) throw an exception.
+	 * &lt;p&gt;
+	 * The goal of &lt;code&gt;assertWhen&lt;/code&gt; is to provide a way to validate that
+	 * an exception is thrown.
+	 * &lt;p&gt;
+	 * 
+	 * Will run a piece of code that always thrown an exception and then
+	 * validate that the message of the exception is &lt;code&gt;test&lt;/code&gt;. &lt;br&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
+	 * 
+	 * @param msg
+	 *            a message
+	 * @param underTest
+	 *            the callable
+	 * @return {@link AssertThatException the assert DSL on the exception}
+	 * @param &lt;T&gt;
+	 *            the exception type
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
+	 * @since 0.4.0
+	 */
+	default &lt;T extends Exception&gt; AssertThatException&lt;T&gt; assertWhen(String msg,
+			Callable&lt;?&gt; underTest) {
+<span class="nc" id="L589">		return assertWhen(msg, (p) -&gt; {</span>
+<span class="nc" id="L590">			underTest.call();</span>
+<span class="nc" id="L591">		}, null);</span>
 	}
 
 	/**
@@ -564,7 +633,7 @@ interface Assert {
 	 */
 	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
 			String msg, Statement&lt;P, T&gt; underTest, P param) {
-<span class="fc" id="L567">		return new AssertThatExceptionImpl&lt;P, T&gt;(this, true, underTest, param,</span>
+<span class="fc" id="L636">		return new AssertThatExceptionImpl&lt;P, T&gt;(this, true, underTest, param,</span>
 				msg);
 	}
 
@@ -597,7 +666,7 @@ interface Assert {
 	 */
 	default &lt;P, T extends RuntimeException&gt; AssertThatException&lt;T&gt; assertWhenFunction(
 			String msg, Function&lt;P, ?&gt; function, P param) {
-<span class="pc" id="L600">		return assertWhen(msg, (p) -&gt; function.apply(p), param);</span>
+<span class="pc" id="L669">		return assertWhen(msg, (p) -&gt; function.apply(p), param);</span>
 	}
 
 	/**
@@ -627,7 +696,7 @@ interface Assert {
 	 */
 	default &lt;P, T extends RuntimeException&gt; AssertThatException&lt;T&gt; assertWhenFunction(
 			Function&lt;P, ?&gt; function, P param) {
-<span class="nc" id="L630">		return assertWhen((p) -&gt; function.apply(p), param);</span>
+<span class="nc" id="L699">		return assertWhen((p) -&gt; function.apply(p), param);</span>
 	}
 
 	/**
@@ -663,7 +732,7 @@ interface Assert {
 	 */
 	default &lt;P1, P2, T extends RuntimeException&gt; AssertThatException&lt;T&gt; assertWhenBiFunction(
 			String msg, BiFunction&lt;P1, P2, ?&gt; bifunction, P1 param1, P2 param2) {
-<span class="nc" id="L666">		return assertWhen(msg, (p) -&gt; bifunction.apply(param1, param2));</span>
+<span class="nc" id="L735">		return assertWhen(msg, (p) -&gt; bifunction.apply(param1, param2));</span>
 	}
 
 	/**
@@ -697,7 +766,7 @@ interface Assert {
 	 */
 	default &lt;P1, P2, T extends RuntimeException&gt; AssertThatException&lt;T&gt; assertWhenBiFunction(
 			BiFunction&lt;P1, P2, ?&gt; bifunction, P1 param1, P2 param2) {
-<span class="nc" id="L700">		return assertWhen((p) -&gt; bifunction.apply(param1, param2));</span>
+<span class="nc" id="L769">		return assertWhen((p) -&gt; bifunction.apply(param1, param2));</span>
 	}
 
 	/**
@@ -725,7 +794,7 @@ interface Assert {
 	 *      done by this failure.
 	 */
 	default boolean fail() {
-<span class="nc" id="L728">		return fail(&quot;Manual failure&quot;);</span>
+<span class="nc" id="L797">		return fail(&quot;Manual failure&quot;);</span>
 	}
 
 	/**
@@ -755,7 +824,7 @@ interface Assert {
 	 *      done by this failure.
 	 */
 	default boolean fail(String msg) {
-<span class="fc" id="L758">		return FailureImpl.fail(this, new AssertionError(msg));</span>
+<span class="fc" id="L827">		return FailureImpl.fail(this, new AssertionError(msg));</span>
 	}
 
 	/**
@@ -787,7 +856,7 @@ interface Assert {
 	 *      done by this failure.
 	 */
 	default boolean fail(String msg, Throwable innerError) {
-<span class="nc" id="L790">		return FailureImpl.fail(this, new AssertionError(msg, innerError));</span>
+<span class="nc" id="L859">		return FailureImpl.fail(this, new AssertionError(msg, innerError));</span>
 	}
 
 	/**
@@ -817,8 +886,8 @@ interface Assert {
 	 *      done by this failure.
 	 */
 	default boolean fail(Throwable innerError) {
-<span class="nc" id="L820">		return FailureImpl.fail(this,</span>
-<span class="nc" id="L821">				new AssertionError(innerError.getMessage(), innerError));</span>
+<span class="nc" id="L889">		return FailureImpl.fail(this,</span>
+<span class="nc" id="L890">				new AssertionError(innerError.getMessage(), innerError));</span>
 	}
 
 }

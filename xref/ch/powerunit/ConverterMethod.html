@@ -111,7 +111,33 @@
 <a class="jxr_linenumber" name="L103" href="#L103">103</a> 		Objects.requireNonNull(key, <span class="jxr_string">"key can't be null"</span>);
 <a class="jxr_linenumber" name="L104" href="#L104">104</a> 		<strong class="jxr_keyword">return</strong> nullToNullConverter((Map&lt;K, V&gt; p) -&gt; p.getOrDefault(key, <strong class="jxr_keyword">null</strong>));
 <a class="jxr_linenumber" name="L105" href="#L105">105</a> 	}
-<a class="jxr_linenumber" name="L106" href="#L106">106</a> }
+<a class="jxr_linenumber" name="L106" href="#L106">106</a> 
+<a class="jxr_linenumber" name="L107" href="#L107">107</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L108" href="#L108">108</a> <em class="jxr_javadoccomment">	 * Functional Interface for exception method conversion.</em>
+<a class="jxr_linenumber" name="L109" href="#L109">109</a> <em class="jxr_javadoccomment">	 * </em>
+<a class="jxr_linenumber" name="L110" href="#L110">110</a> <em class="jxr_javadoccomment">	 * @author borettim</em>
+<a class="jxr_linenumber" name="L111" href="#L111">111</a> <em class="jxr_javadoccomment">	 * @since 0.4.0</em>
+<a class="jxr_linenumber" name="L112" href="#L112">112</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L113" href="#L113">113</a> 	@FunctionalInterface
+<a class="jxr_linenumber" name="L114" href="#L114">114</a> 	<strong class="jxr_keyword">interface</strong> <a href="../../ch/powerunit/ConverterMethod.html">NoArgumentWithThrowableMethod</a> {
+<a class="jxr_linenumber" name="L115" href="#L115">115</a> 		<strong class="jxr_keyword">void</strong> execute() <strong class="jxr_keyword">throws</strong> Throwable;
+<a class="jxr_linenumber" name="L116" href="#L116">116</a> 	}
+<a class="jxr_linenumber" name="L117" href="#L117">117</a> 
+<a class="jxr_linenumber" name="L118" href="#L118">118</a> 	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L119" href="#L119">119</a> <em class="jxr_javadoccomment">	 * Converter a piece of code to statement.</em>
+<a class="jxr_linenumber" name="L120" href="#L120">120</a> <em class="jxr_javadoccomment">	 * </em>
+<a class="jxr_linenumber" name="L121" href="#L121">121</a> <em class="jxr_javadoccomment">	 * @param method</em>
+<a class="jxr_linenumber" name="L122" href="#L122">122</a> <em class="jxr_javadoccomment">	 *            the no arg no return piece of code to be tested.</em>
+<a class="jxr_linenumber" name="L123" href="#L123">123</a> <em class="jxr_javadoccomment">	 * @return the statement</em>
+<a class="jxr_linenumber" name="L124" href="#L124">124</a> <em class="jxr_javadoccomment">	 * @since 0.4.0</em>
+<a class="jxr_linenumber" name="L125" href="#L125">125</a> <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="L126" href="#L126">126</a> 	<strong class="jxr_keyword">default</strong> Statement&lt;?, Throwable&gt; asStatement(
+<a class="jxr_linenumber" name="L127" href="#L127">127</a> 			NoArgumentWithThrowableMethod method) {
+<a class="jxr_linenumber" name="L128" href="#L128">128</a> 		<strong class="jxr_keyword">return</strong> (p) -&gt; {
+<a class="jxr_linenumber" name="L129" href="#L129">129</a> 			method.execute();
+<a class="jxr_linenumber" name="L130" href="#L130">130</a> 		};
+<a class="jxr_linenumber" name="L131" href="#L131">131</a> 	}
+<a class="jxr_linenumber" name="L132" href="#L132">132</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2015 <a href="http://www.powerunit.ch">Powerunit</a>. All rights reserved.</div>

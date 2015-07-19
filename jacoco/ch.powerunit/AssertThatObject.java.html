@@ -59,6 +59,7 @@ public interface AssertThatObject&lt;T&gt; {
 	/**
 	 * Check that the object is the passed one (shortcut to Matcher.equalTo).
 	 * &lt;p&gt;
+	 * This method is a shortcut to &lt;code&gt;is(equalTo(compareTo))&lt;/code&gt;. &lt;br&gt;
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -77,12 +78,13 @@ public interface AssertThatObject&lt;T&gt; {
 	 *      done by this assertion.
 	 */
 	default boolean is(T compareTo) {
-<span class="fc" id="L80">		return is(Matchers.equalTo(compareTo));</span>
+<span class="fc" id="L81">		return is(Matchers.equalTo(compareTo));</span>
 	}
 
 	/**
 	 * Check that the object is not the passed one.
 	 * &lt;p&gt;
+	 * This method is a shortcut to &lt;code&gt;isNot(equalTo(compareTo))&lt;/code&gt;. &lt;br&gt;
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -101,12 +103,13 @@ public interface AssertThatObject&lt;T&gt; {
 	 *      done by this assertion.
 	 */
 	default boolean isNot(T compareTo) {
-<span class="fc" id="L104">		return isNot(Matchers.equalTo(compareTo));</span>
+<span class="fc" id="L106">		return isNot(Matchers.equalTo(compareTo));</span>
 	}
 
 	/**
 	 * Check that the object is not matching the passed matcher.
 	 * &lt;p&gt;
+	 * This method is a shortcut to &lt;code&gt;is(not(matching))&lt;/code&gt;. &lt;br&gt;
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -125,12 +128,13 @@ public interface AssertThatObject&lt;T&gt; {
 	 *      done by this assertion.
 	 */
 	default boolean isNot(Matcher&lt;T&gt; matching) {
-<span class="fc" id="L128">		return is(Matchers.not(matching));</span>
+<span class="fc" id="L131">		return is(Matchers.not(matching));</span>
 	}
 
 	/**
 	 * Check that the object is null.
 	 * &lt;p&gt;
+	 * This method is a shortcut to &lt;code&gt;is(nullValue())&lt;/code&gt;. &lt;br&gt;
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -147,12 +151,13 @@ public interface AssertThatObject&lt;T&gt; {
 	 *      done by this assertion.
 	 */
 	default boolean isNull() {
-<span class="fc" id="L150">		return is(Matchers.nullValue());</span>
+<span class="fc" id="L154">		return is(Matchers.nullValue());</span>
 	}
 
 	/**
 	 * Check that the object is not null.
 	 * &lt;p&gt;
+	 * This method is a shortcut to &lt;code&gt;is(notNullValue())&lt;/code&gt;. &lt;br&gt;
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -169,12 +174,13 @@ public interface AssertThatObject&lt;T&gt; {
 	 *      done by this assertion.
 	 */
 	default boolean isNotNull() {
-<span class="fc" id="L172">		return is(Matchers.notNullValue());</span>
+<span class="fc" id="L177">		return is(Matchers.notNullValue());</span>
 	}
 
 	/**
 	 * Check that the object is of a specific class (or subclasses).
 	 * &lt;p&gt;
+	 * This method is a shortcut to &lt;code&gt;is(isA(clazz))&lt;/code&gt;. &lt;br&gt;
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -193,7 +199,7 @@ public interface AssertThatObject&lt;T&gt; {
 	 *      done by this assertion.
 	 */
 	default boolean isA(Class&lt;? super T&gt; clazz) {
-<span class="fc" id="L196">		return is(Matchers.isA(clazz));</span>
+<span class="fc" id="L202">		return is(Matchers.isA(clazz));</span>
 	}
 
 }
