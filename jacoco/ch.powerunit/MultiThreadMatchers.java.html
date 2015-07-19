@@ -38,10 +38,13 @@ interface MultiThreadMatchers {
 	 * @param expected
 	 *            the expected value.
 	 * @return the Matcher on {@link Future}
+	 * @param &lt;T&gt;
+	 *            The type of the return value of the {@link Future}.
 	 * @since 0.4.0
+	 * 
 	 */
 	default &lt;T&gt; Matcher&lt;Future&lt;T&gt;&gt; futureIsCancelled(boolean expected) {
-<span class="fc" id="L44">		return FutureMatchers.futureIsCancelled(expected);</span>
+<span class="fc" id="L47">		return FutureMatchers.futureIsCancelled(expected);</span>
 	}
 
 	/**
@@ -50,10 +53,12 @@ interface MultiThreadMatchers {
 	 * @param expected
 	 *            the expected value.
 	 * @return the Matcher on {@link Future}
+	 * @param &lt;T&gt;
+	 *            The type of the return value of the {@link Future}.
 	 * @since 0.4.0
 	 */
 	default &lt;T&gt; Matcher&lt;Future&lt;T&gt;&gt; futureIsDone(boolean expected) {
-<span class="fc" id="L56">		return FutureMatchers.futureIsDone(expected);</span>
+<span class="fc" id="L61">		return FutureMatchers.futureIsDone(expected);</span>
 	}
 
 	/**
@@ -74,11 +79,13 @@ interface MultiThreadMatchers {
 	 * @param unit
 	 *            the timeunit for the value.
 	 * @return the Matcher on {@link Future}
+	 * @param &lt;T&gt;
+	 *            The type of the return value of the {@link Future}.
 	 * @since 0.4.0
 	 */
 	default &lt;T&gt; Matcher&lt;Future&lt;T&gt;&gt; futureIsBeforeTimeout(
 			Matcher&lt;? super T&gt; matching, long timeout, TimeUnit unit) {
-<span class="fc" id="L81">		return FutureMatchers.futureIsBeforeTimeout(matching, timeout, unit);</span>
+<span class="fc" id="L88">		return FutureMatchers.futureIsBeforeTimeout(matching, timeout, unit);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
