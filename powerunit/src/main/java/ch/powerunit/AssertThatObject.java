@@ -59,6 +59,7 @@ public interface AssertThatObject<T> {
 	/**
 	 * Check that the object is the passed one (shortcut to Matcher.equalTo).
 	 * <p>
+	 * This method is a shortcut to <code>is(equalTo(compareTo))</code>. <br>
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -83,6 +84,7 @@ public interface AssertThatObject<T> {
 	/**
 	 * Check that the object is not the passed one.
 	 * <p>
+	 * This method is a shortcut to <code>isNot(equalTo(compareTo))</code>. <br>
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -107,6 +109,7 @@ public interface AssertThatObject<T> {
 	/**
 	 * Check that the object is not matching the passed matcher.
 	 * <p>
+	 * This method is a shortcut to <code>is(not(matching))</code>. <br>
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -131,6 +134,7 @@ public interface AssertThatObject<T> {
 	/**
 	 * Check that the object is null.
 	 * <p>
+	 * This method is a shortcut to <code>is(nullValue())</code>. <br>
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -153,6 +157,7 @@ public interface AssertThatObject<T> {
 	/**
 	 * Check that the object is not null.
 	 * <p>
+	 * This method is a shortcut to <code>is(notNullValue())</code>. <br>
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -175,6 +180,7 @@ public interface AssertThatObject<T> {
 	/**
 	 * Check that the object is of a specific class (or subclasses).
 	 * <p>
+	 * This method is a shortcut to <code>is(isA(clazz))</code>. <br>
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
