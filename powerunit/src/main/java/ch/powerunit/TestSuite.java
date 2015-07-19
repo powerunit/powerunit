@@ -77,7 +77,7 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * test, in the rare case when it may be required).
 	 * <p>
 	 * The main use case is to access the stream functionnalities from a
-	 * {@link Parameters &#64;Parameters} annotated method, has this method must
+	 * {@link Parameters &#64;Parameters} annotated method, as this method must
 	 * be static.
 	 */
 	static TestSuite DSL = new TestSuite() {
