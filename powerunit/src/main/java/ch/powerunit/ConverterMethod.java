@@ -103,4 +103,30 @@ interface ConverterMethod {
 		Objects.requireNonNull(key, "key can't be null");
 		return nullToNullConverter((Map<K, V> p) -> p.getOrDefault(key, null));
 	}
+
+	/**
+	 * Functional Interface for exception method conversion.
+	 * 
+	 * @author borettim
+	 * @since 0.4.0
+	 */
+	@FunctionalInterface
+	interface NoArgumentWithThrowableMethod {
+		void execute() throws Throwable;
+	}
+
+	/**
+	 * Converter a piece of code to statement.
+	 * 
+	 * @param method
+	 *            the no arg no return piece of code to be tested.
+	 * @return the statement
+	 * @since 0.4.0
+	 */
+	default Statement<?, Throwable> asStatement(
+			NoArgumentWithThrowableMethod method) {
+		return (p) -> {
+			method.execute();
+		};
+	}
 }

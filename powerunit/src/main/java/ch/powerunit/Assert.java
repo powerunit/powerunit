@@ -19,6 +19,7 @@
  */
 package ch.powerunit;
 
+import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -446,6 +447,39 @@ interface Assert {
 	 * The goal of <code>assertWhen</code> is to provide a way to validate that
 	 * an exception is thrown.
 	 * <p>
+	 * 
+	 * Will run a piece of code that always thrown an exception and then
+	 * validate that the message of the exception is <code>test</code>. <br>
+	 * <br>
+	 * <i>By default, assertThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
+	 * 
+	 * @param underTest
+	 *            the {@link Callable}
+	 * @return {@link AssertThatException the assert DSL on the exception}
+	 * @param <T>
+	 *            the exception type
+	 * @see Test#fastFail() The documentation of the <code>fastFail</code>
+	 *      attribute of the <code>@Test</code> annotation, regarding the action
+	 *      done by this assertion.
+	 * @since 0.4.0
+	 */
+	default <T extends Exception> AssertThatException<T> assertWhen(
+			Callable<?> underTest) {
+		return assertWhen(null, (p) -> {
+			underTest.call();
+		}, null);
+	}
+
+	/**
+	 * Assert that a statement (a piece of code) throw an exception.
+	 * <p>
+	 * The goal of <code>assertWhen</code> is to provide a way to validate that
+	 * an exception is thrown.
+	 * <p>
 	 * For instance
 	 * 
 	 * <pre>
@@ -520,6 +554,41 @@ interface Assert {
 	default <T extends Throwable> AssertThatException<T> assertWhen(String msg,
 			Statement<?, T> underTest) {
 		return assertWhen(msg, underTest, null);
+	}
+
+	/**
+	 * Assert that a statement (a piece of code) throw an exception.
+	 * <p>
+	 * The goal of <code>assertWhen</code> is to provide a way to validate that
+	 * an exception is thrown.
+	 * <p>
+	 * 
+	 * Will run a piece of code that always thrown an exception and then
+	 * validate that the message of the exception is <code>test</code>. <br>
+	 * <br>
+	 * <i>By default, assertThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
+	 * 
+	 * @param msg
+	 *            a message
+	 * @param underTest
+	 *            the callable
+	 * @return {@link AssertThatException the assert DSL on the exception}
+	 * @param <T>
+	 *            the exception type
+	 * @see Test#fastFail() The documentation of the <code>fastFail</code>
+	 *      attribute of the <code>@Test</code> annotation, regarding the action
+	 *      done by this assertion.
+	 * @since 0.4.0
+	 */
+	default <T extends Exception> AssertThatException<T> assertWhen(String msg,
+			Callable<?> underTest) {
+		return assertWhen(msg, (p) -> {
+			underTest.call();
+		}, null);
 	}
 
 	/**

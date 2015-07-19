@@ -44,6 +44,21 @@ public interface AssertThatException<T extends Throwable> {
 	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
 	 * annotation is used, the assertion may not be lost, in case the thread use
 	 * an assertion method from the test object instance. </i>
+	 * <p>
+	 * For instance, having this method :
+	 * 
+	 * <pre>
+	 * public static void method1() throws Exception {
+	 * 	throw new Exception(&quot;demo1&quot;);
+	 * }
+	 * </pre>
+	 * 
+	 * It is possible to test the message by using :
+	 * 
+	 * <pre>
+	 * assertWhen(asStatement(DemoAssertThatExceptionTest::method1)).throwException(
+	 * 		exceptionMessage(&quot;demo1&quot;));
+	 * </pre>
 	 * 
 	 * @param matching
 	 *            the matcher.
@@ -55,5 +70,5 @@ public interface AssertThatException<T extends Throwable> {
 	 *      attribute of the <code>@Test</code> annotation, regarding the action
 	 *      done by this assertion.
 	 */
-	boolean throwException(Matcher<T> matching);
+	boolean throwException(Matcher<? super T> matching);
 }

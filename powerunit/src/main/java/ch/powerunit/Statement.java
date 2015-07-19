@@ -42,154 +42,154 @@ import ch.powerunit.exception.InternalError;
 @FunctionalInterface
 public interface Statement<P, T extends Throwable> {
 
-    /**
-     * Executable code.
-     * 
-     * @param parameter
-     *            A parameter for the statement
-     * @throws Throwable
-     *             in case of error.
-     */
-    void run(P parameter) throws Throwable;// should be T, but T seem to produce
-                                           // a bug in the compiler
+	/**
+	 * Executable code.
+	 * 
+	 * @param parameter
+	 *            A parameter for the statement
+	 * @throws Throwable
+	 *             in case of error.
+	 */
+	void run(P parameter) throws Throwable;// should be T, but T seem to produce
+											// a bug in the compiler
 
-    /**
-     * Used to provide a name (for internal use purpose).
-     * 
-     * @return the string, by default null.
-     * @since 0.1.0
-     */
-    default String getName() {
-        return null;
-    }
+	/**
+	 * Used to provide a name (for internal use purpose).
+	 * 
+	 * @return the string, by default null.
+	 * @since 0.1.0
+	 */
+	default String getName() {
+		return null;
+	}
 
-    /**
-     * Aggregate this statement and then the following. The second statement is
-     * done, even in case of exception in the first one.
-     * 
-     * @param after
-     *            the next statement
-     * @return the new statement
-     */
-    default Statement<P, T> andThenAlways(Statement<P, T> after) {
-        Objects.requireNonNull(after);
-        return (p) -> {
-            try {
-                run(p);
-            } finally {
-                after.run(p);
-            }
-        };
-    }
+	/**
+	 * Aggregate this statement and then the following. The second statement is
+	 * done, even in case of exception in the first one.
+	 * 
+	 * @param after
+	 *            the next statement
+	 * @return the new statement
+	 */
+	default Statement<P, T> andThenAlways(Statement<P, T> after) {
+		Objects.requireNonNull(after);
+		return (p) -> {
+			try {
+				run(p);
+			} finally {
+				after.run(p);
+			}
+		};
+	}
 
-    /**
-     * Aggregate this statement and then the following. The second statement is
-     * done except in case of exception in the first one.
-     * 
-     * @param after
-     *            the next statement
-     * @return the new statement
-     */
-    default Statement<P, T> andThenOnlySuccess(Statement<P, T> after) {
-        Objects.requireNonNull(after);
-        return (p) -> {
-            run(p);
-            after.run(p);
-        };
-    }
+	/**
+	 * Aggregate this statement and then the following. The second statement is
+	 * done except in case of exception in the first one.
+	 * 
+	 * @param after
+	 *            the next statement
+	 * @return the new statement
+	 */
+	default Statement<P, T> andThenOnlySuccess(Statement<P, T> after) {
+		Objects.requireNonNull(after);
+		return (p) -> {
+			run(p);
+			after.run(p);
+		};
+	}
 
-    /**
-     * Build a around statement (do something, then something others, and after
-     * one a third statement, event in case of exception.
-     * 
-     * @param internal
-     *            the internal part
-     * @param before
-     *            the first statement
-     * @param after
-     *            the last statement, done event in case of exception.
-     * @return the new statement.
-     * @param <P>
-     *            The type of the parameter
-     * @param <T>
-     *            the exception type
-     */
-    static <P, T extends Throwable> Statement<P, T> around(
-            Statement<P, T> internal, Statement<P, T> before,
-            Statement<P, T> after) {
-        Objects.requireNonNull(internal);
-        Objects.requireNonNull(before);
-        Objects.requireNonNull(after);
-        return before.andThenOnlySuccess(internal).andThenAlways(after);
-    }
+	/**
+	 * Build a around statement (do something, then something others, and after
+	 * one a third statement, event in case of exception.
+	 * 
+	 * @param internal
+	 *            the internal part
+	 * @param before
+	 *            the first statement
+	 * @param after
+	 *            the last statement, done event in case of exception.
+	 * @return the new statement.
+	 * @param <P>
+	 *            The type of the parameter
+	 * @param <T>
+	 *            the exception type
+	 */
+	static <P, T extends Throwable> Statement<P, T> around(
+			Statement<P, T> internal, Statement<P, T> before,
+			Statement<P, T> after) {
+		Objects.requireNonNull(internal);
+		Objects.requireNonNull(before);
+		Objects.requireNonNull(after);
+		return before.andThenOnlySuccess(internal).andThenAlways(after);
+	}
 
-    /**
-     * Build a statement based on a method-
-     * 
-     * @param target
-     *            the target object
-     * @param method
-     *            the method
-     * @return the new statement.
-     * @param <P>
-     *            The type of the parameter
-     * @param <T>
-     *            the exception type
-     */
-    static <P, T extends Throwable> Statement<P, T> reflectionMethod(
-            Object target, Method method) {
-        Objects.requireNonNull(target);
-        Objects.requireNonNull(method);
-        return new Statement<P, T>() {
+	/**
+	 * Build a statement based on a method-
+	 * 
+	 * @param target
+	 *            the target object
+	 * @param method
+	 *            the method
+	 * @return the new statement.
+	 * @param <P>
+	 *            The type of the parameter
+	 * @param <T>
+	 *            the exception type
+	 */
+	static <P, T extends Throwable> Statement<P, T> reflectionMethod(
+			Object target, Method method) {
+		Objects.requireNonNull(target);
+		Objects.requireNonNull(method);
+		return new Statement<P, T>() {
 
-            @Override
-            public void run(P parameter) throws Throwable {
-                try {
-                    method.invoke(target);
-                } catch (InvocationTargetException e) {
-                    throw e.getCause();
-                } catch (IllegalAccessException | IllegalArgumentException e) {
-                    throw new InternalError("Unexpected error "
-                            + e.getMessage(), e);
-                }
-            }
+			@Override
+			public void run(P parameter) throws Throwable {
+				try {
+					method.invoke(target);
+				} catch (InvocationTargetException e) {
+					throw e.getCause();
+				} catch (IllegalAccessException | IllegalArgumentException e) {
+					throw new InternalError("Unexpected error "
+							+ e.getMessage(), e);
+				}
+			}
 
-            @Override
-            public String getName() {
-                return method.getName();
-            }
-        };
-    }
+			@Override
+			public String getName() {
+				return method.getName();
+			}
+		};
+	}
 
-    /**
-     * Build a statement based on a method-
-     * 
-     * @param method
-     *            the method
-     * @param param
-     *            the param
-     * @return the new statement.
-     * @param <P>
-     *            The type of the parameter
-     * @param <T>
-     *            the exception type
-     * @since 0.2.0
-     */
-    static <P, T extends Throwable> Statement<P, T> reflectionMethod(
-            Consumer<Object> method, Object param) {
-        Objects.requireNonNull(method);
-        return new Statement<P, T>() {
+	/**
+	 * Build a statement based on a method-
+	 * 
+	 * @param method
+	 *            the method
+	 * @param param
+	 *            the param
+	 * @return the new statement.
+	 * @param <P>
+	 *            The type of the parameter
+	 * @param <T>
+	 *            the exception type
+	 * @since 0.2.0
+	 */
+	static <P, T extends Throwable> Statement<P, T> reflectionMethod(
+			Consumer<Object> method, Object param) {
+		Objects.requireNonNull(method);
+		return new Statement<P, T>() {
 
-            @Override
-            public void run(P parameter) throws Throwable {
-                method.accept(param);
-            }
+			@Override
+			public void run(P parameter) throws Throwable {
+				method.accept(param);
+			}
 
-            @Override
-            public String getName() {
-                return "N/A";
-            }
-        };
-    }
+			@Override
+			public String getName() {
+				return "N/A";
+			}
+		};
+	}
 
 }

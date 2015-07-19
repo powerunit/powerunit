@@ -19,6 +19,7 @@
  */
 package ch.powerunit;
 
+import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -386,6 +387,29 @@ interface Assume {
 	 * used to skipped the test if the assumption fail.
 	 * <p>
 	 * The goal of <code>assumeWhen</code> is to provide a way to validate that
+	 * an exception is thrown. <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
+	 * 
+	 * @param underTest
+	 *            the {@link Callable}
+	 * @return {@link AssertThatException the assert DSL on the exception}
+	 * @param <T>
+	 *            the exception type
+	 * @since 0.4.0
+	 */
+	default <T extends Exception> AssertThatException<T> assumeWhen(
+			Callable<?> underTest) {
+		return assumeWhen(null, (p) -> {
+			underTest.call();
+		}, null);
+	}
+
+	/**
+	 * Assume that a statement (a piece of code) throw an exception. This is
+	 * used to skipped the test if the assumption fail.
+	 * <p>
+	 * The goal of <code>assumeWhen</code> is to provide a way to validate that
 	 * an exception is thrown.
 	 * <p>
 	 * For instance
@@ -451,6 +475,29 @@ interface Assume {
 	default <T extends Throwable> AssertThatException<T> assumeWhen(String msg,
 			Statement<?, T> underTest) {
 		return assumeWhen(msg, underTest, null);
+	}
+
+	/**
+	 * Assume that a statement (a piece of code) throw an exception. This is
+	 * used to skipped the test if the assumption fail.
+	 * <p>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
+	 * 
+	 * @param msg
+	 *            a message
+	 * @param underTest
+	 *            the callable
+	 * @return {@link AssertThatException the assert DSL on the exception}
+	 * @param <T>
+	 *            the exception type
+	 */
+	default <T extends Exception> AssertThatException<T> assumeWhen(String msg,
+			Callable<?> underTest) {
+		return assumeWhen(msg, (p) -> {
+			underTest.call();
+		}, null);
 	}
 
 	/**

@@ -50,7 +50,7 @@ public class AssertThatExceptionImpl<P, T extends Throwable> implements
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public boolean throwException(Matcher<T> matching) {
+	public boolean throwException(Matcher<? super T> matching) {
 		try {
 			runnable.run(param);
 		} catch (Throwable t) {// NOSONAR
