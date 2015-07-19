@@ -34,6 +34,13 @@ public interface AssertThatCastableObject<T> extends AssertThatObject<T> {
 	/**
 	 * Cast the received value into a sub-class of the receiver, before applying
 	 * the matcher.
+	 * <p>
+	 * For example, we have <code>Object myNumber =...;</code> which is known to
+	 * be an <code>Integer</code>. It is possible to convert it by using :
+	 * 
+	 * <pre>
+	 * assertThat(myNumber).as(Integer.class).is(10);
+	 * </pre>
 	 * 
 	 * @param clazz
 	 *            the target class
@@ -46,6 +53,14 @@ public interface AssertThatCastableObject<T> extends AssertThatObject<T> {
 
 	/**
 	 * Convert a received object into another one, based on a passed converter.
+	 * <p>
+	 * For example, we have <code>String myString =...;</code> which is known to
+	 * be a <code>String</code> representing an <code>Integer</code>. It is
+	 * possible to convert it by using:
+	 * 
+	 * <pre>
+	 * assertThat(myString).as(Integer.class, Integer::valueOf).is(1);
+	 * </pre>
 	 * 
 	 * @param targetClass
 	 *            he target class

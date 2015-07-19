@@ -32,7 +32,7 @@ import org.hamcrest.Matchers;
  * @author borettim
  *
  */
-public interface AssertThatString extends AssertThatObject<String> {
+public interface AssertThatString extends AssertThatCastableObject<String> {
 	/**
 	 * Check that a string another string.
 	 * <p>
