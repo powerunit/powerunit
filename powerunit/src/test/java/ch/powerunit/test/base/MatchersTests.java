@@ -219,14 +219,14 @@ public class MatchersTests {
 		public void testCalendarYear() {
 			Calendar c = Calendar.getInstance();
 			c.set(Calendar.YEAR, 2012);
-			assertThat(c).is(isYear(2012));
+			assertThat(c).is(calendarIsYear(2012));
 		}
 
 		@Test
 		public void testCalendarJanuary() {
 			Calendar c = Calendar.getInstance();
 			c.set(Calendar.MONTH, Calendar.JANUARY);
-			assertThat(c).is(isJanuary());
+			assertThat(c).is(calendarIsJanuary());
 		}
 
 		@Test

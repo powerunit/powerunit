@@ -2,14 +2,14 @@
  * Powerunit - A JDK1.8 test framework
  * Copyright (C) 2014 Mathieu Boretti.
  *
- * This file is part of Powerunit
+ * This file calendarIs part of Powerunit
  *
- * Powerunit is free software: you can redistribute it and/or modify
+ * Powerunit calendarIs free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Powerunit is distributed in the hope that it will be useful,
+ * Powerunit calendarIs distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -42,7 +42,7 @@ interface DateTimeMatchers {
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isYear(int year) {
+	default Matcher<Calendar> calendarIsYear(int year) {
 		return CalendarMatchers.isYear(year);
 	}
 
@@ -55,7 +55,7 @@ interface DateTimeMatchers {
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isDayOfMonth(int dayOfMonth) {
+	default Matcher<Calendar> calendarIsDayOfMonth(int dayOfMonth) {
 		return CalendarMatchers.isDayOfMonth(dayOfMonth);
 	}
 
@@ -68,7 +68,7 @@ interface DateTimeMatchers {
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isMonth(int month) {
+	default Matcher<Calendar> calendarIsMonth(int month) {
 		return CalendarMatchers.isMonth(month);
 	}
 
@@ -81,7 +81,7 @@ interface DateTimeMatchers {
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isHourOfDay(int hourOfDay) {
+	default Matcher<Calendar> calendarIsHourOfDay(int hourOfDay) {
 		return CalendarMatchers.isHourOfDay(hourOfDay);
 	}
 
@@ -94,7 +94,7 @@ interface DateTimeMatchers {
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isMinute(int minute) {
+	default Matcher<Calendar> calendarIsMinute(int minute) {
 		return CalendarMatchers.isMinute(minute);
 	}
 
@@ -107,7 +107,7 @@ interface DateTimeMatchers {
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isSecond(int second) {
+	default Matcher<Calendar> calendarIsSecond(int second) {
 		return CalendarMatchers.isSecond(second);
 	}
 
@@ -120,7 +120,7 @@ interface DateTimeMatchers {
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isDayOfWeek(int dayOfWeek) {
+	default Matcher<Calendar> calendarIsDayOfWeek(int dayOfWeek) {
 		return CalendarMatchers.isDayOfWeek(dayOfWeek);
 	}
 
@@ -133,202 +133,202 @@ interface DateTimeMatchers {
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isMillisecond(int millisecond) {
+	default Matcher<Calendar> calendarIsMillisecond(int millisecond) {
 		return CalendarMatchers.isMillisecond(millisecond);
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is a monday.
+	 * Verify that the {@link Calendar} calendarIs a monday.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isMonday() {
+	default Matcher<Calendar> calendarIsMonday() {
 		return CalendarMatchers.isMonday();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is a thurday.
+	 * Verify that the {@link Calendar} calendarIs a thurday.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isThurday() {
+	default Matcher<Calendar> calendarIsThurday() {
 		return CalendarMatchers.isThurday();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is a wednesday.
+	 * Verify that the {@link Calendar} calendarIs a wednesday.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isWednesday() {
+	default Matcher<Calendar> calendarIsWednesday() {
 		return CalendarMatchers.isWednesday();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is a tuesday.
+	 * Verify that the {@link Calendar} calendarIs a tuesday.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isTuesday() {
+	default Matcher<Calendar> calendarIsTuesday() {
 		return CalendarMatchers.isTuesday();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is a friday.
+	 * Verify that the {@link Calendar} calendarIs a friday.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isFriday() {
+	default Matcher<Calendar> calendarIsFriday() {
 		return CalendarMatchers.isFriday();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is a saturday.
+	 * Verify that the {@link Calendar} calendarIs a saturday.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isSaturday() {
+	default Matcher<Calendar> calendarIsSaturday() {
 		return CalendarMatchers.isSaturday();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is a sunday.
+	 * Verify that the {@link Calendar} calendarIs a sunday.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isSunday() {
+	default Matcher<Calendar> calendarIsSunday() {
 		return CalendarMatchers.isSunday();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is in january.
+	 * Verify that the {@link Calendar} calendarIs in january.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isJanuary() {
+	default Matcher<Calendar> calendarIsJanuary() {
 		return CalendarMatchers.isJanuary();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is in february.
+	 * Verify that the {@link Calendar} calendarIs in february.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isFebruary() {
+	default Matcher<Calendar> calendarIsFebruary() {
 		return CalendarMatchers.isFebruary();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is in march.
+	 * Verify that the {@link Calendar} calendarIs in march.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isMarch() {
+	default Matcher<Calendar> calendarIsMarch() {
 		return CalendarMatchers.isMarch();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is in april.
+	 * Verify that the {@link Calendar} calendarIs in april.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isApril() {
+	default Matcher<Calendar> calendarIsApril() {
 		return CalendarMatchers.isApril();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is in may.
+	 * Verify that the {@link Calendar} calendarIs in may.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isMay() {
+	default Matcher<Calendar> calendarIsMay() {
 		return CalendarMatchers.isMay();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is in june.
+	 * Verify that the {@link Calendar} calendarIs in june.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isJune() {
+	default Matcher<Calendar> calendarIsJune() {
 		return CalendarMatchers.isJune();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is in july.
+	 * Verify that the {@link Calendar} calendarIs in july.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isJuly() {
+	default Matcher<Calendar> calendarIsJuly() {
 		return CalendarMatchers.isJuly();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is in august.
+	 * Verify that the {@link Calendar} calendarIs in august.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isAugust() {
+	default Matcher<Calendar> calendarIsAugust() {
 		return CalendarMatchers.isAugust();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is in september.
+	 * Verify that the {@link Calendar} calendarIs in september.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isSeptember() {
+	default Matcher<Calendar> calendarIsSeptember() {
 		return CalendarMatchers.isSeptember();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is in october.
+	 * Verify that the {@link Calendar} calendarIs in october.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isOctober() {
+	default Matcher<Calendar> calendarIsOctober() {
 		return CalendarMatchers.isOctober();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is in november.
+	 * Verify that the {@link Calendar} calendarIs in november.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	public static Matcher<Calendar> isNovember() {
+	public static Matcher<Calendar> calendarIsNovember() {
 		return CalendarMatchers.isNovember();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is in december.
+	 * Verify that the {@link Calendar} calendarIs in december.
 	 * 
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isDecember() {
+	default Matcher<Calendar> calendarIsDecember() {
 		return CalendarMatchers.isDecember();
 	}
 
 	/**
-	 * Verify that the {@link Calendar} is on same day (year, month, day of
+	 * Verify that the {@link Calendar} calendarIs on same day (year, month, day of
 	 * month) that another one.
 	 * 
 	 * @param other
@@ -341,26 +341,26 @@ interface DateTimeMatchers {
 	}
 
 	/**
-	 * Verify that a {@link Calendar} is before another one.
+	 * Verify that a {@link Calendar} calendarIs before another one.
 	 * 
 	 * @param other
 	 *            the other {@link Calendar}.
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isBefore(Calendar other) {
+	default Matcher<Calendar> calendarIsBefore(Calendar other) {
 		return TestSuite.DSL.lessThan(other);
 	}
 
 	/**
-	 * Verify that a {@link Calendar} is after another one.
+	 * Verify that a {@link Calendar} calendarIs after another one.
 	 * 
 	 * @param other
 	 *            the other {@link Calendar}.
 	 * @return the matcher on {@link Calendar}.
 	 * @since 0.4.0
 	 */
-	default Matcher<Calendar> isAfter(Calendar other) {
+	default Matcher<Calendar> calendarIsAfter(Calendar other) {
 		return TestSuite.DSL.greaterThan(other);
 	}
 
