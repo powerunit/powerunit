@@ -23,8 +23,10 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.OptionalLong;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
+import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 
 import ch.powerunit.matchers.ExceptionMessageMatcher;
@@ -44,222 +46,254 @@ import ch.powerunit.matchers.optional.OptionalPresentMatcher;
  */
 interface Matchers extends HamcrestMatchers, FileMatchers {
 
-    /**
-     * Validate the message of an exception
-     * 
-     * @param matching
-     *            the matcher on the message
-     * @return the matcher on the exception
-     */
-    default org.hamcrest.Matcher&lt;Throwable&gt; exceptionMessage(
-            org.hamcrest.Matcher&lt;? super String&gt; matching) {
-<span class="fc" id="L56">        return new ExceptionMessageMatcher(matching);</span>
-    }
+	/**
+	 * Validate the message of an exception
+	 * 
+	 * @param matching
+	 *            the matcher on the message
+	 * @return the matcher on the exception
+	 */
+	default org.hamcrest.Matcher&lt;Throwable&gt; exceptionMessage(
+			org.hamcrest.Matcher&lt;? super String&gt; matching) {
+<span class="fc" id="L58">		return new ExceptionMessageMatcher(matching);</span>
+	}
 
-    /**
-     * Validate the message of an exception
-     * 
-     * @param message
-     *            the expected Message
-     * @return the matcher on the exception
-     */
-    default org.hamcrest.Matcher&lt;Throwable&gt; exceptionMessage(String message) {
-<span class="fc" id="L67">        return exceptionMessage(equalTo(message));</span>
-    }
+	/**
+	 * Validate the message of an exception
+	 * 
+	 * @param message
+	 *            the expected Message
+	 * @return the matcher on the exception
+	 */
+	default org.hamcrest.Matcher&lt;Throwable&gt; exceptionMessage(String message) {
+<span class="fc" id="L69">		return exceptionMessage(equalTo(message));</span>
+	}
 
-    /**
-     * Check that the passed optional is present.
-     * 
-     * @return the matcher on the optional
-     * @param &lt;T&gt;
-     *            the type for what is inside the optional
-     */
-    default &lt;T&gt; org.hamcrest.Matcher&lt;Optional&lt;T&gt;&gt; optionalIsPresent() {
-<span class="fc" id="L78">        return new OptionalPresentMatcher&lt;&gt;(is(true));</span>
-    }
+	/**
+	 * Check that the passed optional is present.
+	 * 
+	 * @return the matcher on the optional
+	 * @param &lt;T&gt;
+	 *            the type for what is inside the optional
+	 */
+	default &lt;T&gt; org.hamcrest.Matcher&lt;Optional&lt;T&gt;&gt; optionalIsPresent() {
+<span class="fc" id="L80">		return new OptionalPresentMatcher&lt;&gt;(is(true));</span>
+	}
 
-    /**
-     * Check that the passed optional is not present.
-     * 
-     * @return the matcher on the optional
-     * @param &lt;T&gt;
-     *            the type for what is inside the optional
-     */
-    default &lt;T&gt; org.hamcrest.Matcher&lt;Optional&lt;T&gt;&gt; optionalIsNotPresent() {
-<span class="fc" id="L89">        return new OptionalPresentMatcher&lt;&gt;(not(true));</span>
-    }
+	/**
+	 * Check that the passed optional is not present.
+	 * 
+	 * @return the matcher on the optional
+	 * @param &lt;T&gt;
+	 *            the type for what is inside the optional
+	 */
+	default &lt;T&gt; org.hamcrest.Matcher&lt;Optional&lt;T&gt;&gt; optionalIsNotPresent() {
+<span class="fc" id="L91">		return new OptionalPresentMatcher&lt;&gt;(not(true));</span>
+	}
 
-    /**
-     * Check that the passed optional is accepted by some matcher.
-     * 
-     * @param subMatcher
-     *            the matcher on the data
-     * @return the matcher on the optional
-     * @param &lt;T&gt;
-     *            the type for what is inside the optional
-     */
-    default &lt;T&gt; org.hamcrest.Matcher&lt;Optional&lt;? super T&gt;&gt; optionalIs(
-            org.hamcrest.Matcher&lt;? super T&gt; subMatcher) {
-<span class="fc" id="L103">        return both((org.hamcrest.Matcher) optionalIsPresent()).and(</span>
-                new OptionalMatcher&lt;T&gt;(subMatcher));
-    }
+	/**
+	 * Check that the passed optional is accepted by some matcher.
+	 * 
+	 * @param subMatcher
+	 *            the matcher on the data
+	 * @return the matcher on the optional
+	 * @param &lt;T&gt;
+	 *            the type for what is inside the optional
+	 */
+	default &lt;T&gt; org.hamcrest.Matcher&lt;Optional&lt;? super T&gt;&gt; optionalIs(
+			org.hamcrest.Matcher&lt;? super T&gt; subMatcher) {
+<span class="fc" id="L105">		return both((org.hamcrest.Matcher) optionalIsPresent()).and(</span>
+				new OptionalMatcher&lt;T&gt;(subMatcher));
+	}
 
-    /**
-     * Check that the passed optional is some target value.
-     * 
-     * @param target
-     *            the target value
-     * @return the matcher on the optional
-     * @param &lt;T&gt;
-     *            the type for what is inside the optional
-     */
-    default &lt;T&gt; org.hamcrest.Matcher&lt;Optional&lt;? super T&gt;&gt; optionalIs(T target) {
-<span class="fc" id="L117">        return optionalIs(is(target));</span>
-    }
+	/**
+	 * Check that the passed optional is some target value.
+	 * 
+	 * @param target
+	 *            the target value
+	 * @return the matcher on the optional
+	 * @param &lt;T&gt;
+	 *            the type for what is inside the optional
+	 */
+	default &lt;T&gt; org.hamcrest.Matcher&lt;Optional&lt;? super T&gt;&gt; optionalIs(T target) {
+<span class="fc" id="L119">		return optionalIs(is(target));</span>
+	}
 
-    /**
-     * Check that the passed optional is present.
-     * 
-     * @return the matcher on the optional
-     */
-    default org.hamcrest.Matcher&lt;OptionalDouble&gt; optionalDoubleIsPresent() {
-<span class="fc" id="L126">        return new OptionalDoublePresentMatcher(is(true));</span>
-    }
+	/**
+	 * Check that the passed optional is present.
+	 * 
+	 * @return the matcher on the optional
+	 */
+	default org.hamcrest.Matcher&lt;OptionalDouble&gt; optionalDoubleIsPresent() {
+<span class="fc" id="L128">		return new OptionalDoublePresentMatcher(is(true));</span>
+	}
 
-    /**
-     * Check that the passed optional is not present.
-     * 
-     * @return the matcher on the optional
-     */
-    default org.hamcrest.Matcher&lt;OptionalDouble&gt; optionalDoubleIsNotPresent() {
-<span class="fc" id="L135">        return new OptionalDoublePresentMatcher(not(true));</span>
-    }
+	/**
+	 * Check that the passed optional is not present.
+	 * 
+	 * @return the matcher on the optional
+	 */
+	default org.hamcrest.Matcher&lt;OptionalDouble&gt; optionalDoubleIsNotPresent() {
+<span class="fc" id="L137">		return new OptionalDoublePresentMatcher(not(true));</span>
+	}
 
-    /**
-     * Check that the passed optional is accepted by some matcher.
-     * 
-     * @param subMatcher
-     *            the matcher on the data
-     * @return the matcher on the optional
-     */
-    default org.hamcrest.Matcher&lt;OptionalDouble&gt; optionalDoubleIs(
-            org.hamcrest.Matcher&lt;? super Double&gt; subMatcher) {
-<span class="fc" id="L147">        return both((org.hamcrest.Matcher) optionalDoubleIsPresent()).and(</span>
-                new OptionalDoubleMatcher(subMatcher));
-    }
+	/**
+	 * Check that the passed optional is accepted by some matcher.
+	 * 
+	 * @param subMatcher
+	 *            the matcher on the data
+	 * @return the matcher on the optional
+	 */
+	default org.hamcrest.Matcher&lt;OptionalDouble&gt; optionalDoubleIs(
+			org.hamcrest.Matcher&lt;? super Double&gt; subMatcher) {
+<span class="fc" id="L149">		return both((org.hamcrest.Matcher) optionalDoubleIsPresent()).and(</span>
+				new OptionalDoubleMatcher(subMatcher));
+	}
 
-    /**
-     * Check that the passed optional is present.
-     * 
-     * @return the matcher on the optional
-     */
-    default org.hamcrest.Matcher&lt;OptionalInt&gt; optionalIntIsPresent() {
-<span class="fc" id="L157">        return new OptionalIntPresentMatcher(is(true));</span>
-    }
+	/**
+	 * Check that the passed optional is present.
+	 * 
+	 * @return the matcher on the optional
+	 */
+	default org.hamcrest.Matcher&lt;OptionalInt&gt; optionalIntIsPresent() {
+<span class="fc" id="L159">		return new OptionalIntPresentMatcher(is(true));</span>
+	}
 
-    /**
-     * Check that the passed optional is not present.
-     * 
-     * @return the matcher on the optional
-     */
-    default org.hamcrest.Matcher&lt;OptionalInt&gt; optionalIntIsNotPresent() {
-<span class="fc" id="L166">        return new OptionalIntPresentMatcher(not(true));</span>
-    }
+	/**
+	 * Check that the passed optional is not present.
+	 * 
+	 * @return the matcher on the optional
+	 */
+	default org.hamcrest.Matcher&lt;OptionalInt&gt; optionalIntIsNotPresent() {
+<span class="fc" id="L168">		return new OptionalIntPresentMatcher(not(true));</span>
+	}
 
-    /**
-     * Check that the passed optional is accepted by some matcher.
-     * 
-     * @param subMatcher
-     *            the matcher on the data
-     * @return the matcher on the optional
-     */
-    default org.hamcrest.Matcher&lt;OptionalInt&gt; optionalIntIs(
-            org.hamcrest.Matcher&lt;? super Integer&gt; subMatcher) {
-<span class="fc" id="L178">        return both((org.hamcrest.Matcher) optionalIntIsPresent()).and(</span>
-                new OptionalIntMatcher(subMatcher));
-    }
+	/**
+	 * Check that the passed optional is accepted by some matcher.
+	 * 
+	 * @param subMatcher
+	 *            the matcher on the data
+	 * @return the matcher on the optional
+	 */
+	default org.hamcrest.Matcher&lt;OptionalInt&gt; optionalIntIs(
+			org.hamcrest.Matcher&lt;? super Integer&gt; subMatcher) {
+<span class="fc" id="L180">		return both((org.hamcrest.Matcher) optionalIntIsPresent()).and(</span>
+				new OptionalIntMatcher(subMatcher));
+	}
 
-    /**
-     * Check that the passed optional is some target value.
-     * 
-     * @param target
-     *            the target value
-     * @return the matcher on the optional
-     */
-    default org.hamcrest.Matcher&lt;OptionalInt&gt; optionalIntIs(Integer target) {
-<span class="fc" id="L190">        return optionalIntIs(is(target));</span>
-    }
+	/**
+	 * Check that the passed optional is some target value.
+	 * 
+	 * @param target
+	 *            the target value
+	 * @return the matcher on the optional
+	 */
+	default org.hamcrest.Matcher&lt;OptionalInt&gt; optionalIntIs(Integer target) {
+<span class="fc" id="L192">		return optionalIntIs(is(target));</span>
+	}
 
-    /**
-     * Check that the passed optional is present.
-     * 
-     * @return the matcher on the optional
-     */
-    default org.hamcrest.Matcher&lt;OptionalLong&gt; optionalLongIsPresent() {
-<span class="fc" id="L199">        return new OptionalLongPresentMatcher(is(true));</span>
-    }
+	/**
+	 * Check that the passed optional is present.
+	 * 
+	 * @return the matcher on the optional
+	 */
+	default org.hamcrest.Matcher&lt;OptionalLong&gt; optionalLongIsPresent() {
+<span class="fc" id="L201">		return new OptionalLongPresentMatcher(is(true));</span>
+	}
 
-    /**
-     * Check that the passed optional is not present.
-     * 
-     * @return the matcher on the optional
-     */
-    default org.hamcrest.Matcher&lt;OptionalLong&gt; optionalLongIsNotPresent() {
-<span class="fc" id="L208">        return new OptionalLongPresentMatcher(not(true));</span>
-    }
+	/**
+	 * Check that the passed optional is not present.
+	 * 
+	 * @return the matcher on the optional
+	 */
+	default org.hamcrest.Matcher&lt;OptionalLong&gt; optionalLongIsNotPresent() {
+<span class="fc" id="L210">		return new OptionalLongPresentMatcher(not(true));</span>
+	}
 
-    /**
-     * Check that the passed optional is accepted by some matcher.
-     * 
-     * @param subMatcher
-     *            the matcher on the data
-     * @return the matcher on the optional
-     */
-    default org.hamcrest.Matcher&lt;OptionalLong&gt; optionalLongIs(
-            org.hamcrest.Matcher&lt;? super Long&gt; subMatcher) {
-<span class="fc" id="L220">        return both((org.hamcrest.Matcher) optionalLongIsPresent()).and(</span>
-                new OptionalLongMatcher(subMatcher));
-    }
+	/**
+	 * Check that the passed optional is accepted by some matcher.
+	 * 
+	 * @param subMatcher
+	 *            the matcher on the data
+	 * @return the matcher on the optional
+	 */
+	default org.hamcrest.Matcher&lt;OptionalLong&gt; optionalLongIs(
+			org.hamcrest.Matcher&lt;? super Long&gt; subMatcher) {
+<span class="fc" id="L222">		return both((org.hamcrest.Matcher) optionalLongIsPresent()).and(</span>
+				new OptionalLongMatcher(subMatcher));
+	}
 
-    /**
-     * Check that the passed optional is some target value.
-     * 
-     * @param target
-     *            the target value
-     * @return the matcher on the optional
-     */
-    default org.hamcrest.Matcher&lt;OptionalLong&gt; optionalLongIs(Long target) {
-<span class="fc" id="L232">        return optionalLongIs(is(target));</span>
-    }
+	/**
+	 * Check that the passed optional is some target value.
+	 * 
+	 * @param target
+	 *            the target value
+	 * @return the matcher on the optional
+	 */
+	default org.hamcrest.Matcher&lt;OptionalLong&gt; optionalLongIs(Long target) {
+<span class="fc" id="L234">		return optionalLongIs(is(target));</span>
+	}
 
-    /**
-     * Validate a string with a {@link java.util.regex.Pattern}.
-     * 
-     * &lt;pre&gt;
-     * assertThat(&amp;quot;abc&amp;quot;).is(matchesRegex(Pattern.compile(&amp;quot;&amp;circ;[a-z]$&amp;quot;));
-     * &lt;/pre&gt;
-     * 
-     * @param pattern
-     *            the pattern to be used.
-     * @return The matcher.
-     */
-    default Matcher&lt;String&gt; matchesRegex(Pattern pattern) {
-<span class="nc" id="L247">        return new StringPatternMatcher(pattern);</span>
-    }
+	/**
+	 * Validate a string with a {@link java.util.regex.Pattern}.
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(&amp;quot;abc&amp;quot;).is(matchesRegex(Pattern.compile(&amp;quot;&amp;circ;[a-z]$&amp;quot;));
+	 * &lt;/pre&gt;
+	 * 
+	 * @param pattern
+	 *            the pattern to be used.
+	 * @return The matcher.
+	 */
+	default Matcher&lt;String&gt; matchesRegex(Pattern pattern) {
+<span class="nc" id="L249">		return new StringPatternMatcher(pattern);</span>
+	}
 
-    /**
-     * Validate a string with a regex.
-     * 
-     * &lt;pre&gt;
-     * assertThat(&amp;quot;abc&amp;quot;).is matchesRegex(&amp;quot;&amp;circ;[a-z]+$&amp;quot;));
-     * &lt;/pre&gt;
-     * 
-     * @param regex
-     *            The regex to be used for the validation.
-     * @return The matcher.
-     */
-    default Matcher&lt;String&gt; matchesRegex(String regex) {
-<span class="nc" id="L262">        return matchesRegex(Pattern.compile(regex));</span>
-    }
+	/**
+	 * Validate a string with a regex.
+	 * 
+	 * &lt;pre&gt;
+	 * assertThat(&amp;quot;abc&amp;quot;).is matchesRegex(&amp;quot;&amp;circ;[a-z]+$&amp;quot;));
+	 * &lt;/pre&gt;
+	 * 
+	 * @param regex
+	 *            The regex to be used for the validation.
+	 * @return The matcher.
+	 */
+	default Matcher&lt;String&gt; matchesRegex(String regex) {
+<span class="nc" id="L264">		return matchesRegex(Pattern.compile(regex));</span>
+	}
+
+	/**
+	 * Create a feature matcher, on the fly.
+	 * 
+	 * @param clazz
+	 *            the clazz of the object supported by the Matcher.
+	 * @param featureClazz
+	 *            the clazz of the feature.
+	 * @param featureName
+	 *            the name of the feature.
+	 * @param featureExtractor
+	 *            the {@link Function} to extract the feature.
+	 * @param subMatcher
+	 *            the matcher to be applied on the feature.
+	 * @return the matcher.
+	 * @param &lt;T&gt;
+	 *            the type for the matcher.
+	 * @param &lt;F&gt;
+	 *            the feature returned by the extractor.
+	 * @since 0.4.0
+	 */
+	default &lt;T, F&gt; Matcher&lt;T&gt; featureMatcher(Class&lt;T&gt; clazz,
+			Class&lt;F&gt; featureClazz, String featureName,
+			Function&lt;T, F&gt; featureExtractor, Matcher&lt;? super F&gt; subMatcher) {
+<span class="fc" id="L290">		return new FeatureMatcher&lt;T, F&gt;(subMatcher, featureName, featureName) {</span>
+
+			@Override
+			protected F featureValueOf(T actual) {
+<span class="fc" id="L294">				return featureExtractor.apply(actual);</span>
+			}
+		};
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

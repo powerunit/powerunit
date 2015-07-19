@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CalendarMatchers.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.matchers.datetime</a> &gt; <span class="el_source">CalendarMatchers.java</span></div><h1>CalendarMatchers.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.matchers.datetime;
+
+import java.util.Calendar;
+
+import org.hamcrest.FeatureMatcher;
+import org.hamcrest.Matcher;
+
+import ch.powerunit.TestSuite;
+
+/**
+ * @author borettim
+ *
+ */
+public final class CalendarMatchers {
+
+<span class="nc" id="L35">	private CalendarMatchers() {</span>
+<span class="nc" id="L36">	}</span>
+
+	private static final class CalendarFieldMatcher extends
+			FeatureMatcher&lt;Calendar, Integer&gt; {
+
+		private final int field;
+
+		public CalendarFieldMatcher(Matcher&lt;? super Integer&gt; subMatcher,
+				String featureName, int field) {
+<span class="fc" id="L45">			super(subMatcher, featureName, featureName);</span>
+<span class="fc" id="L46">			this.field = field;</span>
+<span class="fc" id="L47">		}</span>
+
+		@Override
+		protected Integer featureValueOf(Calendar actual) {
+<span class="fc" id="L51">			return actual.get(field);</span>
+		}
+
+	}
+
+	public static Matcher&lt;Calendar&gt; isYear(int year) {
+<span class="fc" id="L57">		return new CalendarFieldMatcher(TestSuite.DSL.equalTo(year), &quot;year&quot;,</span>
+				Calendar.YEAR);
+	}
+
+	public static Matcher&lt;Calendar&gt; isDayOfMonth(int dayOfMonth) {
+<span class="nc" id="L62">		return new CalendarFieldMatcher(TestSuite.DSL.equalTo(dayOfMonth),</span>
+				&quot;day of month&quot;, Calendar.DAY_OF_MONTH);
+	}
+
+	public static Matcher&lt;Calendar&gt; isMonth(int month) {
+<span class="nc" id="L67">		return new CalendarFieldMatcher(TestSuite.DSL.equalTo(month), &quot;month&quot;,</span>
+				Calendar.MONTH);
+	}
+
+	public static Matcher&lt;Calendar&gt; isHourOfDay(int hourOfDay) {
+<span class="nc" id="L72">		return new CalendarFieldMatcher(TestSuite.DSL.equalTo(hourOfDay),</span>
+				&quot;hour of day&quot;, Calendar.HOUR_OF_DAY);
+	}
+
+	public static Matcher&lt;Calendar&gt; isMinute(int minute) {
+<span class="nc" id="L77">		return new CalendarFieldMatcher(TestSuite.DSL.equalTo(minute),</span>
+				&quot;minute&quot;, Calendar.MINUTE);
+	}
+
+	public static Matcher&lt;Calendar&gt; isSecond(int second) {
+<span class="nc" id="L82">		return new CalendarFieldMatcher(TestSuite.DSL.equalTo(second),</span>
+				&quot;second&quot;, Calendar.SECOND);
+	}
+
+	public static Matcher&lt;Calendar&gt; isMillisecond(int millisecond) {
+<span class="nc" id="L87">		return new CalendarFieldMatcher(TestSuite.DSL.equalTo(millisecond),</span>
+				&quot;millisecond&quot;, Calendar.MILLISECOND);
+	}
+
+	public static Matcher&lt;Calendar&gt; isDayOfWeek(int dayOfWeek) {
+<span class="nc" id="L92">		return new CalendarFieldMatcher(TestSuite.DSL.equalTo(dayOfWeek),</span>
+				&quot;day of week&quot;, Calendar.DAY_OF_WEEK);
+	}
+
+	public static Matcher&lt;Calendar&gt; isMonday() {
+<span class="nc" id="L97">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;Monday&quot;,</span>
+<span class="nc" id="L98">				TestSuite.DSL.equalTo(Calendar.MONDAY)), &quot;day of week&quot;,</span>
+				Calendar.DAY_OF_WEEK);
+	}
+
+	public static Matcher&lt;Calendar&gt; isThurday() {
+<span class="nc" id="L103">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;Thursday&quot;,</span>
+<span class="nc" id="L104">				TestSuite.DSL.equalTo(Calendar.THURSDAY)), &quot;day of week&quot;,</span>
+				Calendar.DAY_OF_WEEK);
+	}
+
+	public static Matcher&lt;Calendar&gt; isWednesday() {
+<span class="nc" id="L109">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;Wednesday&quot;,</span>
+<span class="nc" id="L110">				TestSuite.DSL.equalTo(Calendar.WEDNESDAY)), &quot;day of week&quot;,</span>
+				Calendar.DAY_OF_WEEK);
+	}
+
+	public static Matcher&lt;Calendar&gt; isTuesday() {
+<span class="nc" id="L115">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;Tuesday&quot;,</span>
+<span class="nc" id="L116">				TestSuite.DSL.equalTo(Calendar.TUESDAY)), &quot;day of week&quot;,</span>
+				Calendar.DAY_OF_WEEK);
+	}
+
+	public static Matcher&lt;Calendar&gt; isFriday() {
+<span class="nc" id="L121">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;Friday&quot;,</span>
+<span class="nc" id="L122">				TestSuite.DSL.equalTo(Calendar.FRIDAY)), &quot;day of week&quot;,</span>
+				Calendar.DAY_OF_WEEK);
+	}
+
+	public static Matcher&lt;Calendar&gt; isSaturday() {
+<span class="nc" id="L127">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;Saturday&quot;,</span>
+<span class="nc" id="L128">				TestSuite.DSL.equalTo(Calendar.SATURDAY)), &quot;day of week&quot;,</span>
+				Calendar.DAY_OF_WEEK);
+	}
+
+	public static Matcher&lt;Calendar&gt; isSunday() {
+<span class="nc" id="L133">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;Sunday&quot;,</span>
+<span class="nc" id="L134">				TestSuite.DSL.equalTo(Calendar.SUNDAY)), &quot;day of week&quot;,</span>
+				Calendar.DAY_OF_WEEK);
+	}
+
+	public static Matcher&lt;Calendar&gt; isJanuary() {
+<span class="fc" id="L139">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;January&quot;,</span>
+<span class="fc" id="L140">				TestSuite.DSL.equalTo(Calendar.JANUARY)), &quot;month&quot;,</span>
+				Calendar.MONTH);
+	}
+
+	public static Matcher&lt;Calendar&gt; isFebruary() {
+<span class="nc" id="L145">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;February&quot;,</span>
+<span class="nc" id="L146">				TestSuite.DSL.equalTo(Calendar.FEBRUARY)), &quot;month&quot;,</span>
+				Calendar.MONTH);
+	}
+
+	public static Matcher&lt;Calendar&gt; isMarch() {
+<span class="nc" id="L151">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;March&quot;,</span>
+<span class="nc" id="L152">				TestSuite.DSL.equalTo(Calendar.MARCH)), &quot;month&quot;, Calendar.MONTH);</span>
+	}
+
+	public static Matcher&lt;Calendar&gt; isApril() {
+<span class="nc" id="L156">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;April&quot;,</span>
+<span class="nc" id="L157">				TestSuite.DSL.equalTo(Calendar.APRIL)), &quot;month&quot;, Calendar.MONTH);</span>
+	}
+
+	public static Matcher&lt;Calendar&gt; isMay() {
+<span class="nc" id="L161">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;May&quot;,</span>
+<span class="nc" id="L162">				TestSuite.DSL.equalTo(Calendar.MAY)), &quot;month&quot;, Calendar.MONTH);</span>
+	}
+
+	public static Matcher&lt;Calendar&gt; isJune() {
+<span class="nc" id="L166">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;June&quot;,</span>
+<span class="nc" id="L167">				TestSuite.DSL.equalTo(Calendar.JUNE)), &quot;month&quot;, Calendar.MONTH);</span>
+	}
+
+	public static Matcher&lt;Calendar&gt; isJuly() {
+<span class="nc" id="L171">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;July&quot;,</span>
+<span class="nc" id="L172">				TestSuite.DSL.equalTo(Calendar.JULY)), &quot;month&quot;, Calendar.MONTH);</span>
+	}
+
+	public static Matcher&lt;Calendar&gt; isAugust() {
+<span class="nc" id="L176">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;August&quot;,</span>
+<span class="nc" id="L177">				TestSuite.DSL.equalTo(Calendar.AUGUST)), &quot;month&quot;,</span>
+				Calendar.MONTH);
+	}
+
+	public static Matcher&lt;Calendar&gt; isSeptember() {
+<span class="nc" id="L182">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;September&quot;,</span>
+<span class="nc" id="L183">				TestSuite.DSL.equalTo(Calendar.SEPTEMBER)), &quot;month&quot;,</span>
+				Calendar.MONTH);
+	}
+
+	public static Matcher&lt;Calendar&gt; isOctober() {
+<span class="nc" id="L188">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;October&quot;,</span>
+<span class="nc" id="L189">				TestSuite.DSL.equalTo(Calendar.OCTOBER)), &quot;month&quot;,</span>
+				Calendar.MONTH);
+	}
+
+	public static Matcher&lt;Calendar&gt; isNovember() {
+<span class="nc" id="L194">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;November&quot;,</span>
+<span class="nc" id="L195">				TestSuite.DSL.equalTo(Calendar.NOVEMBER)), &quot;month&quot;,</span>
+				Calendar.MONTH);
+	}
+
+	public static Matcher&lt;Calendar&gt; isDecember() {
+<span class="nc" id="L200">		return new CalendarFieldMatcher(TestSuite.DSL.describedAs(&quot;December&quot;,</span>
+<span class="nc" id="L201">				TestSuite.DSL.equalTo(Calendar.DECEMBER)), &quot;month&quot;,</span>
+				Calendar.MONTH);
+	}
+
+	public static Matcher&lt;Calendar&gt; sameDate(Calendar other) {
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		return other == null ? TestSuite.DSL.nullValue(Calendar.class)</span>
+<span class="nc" id="L207">				: TestSuite.DSL.both(isYear(other.get(Calendar.YEAR)))</span>
+<span class="nc" id="L208">						.and(isDayOfMonth(other.get(Calendar.DAY_OF_MONTH)))</span>
+<span class="nc" id="L209">						.and(isMonth(other.get(Calendar.DAY_OF_MONTH)));</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
