@@ -447,10 +447,24 @@ interface Assert {
 	 * The goal of <code>assertWhen</code> is to provide a way to validate that
 	 * an exception is thrown.
 	 * <p>
+	 * For instance, having this method :
 	 * 
-	 * Will run a piece of code that always thrown an exception and then
-	 * validate that the message of the exception is <code>test</code>. <br>
-	 * <br>
+	 * <pre>
+	 * public static void method1() throws Exception {
+	 * 	throw new Exception(&quot;demo1&quot;);
+	 * }
+	 * </pre>
+	 * 
+	 * It can be tested by :
+	 * 
+	 * <pre>
+	 * &#064;Test
+	 * public void testNoArgNoReturn() {
+	 * 	assertWhen(asStatement(DemoAssertThatExceptionTest::method1))
+	 * 			.throwException(exceptionMessage(&quot;demo1&quot;));
+	 * }
+	 * </pre>
+	 * 
 	 * <i>By default, assertThat can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
 	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
@@ -563,8 +577,6 @@ interface Assert {
 	 * an exception is thrown.
 	 * <p>
 	 * 
-	 * Will run a piece of code that always thrown an exception and then
-	 * validate that the message of the exception is <code>test</code>. <br>
 	 * <br>
 	 * <i>By default, assertThat can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
