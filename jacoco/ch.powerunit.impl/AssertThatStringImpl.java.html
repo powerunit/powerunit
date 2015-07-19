@@ -7,9 +7,9 @@ import ch.powerunit.AssertThatString;
 public class AssertThatStringImpl extends AssertThatObjectImpl&lt;String&gt;
         implements AssertThatString {
 
-    public AssertThatStringImpl(boolean assertion, String msg,
+    public AssertThatStringImpl(Object underTest,boolean assertion, String msg,
             Supplier&lt;String&gt; provider) {
-<span class="fc" id="L12">        super(assertion, msg, provider);</span>
+<span class="fc" id="L12">        super(underTest,assertion, msg, provider);</span>
 <span class="fc" id="L13">    }</span>
 
 }

@@ -35,6 +35,13 @@ import org.hamcrest.Matchers;
 public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	/**
 	 * Check that a string another string.
+	 * &lt;p&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
 	 * 
 	 * @param substring
 	 *            the other string.
@@ -42,13 +49,23 @@ public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean containsString(String substring) {
-<span class="fc" id="L47">		return is(Matchers.containsString(substring));</span>
+<span class="fc" id="L57">		return is(Matchers.containsString(substring));</span>
 	}
 
 	/**
 	 * Check that a string starts with another one.
+	 * &lt;p&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
 	 * 
 	 * @param prefix
 	 *            the prefix.
@@ -56,13 +73,23 @@ public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean startsWith(String prefix) {
-<span class="fc" id="L61">		return is(Matchers.startsWith(prefix));</span>
+<span class="fc" id="L81">		return is(Matchers.startsWith(prefix));</span>
 	}
 
 	/**
 	 * Check that a string ends with another one.
+	 * &lt;p&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
 	 * 
 	 * @param prefix
 	 *            the prefix.
@@ -70,13 +97,23 @@ public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean endsWith(String prefix) {
-<span class="fc" id="L75">		return is(Matchers.endsWith(prefix));</span>
+<span class="fc" id="L105">		return is(Matchers.endsWith(prefix));</span>
 	}
 
 	/**
 	 * Validate a string with a {@link java.util.regex.Pattern}.
+	 * &lt;p&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
 	 * 
 	 * @param pattern
 	 *            the pattern to be used.
@@ -84,13 +121,23 @@ public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean matchesRegex(Pattern pattern) {
-<span class="nc" id="L89">		return is(TestSuite.DSL.matchesRegex(pattern));</span>
+<span class="nc" id="L129">		return is(TestSuite.DSL.matchesRegex(pattern));</span>
 	}
 
 	/**
 	 * Validate a string with a regex.
+	 * &lt;p&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
 	 * 
 	 * 
 	 * @param regex
@@ -99,9 +146,12 @@ public interface AssertThatString extends AssertThatObject&lt;String&gt; {
 	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean matchesRegex(String regex) {
-<span class="nc" id="L104">		return is(TestSuite.DSL.matchesRegex(regex));</span>
+<span class="nc" id="L154">		return is(TestSuite.DSL.matchesRegex(regex));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="fr">
+<html lang="en">
 <head>
 <title>Source code</title>
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
@@ -44,97 +44,167 @@
 <span class="sourceLineNo">036</span><a name="line.36"></a>
 <span class="sourceLineNo">037</span>        /**<a name="line.37"></a>
 <span class="sourceLineNo">038</span>         * Check that the object is matching the passed matcher.<a name="line.38"></a>
-<span class="sourceLineNo">039</span>         * <a name="line.39"></a>
-<span class="sourceLineNo">040</span>         * @param matching<a name="line.40"></a>
-<span class="sourceLineNo">041</span>         *            the matcher.<a name="line.41"></a>
-<span class="sourceLineNo">042</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.42"></a>
-<span class="sourceLineNo">043</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.43"></a>
-<span class="sourceLineNo">044</span>         *         fail the test, else, return false and the test will be failed<a name="line.44"></a>
-<span class="sourceLineNo">045</span>         *         later.<a name="line.45"></a>
-<span class="sourceLineNo">046</span>         */<a name="line.46"></a>
-<span class="sourceLineNo">047</span>        boolean is(Matcher&lt;? super T&gt; matching);<a name="line.47"></a>
-<span class="sourceLineNo">048</span><a name="line.48"></a>
-<span class="sourceLineNo">049</span>        /**<a name="line.49"></a>
-<span class="sourceLineNo">050</span>         * Check that the object is the passed one (shortcut to Matcher.equalTo).<a name="line.50"></a>
-<span class="sourceLineNo">051</span>         * <a name="line.51"></a>
-<span class="sourceLineNo">052</span>         * @param compareTo<a name="line.52"></a>
-<span class="sourceLineNo">053</span>         *            the value.<a name="line.53"></a>
-<span class="sourceLineNo">054</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.54"></a>
-<span class="sourceLineNo">055</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.55"></a>
-<span class="sourceLineNo">056</span>         *         fail the test, else, return false and the test will be failed<a name="line.56"></a>
-<span class="sourceLineNo">057</span>         *         later.<a name="line.57"></a>
-<span class="sourceLineNo">058</span>         */<a name="line.58"></a>
-<span class="sourceLineNo">059</span>        default boolean is(T compareTo) {<a name="line.59"></a>
-<span class="sourceLineNo">060</span>                return is(Matchers.equalTo(compareTo));<a name="line.60"></a>
-<span class="sourceLineNo">061</span>        }<a name="line.61"></a>
-<span class="sourceLineNo">062</span><a name="line.62"></a>
-<span class="sourceLineNo">063</span>        /**<a name="line.63"></a>
-<span class="sourceLineNo">064</span>         * Check that the object is not the passed one.<a name="line.64"></a>
-<span class="sourceLineNo">065</span>         * <a name="line.65"></a>
-<span class="sourceLineNo">066</span>         * @param compareTo<a name="line.66"></a>
-<span class="sourceLineNo">067</span>         *            the value<a name="line.67"></a>
-<span class="sourceLineNo">068</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.68"></a>
-<span class="sourceLineNo">069</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.69"></a>
-<span class="sourceLineNo">070</span>         *         fail the test, else, return false and the test will be failed<a name="line.70"></a>
-<span class="sourceLineNo">071</span>         *         later.<a name="line.71"></a>
-<span class="sourceLineNo">072</span>         */<a name="line.72"></a>
-<span class="sourceLineNo">073</span>        default boolean isNot(T compareTo) {<a name="line.73"></a>
-<span class="sourceLineNo">074</span>                return isNot(Matchers.equalTo(compareTo));<a name="line.74"></a>
-<span class="sourceLineNo">075</span>        }<a name="line.75"></a>
-<span class="sourceLineNo">076</span><a name="line.76"></a>
-<span class="sourceLineNo">077</span>        /**<a name="line.77"></a>
-<span class="sourceLineNo">078</span>         * Check that the object is not matching the passed matcher.<a name="line.78"></a>
-<span class="sourceLineNo">079</span>         * <a name="line.79"></a>
-<span class="sourceLineNo">080</span>         * @param matching<a name="line.80"></a>
-<span class="sourceLineNo">081</span>         *            the matcher<a name="line.81"></a>
-<span class="sourceLineNo">082</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.82"></a>
-<span class="sourceLineNo">083</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.83"></a>
-<span class="sourceLineNo">084</span>         *         fail the test, else, return false and the test will be failed<a name="line.84"></a>
-<span class="sourceLineNo">085</span>         *         later.<a name="line.85"></a>
-<span class="sourceLineNo">086</span>         */<a name="line.86"></a>
-<span class="sourceLineNo">087</span>        default boolean isNot(Matcher&lt;T&gt; matching) {<a name="line.87"></a>
-<span class="sourceLineNo">088</span>                return is(Matchers.not(matching));<a name="line.88"></a>
-<span class="sourceLineNo">089</span>        }<a name="line.89"></a>
-<span class="sourceLineNo">090</span><a name="line.90"></a>
-<span class="sourceLineNo">091</span>        /**<a name="line.91"></a>
-<span class="sourceLineNo">092</span>         * Check that the object is null.<a name="line.92"></a>
-<span class="sourceLineNo">093</span>         * <a name="line.93"></a>
-<span class="sourceLineNo">094</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.94"></a>
-<span class="sourceLineNo">095</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.95"></a>
-<span class="sourceLineNo">096</span>         *         fail the test, else, return false and the test will be failed<a name="line.96"></a>
-<span class="sourceLineNo">097</span>         *         later.<a name="line.97"></a>
-<span class="sourceLineNo">098</span>         */<a name="line.98"></a>
-<span class="sourceLineNo">099</span>        default boolean isNull() {<a name="line.99"></a>
-<span class="sourceLineNo">100</span>                return is(Matchers.nullValue());<a name="line.100"></a>
-<span class="sourceLineNo">101</span>        }<a name="line.101"></a>
-<span class="sourceLineNo">102</span><a name="line.102"></a>
-<span class="sourceLineNo">103</span>        /**<a name="line.103"></a>
-<span class="sourceLineNo">104</span>         * Check that the object is not null.<a name="line.104"></a>
-<span class="sourceLineNo">105</span>         * <a name="line.105"></a>
-<span class="sourceLineNo">106</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.106"></a>
-<span class="sourceLineNo">107</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.107"></a>
-<span class="sourceLineNo">108</span>         *         fail the test, else, return false and the test will be failed<a name="line.108"></a>
-<span class="sourceLineNo">109</span>         *         later.<a name="line.109"></a>
-<span class="sourceLineNo">110</span>         */<a name="line.110"></a>
-<span class="sourceLineNo">111</span>        default boolean isNotNull() {<a name="line.111"></a>
-<span class="sourceLineNo">112</span>                return is(Matchers.notNullValue());<a name="line.112"></a>
-<span class="sourceLineNo">113</span>        }<a name="line.113"></a>
-<span class="sourceLineNo">114</span><a name="line.114"></a>
-<span class="sourceLineNo">115</span>        /**<a name="line.115"></a>
-<span class="sourceLineNo">116</span>         * Check that the object is of a specific class (or subclasses).<a name="line.116"></a>
-<span class="sourceLineNo">117</span>         * <a name="line.117"></a>
-<span class="sourceLineNo">118</span>         * @param clazz<a name="line.118"></a>
-<span class="sourceLineNo">119</span>         *            the class<a name="line.119"></a>
-<span class="sourceLineNo">120</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.120"></a>
-<span class="sourceLineNo">121</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.121"></a>
-<span class="sourceLineNo">122</span>         *         fail the test, else, return false and the test will be failed<a name="line.122"></a>
-<span class="sourceLineNo">123</span>         *         later.<a name="line.123"></a>
-<span class="sourceLineNo">124</span>         */<a name="line.124"></a>
-<span class="sourceLineNo">125</span>        default boolean isA(Class&lt;? super T&gt; clazz) {<a name="line.125"></a>
-<span class="sourceLineNo">126</span>                return is(Matchers.isA(clazz));<a name="line.126"></a>
-<span class="sourceLineNo">127</span>        }<a name="line.127"></a>
-<span class="sourceLineNo">128</span><a name="line.128"></a>
-<span class="sourceLineNo">129</span>}<a name="line.129"></a>
+<span class="sourceLineNo">039</span>         * &lt;p&gt;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>         * &lt;br&gt;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>         * &lt;i&gt;By default, assertion can only be used from the main thread of the<a name="line.41"></a>
+<span class="sourceLineNo">042</span>         * test ; When used from another thread, the assertion will be lost. In the<a name="line.42"></a>
+<span class="sourceLineNo">043</span>         * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}<a name="line.43"></a>
+<span class="sourceLineNo">044</span>         * annotation is used, the assertion may not be lost, in case the thread use<a name="line.44"></a>
+<span class="sourceLineNo">045</span>         * an assertion method from the test object instance. &lt;/i&gt;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>         * <a name="line.46"></a>
+<span class="sourceLineNo">047</span>         * @param matching<a name="line.47"></a>
+<span class="sourceLineNo">048</span>         *            the matcher.<a name="line.48"></a>
+<span class="sourceLineNo">049</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.49"></a>
+<span class="sourceLineNo">050</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.50"></a>
+<span class="sourceLineNo">051</span>         *         fail the test, else, return false and the test will be failed<a name="line.51"></a>
+<span class="sourceLineNo">052</span>         *         later.<a name="line.52"></a>
+<span class="sourceLineNo">053</span>         * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;<a name="line.53"></a>
+<span class="sourceLineNo">054</span>         *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action<a name="line.54"></a>
+<span class="sourceLineNo">055</span>         *      done by this assertion.<a name="line.55"></a>
+<span class="sourceLineNo">056</span>         */<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        boolean is(Matcher&lt;? super T&gt; matching);<a name="line.57"></a>
+<span class="sourceLineNo">058</span><a name="line.58"></a>
+<span class="sourceLineNo">059</span>        /**<a name="line.59"></a>
+<span class="sourceLineNo">060</span>         * Check that the object is the passed one (shortcut to Matcher.equalTo).<a name="line.60"></a>
+<span class="sourceLineNo">061</span>         * &lt;p&gt;<a name="line.61"></a>
+<span class="sourceLineNo">062</span>         * &lt;br&gt;<a name="line.62"></a>
+<span class="sourceLineNo">063</span>         * &lt;i&gt;By default, assertion can only be used from the main thread of the<a name="line.63"></a>
+<span class="sourceLineNo">064</span>         * test ; When used from another thread, the assertion will be lost. In the<a name="line.64"></a>
+<span class="sourceLineNo">065</span>         * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}<a name="line.65"></a>
+<span class="sourceLineNo">066</span>         * annotation is used, the assertion may not be lost, in case the thread use<a name="line.66"></a>
+<span class="sourceLineNo">067</span>         * an assertion method from the test object instance. &lt;/i&gt;<a name="line.67"></a>
+<span class="sourceLineNo">068</span>         * <a name="line.68"></a>
+<span class="sourceLineNo">069</span>         * @param compareTo<a name="line.69"></a>
+<span class="sourceLineNo">070</span>         *            the value.<a name="line.70"></a>
+<span class="sourceLineNo">071</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.71"></a>
+<span class="sourceLineNo">072</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.72"></a>
+<span class="sourceLineNo">073</span>         *         fail the test, else, return false and the test will be failed<a name="line.73"></a>
+<span class="sourceLineNo">074</span>         *         later.<a name="line.74"></a>
+<span class="sourceLineNo">075</span>         * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;<a name="line.75"></a>
+<span class="sourceLineNo">076</span>         *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action<a name="line.76"></a>
+<span class="sourceLineNo">077</span>         *      done by this assertion.<a name="line.77"></a>
+<span class="sourceLineNo">078</span>         */<a name="line.78"></a>
+<span class="sourceLineNo">079</span>        default boolean is(T compareTo) {<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                return is(Matchers.equalTo(compareTo));<a name="line.80"></a>
+<span class="sourceLineNo">081</span>        }<a name="line.81"></a>
+<span class="sourceLineNo">082</span><a name="line.82"></a>
+<span class="sourceLineNo">083</span>        /**<a name="line.83"></a>
+<span class="sourceLineNo">084</span>         * Check that the object is not the passed one.<a name="line.84"></a>
+<span class="sourceLineNo">085</span>         * &lt;p&gt;<a name="line.85"></a>
+<span class="sourceLineNo">086</span>         * &lt;br&gt;<a name="line.86"></a>
+<span class="sourceLineNo">087</span>         * &lt;i&gt;By default, assertion can only be used from the main thread of the<a name="line.87"></a>
+<span class="sourceLineNo">088</span>         * test ; When used from another thread, the assertion will be lost. In the<a name="line.88"></a>
+<span class="sourceLineNo">089</span>         * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}<a name="line.89"></a>
+<span class="sourceLineNo">090</span>         * annotation is used, the assertion may not be lost, in case the thread use<a name="line.90"></a>
+<span class="sourceLineNo">091</span>         * an assertion method from the test object instance. &lt;/i&gt;<a name="line.91"></a>
+<span class="sourceLineNo">092</span>         * <a name="line.92"></a>
+<span class="sourceLineNo">093</span>         * @param compareTo<a name="line.93"></a>
+<span class="sourceLineNo">094</span>         *            the value<a name="line.94"></a>
+<span class="sourceLineNo">095</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.95"></a>
+<span class="sourceLineNo">096</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.96"></a>
+<span class="sourceLineNo">097</span>         *         fail the test, else, return false and the test will be failed<a name="line.97"></a>
+<span class="sourceLineNo">098</span>         *         later.<a name="line.98"></a>
+<span class="sourceLineNo">099</span>         * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;<a name="line.99"></a>
+<span class="sourceLineNo">100</span>         *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action<a name="line.100"></a>
+<span class="sourceLineNo">101</span>         *      done by this assertion.<a name="line.101"></a>
+<span class="sourceLineNo">102</span>         */<a name="line.102"></a>
+<span class="sourceLineNo">103</span>        default boolean isNot(T compareTo) {<a name="line.103"></a>
+<span class="sourceLineNo">104</span>                return isNot(Matchers.equalTo(compareTo));<a name="line.104"></a>
+<span class="sourceLineNo">105</span>        }<a name="line.105"></a>
+<span class="sourceLineNo">106</span><a name="line.106"></a>
+<span class="sourceLineNo">107</span>        /**<a name="line.107"></a>
+<span class="sourceLineNo">108</span>         * Check that the object is not matching the passed matcher.<a name="line.108"></a>
+<span class="sourceLineNo">109</span>         * &lt;p&gt;<a name="line.109"></a>
+<span class="sourceLineNo">110</span>         * &lt;br&gt;<a name="line.110"></a>
+<span class="sourceLineNo">111</span>         * &lt;i&gt;By default, assertion can only be used from the main thread of the<a name="line.111"></a>
+<span class="sourceLineNo">112</span>         * test ; When used from another thread, the assertion will be lost. In the<a name="line.112"></a>
+<span class="sourceLineNo">113</span>         * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}<a name="line.113"></a>
+<span class="sourceLineNo">114</span>         * annotation is used, the assertion may not be lost, in case the thread use<a name="line.114"></a>
+<span class="sourceLineNo">115</span>         * an assertion method from the test object instance. &lt;/i&gt;<a name="line.115"></a>
+<span class="sourceLineNo">116</span>         * <a name="line.116"></a>
+<span class="sourceLineNo">117</span>         * @param matching<a name="line.117"></a>
+<span class="sourceLineNo">118</span>         *            the matcher<a name="line.118"></a>
+<span class="sourceLineNo">119</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.119"></a>
+<span class="sourceLineNo">120</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.120"></a>
+<span class="sourceLineNo">121</span>         *         fail the test, else, return false and the test will be failed<a name="line.121"></a>
+<span class="sourceLineNo">122</span>         *         later.<a name="line.122"></a>
+<span class="sourceLineNo">123</span>         * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;<a name="line.123"></a>
+<span class="sourceLineNo">124</span>         *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action<a name="line.124"></a>
+<span class="sourceLineNo">125</span>         *      done by this assertion.<a name="line.125"></a>
+<span class="sourceLineNo">126</span>         */<a name="line.126"></a>
+<span class="sourceLineNo">127</span>        default boolean isNot(Matcher&lt;T&gt; matching) {<a name="line.127"></a>
+<span class="sourceLineNo">128</span>                return is(Matchers.not(matching));<a name="line.128"></a>
+<span class="sourceLineNo">129</span>        }<a name="line.129"></a>
+<span class="sourceLineNo">130</span><a name="line.130"></a>
+<span class="sourceLineNo">131</span>        /**<a name="line.131"></a>
+<span class="sourceLineNo">132</span>         * Check that the object is null.<a name="line.132"></a>
+<span class="sourceLineNo">133</span>         * &lt;p&gt;<a name="line.133"></a>
+<span class="sourceLineNo">134</span>         * &lt;br&gt;<a name="line.134"></a>
+<span class="sourceLineNo">135</span>         * &lt;i&gt;By default, assertion can only be used from the main thread of the<a name="line.135"></a>
+<span class="sourceLineNo">136</span>         * test ; When used from another thread, the assertion will be lost. In the<a name="line.136"></a>
+<span class="sourceLineNo">137</span>         * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}<a name="line.137"></a>
+<span class="sourceLineNo">138</span>         * annotation is used, the assertion may not be lost, in case the thread use<a name="line.138"></a>
+<span class="sourceLineNo">139</span>         * an assertion method from the test object instance. &lt;/i&gt;<a name="line.139"></a>
+<span class="sourceLineNo">140</span>         * <a name="line.140"></a>
+<span class="sourceLineNo">141</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.141"></a>
+<span class="sourceLineNo">142</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.142"></a>
+<span class="sourceLineNo">143</span>         *         fail the test, else, return false and the test will be failed<a name="line.143"></a>
+<span class="sourceLineNo">144</span>         *         later.<a name="line.144"></a>
+<span class="sourceLineNo">145</span>         * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;<a name="line.145"></a>
+<span class="sourceLineNo">146</span>         *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action<a name="line.146"></a>
+<span class="sourceLineNo">147</span>         *      done by this assertion.<a name="line.147"></a>
+<span class="sourceLineNo">148</span>         */<a name="line.148"></a>
+<span class="sourceLineNo">149</span>        default boolean isNull() {<a name="line.149"></a>
+<span class="sourceLineNo">150</span>                return is(Matchers.nullValue());<a name="line.150"></a>
+<span class="sourceLineNo">151</span>        }<a name="line.151"></a>
+<span class="sourceLineNo">152</span><a name="line.152"></a>
+<span class="sourceLineNo">153</span>        /**<a name="line.153"></a>
+<span class="sourceLineNo">154</span>         * Check that the object is not null.<a name="line.154"></a>
+<span class="sourceLineNo">155</span>         * &lt;p&gt;<a name="line.155"></a>
+<span class="sourceLineNo">156</span>         * &lt;br&gt;<a name="line.156"></a>
+<span class="sourceLineNo">157</span>         * &lt;i&gt;By default, assertion can only be used from the main thread of the<a name="line.157"></a>
+<span class="sourceLineNo">158</span>         * test ; When used from another thread, the assertion will be lost. In the<a name="line.158"></a>
+<span class="sourceLineNo">159</span>         * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}<a name="line.159"></a>
+<span class="sourceLineNo">160</span>         * annotation is used, the assertion may not be lost, in case the thread use<a name="line.160"></a>
+<span class="sourceLineNo">161</span>         * an assertion method from the test object instance. &lt;/i&gt;<a name="line.161"></a>
+<span class="sourceLineNo">162</span>         * <a name="line.162"></a>
+<span class="sourceLineNo">163</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.163"></a>
+<span class="sourceLineNo">164</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.164"></a>
+<span class="sourceLineNo">165</span>         *         fail the test, else, return false and the test will be failed<a name="line.165"></a>
+<span class="sourceLineNo">166</span>         *         later.<a name="line.166"></a>
+<span class="sourceLineNo">167</span>         * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;<a name="line.167"></a>
+<span class="sourceLineNo">168</span>         *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action<a name="line.168"></a>
+<span class="sourceLineNo">169</span>         *      done by this assertion.<a name="line.169"></a>
+<span class="sourceLineNo">170</span>         */<a name="line.170"></a>
+<span class="sourceLineNo">171</span>        default boolean isNotNull() {<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                return is(Matchers.notNullValue());<a name="line.172"></a>
+<span class="sourceLineNo">173</span>        }<a name="line.173"></a>
+<span class="sourceLineNo">174</span><a name="line.174"></a>
+<span class="sourceLineNo">175</span>        /**<a name="line.175"></a>
+<span class="sourceLineNo">176</span>         * Check that the object is of a specific class (or subclasses).<a name="line.176"></a>
+<span class="sourceLineNo">177</span>         * &lt;p&gt;<a name="line.177"></a>
+<span class="sourceLineNo">178</span>         * &lt;br&gt;<a name="line.178"></a>
+<span class="sourceLineNo">179</span>         * &lt;i&gt;By default, assertion can only be used from the main thread of the<a name="line.179"></a>
+<span class="sourceLineNo">180</span>         * test ; When used from another thread, the assertion will be lost. In the<a name="line.180"></a>
+<span class="sourceLineNo">181</span>         * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}<a name="line.181"></a>
+<span class="sourceLineNo">182</span>         * annotation is used, the assertion may not be lost, in case the thread use<a name="line.182"></a>
+<span class="sourceLineNo">183</span>         * an assertion method from the test object instance. &lt;/i&gt;<a name="line.183"></a>
+<span class="sourceLineNo">184</span>         * <a name="line.184"></a>
+<span class="sourceLineNo">185</span>         * @param clazz<a name="line.185"></a>
+<span class="sourceLineNo">186</span>         *            the class<a name="line.186"></a>
+<span class="sourceLineNo">187</span>         * @return true if the assertion is valid ; If the assertion is false,<a name="line.187"></a>
+<span class="sourceLineNo">188</span>         *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then<a name="line.188"></a>
+<span class="sourceLineNo">189</span>         *         fail the test, else, return false and the test will be failed<a name="line.189"></a>
+<span class="sourceLineNo">190</span>         *         later.<a name="line.190"></a>
+<span class="sourceLineNo">191</span>         * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;<a name="line.191"></a>
+<span class="sourceLineNo">192</span>         *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action<a name="line.192"></a>
+<span class="sourceLineNo">193</span>         *      done by this assertion.<a name="line.193"></a>
+<span class="sourceLineNo">194</span>         */<a name="line.194"></a>
+<span class="sourceLineNo">195</span>        default boolean isA(Class&lt;? super T&gt; clazz) {<a name="line.195"></a>
+<span class="sourceLineNo">196</span>                return is(Matchers.isA(clazz));<a name="line.196"></a>
+<span class="sourceLineNo">197</span>        }<a name="line.197"></a>
+<span class="sourceLineNo">198</span><a name="line.198"></a>
+<span class="sourceLineNo">199</span>}<a name="line.199"></a>
 
 
 

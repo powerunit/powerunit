@@ -25,9 +25,9 @@ package ch.powerunit.impl;
  */
 <span class="nc" id="L26">public final class FailureImpl {</span>
 
-	public static boolean fail(AssertionError msg) {
-		TestContextImpl&lt;Object&gt; ctx = DefaultPowerUnitRunnerImpl
-<span class="fc" id="L30">				.getCurrentContext();</span>
+	public static boolean fail(Object underTest, AssertionError msg) {
+<span class="fc" id="L29">		TestContextImpl&lt;Object&gt; ctx = DefaultPowerUnitRunnerImpl</span>
+<span class="fc" id="L30">				.getCurrentContext(underTest);</span>
 <span class="pc bpc" id="L31" title="1 of 4 branches missed.">		if (ctx == null || ctx.isFastFail()) {</span>
 <span class="fc" id="L32">			throw msg;</span>
 		}

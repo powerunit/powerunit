@@ -36,6 +36,13 @@ public interface AssertThatObject&lt;T&gt; {
 
 	/**
 	 * Check that the object is matching the passed matcher.
+	 * &lt;p&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
 	 * 
 	 * @param matching
 	 *            the matcher.
@@ -43,11 +50,21 @@ public interface AssertThatObject&lt;T&gt; {
 	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	boolean is(Matcher&lt;? super T&gt; matching);
 
 	/**
 	 * Check that the object is the passed one (shortcut to Matcher.equalTo).
+	 * &lt;p&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
 	 * 
 	 * @param compareTo
 	 *            the value.
@@ -55,13 +72,23 @@ public interface AssertThatObject&lt;T&gt; {
 	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean is(T compareTo) {
-<span class="fc" id="L60">		return is(Matchers.equalTo(compareTo));</span>
+<span class="fc" id="L80">		return is(Matchers.equalTo(compareTo));</span>
 	}
 
 	/**
 	 * Check that the object is not the passed one.
+	 * &lt;p&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
 	 * 
 	 * @param compareTo
 	 *            the value
@@ -69,13 +96,23 @@ public interface AssertThatObject&lt;T&gt; {
 	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean isNot(T compareTo) {
-<span class="fc" id="L74">		return isNot(Matchers.equalTo(compareTo));</span>
+<span class="fc" id="L104">		return isNot(Matchers.equalTo(compareTo));</span>
 	}
 
 	/**
 	 * Check that the object is not matching the passed matcher.
+	 * &lt;p&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
 	 * 
 	 * @param matching
 	 *            the matcher
@@ -83,37 +120,67 @@ public interface AssertThatObject&lt;T&gt; {
 	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean isNot(Matcher&lt;T&gt; matching) {
-<span class="fc" id="L88">		return is(Matchers.not(matching));</span>
+<span class="fc" id="L128">		return is(Matchers.not(matching));</span>
 	}
 
 	/**
 	 * Check that the object is null.
+	 * &lt;p&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
 	 * 
 	 * @return true if the assertion is valid ; If the assertion is false,
 	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean isNull() {
-<span class="fc" id="L100">		return is(Matchers.nullValue());</span>
+<span class="fc" id="L150">		return is(Matchers.nullValue());</span>
 	}
 
 	/**
 	 * Check that the object is not null.
+	 * &lt;p&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
 	 * 
 	 * @return true if the assertion is valid ; If the assertion is false,
 	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean isNotNull() {
-<span class="fc" id="L112">		return is(Matchers.notNullValue());</span>
+<span class="fc" id="L172">		return is(Matchers.notNullValue());</span>
 	}
 
 	/**
 	 * Check that the object is of a specific class (or subclasses).
+	 * &lt;p&gt;
+	 * &lt;br&gt;
+	 * &lt;i&gt;By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. &lt;/i&gt;
 	 * 
 	 * @param clazz
 	 *            the class
@@ -121,9 +188,12 @@ public interface AssertThatObject&lt;T&gt; {
 	 *         depending on {@link Test#fastFail()} : If &lt;code&gt;true&lt;/code&gt;, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the &lt;code&gt;fastFail&lt;/code&gt;
+	 *      attribute of the &lt;code&gt;@Test&lt;/code&gt; annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean isA(Class&lt;? super T&gt; clazz) {
-<span class="fc" id="L126">		return is(Matchers.isA(clazz));</span>
+<span class="fc" id="L196">		return is(Matchers.isA(clazz));</span>
 	}
 
 }

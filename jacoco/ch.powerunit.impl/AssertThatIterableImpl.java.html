@@ -26,9 +26,9 @@ import ch.powerunit.AssertThatIterable;
 public class AssertThatIterableImpl&lt;T&gt; extends
         AssertThatObjectImpl&lt;Iterable&lt;T&gt;&gt; implements AssertThatIterable&lt;T&gt; {
 
-    public AssertThatIterableImpl(boolean assertion, String msg,
+    public AssertThatIterableImpl(Object underTest,boolean assertion, String msg,
             Supplier&lt;Iterable&lt;T&gt;&gt; provider) {
-<span class="fc" id="L31">        super(assertion, msg, provider);</span>
+<span class="fc" id="L31">        super(underTest,assertion, msg, provider);</span>
 <span class="fc" id="L32">    }</span>
 
 }
