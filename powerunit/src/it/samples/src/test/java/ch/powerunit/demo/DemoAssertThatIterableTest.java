@@ -34,10 +34,31 @@ public class DemoAssertThatIterableTest implements TestSuite {
 	public void testSize() {
 		assertThatIterable(myCollection).hasSize(3);
 	}
-	
+
 	@Test
 	public void testNotSize() {
 		assertThatIterable(myCollection).hasNotSize(4);
 	}
 
+	@Test
+	public void testContains() {
+		assertThatIterable(myCollection).contains(1, 3, 5);
+	}
+
+	@Test
+	public void testContainsMatching() {
+		assertThatIterable(myCollection).containsMatching(equalTo(1),
+				equalTo(3), equalTo(5));
+	}
+
+	@Test
+	public void testContainsInAnyOrder() {
+		assertThatIterable(myCollection).containsInAnyOrder(5, 3, 1);
+	}
+
+	@Test
+	public void testContainsInAnyOrderMatching() {
+		assertThatIterable(myCollection).containsInAnyOrderMatching(equalTo(5),
+				equalTo(3), equalTo(1));
+	}
 }

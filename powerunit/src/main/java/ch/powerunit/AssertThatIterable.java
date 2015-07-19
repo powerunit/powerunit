@@ -98,6 +98,12 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 	/**
 	 * Check that the iterable contains the items.
 	 * <p>
+	 * For instance :
+	 * 
+	 * <pre>
+	 * assertThatIterable(myList).contains(1, 3, 5);
+	 * </pre>
+	 * 
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -122,6 +128,12 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 	/**
 	 * Check that the iterable contains the items.
 	 * <p>
+	 * For instance
+	 * 
+	 * <pre>
+	 * assertThatIterable(myList).containsMatching(equalTo(1), equalTo(3), equalTo(5));
+	 * </pre>
+	 * 
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -147,6 +159,12 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 	/**
 	 * Check that the iterable contains the items in any order.
 	 * <p>
+	 * For instance :
+	 * 
+	 * <pre>
+	 * assertThatIterable(myCollection).containsInAnyOrder(5, 3, 1);
+	 * </pre>
+	 * 
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -172,6 +190,13 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 	/**
 	 * Check that the iterable contains the items in any order.
 	 * <p>
+	 * For instance :
+	 * 
+	 * <pre>
+	 * assertThatIterable(myCollection).containsInAnyOrderMatching(equalTo(5),
+	 * 		equalTo(3), equalTo(1));
+	 * </pre>
+	 * 
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
