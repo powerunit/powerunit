@@ -39,6 +39,7 @@ public class AllTests {
 		SystemStreamRuleTests.main(args);
 		PatternTesterTests.main(args);
 		LaterFailureTests.main(args);
+		FutureMatchersTests.main(args);
 	}
 
 }

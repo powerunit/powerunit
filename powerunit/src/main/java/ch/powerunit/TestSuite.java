@@ -70,7 +70,7 @@ import ch.powerunit.rules.impl.TemporaryFolderImpl;
  *
  */
 public interface TestSuite extends Assert, Assume, Matchers,
-		TestFrameworkSupport, ConverterMethod, DateTimeMatchers {
+		TestFrameworkSupport, ConverterMethod, DateTimeMatchers,MultiThreadMatchers {
 
 	/**
 	 * A static field that is a testsuite (to avoid implementing TestSuite in
