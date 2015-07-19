@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-/**{@link java.util.stream.Collector}.
- * DSL support for tester of 
+/**
+ * DSL support for tester of {@link java.util.stream.Collector}.
  * @author borettim
  *
  */
