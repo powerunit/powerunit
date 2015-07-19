@@ -38,7 +38,10 @@ interface MultiThreadMatchers {
 	 * @param expected
 	 *            the expected value.
 	 * @return the Matcher on {@link Future}
+	 * @param <T>
+	 *            The type of the return value of the {@link Future}.
 	 * @since 0.4.0
+	 * 
 	 */
 	default <T> Matcher<Future<T>> futureIsCancelled(boolean expected) {
 		return FutureMatchers.futureIsCancelled(expected);
@@ -50,6 +53,8 @@ interface MultiThreadMatchers {
 	 * @param expected
 	 *            the expected value.
 	 * @return the Matcher on {@link Future}
+	 * @param <T>
+	 *            The type of the return value of the {@link Future}.
 	 * @since 0.4.0
 	 */
 	default <T> Matcher<Future<T>> futureIsDone(boolean expected) {
@@ -74,6 +79,8 @@ interface MultiThreadMatchers {
 	 * @param unit
 	 *            the timeunit for the value.
 	 * @return the Matcher on {@link Future}
+	 * @param <T>
+	 *            The type of the return value of the {@link Future}.
 	 * @since 0.4.0
 	 */
 	default <T> Matcher<Future<T>> futureIsBeforeTimeout(
