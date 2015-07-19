@@ -108,6 +108,31 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	}
 
 	/**
+	 * Build a before testrule that will receive the {@link TestContext}.
+	 * <p>
+	 * The passed consumer will be used before each test. The exact location of
+	 * the execution is depending on where this used on the testRule chain.
+	 * <p>
+	 * In the much simple case (just one method to be executed before each
+	 * test), the syntax is :
+	 * 
+	 * <pre>
+	 * &#064;Rule
+	 * public TestRule rule = beforeContextAware(this::beforeMethodName);
+	 * </pre>
+	 * 
+	 * @param befores
+	 *            the befores
+	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
+	 * @since 0.4.0
+	 */
+	default TestRule beforeContextAware(Consumer<TestContext<Object>>... befores) {
+		return Arrays.stream(befores).map(TestRule::before)
+				.reduce((prev, next) -> prev.around(next)).get();
+	}
+
+	/**
 	 * Build a after testrule.
 	 * <p>
 	 * The passed runnable will be used after each test. The exact location of
@@ -127,6 +152,31 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 */
 	default TestRule after(Runnable... afters) {
+		return Arrays.stream(afters).map(TestRule::after)
+				.reduce((prev, next) -> prev.around(next)).get();
+	}
+
+	/**
+	 * Build a after testrule that will receive the {@link TestContext}.
+	 * <p>
+	 * The passed consumer will be used after each test. The exact location of
+	 * the execution is depending on where this used on the testRule chain.
+	 * <p>
+	 * In the much simple case (just one method to be executed after each test),
+	 * the syntax is :
+	 * 
+	 * <pre>
+	 * &#064;Rule
+	 * public TestRule rule = afterContextAware(this::afterMethodName);
+	 * </pre>
+	 * 
+	 * @param afters
+	 *            the afters
+	 * @return {@link TestRule the rule chain}.
+	 * @see Rule
+	 * @since 0.4.0
+	 */
+	default TestRule afterContextAware(Consumer<TestContext<Object>>... afters) {
 		return Arrays.stream(afters).map(TestRule::after)
 				.reduce((prev, next) -> prev.around(next)).get();
 	}

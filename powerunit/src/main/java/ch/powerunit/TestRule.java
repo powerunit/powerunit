@@ -19,6 +19,7 @@
  */
 package ch.powerunit;
 
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import org.mockito.MockitoAnnotations;
@@ -132,6 +133,24 @@ public interface TestRule {
             i.run(p);
         };
     }
+    
+    /**
+     * Build a before testrule.
+     * <p>
+     * The passed piece of code (which can for instance an inline definition or
+     * a reference to a method) that must be executed before the test itself.
+     * 
+     * @param before
+     *            the code to be used before
+     * @return the rule chain.
+     * @since 0.4.0
+     */
+    static TestRule before(Consumer<TestContext<Object>> before) {
+        return (i) -> (p) -> {
+            before.accept(p);
+            i.run(p);// NOSONAR - It is OK to run here
+        };
+    }
 
     /**
      * Build a after testrule.
@@ -149,6 +168,27 @@ public interface TestRule {
                 i.run(p);// NOSONAR - It is OK to run here
             } finally {
                 after.run();// NOSONAR - It is OK to run here
+            }
+        };
+    }
+    
+    /**
+     * Build a after testrule.
+     * <p>
+     * The passed piece of code (which can for instance an inline definition or
+     * a reference to a method) that must be executed after the test itself.
+     * 
+     * @param after
+     *            the code to be used after
+     * @return the rule chain.
+     * @since 0.4.0
+     */
+    static TestRule after(Consumer<TestContext<Object>> after) {
+        return (i) -> (p) -> {
+            try {
+                i.run(p);// NOSONAR - It is OK to run here
+            } finally {
+                after.accept(p);
             }
         };
     }
