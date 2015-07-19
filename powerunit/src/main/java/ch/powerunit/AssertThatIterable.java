@@ -38,6 +38,13 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 	/**
 	 * Check the size of the iterable.
 	 * <p>
+	 * 
+	 * For instance :
+	 * 
+	 * <pre>
+	 * assertThatIterable(myCollection).hasSize(3);
+	 * </pre>
+	 * 
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -60,6 +67,12 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 	/**
 	 * Check the size is not the one passed.
 	 * <p>
+	 * For instance :
+	 * 
+	 * <pre>
+	 * assertThatIterable(myCollection).hasNotSize(4);
+	 * </pre>
+	 * 
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
