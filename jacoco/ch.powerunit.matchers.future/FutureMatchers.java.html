@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FutureMatchers.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.matchers.future</a> &gt; <span class="el_source">FutureMatchers.java</span></div><h1>FutureMatchers.java</h1><pre class="source lang-java linenums">/**
+ * Powerunit - A JDK1.8 test framework
+ * Copyright (C) 2014 Mathieu Boretti.
+ *
+ * This file is part of Powerunit
+ *
+ * Powerunit is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Powerunit is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Powerunit. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package ch.powerunit.matchers.future;
+
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeDiagnosingMatcher;
+import org.hamcrest.TypeSafeMatcher;
+
+import ch.powerunit.TestSuite;
+
+/**
+ * @author borettim
+ * @since 0.4.0
+ */
+public final class FutureMatchers {
+<span class="nc" id="L40">	private FutureMatchers() {</span>
+<span class="nc" id="L41">	}</span>
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public static &lt;T&gt; Matcher&lt;Future&lt;T&gt;&gt; futureIsCancelled(boolean expected) {
+<span class="fc" id="L45">		return (Matcher) TestSuite.DSL.featureMatcher(Future.class,</span>
+<span class="fc" id="L46">				Boolean.class, &quot;is cancelled&quot;, (f) -&gt; f.isCancelled(),</span>
+<span class="fc" id="L47">				TestSuite.DSL.equalTo(expected));</span>
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public static &lt;T&gt; Matcher&lt;Future&lt;T&gt;&gt; futureIsDone(boolean expected) {
+<span class="fc" id="L52">		return (Matcher) TestSuite.DSL.featureMatcher(Future.class,</span>
+<span class="fc" id="L53">				Boolean.class, &quot;is done&quot;, (f) -&gt; f.isDone(),</span>
+<span class="fc" id="L54">				TestSuite.DSL.equalTo(expected));</span>
+	}
+
+	public static &lt;T&gt; Matcher&lt;Future&lt;T&gt;&gt; futureIsBeforeTimeout(
+			Matcher&lt;? super T&gt; matching, long timeout, TimeUnit unit) {
+<span class="fc" id="L59">		return new FutureGetMatcher&lt;T&gt;(matching, timeout, unit);</span>
+	}
+
+	private static class FutureGetMatcher&lt;T&gt; extends TypeSafeMatcher&lt;Future&lt;T&gt;&gt; {
+
+		private final Matcher&lt;? super T&gt; subMatcher;
+
+		private final long timeout;
+
+		private final TimeUnit unit;
+
+		private T reply;
+
+		private Exception exception;
+
+		public FutureGetMatcher(Matcher&lt;? super T&gt; subMatcher, long timeout,
+<span class="fc" id="L75">				TimeUnit unit) {</span>
+<span class="fc" id="L76">			this.subMatcher = subMatcher;</span>
+<span class="fc" id="L77">			this.timeout = timeout;</span>
+<span class="fc" id="L78">			this.unit = unit;</span>
+<span class="fc" id="L79">		}</span>
+
+		@Override
+		public void describeTo(Description description) {
+<span class="fc" id="L83">			description.appendText(&quot;future value is get before &quot;)</span>
+<span class="fc" id="L84">					.appendValue(timeout).appendText(&quot; &quot;).appendValue(unit)</span>
+<span class="fc" id="L85">					.appendText(&quot; and must be &quot;).appendDescriptionOf(subMatcher);</span>
+<span class="fc" id="L86">		}</span>
+
+		@Override
+		protected void describeMismatchSafely(Future&lt;T&gt; item,
+				Description mismatchDescription) {
+<span class="fc bfc" id="L91" title="All 2 branches covered.">			if (exception != null) {</span>
+<span class="fc" id="L92">				mismatchDescription.appendText(&quot; exception &quot;)</span>
+<span class="fc" id="L93">						.appendValue(exception.getClass())</span>
+<span class="fc" id="L94">						.appendText(&quot; because of &quot;)</span>
+<span class="fc" id="L95">						.appendValue(exception.getMessage());</span>
+			} else {
+<span class="fc" id="L97">				subMatcher.describeMismatch(reply, mismatchDescription);</span>
+			}
+<span class="fc" id="L99">		}</span>
+
+		@Override
+		protected boolean matchesSafely(Future&lt;T&gt; item) {
+			try {
+<span class="fc" id="L104">				reply = item.get(timeout, unit);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">				if (subMatcher.matches(reply)) {</span>
+<span class="fc" id="L106">					return true;</span>
+				}
+<span class="fc" id="L108">			} catch (InterruptedException | ExecutionException</span>
+					| TimeoutException | CancellationException e) {
+<span class="fc" id="L110">				exception = e;</span>
+<span class="fc" id="L111">				return false;</span>
+<span class="fc" id="L112">			}</span>
+<span class="fc" id="L113">			return false;</span>
+		}
+
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

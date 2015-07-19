@@ -19,6 +19,7 @@
  */
 package ch.powerunit;
 
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import org.mockito.MockitoAnnotations;
@@ -127,10 +128,28 @@ public interface TestRule {
      * @return the rule chain.
      */
     static TestRule before(Runnable before) {
-<span class="fc" id="L130">        return (i) -&gt; (p) -&gt; {</span>
-<span class="fc" id="L131">            before.run();// NOSONAR - It is OK to run here</span>
-<span class="fc" id="L132">            i.run(p);</span>
-<span class="fc" id="L133">        };</span>
+<span class="fc" id="L131">        return (i) -&gt; (p) -&gt; {</span>
+<span class="fc" id="L132">            before.run();// NOSONAR - It is OK to run here</span>
+<span class="fc" id="L133">            i.run(p);</span>
+<span class="fc" id="L134">        };</span>
+    }
+    
+    /**
+     * Build a before testrule.
+     * &lt;p&gt;
+     * The passed piece of code (which can for instance an inline definition or
+     * a reference to a method) that must be executed before the test itself.
+     * 
+     * @param before
+     *            the code to be used before
+     * @return the rule chain.
+     * @since 0.4.0
+     */
+    static TestRule before(Consumer&lt;TestContext&lt;Object&gt;&gt; before) {
+<span class="nc" id="L149">        return (i) -&gt; (p) -&gt; {</span>
+<span class="nc" id="L150">            before.accept(p);</span>
+<span class="nc" id="L151">            i.run(p);// NOSONAR - It is OK to run here</span>
+<span class="nc" id="L152">        };</span>
     }
 
     /**
@@ -144,13 +163,34 @@ public interface TestRule {
      * @return the rule chain.
      */
     static TestRule after(Runnable after) {
-<span class="fc" id="L147">        return (i) -&gt; (p) -&gt; {</span>
+<span class="fc" id="L166">        return (i) -&gt; (p) -&gt; {</span>
             try {
-<span class="fc" id="L149">                i.run(p);// NOSONAR - It is OK to run here</span>
+<span class="fc" id="L168">                i.run(p);// NOSONAR - It is OK to run here</span>
             } finally {
-<span class="pc" id="L151">                after.run();// NOSONAR - It is OK to run here</span>
-<span class="fc" id="L152">            }</span>
-<span class="fc" id="L153">        };</span>
+<span class="pc" id="L170">                after.run();// NOSONAR - It is OK to run here</span>
+<span class="fc" id="L171">            }</span>
+<span class="fc" id="L172">        };</span>
+    }
+    
+    /**
+     * Build a after testrule.
+     * &lt;p&gt;
+     * The passed piece of code (which can for instance an inline definition or
+     * a reference to a method) that must be executed after the test itself.
+     * 
+     * @param after
+     *            the code to be used after
+     * @return the rule chain.
+     * @since 0.4.0
+     */
+    static TestRule after(Consumer&lt;TestContext&lt;Object&gt;&gt; after) {
+<span class="nc" id="L187">        return (i) -&gt; (p) -&gt; {</span>
+            try {
+<span class="nc" id="L189">                i.run(p);// NOSONAR - It is OK to run here</span>
+            } finally {
+<span class="nc" id="L191">                after.accept(p);</span>
+<span class="nc" id="L192">            }</span>
+<span class="nc" id="L193">        };</span>
     }
 
     /**
@@ -161,7 +201,7 @@ public interface TestRule {
      * @return the rule chain.
      */
     default TestRule around(TestRule inner) {
-<span class="fc" id="L164">        return around(() -&gt; inner);</span>
+<span class="fc" id="L204">        return around(() -&gt; inner);</span>
     }
 
     /**
@@ -176,8 +216,8 @@ public interface TestRule {
      * @return the rule chain.
      */
     default TestRule around(Supplier&lt;TestRule&gt; inner) {
-<span class="fc" id="L179">        return (i) -&gt; computeStatement((p) -&gt; inner.get().computeStatement(i)</span>
-<span class="fc" id="L180">                .run(p));</span>
+<span class="fc" id="L219">        return (i) -&gt; computeStatement((p) -&gt; inner.get().computeStatement(i)</span>
+<span class="fc" id="L220">                .run(p));</span>
     }
 
     /**
@@ -186,11 +226,11 @@ public interface TestRule {
      * @return the mockitor rule
      */
     static TestRule mockitoRule() {
-<span class="fc" id="L189">        return (i) -&gt; Statement.around(i, (p) -&gt; {</span>
-<span class="fc" id="L190">            MockitoAnnotations.initMocks(p.getTestSuiteObject());</span>
-<span class="fc" id="L191">        }, (p) -&gt; {</span>
+<span class="fc" id="L229">        return (i) -&gt; Statement.around(i, (p) -&gt; {</span>
+<span class="fc" id="L230">            MockitoAnnotations.initMocks(p.getTestSuiteObject());</span>
+<span class="fc" id="L231">        }, (p) -&gt; {</span>
             // Do nothing as default
-<span class="fc" id="L193">            });</span>
+<span class="fc" id="L233">            });</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

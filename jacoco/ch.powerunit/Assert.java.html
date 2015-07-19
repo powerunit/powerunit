@@ -447,10 +447,24 @@ interface Assert {
 	 * The goal of &lt;code&gt;assertWhen&lt;/code&gt; is to provide a way to validate that
 	 * an exception is thrown.
 	 * &lt;p&gt;
+	 * For instance, having this method :
 	 * 
-	 * Will run a piece of code that always thrown an exception and then
-	 * validate that the message of the exception is &lt;code&gt;test&lt;/code&gt;. &lt;br&gt;
-	 * &lt;br&gt;
+	 * &lt;pre&gt;
+	 * public static void method1() throws Exception {
+	 * 	throw new Exception(&amp;quot;demo1&amp;quot;);
+	 * }
+	 * &lt;/pre&gt;
+	 * 
+	 * It can be tested by :
+	 * 
+	 * &lt;pre&gt;
+	 * &amp;#064;Test
+	 * public void testNoArgNoReturn() {
+	 * 	assertWhen(asStatement(DemoAssertThatExceptionTest::method1))
+	 * 			.throwException(exceptionMessage(&amp;quot;demo1&amp;quot;));
+	 * }
+	 * &lt;/pre&gt;
+	 * 
 	 * &lt;i&gt;By default, assertThat can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
 	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
@@ -469,9 +483,9 @@ interface Assert {
 	 */
 	default &lt;T extends Exception&gt; AssertThatException&lt;T&gt; assertWhen(
 			Callable&lt;?&gt; underTest) {
-<span class="nc" id="L472">		return assertWhen(null, (p) -&gt; {</span>
-<span class="nc" id="L473">			underTest.call();</span>
-<span class="nc" id="L474">		}, null);</span>
+<span class="nc" id="L486">		return assertWhen(null, (p) -&gt; {</span>
+<span class="nc" id="L487">			underTest.call();</span>
+<span class="nc" id="L488">		}, null);</span>
 	}
 
 	/**
@@ -514,7 +528,7 @@ interface Assert {
 	 */
 	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
 			Statement&lt;P, T&gt; underTest, P param) {
-<span class="fc" id="L517">		return assertWhen(null, underTest, param);</span>
+<span class="fc" id="L531">		return assertWhen(null, underTest, param);</span>
 	}
 
 	/**
@@ -553,7 +567,7 @@ interface Assert {
 	 */
 	default &lt;T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(String msg,
 			Statement&lt;?, T&gt; underTest) {
-<span class="fc" id="L556">		return assertWhen(msg, underTest, null);</span>
+<span class="fc" id="L570">		return assertWhen(msg, underTest, null);</span>
 	}
 
 	/**
@@ -563,8 +577,6 @@ interface Assert {
 	 * an exception is thrown.
 	 * &lt;p&gt;
 	 * 
-	 * Will run a piece of code that always thrown an exception and then
-	 * validate that the message of the exception is &lt;code&gt;test&lt;/code&gt;. &lt;br&gt;
 	 * &lt;br&gt;
 	 * &lt;i&gt;By default, assertThat can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -586,9 +598,9 @@ interface Assert {
 	 */
 	default &lt;T extends Exception&gt; AssertThatException&lt;T&gt; assertWhen(String msg,
 			Callable&lt;?&gt; underTest) {
-<span class="nc" id="L589">		return assertWhen(msg, (p) -&gt; {</span>
-<span class="nc" id="L590">			underTest.call();</span>
-<span class="nc" id="L591">		}, null);</span>
+<span class="nc" id="L601">		return assertWhen(msg, (p) -&gt; {</span>
+<span class="nc" id="L602">			underTest.call();</span>
+<span class="nc" id="L603">		}, null);</span>
 	}
 
 	/**
@@ -633,7 +645,7 @@ interface Assert {
 	 */
 	default &lt;P, T extends Throwable&gt; AssertThatException&lt;T&gt; assertWhen(
 			String msg, Statement&lt;P, T&gt; underTest, P param) {
-<span class="fc" id="L636">		return new AssertThatExceptionImpl&lt;P, T&gt;(this, true, underTest, param,</span>
+<span class="fc" id="L648">		return new AssertThatExceptionImpl&lt;P, T&gt;(this, true, underTest, param,</span>
 				msg);
 	}
 
@@ -666,7 +678,7 @@ interface Assert {
 	 */
 	default &lt;P, T extends RuntimeException&gt; AssertThatException&lt;T&gt; assertWhenFunction(
 			String msg, Function&lt;P, ?&gt; function, P param) {
-<span class="pc" id="L669">		return assertWhen(msg, (p) -&gt; function.apply(p), param);</span>
+<span class="pc" id="L681">		return assertWhen(msg, (p) -&gt; function.apply(p), param);</span>
 	}
 
 	/**
@@ -696,7 +708,7 @@ interface Assert {
 	 */
 	default &lt;P, T extends RuntimeException&gt; AssertThatException&lt;T&gt; assertWhenFunction(
 			Function&lt;P, ?&gt; function, P param) {
-<span class="nc" id="L699">		return assertWhen((p) -&gt; function.apply(p), param);</span>
+<span class="nc" id="L711">		return assertWhen((p) -&gt; function.apply(p), param);</span>
 	}
 
 	/**
@@ -732,7 +744,7 @@ interface Assert {
 	 */
 	default &lt;P1, P2, T extends RuntimeException&gt; AssertThatException&lt;T&gt; assertWhenBiFunction(
 			String msg, BiFunction&lt;P1, P2, ?&gt; bifunction, P1 param1, P2 param2) {
-<span class="nc" id="L735">		return assertWhen(msg, (p) -&gt; bifunction.apply(param1, param2));</span>
+<span class="nc" id="L747">		return assertWhen(msg, (p) -&gt; bifunction.apply(param1, param2));</span>
 	}
 
 	/**
@@ -766,7 +778,7 @@ interface Assert {
 	 */
 	default &lt;P1, P2, T extends RuntimeException&gt; AssertThatException&lt;T&gt; assertWhenBiFunction(
 			BiFunction&lt;P1, P2, ?&gt; bifunction, P1 param1, P2 param2) {
-<span class="nc" id="L769">		return assertWhen((p) -&gt; bifunction.apply(param1, param2));</span>
+<span class="nc" id="L781">		return assertWhen((p) -&gt; bifunction.apply(param1, param2));</span>
 	}
 
 	/**
@@ -794,7 +806,7 @@ interface Assert {
 	 *      done by this failure.
 	 */
 	default boolean fail() {
-<span class="nc" id="L797">		return fail(&quot;Manual failure&quot;);</span>
+<span class="nc" id="L809">		return fail(&quot;Manual failure&quot;);</span>
 	}
 
 	/**
@@ -824,7 +836,7 @@ interface Assert {
 	 *      done by this failure.
 	 */
 	default boolean fail(String msg) {
-<span class="fc" id="L827">		return FailureImpl.fail(this, new AssertionError(msg));</span>
+<span class="fc" id="L839">		return FailureImpl.fail(this, new AssertionError(msg));</span>
 	}
 
 	/**
@@ -856,7 +868,7 @@ interface Assert {
 	 *      done by this failure.
 	 */
 	default boolean fail(String msg, Throwable innerError) {
-<span class="nc" id="L859">		return FailureImpl.fail(this, new AssertionError(msg, innerError));</span>
+<span class="nc" id="L871">		return FailureImpl.fail(this, new AssertionError(msg, innerError));</span>
 	}
 
 	/**
@@ -886,8 +898,8 @@ interface Assert {
 	 *      done by this failure.
 	 */
 	default boolean fail(Throwable innerError) {
-<span class="nc" id="L889">		return FailureImpl.fail(this,</span>
-<span class="nc" id="L890">				new AssertionError(innerError.getMessage(), innerError));</span>
+<span class="nc" id="L901">		return FailureImpl.fail(this,</span>
+<span class="nc" id="L902">				new AssertionError(innerError.getMessage(), innerError));</span>
 	}
 
 }
