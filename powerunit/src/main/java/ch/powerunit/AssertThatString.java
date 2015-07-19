@@ -36,6 +36,8 @@ public interface AssertThatString extends AssertThatCastableObject<String> {
 	/**
 	 * Check that a string another string.
 	 * <p>
+	 * This method is a shortcut to <code>is(containsString(substring))</code>.
+	 * <br>
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -60,6 +62,7 @@ public interface AssertThatString extends AssertThatCastableObject<String> {
 	/**
 	 * Check that a string starts with another one.
 	 * <p>
+	 * This method is a shortcut to <code>is(startsWith(prefix))</code>. <br>
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -84,6 +87,7 @@ public interface AssertThatString extends AssertThatCastableObject<String> {
 	/**
 	 * Check that a string ends with another one.
 	 * <p>
+	 * This method is a shortcut to <code>is(endsWith(prefix))</code>. <br>
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -108,6 +112,7 @@ public interface AssertThatString extends AssertThatCastableObject<String> {
 	/**
 	 * Validate a string with a {@link java.util.regex.Pattern}.
 	 * <p>
+	 * This method is a shortcut to <code>is(matchesRegex(pattern))</code>. <br>
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
@@ -132,6 +137,7 @@ public interface AssertThatString extends AssertThatCastableObject<String> {
 	/**
 	 * Validate a string with a regex.
 	 * <p>
+	 * This method is a shortcut to <code>is(matchesRegex(regex))</code>. <br>
 	 * <br>
 	 * <i>By default, assertion can only be used from the main thread of the
 	 * test ; When used from another thread, the assertion will be lost. In the
