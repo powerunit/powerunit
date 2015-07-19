@@ -31,12 +31,15 @@ public class AssertThatExceptionImpl<P, T extends Throwable> implements
 
 	private final boolean assertion;
 
-	public AssertThatExceptionImpl(boolean assertion, Statement<P, T> runnable,
-			P param, String msg) {
+	private final Object underTest;
+
+	public AssertThatExceptionImpl(Object underTest, boolean assertion,
+			Statement<P, T> runnable, P param, String msg) {
 		this.runnable = runnable;
 		this.msg = msg;
 		this.param = param;
 		this.assertion = assertion;
+		this.underTest = underTest;
 	}
 
 	private final Statement<P, T> runnable;
@@ -60,7 +63,7 @@ public class AssertThatExceptionImpl<P, T extends Throwable> implements
 		}
 		if (assertion) {
 			TestContextImpl<Object> ctx = DefaultPowerUnitRunnerImpl
-					.getCurrentContext();
+					.getCurrentContext(underTest);
 			AssertionError e = new AssertionError((msg == null ? "" : msg
 					+ "\n")
 					+ "An exception was expected, but none was thrown");

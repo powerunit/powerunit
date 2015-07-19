@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
@@ -61,7 +62,9 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 		ParametersValidator, ParameterValidator, TestValidator, RuleValidator,
 		TestDelegateValidator {
 
-	private static final ThreadLocal<TestContextImpl<Object>> contexts = new ThreadLocal<>();
+	private static final Map<Integer, TestContextImpl<Object>> contexts = new HashMap<>();
+
+	private static final ThreadLocal<TestContextImpl<Object>> threadContext = new ThreadLocal<TestContextImpl<Object>>();
 
 	private final List<TestResultListener<Object>> listeners = new ArrayList<>();
 
@@ -75,8 +78,21 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 
 	private final Object externalParameter;
 
-	static TestContextImpl<Object> getCurrentContext() {
-		return contexts.get();
+	static TestContextImpl<Object> getCurrentContext(Object underTest) {
+		return Optional.ofNullable(
+				contexts.get(System.identityHashCode(underTest))).orElse(
+				threadContext.get());
+	}
+
+	private static void setCurrentContext(Object underTest,
+			TestContextImpl<Object> ctx) {
+		contexts.put(System.identityHashCode(underTest), ctx);
+		threadContext.set(ctx);
+	}
+
+	private static void resetCurrentContext(Object underTest) {
+		contexts.remove(System.identityHashCode(underTest));
+		threadContext.set(null);
 	}
 
 	DefaultPowerUnitRunnerImpl(Class<T> testClass, Object externalParameter) {
@@ -494,7 +510,9 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 												.getValue()
 												.getAnnotation(Test.class)
 												.fastFail());
-										contexts.set((TestContextImpl) p);
+										setCurrentContext(
+												p.getTestSuiteObject(),
+												(TestContextImpl) p);
 										notifyStartTest(p);
 										try {
 											stest.run(p);
@@ -515,7 +533,8 @@ public class DefaultPowerUnitRunnerImpl<T> implements PowerUnitRunner<T>,
 											// As we really want all error
 											notifyEndFailureTest(p, e);
 										}
-										contexts.set(null);
+										resetCurrentContext(p
+												.getTestSuiteObject());
 									};
 								}));
 	}

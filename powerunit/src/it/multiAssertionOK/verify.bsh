@@ -1,0 +1,7 @@
+import java.io.*;
+
+File file = new File( basedir, "target/surefire-reports/ch.powerunit.demo.MyBeanTest.txt" );
+if ( !file.isFile() )
+{
+    throw new FileNotFoundException( "Could not find generated test result: " + file );
+}

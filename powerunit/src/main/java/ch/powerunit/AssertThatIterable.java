@@ -37,6 +37,13 @@ import org.hamcrest.Matchers;
 public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 	/**
 	 * Check the size of the iterable.
+	 * <p>
+	 * <br>
+	 * <i>By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
 	 * 
 	 * @param size
 	 *            the expected size.
@@ -52,6 +59,13 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 
 	/**
 	 * Check the size is not the one passed.
+	 * <p>
+	 * <br>
+	 * <i>By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
 	 * 
 	 * @param size
 	 *            the not expected size.
@@ -59,6 +73,9 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the <code>fastFail</code>
+	 *      attribute of the <code>@Test</code> annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	default boolean hasNotSize(int size) {
@@ -67,6 +84,13 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 
 	/**
 	 * Check that the iterable contains the items.
+	 * <p>
+	 * <br>
+	 * <i>By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
 	 * 
 	 * @param items
 	 *            the expected items.
@@ -74,6 +98,9 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the <code>fastFail</code>
+	 *      attribute of the <code>@Test</code> annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean contains(@SuppressWarnings("unchecked") T... items) {
 		return is(Matchers.contains(items));
@@ -81,6 +108,13 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 
 	/**
 	 * Check that the iterable contains the items.
+	 * <p>
+	 * <br>
+	 * <i>By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
 	 * 
 	 * @param items
 	 *            the matcher for each item.
@@ -88,6 +122,9 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the <code>fastFail</code>
+	 *      attribute of the <code>@Test</code> annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean containsMatching(
 			@SuppressWarnings("unchecked") Matcher<? super T>... items) {
@@ -96,6 +133,13 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 
 	/**
 	 * Check that the iterable contains the items in any order.
+	 * <p>
+	 * <br>
+	 * <i>By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
 	 * 
 	 * @param items
 	 *            the expected items.
@@ -103,6 +147,9 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the <code>fastFail</code>
+	 *      attribute of the <code>@Test</code> annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean containsInAnyOrder(
 			@SuppressWarnings("unchecked") T... items) {
@@ -111,6 +158,13 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 
 	/**
 	 * Check that the iterable contains the items in any order.
+	 * <p>
+	 * <br>
+	 * <i>By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
 	 * 
 	 * @param items
 	 *            the matcher for each item.
@@ -118,6 +172,9 @@ public interface AssertThatIterable<T> extends AssertThatObject<Iterable<T>> {
 	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the <code>fastFail</code>
+	 *      attribute of the <code>@Test</code> annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean containsInAnyOrderMatching(
 			@SuppressWarnings("unchecked") Matcher<? super T>... items) {

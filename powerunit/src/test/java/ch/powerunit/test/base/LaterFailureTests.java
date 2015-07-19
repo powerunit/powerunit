@@ -22,6 +22,7 @@ package ch.powerunit.test.base;
 import ch.powerunit.Categories;
 import ch.powerunit.Test;
 import ch.powerunit.TestSuite;
+import ch.powerunit.exception.InternalError;
 import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
 
 /**
@@ -35,7 +36,7 @@ public class LaterFailureTests {
 		runner.addListener(new BootstrapTestListener<LaterFailureTest>());
 		try {
 			runner.run();
-		} catch (AssertionError e) {
+		} catch (AssertionError|InternalError e) {
 			if (!e.getMessage().contains("Multiple failures")) {
 				throw e;
 			}

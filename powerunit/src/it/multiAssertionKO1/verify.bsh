@@ -1,0 +1,20 @@
+import java.io.*;
+
+File file = new File( basedir, "target/surefire-reports/ch.powerunit.demo.MyBeanTest.txt" );
+if ( !file.isFile() )
+{
+    throw new FileNotFoundException( "Could not find generated test result: " + file );
+}
+
+BufferedReader br = new BufferedReader(new FileReader(file));
+String nextLine = null;
+boolean ok=false;
+while((nextLine=br.readLine())!=null) {
+  if (nextLine.contains("Multiple failures :")) {
+   ok=true;
+  }
+}
+if ( !ok )
+{
+    throw new RuntimeException( "No multiple error found in test1" );
+}

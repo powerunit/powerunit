@@ -26,9 +26,9 @@ import ch.powerunit.AssertThatIterable;
 public class AssertThatIterableImpl<T> extends
         AssertThatObjectImpl<Iterable<T>> implements AssertThatIterable<T> {
 
-    public AssertThatIterableImpl(boolean assertion, String msg,
+    public AssertThatIterableImpl(Object underTest,boolean assertion, String msg,
             Supplier<Iterable<T>> provider) {
-        super(assertion, msg, provider);
+        super(underTest,assertion, msg, provider);
     }
 
 }

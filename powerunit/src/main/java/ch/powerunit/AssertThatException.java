@@ -37,6 +37,13 @@ public interface AssertThatException<T extends Throwable> {
 
 	/**
 	 * Define the matcher on the exception and execute the matcher validation.
+	 * <p>
+	 * <br>
+	 * <i>By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
 	 * 
 	 * @param matching
 	 *            the matcher.
@@ -44,6 +51,9 @@ public interface AssertThatException<T extends Throwable> {
 	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the <code>fastFail</code>
+	 *      attribute of the <code>@Test</code> annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	boolean throwException(Matcher<T> matching);
 }

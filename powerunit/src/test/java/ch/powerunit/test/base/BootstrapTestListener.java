@@ -24,60 +24,62 @@ import ch.powerunit.TestResultListener;
 import ch.powerunit.TestSuite;
 
 class BootstrapTestListener<T> implements TestResultListener<T>, TestSuite {// package
-                                                                            // private
+																			// private
 
-    @Override
-    public void notifySetStart(String setName, String parameters) {
-        System.out.println("Starting " + setName + ":" + parameters);
-    }
+	@Override
+	public void notifySetStart(String setName, String parameters) {
+		System.out.println("Starting " + setName + ":" + parameters);
+	}
 
-    @Override
-    public void notifySetEnd(String setName, String parameters) {
-        System.out.println("Ending " + setName + ":" + parameters);
-    }
+	@Override
+	public void notifySetEnd(String setName, String parameters) {
+		System.out.println("Ending " + setName + ":" + parameters);
+	}
 
-    @Override
-    public void notifyStart(TestContext<T> context) {
-        System.out.println("Starting " + context.getFullTestName() + ":"
-                + context.getTestCategories());
-    }
+	@Override
+	public void notifyStart(TestContext<T> context) {
+		System.out.println("Starting " + context.getFullTestName() + ":"
+				+ context.getTestCategories());
+	}
 
-    @Override
-    public void notifySuccess(TestContext<T> context) {
-        System.out.println("Successs " + context.getFullTestName() + ":"
-                + context.getTestCategories());
-    }
+	@Override
+	public void notifySuccess(TestContext<T> context) {
+		System.out.println("Successs " + context.getFullTestName() + ":"
+				+ context.getTestCategories());
+	}
 
-    @Override
-    public void notifyFailure(TestContext<T> context, Throwable cause) {
-        System.out.println("Failed " + context.getFullTestName() + ":"
-                + context.getTestCategories());
-        fail("Unexpected error " + cause.getMessage(), cause);
-    }
+	@Override
+	public void notifyFailure(TestContext<T> context, Throwable cause) {
+		System.out.println("Failed " + context.getFullTestName() + ":"
+				+ context.getTestCategories());
+		throw new AssertionError("Unexpected error " + cause.getMessage(),
+				cause);
+	}
 
-    @Override
-    public void notifySkipped(TestContext<T> context) {
-        System.out.println("Skipped " + context.getFullTestName() + ":"
-                + context.getTestCategories());
-    }
+	@Override
+	public void notifySkipped(TestContext<T> context) {
+		System.out.println("Skipped " + context.getFullTestName() + ":"
+				+ context.getTestCategories());
+	}
 
-    @Override
-    public void notifyError(TestContext<T> context, Throwable cause) {
-        System.out.println("Failed " + context.getFullTestName() + ":"
-                + context.getTestCategories());
-        fail("Unexpected error " + cause.getMessage(), cause);
-    }
+	@Override
+	public void notifyError(TestContext<T> context, Throwable cause) {
+		System.out.println("Failed " + context.getFullTestName() + ":"
+				+ context.getTestCategories());
+		throw new AssertionError("Unexpected error " + cause.getMessage(),
+				cause);
+	}
 
-    @Override
-    public void notifyParameterStart(String setName, String parameterName) {
-        System.out.println("Start of parameter " + parameterName + " on "
-                + setName);
-    }
+	@Override
+	public void notifyParameterStart(String setName, String parameterName) {
+		System.out.println("Start of parameter " + parameterName + " on "
+				+ setName);
+	}
 
-    @Override
-    public void notifyParameterEnd(String setName, String parameterName) {
-        System.out.println("End of parameter " + parameterName + " on "
-                + setName);
-    }
+	@Override
+	public void notifyParameterEnd(String setName, String parameterName) {
+		System.out.println("End of parameter " + parameterName + " on "
+				+ setName);
+	}
 
 }

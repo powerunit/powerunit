@@ -108,6 +108,88 @@ public @interface Test {
 	 * ch.powerunit.suite.Suites.main(Suites.java:73)
 	 * </pre>
 	 * 
+	 * <br>
+	 * This function will only function in the following case :
+	 * <ul>
+	 * <li>The assertion method is used from the same thread that the test
+	 * itself (it is the standard case).</li>
+	 * <li>The assertion method is used directement from the object test, and
+	 * this class implements {@link TestSuite}.</li>
+	 * </ul>
+	 * 
+	 * <h3>Examples</h3>
+	 * <h4>Using two threads without fastFail</h4>
+	 * Let's assume the following test class :
+	 * 
+	 * <pre>
+	 * import ch.powerunit.Rule;
+	 * import ch.powerunit.Test;
+	 * import ch.powerunit.TestRule;
+	 * import ch.powerunit.TestSuite;
+	 * 
+	 * public class MyBean4Test implements TestSuite {
+	 * 	&#064;Rule
+	 * 	public final TestRule rule = before(this::prepare);
+	 * 
+	 * 	private MyBean bean;
+	 * 
+	 * 	private void prepare() {
+	 * 		bean = new MyBean();
+	 * 	}
+	 * 
+	 * 	&#064;Test()
+	 * 	public void testSimple() throws Exception {
+	 * 		Thread t = new Thread(() -&gt; {
+	 * 			bean.setField1(&quot;y&quot;);
+	 * 			assertThat(bean.getField1()).is(&quot;x&quot;);
+	 * 		});
+	 * 		t.start();
+	 * 		t.join();
+	 * 	}
+	 * }
+	 * </pre>
+	 * 
+	 * <b>This test will not fail!</b>. Why ? because simply the assertion
+	 * failure happend in another thread, so this thread receive an assertion
+	 * failure, not the once supporting the test.
+	 * 
+	 * <h4>Using two threads inside the same class, with fastFail</h4>
+	 * Let's assume the following test class
+	 * 
+	 * <pre>
+	 * import ch.powerunit.Rule;
+	 * import ch.powerunit.Test;
+	 * import ch.powerunit.TestRule;
+	 * import ch.powerunit.TestSuite;
+	 * 
+	 * public class MyBean3Test implements TestSuite {
+	 * 	&#064;Rule
+	 * 	public final TestRule rule = before(this::prepare);
+	 * 
+	 * 	private MyBean bean;
+	 * 
+	 * 	private void prepare() {
+	 * 		bean = new MyBean();
+	 * 	}
+	 * 
+	 * 	&#064;Test(fastFail = false)
+	 * 	public void testSimple() throws Exception {
+	 * 		Thread t = new Thread(() -&gt; {
+	 * 			bean.setField1(&quot;y&quot;);
+	 * 			assertThat(bean.getField1()).is(&quot;x&quot;);
+	 * 		});
+	 * 		t.start();
+	 * 		t.join();
+	 * 	}
+	 * }
+	 * </pre>
+	 * 
+	 * <b>This test will fail!</b>. Why ? because the fastFail mode will make
+	 * the <code>assertThat</code> method only register the failure, and produce
+	 * an error in the test thread. the link between the two threads is found
+	 * because the <code>assertThat</code> method used is the one from the test
+	 * class itself.
+	 * 
 	 * @return true by default.
 	 * @since 0.4.0
 	 */

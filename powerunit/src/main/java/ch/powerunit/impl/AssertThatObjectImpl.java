@@ -36,8 +36,11 @@ public class AssertThatObjectImpl<T> implements AssertThatObject<T>,
 
 	private final boolean assertion;
 
-	public AssertThatObjectImpl(boolean assertion, String msg,
+	private final Object underTest;
+
+	public AssertThatObjectImpl(Object underTest,boolean assertion, String msg,
 			Supplier<T> provider) {
+		this.underTest = underTest;
 		this.provider = provider;
 		this.msg = msg;
 		this.assertion = assertion;
@@ -58,7 +61,7 @@ public class AssertThatObjectImpl<T> implements AssertThatObject<T>,
 			matching.describeMismatch(obj, message);
 			if (assertion) {
 				TestContextImpl<Object> ctx = DefaultPowerUnitRunnerImpl
-						.getCurrentContext();
+						.getCurrentContext(underTest);
 				AssertionError e = new AssertionError((msg == null ? "" : msg
 						+ "\n")
 						+ message.toString());
@@ -81,7 +84,7 @@ public class AssertThatObjectImpl<T> implements AssertThatObject<T>,
 		if (clazz == null) {
 			throw new InternalError("clazz argument can't be null");
 		}
-		return new AssertThatObjectImpl<P>(assertion, msg, () -> {
+		return new AssertThatObjectImpl<P>(underTest,assertion, msg, () -> {
 			T v = provider.get();
 			if (v == null) {
 				return null;
@@ -107,7 +110,7 @@ public class AssertThatObjectImpl<T> implements AssertThatObject<T>,
 		if (targetClass == null) {
 			throw new InternalError("targetClass argument can't be null");
 		}
-		return new AssertThatObjectImpl<P>(assertion, msg,
+		return new AssertThatObjectImpl<P>(underTest,assertion, msg,
 				() -> converter.apply(provider.get()));
 	}
 }

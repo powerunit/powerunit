@@ -25,9 +25,9 @@ package ch.powerunit.impl;
  */
 public final class FailureImpl {
 
-	public static boolean fail(AssertionError msg) {
+	public static boolean fail(Object underTest, AssertionError msg) {
 		TestContextImpl<Object> ctx = DefaultPowerUnitRunnerImpl
-				.getCurrentContext();
+				.getCurrentContext(underTest);
 		if (ctx == null || ctx.isFastFail()) {
 			throw msg;
 		}

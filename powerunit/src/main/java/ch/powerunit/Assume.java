@@ -47,7 +47,10 @@ interface Assume {
 	 * </pre>
 	 * 
 	 * This will check that <code>myObject</code> is <code>myOtherObject</code>
-	 * (using the <code>equalTo</code> Hamcrest matcher).
+	 * (using the <code>equalTo</code> Hamcrest matcher). <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param <T>
 	 *            the object type.
@@ -70,7 +73,10 @@ interface Assume {
 	 * </pre>
 	 * 
 	 * This will check that <code>myObject</code> is <code>myOtherObject</code>
-	 * (using the <code>equalTo</code> Hamcrest matcher).
+	 * (using the <code>equalTo</code> Hamcrest matcher). <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param <T>
 	 *            the object type.
@@ -81,7 +87,7 @@ interface Assume {
 	 * @return {@link AssertThatCastableObject the assert DSL on this object}
 	 */
 	default <T> AssertThatCastableObject<T> assumeThat(String msg, T obj) {
-		return new AssertThatObjectImpl<T>(false, msg, () -> obj);
+		return new AssertThatObjectImpl<T>(this, false, msg, () -> obj);
 	}
 
 	/**
@@ -94,7 +100,10 @@ interface Assume {
 	 * </pre>
 	 * 
 	 * This will check that <code>myString</code> is <code>""</code> (using the
-	 * <code>equalTo</code> Hamcrest matcher).
+	 * <code>equalTo</code> Hamcrest matcher). <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param obj
 	 *            the String
@@ -114,7 +123,10 @@ interface Assume {
 	 * </pre>
 	 * 
 	 * This will check that <code>myString</code> is <code>""</code> (using the
-	 * <code>equalTo</code> Hamcrest matcher).
+	 * <code>equalTo</code> Hamcrest matcher). <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param msg
 	 *            a message
@@ -123,7 +135,7 @@ interface Assume {
 	 * @return {@link AssertThatString the assert DSL on this object}
 	 */
 	default AssertThatString assumeThat(String msg, String obj) {
-		return new AssertThatStringImpl(true, msg, () -> obj);
+		return new AssertThatStringImpl(this, true, msg, () -> obj);
 	}
 
 	/**
@@ -136,7 +148,10 @@ interface Assume {
 	 * assumeThatIterable(myIterable).hasSize(0);
 	 * </pre>
 	 * 
-	 * This will check that <code>myIterable</code> has a size of 0.
+	 * This will check that <code>myIterable</code> has a size of 0. <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param <T>
 	 *            the element type.
@@ -158,7 +173,10 @@ interface Assume {
 	 * assumeThatIterable(&quot;msg&quot;, myIterable).hasSize(0);
 	 * </pre>
 	 * 
-	 * This will check that <code>myIterable</code> has a size of 0.
+	 * This will check that <code>myIterable</code> has a size of 0. <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param <T>
 	 *            the element type.
@@ -170,7 +188,7 @@ interface Assume {
 	 */
 	default <T> AssertThatIterable<T> assumeThatIterable(String msg,
 			Iterable<T> obj) {
-		return new AssertThatIterableImpl<T>(false, msg, () -> obj);
+		return new AssertThatIterableImpl<T>(this, false, msg, () -> obj);
 	}
 
 	/**
@@ -188,7 +206,10 @@ interface Assume {
 	 * 
 	 * This will pass the <code>b</code> string to the passed function (which
 	 * add a <code>x</code> add the end of the string and then it will check
-	 * that this string is <code>bx</code> (which is the case).
+	 * that this string is <code>bx</code> (which is the case). <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param <T>
 	 *            the object type of the input of the function
@@ -198,12 +219,12 @@ interface Assume {
 	 *            the function
 	 * @param input
 	 *            the input to the function
-	 * @return {@link AssertThatCastableObject then assert DSL on the result of the
-	 *         function}
+	 * @return {@link AssertThatCastableObject then assert DSL on the result of
+	 *         the function}
 	 */
 	default <T, R> AssertThatCastableObject<R> assumeThatFunction(
 			Function<T, R> function, T input) {
-		return new AssertThatObjectImpl<R>(false, null,
+		return new AssertThatObjectImpl<R>(this, false, null,
 				() -> function.apply(input));
 	}
 
@@ -222,7 +243,10 @@ interface Assume {
 	 * 
 	 * This will pass the <code>b</code> string to the passed function (which
 	 * add a <code>x</code> add the end of the string and then it will check
-	 * that this string is <code>bx</code> (which is the case).
+	 * that this string is <code>bx</code> (which is the case). <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param <T>
 	 *            the object type of the input of the function
@@ -234,12 +258,12 @@ interface Assume {
 	 *            the function
 	 * @param input
 	 *            the input to the function
-	 * @return {@link AssertThatCastableObject then assert DSL on the result of the
-	 *         function}
+	 * @return {@link AssertThatCastableObject then assert DSL on the result of
+	 *         the function}
 	 */
 	default <T, R> AssertThatCastableObject<R> assumeThatFunction(String msg,
 			Function<T, R> function, T input) {
-		return new AssertThatObjectImpl<R>(false, msg,
+		return new AssertThatObjectImpl<R>(this, false, msg,
 				() -> function.apply(input));
 	}
 
@@ -257,7 +281,10 @@ interface Assume {
 	 * 
 	 * This will pass the <code>b</code> string to the passed function (which
 	 * add a <code>x</code> add the end of the string and then it will check
-	 * that this string is <code>bx</code> (which is the case).
+	 * that this string is <code>bx</code> (which is the case). <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param <T>
 	 *            the object type of the first input of the function
@@ -271,13 +298,13 @@ interface Assume {
 	 *            the first input to the function
 	 * @param input2
 	 *            the second input to the function
-	 * @return {@link AssertThatCastableObject then assert DSL on the result of the
-	 *         bifunction}
+	 * @return {@link AssertThatCastableObject then assert DSL on the result of
+	 *         the bifunction}
 	 */
 	default <T, U, R> AssertThatCastableObject<R> assumeThatBiFunction(
 			BiFunction<T, U, R> function, T input1, U input2) {
-		return new AssertThatObjectImpl<R>(false, null, () -> function.apply(
-				input1, input2));
+		return new AssertThatObjectImpl<R>(this, false, null,
+				() -> function.apply(input1, input2));
 	}
 
 	/**
@@ -294,7 +321,10 @@ interface Assume {
 	 * 
 	 * This will pass the <code>b</code> string to the passed function (which
 	 * add a <code>x</code> add the end of the string and then it will check
-	 * that this string is <code>bx</code> (which is the case).
+	 * that this string is <code>bx</code> (which is the case). <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param <T>
 	 *            the object type of the first input of the function
@@ -310,13 +340,13 @@ interface Assume {
 	 *            the first input to the function
 	 * @param input2
 	 *            the second input to the function
-	 * @return {@link AssertThatCastableObject then assert DSL on the result of the
-	 *         bifunction}
+	 * @return {@link AssertThatCastableObject then assert DSL on the result of
+	 *         the bifunction}
 	 */
-	default <T, U, R> AssertThatCastableObject<R> assumeThatBiFunction(String msg,
-			BiFunction<T, U, R> function, T input1, U input2) {
-		return new AssertThatObjectImpl<R>(false, msg, () -> function.apply(
-				input1, input2));
+	default <T, U, R> AssertThatCastableObject<R> assumeThatBiFunction(
+			String msg, BiFunction<T, U, R> function, T input1, U input2) {
+		return new AssertThatObjectImpl<R>(this, false, msg,
+				() -> function.apply(input1, input2));
 	}
 
 	/**
@@ -335,7 +365,10 @@ interface Assume {
 	 * </pre>
 	 * 
 	 * Will run a piece of code that always thrown an exception and then
-	 * validate that the message of the exception is <code>test</code>.
+	 * validate that the message of the exception is <code>test</code>. <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param underTest
 	 *            the {@link Statement} <code>(p)-&gt;{}</code>
@@ -365,7 +398,10 @@ interface Assume {
 	 * 
 	 * Will run a piece of code, passing null as parameter, that always thrown
 	 * an exception and then validate that the message of the exception is
-	 * <code>test</code>.
+	 * <code>test</code>. <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param underTest
 	 *            the {@link Statement} <code>(p)-&gt;{}</code>
@@ -399,7 +435,10 @@ interface Assume {
 	 * </pre>
 	 * 
 	 * Will run a piece of code that always thrown an exception and then
-	 * validate that the message of the exception is <code>test</code>.
+	 * validate that the message of the exception is <code>test</code>. <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param msg
 	 *            a message
@@ -431,7 +470,10 @@ interface Assume {
 	 * 
 	 * Will run a piece of code, passing null as parameter, that always thrown
 	 * an exception and then validate that the message of the exception is
-	 * <code>test</code>.
+	 * <code>test</code>. <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param msg
 	 *            a message
@@ -449,12 +491,16 @@ interface Assume {
 	 */
 	default <P, T extends Throwable> AssertThatException<T> assumeWhen(
 			String msg, Statement<P, T> underTest, P param) {
-		return new AssertThatExceptionImpl<P, T>(false, underTest, param, msg);
+		return new AssertThatExceptionImpl<P, T>(this, false, underTest, param,
+				msg);
 	}
 
 	/**
 	 * Assume that a function throw an exception. As {@link Function} signature
-	 * doesn't throws exception, it should be a RuntimeException.
+	 * doesn't throws exception, it should be a RuntimeException. <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param msg
 	 *            a message
@@ -478,7 +524,10 @@ interface Assume {
 
 	/**
 	 * Assume that a function throw an exception. As {@link Function} signature
-	 * doesn't throws exception, it should be a RuntimeException.
+	 * doesn't throws exception, it should be a RuntimeException. <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param function
 	 *            the function to be executed and that should return an
@@ -500,7 +549,10 @@ interface Assume {
 
 	/**
 	 * Assume that a bifunction throw an exception. As {@link BiFunction}
-	 * signature doesn't throws exception, it should be a RuntimeException.
+	 * signature doesn't throws exception, it should be a RuntimeException. <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param msg
 	 *            a message
@@ -527,7 +579,10 @@ interface Assume {
 
 	/**
 	 * Assume that a bifunction throw an exception. As {@link BiFunction}
-	 * signature doesn't throws exception, it should be a RuntimeException.
+	 * signature doesn't throws exception, it should be a RuntimeException. <br>
+	 * <br>
+	 * <i>By default, assumeThat can only be used from the main thread of the
+	 * test ; When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param bifunction
 	 *            the bifunction to be executed and that should return an
@@ -559,7 +614,10 @@ interface Assume {
 	 * skip();
 	 * </pre>
 	 * 
-	 * will immediately skip the current test.
+	 * will immediately skip the current test. <br>
+	 * <br>
+	 * <i>By default, skip can only be used from the main thread of the test ;
+	 * When used from another thread, the assumption will be lost.</i>
 	 */
 	default void skip() {
 		skip("Manual skip");
@@ -574,7 +632,10 @@ interface Assume {
 	 * skip(&quot;my message&quot;);
 	 * </pre>
 	 * 
-	 * will immediately skip the current test.
+	 * will immediately skip the current test. <br>
+	 * <br>
+	 * <i>By default, skip can only be used from the main thread of the test ;
+	 * When used from another thread, the assumption will be lost.</i>
 	 * 
 	 * @param msg
 	 *            a message

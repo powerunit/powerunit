@@ -35,6 +35,13 @@ import org.hamcrest.Matchers;
 public interface AssertThatString extends AssertThatObject<String> {
 	/**
 	 * Check that a string another string.
+	 * <p>
+	 * <br>
+	 * <i>By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
 	 * 
 	 * @param substring
 	 *            the other string.
@@ -42,6 +49,9 @@ public interface AssertThatString extends AssertThatObject<String> {
 	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the <code>fastFail</code>
+	 *      attribute of the <code>@Test</code> annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean containsString(String substring) {
 		return is(Matchers.containsString(substring));
@@ -49,6 +59,13 @@ public interface AssertThatString extends AssertThatObject<String> {
 
 	/**
 	 * Check that a string starts with another one.
+	 * <p>
+	 * <br>
+	 * <i>By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
 	 * 
 	 * @param prefix
 	 *            the prefix.
@@ -56,6 +73,9 @@ public interface AssertThatString extends AssertThatObject<String> {
 	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the <code>fastFail</code>
+	 *      attribute of the <code>@Test</code> annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean startsWith(String prefix) {
 		return is(Matchers.startsWith(prefix));
@@ -63,6 +83,13 @@ public interface AssertThatString extends AssertThatObject<String> {
 
 	/**
 	 * Check that a string ends with another one.
+	 * <p>
+	 * <br>
+	 * <i>By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
 	 * 
 	 * @param prefix
 	 *            the prefix.
@@ -70,6 +97,9 @@ public interface AssertThatString extends AssertThatObject<String> {
 	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the <code>fastFail</code>
+	 *      attribute of the <code>@Test</code> annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean endsWith(String prefix) {
 		return is(Matchers.endsWith(prefix));
@@ -77,6 +107,13 @@ public interface AssertThatString extends AssertThatObject<String> {
 
 	/**
 	 * Validate a string with a {@link java.util.regex.Pattern}.
+	 * <p>
+	 * <br>
+	 * <i>By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
 	 * 
 	 * @param pattern
 	 *            the pattern to be used.
@@ -84,6 +121,9 @@ public interface AssertThatString extends AssertThatObject<String> {
 	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the <code>fastFail</code>
+	 *      attribute of the <code>@Test</code> annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean matchesRegex(Pattern pattern) {
 		return is(TestSuite.DSL.matchesRegex(pattern));
@@ -91,6 +131,13 @@ public interface AssertThatString extends AssertThatObject<String> {
 
 	/**
 	 * Validate a string with a regex.
+	 * <p>
+	 * <br>
+	 * <i>By default, assertion can only be used from the main thread of the
+	 * test ; When used from another thread, the assertion will be lost. In the
+	 * case the {@link Test#fastFail() fastFail} attribute of {@link Test @Test}
+	 * annotation is used, the assertion may not be lost, in case the thread use
+	 * an assertion method from the test object instance. </i>
 	 * 
 	 * 
 	 * @param regex
@@ -99,6 +146,9 @@ public interface AssertThatString extends AssertThatObject<String> {
 	 *         depending on {@link Test#fastFail()} : If <code>true</code>, then
 	 *         fail the test, else, return false and the test will be failed
 	 *         later.
+	 * @see Test#fastFail() The documentation of the <code>fastFail</code>
+	 *      attribute of the <code>@Test</code> annotation, regarding the action
+	 *      done by this assertion.
 	 */
 	default boolean matchesRegex(String regex) {
 		return is(TestSuite.DSL.matchesRegex(regex));
