@@ -42,27 +42,39 @@ import ch.powerunit.TestContext;
  */
 public interface ExternalResource extends TestListenerRule {
 
-    @Override
-    default void onStart(TestContext<Object> context) {
-        before();
-    }
+	/**
+	 * This method delegate to the {@link #before()} method.
+	 * 
+	 * @param context
+	 *            the context.
+	 */
+	@Override
+	default void onStart(TestContext<Object> context) {
+		before();
+	}
 
-    @Override
-    default void onEnd(TestContext<Object> context) {
-        after();
-    }
+	/**
+	 * This method delegate to the {@link #after()} method.
+	 * 
+	 * @param context
+	 *            the context.
+	 */
+	@Override
+	default void onEnd(TestContext<Object> context) {
+		after();
+	}
 
-    /**
-     * Code to be done before
-     */
-    default void before() {
-        // Do nothing as default
-    }
+	/**
+	 * Code to be done before
+	 */
+	default void before() {
+		// Do nothing as default
+	}
 
-    /**
-     * Code to be done after.
-     */
-    default void after() {
-        // Do nothing as default
-    }
+	/**
+	 * Code to be done after.
+	 */
+	default void after() {
+		// Do nothing as default
+	}
 }
