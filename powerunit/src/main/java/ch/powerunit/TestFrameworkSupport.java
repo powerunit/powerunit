@@ -72,7 +72,15 @@ interface TestFrameworkSupport {
 	 * Use this method to start the DSL to test a comparator.
 	 * <p>
 	 * <b>{@link ch.powerunit.comparator.ComparatorTester#of(Class) Please refer
-	 * to the complete documentation}</b>
+	 * to the complete documentation}</b> <br>
+	 * For example :
+	 * 
+	 * <pre>
+	 * &#064;TestDelegate
+	 * public final ComparatorTester&lt;Integer, MyComparator&gt; direct = testerOfComparator(
+	 * 		MyComparator.class).withLessSamples(-6).withEqualSamples(12)
+	 * 		.withGreaterSamples(16).build();
+	 * </pre>
 	 * 
 	 * @param comparatorClass
 	 *            the class of the Comparator

@@ -224,6 +224,15 @@ public final class ComparatorTester<O, C extends Comparator<O>> {
 
 	/**
 	 * Use this method to start the DSL to test a comparator.
+	 * <p>
+	 * For example :
+	 * 
+	 * <pre>
+	 * &#064;TestDelegate
+	 * public final ComparatorTester&lt;Integer, MyComparator&gt; direct = ComparatorTester.of(
+	 * 		MyComparator.class).withLessSamples(-6).withEqualSamples(12)
+	 * 		.withGreaterSamples(16).build();
+	 * </pre>
 	 * 
 	 * @param clazzUnderTest
 	 *            The class of the comparator to be tested.
