@@ -49,7 +49,7 @@ public interface BiFunctionTesterDefineDSL<T, U, R> {
 	BiFunctionTesterNextDSL<T, U, R> thenExpectingResult(Supplier<R> result);
 
 	/**
-	 * Specify the expected result. Specify the expected result.
+	 * Specify the expected result.
 	 * 
 	 * @param matching
 	 *            a matcher on the expected value.
