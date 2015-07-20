@@ -37,7 +37,7 @@ import ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL;
 import ch.powerunit.function.impl.SupplierEqualsToMatcher;
 
 /**
- * Tester for function.
+ * Tester for bifunction.
  * 
  * @author borettim
  * @since 0.3.0
@@ -153,6 +153,16 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 
 	/**
 	 * Start the creation of a tester of function.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * &amp;#064;TestDelegate
+	 * public final BiFunctionTester&amp;lt;Short, Integer, Long&amp;gt; tester1 = BiFunctionTester
+	 * 		.of(this::bifunctionToBeTested).passingAsParameter((short) 1, 2)
+	 * 		.thenExpectingResult(3l).testNamed(&amp;quot;tested&amp;quot;)
+	 * 		.passingAsParameter((short) 2, 4).thenExpectingResult(6l).build();
+	 * &lt;/pre&gt;
 	 * 
 	 * @param bifunctionUnderTest
 	 *            the function to be tested
@@ -169,9 +179,9 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 	 */
 	public static &lt;T, U, R&gt; BiFunctionTesterStartDSL&lt;T, U, R&gt; of(
 			BiFunction&lt;T, U, R&gt; bifunctionUnderTest) {
-<span class="fc" id="L172">		Objects.requireNonNull(bifunctionUnderTest,</span>
+<span class="fc" id="L182">		Objects.requireNonNull(bifunctionUnderTest,</span>
 				&quot;bifunctionUnderTest can't be null&quot;);
-<span class="fc" id="L174">		return new BiFunctionTesterDSL&lt;T, U, R&gt;(bifunctionUnderTest);</span>
+<span class="fc" id="L184">		return new BiFunctionTesterDSL&lt;T, U, R&gt;(bifunctionUnderTest);</span>
 	}
 
 	/**
@@ -180,7 +190,7 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 	 * @return the underTest
 	 */
 	public BiFunction&lt;T, U, R&gt; getUnderTest() {
-<span class="fc" id="L183">		return underTest;</span>
+<span class="fc" id="L193">		return underTest;</span>
 	}
 
 	/**
@@ -189,7 +199,7 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 	 * @return the first input
 	 */
 	public List&lt;Supplier&lt;T&gt;&gt; getInput1() {
-<span class="fc" id="L192">		return Collections.unmodifiableList(input1);</span>
+<span class="fc" id="L202">		return Collections.unmodifiableList(input1);</span>
 	}
 
 	/**
@@ -198,7 +208,7 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 	 * @return the first input
 	 */
 	public List&lt;Supplier&lt;U&gt;&gt; getInput2() {
-<span class="fc" id="L201">		return Collections.unmodifiableList(input2);</span>
+<span class="fc" id="L211">		return Collections.unmodifiableList(input2);</span>
 	}
 
 	/**
@@ -207,7 +217,7 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 	 * @return the result
 	 */
 	public List&lt;Supplier&lt;Matcher&lt;? super R&gt;&gt;&gt; getResult() {
-<span class="fc" id="L210">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L220">		return Collections.unmodifiableList(result);</span>
 	}
 
 	/**
@@ -216,7 +226,7 @@ public final class BiFunctionTester&lt;T, U, R&gt; {
 	 * @return the name
 	 */
 	public List&lt;Supplier&lt;String&gt;&gt; getName() {
-<span class="fc" id="L219">		return Collections.unmodifiableList(name);</span>
+<span class="fc" id="L229">		return Collections.unmodifiableList(name);</span>
 	}
 
 }

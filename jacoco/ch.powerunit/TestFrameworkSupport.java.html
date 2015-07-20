@@ -72,7 +72,15 @@ interface TestFrameworkSupport {
 	 * Use this method to start the DSL to test a comparator.
 	 * &lt;p&gt;
 	 * &lt;b&gt;{@link ch.powerunit.comparator.ComparatorTester#of(Class) Please refer
-	 * to the complete documentation}&lt;/b&gt;
+	 * to the complete documentation}&lt;/b&gt; &lt;br&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * &amp;#064;TestDelegate
+	 * public final ComparatorTester&amp;lt;Integer, MyComparator&amp;gt; direct = testerOfComparator(
+	 * 		MyComparator.class).withLessSamples(-6).withEqualSamples(12)
+	 * 		.withGreaterSamples(16).build();
+	 * &lt;/pre&gt;
 	 * 
 	 * @param comparatorClass
 	 *            the class of the Comparator
@@ -88,7 +96,7 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;O, C extends Comparator&lt;O&gt;&gt; ComparatorTesterDSLStart&lt;O, C&gt; testerOfComparator(
 			Class&lt;C&gt; comparatorClass) {
-<span class="fc" id="L91">		return ComparatorTester.of(comparatorClass);</span>
+<span class="fc" id="L99">		return ComparatorTester.of(comparatorClass);</span>
 	}
 
 	/**
@@ -110,14 +118,23 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;T, R&gt; FunctionTesterStartDSL&lt;T, R&gt; testerOfFunction(
 			Function&lt;T, R&gt; functionUnderTest) {
-<span class="nc" id="L113">		return FunctionTester.of(functionUnderTest);</span>
+<span class="nc" id="L121">		return FunctionTester.of(functionUnderTest);</span>
 	}
 
 	/**
 	 * Use this method to start the DSL to test a bifunction.
 	 * &lt;p&gt;
 	 * &lt;b&gt;{@link ch.powerunit.bifunction.BiFunctionTester#of(BiFunction) Please
-	 * refer to the complete documentation}&lt;/b&gt;
+	 * refer to the complete documentation}&lt;/b&gt; &lt;br&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * &amp;#064;TestDelegate
+	 * public final BiFunctionTester&amp;lt;Short, Integer, Long&amp;gt; tester1 = testerOfBiFunction(
+	 * 		this::bifunctionToBeTested).passingAsParameter((short) 1, 2)
+	 * 		.thenExpectingResult(3l).testNamed(&amp;quot;tested&amp;quot;)
+	 * 		.passingAsParameter((short) 2, 4).thenExpectingResult(6l).build();
+	 * &lt;/pre&gt;
 	 * 
 	 * @param bifunctionUnderTest
 	 *            the bifunction to be tested
@@ -135,7 +152,7 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;T, U, R&gt; BiFunctionTesterStartDSL&lt;T, U, R&gt; testerOfBiFunction(
 			BiFunction&lt;T, U, R&gt; bifunctionUnderTest) {
-<span class="fc" id="L138">		return BiFunctionTester.of(bifunctionUnderTest);</span>
+<span class="fc" id="L155">		return BiFunctionTester.of(bifunctionUnderTest);</span>
 	}
 
 	/**
@@ -159,7 +176,7 @@ interface TestFrameworkSupport {
 	 * @since 0.4.0
 	 */
 	default PatternTester0 testerOfPattern(String pattern) {
-<span class="fc" id="L162">		return PatternTester.of(pattern);</span>
+<span class="fc" id="L179">		return PatternTester.of(pattern);</span>
 	}
 
 	/**
@@ -181,7 +198,7 @@ interface TestFrameworkSupport {
 	 * @since 0.4.0
 	 */
 	default PatternTester0 testerOfPattern(Pattern pattern) {
-<span class="nc" id="L184">		return PatternTester.of(pattern);</span>
+<span class="nc" id="L201">		return PatternTester.of(pattern);</span>
 	}
 
 	/**
@@ -206,7 +223,7 @@ interface TestFrameworkSupport {
 	 */
 	default &lt;T, R&gt; CollectorTesterDSL0&lt;T, ?, R&gt; testerOfCollector(
 			Collector&lt;T, ?, R&gt; collectorToTest) {
-<span class="fc" id="L209">		return CollectorTester.of(collectorToTest);</span>
+<span class="fc" id="L226">		return CollectorTester.of(collectorToTest);</span>
 	}
 
 	/**
@@ -238,7 +255,7 @@ interface TestFrameworkSupport {
 	default &lt;T, R&gt; CollectorTesterDSL0&lt;T, ?, R&gt; testerOfCollector(
 			Class&lt;T&gt; inputClass, Class&lt;T&gt; outputClass,
 			Collector&lt;T, ?, R&gt; collectorToTest) {
-<span class="nc" id="L241">		return CollectorTester.of(collectorToTest);</span>
+<span class="nc" id="L258">		return CollectorTester.of(collectorToTest);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

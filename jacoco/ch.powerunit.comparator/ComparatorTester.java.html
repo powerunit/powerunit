@@ -224,6 +224,15 @@ public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
 
 	/**
 	 * Use this method to start the DSL to test a comparator.
+	 * &lt;p&gt;
+	 * For example :
+	 * 
+	 * &lt;pre&gt;
+	 * &amp;#064;TestDelegate
+	 * public final ComparatorTester&amp;lt;Integer, MyComparator&amp;gt; direct = ComparatorTester.of(
+	 * 		MyComparator.class).withLessSamples(-6).withEqualSamples(12)
+	 * 		.withGreaterSamples(16).build();
+	 * &lt;/pre&gt;
 	 * 
 	 * @param clazzUnderTest
 	 *            The class of the comparator to be tested.
@@ -238,8 +247,8 @@ public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
 	 */
 	public static &lt;O, C extends Comparator&lt;O&gt;&gt; ComparatorTesterDSLStart&lt;O, C&gt; of(
 			final Class&lt;C&gt; clazzUnderTest) {
-<span class="fc" id="L241">		Objects.requireNonNull(clazzUnderTest, &quot;clazzUnderTest can't be null&quot;);</span>
-<span class="fc" id="L242">		return new ComparatorTesterDSL&lt;O, C&gt;(clazzUnderTest);</span>
+<span class="fc" id="L250">		Objects.requireNonNull(clazzUnderTest, &quot;clazzUnderTest can't be null&quot;);</span>
+<span class="fc" id="L251">		return new ComparatorTesterDSL&lt;O, C&gt;(clazzUnderTest);</span>
 	}
 
 	/**
@@ -248,7 +257,7 @@ public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
 	 * @return the comparatorClass
 	 */
 	public Class&lt;C&gt; getComparatorClass() {
-<span class="fc" id="L251">		return comparatorClass;</span>
+<span class="fc" id="L260">		return comparatorClass;</span>
 	}
 
 	/**
@@ -257,7 +266,7 @@ public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
 	 * @return the lessSamples
 	 */
 	public Supplier&lt;O[]&gt; getLessSamples() {
-<span class="fc" id="L260">		return lessSamples;</span>
+<span class="fc" id="L269">		return lessSamples;</span>
 	}
 
 	/**
@@ -266,7 +275,7 @@ public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
 	 * @return the equalSamples
 	 */
 	public Supplier&lt;O[]&gt; getEqualSamples() {
-<span class="fc" id="L269">		return equalSamples;</span>
+<span class="fc" id="L278">		return equalSamples;</span>
 	}
 
 	/**
@@ -275,7 +284,7 @@ public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
 	 * @return the greaterSamples
 	 */
 	public Supplier&lt;O[]&gt; getGreaterSamples() {
-<span class="fc" id="L278">		return greaterSamples;</span>
+<span class="fc" id="L287">		return greaterSamples;</span>
 	}
 
 	/**
@@ -284,7 +293,7 @@ public final class ComparatorTester&lt;O, C extends Comparator&lt;O&gt;&gt; {
 	 * @return the underTest
 	 */
 	public Supplier&lt;C&gt; getUnderTest() {
-<span class="fc" id="L287">		return underTest;</span>
+<span class="fc" id="L296">		return underTest;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
