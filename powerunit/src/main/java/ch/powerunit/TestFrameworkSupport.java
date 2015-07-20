@@ -117,7 +117,16 @@ interface TestFrameworkSupport {
 	 * Use this method to start the DSL to test a bifunction.
 	 * <p>
 	 * <b>{@link ch.powerunit.bifunction.BiFunctionTester#of(BiFunction) Please
-	 * refer to the complete documentation}</b>
+	 * refer to the complete documentation}</b> <br>
+	 * For example :
+	 * 
+	 * <pre>
+	 * &#064;TestDelegate
+	 * public final BiFunctionTester&lt;Short, Integer, Long&gt; tester1 = testerOfBiFunction(
+	 * 		this::bifunctionToBeTested).passingAsParameter((short) 1, 2)
+	 * 		.thenExpectingResult(3l).testNamed(&quot;tested&quot;)
+	 * 		.passingAsParameter((short) 2, 4).thenExpectingResult(6l).build();
+	 * </pre>
 	 * 
 	 * @param bifunctionUnderTest
 	 *            the bifunction to be tested

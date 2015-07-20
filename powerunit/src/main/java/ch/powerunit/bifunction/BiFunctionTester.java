@@ -37,7 +37,7 @@ import ch.powerunit.bifunction.lang.BiFunctionTesterStartDSL;
 import ch.powerunit.function.impl.SupplierEqualsToMatcher;
 
 /**
- * Tester for function.
+ * Tester for bifunction.
  * 
  * @author borettim
  * @since 0.3.0
@@ -153,6 +153,16 @@ public final class BiFunctionTester<T, U, R> {
 
 	/**
 	 * Start the creation of a tester of function.
+	 * <p>
+	 * For example :
+	 * 
+	 * <pre>
+	 * &#064;TestDelegate
+	 * public final BiFunctionTester&lt;Short, Integer, Long&gt; tester1 = BiFunctionTester
+	 * 		.of(this::bifunctionToBeTested).passingAsParameter((short) 1, 2)
+	 * 		.thenExpectingResult(3l).testNamed(&quot;tested&quot;)
+	 * 		.passingAsParameter((short) 2, 4).thenExpectingResult(6l).build();
+	 * </pre>
 	 * 
 	 * @param bifunctionUnderTest
 	 *            the function to be tested
