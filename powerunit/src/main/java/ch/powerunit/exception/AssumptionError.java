@@ -20,23 +20,25 @@
 package ch.powerunit.exception;
 
 /**
+ * This exception is throw when an assumption is not met.
+ * 
  * @author borettim
  *
  */
 public class AssumptionError extends RuntimeException {
-    /**
+	/**
      *
      */
-    private static final long serialVersionUID = 4819860004880388771L;
+	private static final long serialVersionUID = 4819860004880388771L;
 
-    /**
-     * Default constructor.
-     * 
-     * @param msg
-     *            the message
-     */
-    public AssumptionError(String msg) {
-        super(msg);
-    }
+	/**
+	 * Default constructor.
+	 * 
+	 * @param msg
+	 *            the message
+	 */
+	public AssumptionError(String msg) {
+		super(msg);
+	}
 
 }
