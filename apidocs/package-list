@@ -9,6 +9,7 @@ ch.powerunit.exception
 ch.powerunit.function
 ch.powerunit.function.lang
 ch.powerunit.helpers
+ch.powerunit.mbean
 ch.powerunit.pattern
 ch.powerunit.pattern.lang
 ch.powerunit.rules

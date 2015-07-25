@@ -19,6 +19,7 @@
  */
 package ch.powerunit.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.util.HashMap;
@@ -42,274 +43,287 @@ import ch.powerunit.report.Testsuites;
 public class DefaultTestResultListener&lt;T&gt; implements TestResultListener&lt;T&gt; {
 
 	public DefaultTestResultListener(String targetFolder) {
-<span class="nc" id="L45">		this(targetFolder, null);</span>
-<span class="nc" id="L46">	}</span>
+<span class="nc" id="L46">		this(targetFolder, null);</span>
+<span class="nc" id="L47">	}</span>
 
 	public DefaultTestResultListener(String targetFolder,
-<span class="fc" id="L49">			PrintStream outputConsole) {</span>
-<span class="fc" id="L50">		this.outputConsole = outputConsole;</span>
-<span class="fc" id="L51">		this.targetFolder = new File(targetFolder);</span>
-<span class="fc" id="L52">		this.targetFolder.mkdirs();</span>
-<span class="fc" id="L53">	}</span>
+			PrintStream outputConsole) {
+<span class="nc" id="L51">		this(targetFolder, outputConsole, null);</span>
+<span class="nc" id="L52">	}</span>
+
+	public DefaultTestResultListener(String targetFolder,
+<span class="fc" id="L55">			PrintStream outputConsole, PowerUnit mbean) {</span>
+<span class="fc" id="L56">		this.outputConsole = outputConsole;</span>
+<span class="fc" id="L57">		this.targetFolder = new File(targetFolder);</span>
+<span class="fc" id="L58">		this.targetFolder.mkdirs();</span>
+<span class="fc" id="L59">		this.mbean = mbean;</span>
+<span class="fc" id="L60">	}</span>
 
 	private static final JAXBContext JAXB_CONTEXT;
 
-<span class="fc" id="L57">	private final StringBuilder resumedSucess = new StringBuilder();</span>
+<span class="fc" id="L64">	private final StringBuilder resumedSucess = new StringBuilder();</span>
 
-<span class="fc" id="L59">	private final StringBuilder resumedFailure = new StringBuilder();</span>
+<span class="fc" id="L66">	private final StringBuilder resumedFailure = new StringBuilder();</span>
 
-<span class="fc" id="L61">	private final StringBuilder resumedSkipped = new StringBuilder();</span>
+<span class="fc" id="L68">	private final StringBuilder resumedSkipped = new StringBuilder();</span>
 
 	/**
 	 * @return the resumed
 	 */
 	public String getResumed() {
-<span class="nc" id="L67">		return &quot;Success tests:\n&quot; + resumedSucess.toString()</span>
-<span class="nc" id="L68">				+ &quot;\n\nSkipped tests:\n&quot; + resumedSkipped.toString()</span>
-<span class="nc" id="L69">				+ &quot;\n\nFailed tests:\n&quot; + resumedFailure.toString() + &quot;\n&quot;;</span>
+<span class="nc" id="L74">		return &quot;Success tests:\n&quot; + resumedSucess.toString()</span>
+<span class="nc" id="L75">				+ &quot;\n\nSkipped tests:\n&quot; + resumedSkipped.toString()</span>
+<span class="nc" id="L76">				+ &quot;\n\nFailed tests:\n&quot; + resumedFailure.toString() + &quot;\n&quot;;</span>
 	}
 
 	/**
 	 * @return the resumedSucess
 	 */
 	public String getResumedSucess() {
-<span class="fc" id="L76">		return resumedSucess.toString();</span>
+<span class="fc" id="L83">		return resumedSucess.toString();</span>
 	}
 
 	/**
 	 * @return the resumedFailure
 	 */
 	public String getResumedFailure() {
-<span class="fc" id="L83">		return resumedFailure.toString();</span>
+<span class="fc" id="L90">		return resumedFailure.toString();</span>
 	}
 
 	/**
 	 * @return the resumedSkipped
 	 */
 	public String getResumedSkipped() {
-<span class="fc" id="L90">		return resumedSkipped.toString();</span>
+<span class="fc" id="L97">		return resumedSkipped.toString();</span>
 	}
 
 	static {
 		try {
-<span class="fc" id="L95">			JAXB_CONTEXT = JAXBContext.newInstance(Testsuites.class);</span>
-<span class="nc" id="L96">		} catch (JAXBException e) {</span>
-<span class="nc" id="L97">			throw new IllegalArgumentException(&quot;Unable to setup jaxb &quot;</span>
-<span class="nc" id="L98">					+ e.getMessage(), e);</span>
-<span class="fc" id="L99">		}</span>
-<span class="fc" id="L100">	}</span>
+<span class="fc" id="L102">			JAXB_CONTEXT = JAXBContext.newInstance(Testsuites.class);</span>
+<span class="nc" id="L103">		} catch (JAXBException e) {</span>
+<span class="nc" id="L104">			throw new IllegalArgumentException(&quot;Unable to setup jaxb &quot;</span>
+<span class="nc" id="L105">					+ e.getMessage(), e);</span>
+<span class="fc" id="L106">		}</span>
+<span class="fc" id="L107">	}</span>
 
-<span class="fc" id="L102">	private boolean error = false;</span>
+<span class="fc" id="L109">	private boolean error = false;</span>
 
 	private final PrintStream outputConsole;
 
-<span class="fc" id="L106">	private final Map&lt;String, Testsuite&gt; result = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L113">	private final Map&lt;String, Testsuite&gt; result = new HashMap&lt;&gt;();</span>
 
-<span class="fc" id="L108">	private final Map&lt;String, Testsuites&gt; results = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L115">	private final Map&lt;String, Testsuites&gt; results = new HashMap&lt;&gt;();</span>
 
-<span class="fc" id="L110">	private final Map&lt;String, Map&lt;String, Testcase&gt;&gt; resultcase = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L117">	private final Map&lt;String, Map&lt;String, Testcase&gt;&gt; resultcase = new HashMap&lt;&gt;();</span>
 
 	private final File targetFolder;
 
+	private final PowerUnit mbean;
+
 	private void printf(String format, Object... args) {
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (outputConsole != null) {</span>
-<span class="fc" id="L116">			outputConsole.printf(format, args);</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (outputConsole != null) {</span>
+<span class="fc" id="L125">			outputConsole.printf(format, args);</span>
 		}
-<span class="fc" id="L118">	}</span>
+<span class="fc" id="L127">	}</span>
 
 	@Override
 	public void notifySetStart(String setName, String parameters) {
-<span class="fc" id="L122">		Testsuites tss = new Testsuites();</span>
-<span class="fc" id="L123">		tss.setDisabled(0);</span>
-<span class="fc" id="L124">		tss.setErrors(0);</span>
-<span class="fc" id="L125">		tss.setFailures(0);</span>
-<span class="fc" id="L126">		tss.setName(setName);</span>
-<span class="fc" id="L127">		tss.setTests(0);</span>
-<span class="fc" id="L128">		tss.setTime(0L);</span>
-<span class="fc" id="L129">		results.put(setName, tss);</span>
+<span class="fc" id="L131">		Testsuites tss = new Testsuites();</span>
+<span class="fc" id="L132">		tss.setDisabled(0);</span>
+<span class="fc" id="L133">		tss.setErrors(0);</span>
+<span class="fc" id="L134">		tss.setFailures(0);</span>
+<span class="fc" id="L135">		tss.setName(setName);</span>
+<span class="fc" id="L136">		tss.setTests(0);</span>
+<span class="fc" id="L137">		tss.setTime(0L);</span>
+<span class="fc" id="L138">		results.put(setName, tss);</span>
 
-<span class="fc" id="L131">		Testsuite ts = new Testsuite();</span>
-<span class="fc" id="L132">		result.put(setName, ts);</span>
-<span class="fc" id="L133">		ts.setName(setName.replace('$', '.'));</span>
-<span class="fc" id="L134">		ts.setDisabled(0);</span>
-<span class="fc" id="L135">		ts.setErrors(0);</span>
-<span class="fc" id="L136">		ts.setFailures(0);</span>
-<span class="fc" id="L137">		ts.setTests(0);</span>
-<span class="fc" id="L138">		ts.setTime(0L);</span>
-<span class="fc" id="L139">		resultcase.put(setName, new HashMap&lt;&gt;());</span>
+<span class="fc" id="L140">		Testsuite ts = new Testsuite();</span>
+<span class="fc" id="L141">		result.put(setName, ts);</span>
+<span class="fc" id="L142">		ts.setName(setName.replace('$', '.'));</span>
+<span class="fc" id="L143">		ts.setDisabled(0);</span>
+<span class="fc" id="L144">		ts.setErrors(0);</span>
+<span class="fc" id="L145">		ts.setFailures(0);</span>
+<span class="fc" id="L146">		ts.setTests(0);</span>
+<span class="fc" id="L147">		ts.setTime(0L);</span>
+<span class="fc" id="L148">		resultcase.put(setName, new HashMap&lt;&gt;());</span>
 
-<span class="fc" id="L141">	}</span>
+<span class="fc" id="L150">	}</span>
 
 	@Override
 	public void notifySetEnd(String setName, String parameters) {
 		try {
-<span class="fc" id="L146">			File target = new File(targetFolder, setName + &quot;.xml&quot;);</span>
-<span class="fc" id="L147">			printf(&quot;Pushing test results into %1$s%n&quot;, target.getAbsolutePath());</span>
-<span class="fc" id="L148">			Object o = results.get(setName);</span>
-<span class="fc bfc" id="L149" title="All 2 branches covered.">			if (results.get(setName).getTestsuite().isEmpty()) {</span>
-<span class="fc" id="L150">				o = result.get(setName);</span>
+<span class="fc" id="L155">			File target = new File(targetFolder, setName + &quot;.xml&quot;);</span>
+<span class="fc" id="L156">			printf(&quot;Pushing test results into %1$s%n&quot;, target.getAbsolutePath());</span>
+<span class="fc" id="L157">			Object o = results.get(setName);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">			if (results.get(setName).getTestsuite().isEmpty()) {</span>
+<span class="fc" id="L159">				o = result.get(setName);</span>
 			}
-<span class="fc" id="L152">			JAXB_CONTEXT.createMarshaller().marshal(o, target);</span>
-<span class="nc" id="L153">		} catch (JAXBException e) {</span>
-<span class="nc" id="L154">			throw new IllegalArgumentException(&quot;Unable to setup jaxb &quot;</span>
-<span class="nc" id="L155">					+ e.getMessage(), e);</span>
-<span class="fc" id="L156">		}</span>
-<span class="fc" id="L157">	}</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">			if (mbean != null) {</span>
+<span class="fc" id="L162">				ByteArrayOutputStream str = new ByteArrayOutputStream();</span>
+<span class="fc" id="L163">				JAXB_CONTEXT.createMarshaller().marshal(o, str);</span>
+<span class="fc" id="L164">				mbean.addResult(new String(str.toByteArray()));</span>
+			}
+<span class="fc" id="L166">			JAXB_CONTEXT.createMarshaller().marshal(o, target);</span>
+<span class="nc" id="L167">		} catch (JAXBException e) {</span>
+<span class="nc" id="L168">			throw new IllegalArgumentException(&quot;Unable to setup jaxb &quot;</span>
+<span class="nc" id="L169">					+ e.getMessage(), e);</span>
+<span class="fc" id="L170">		}</span>
+<span class="fc" id="L171">	}</span>
 
 	@Override
 	public void notifyStart(TestContext&lt;T&gt; context) {
-<span class="fc" id="L161">		String setName = context.getSetName()</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
-<span class="fc" id="L163">						.getParameterName());</span>
-<span class="fc" id="L164">		Testsuite ts = result.get(setName);</span>
-<span class="fc" id="L165">		Testcase tc = new Testcase();</span>
-<span class="fc" id="L166">		tc.setName(context.getLocalTestName()</span>
-<span class="fc bfc" id="L167" title="All 2 branches covered.">				+ (context.getParameterName() == null ? &quot;&quot; : &quot;[&quot;</span>
-<span class="fc" id="L168">						+ context.getParameterName() + &quot;]&quot;));</span>
-<span class="fc" id="L169">		tc.setClassname(context.getTestSuiteObject().getClass()</span>
-<span class="fc" id="L170">				.getCanonicalName());</span>
-<span class="fc" id="L171">		resultcase.get(setName).put(context.getFullTestName(), tc);</span>
-<span class="fc" id="L172">		ts.getTestcase().add(tc);</span>
-<span class="fc" id="L173">		tc.setTime(System.currentTimeMillis());</span>
-<span class="fc" id="L174">		printf(&quot;Start of test %1$s%n&quot;, context.getFullTestName());</span>
-<span class="fc" id="L175">	}</span>
+<span class="fc" id="L175">		String setName = context.getSetName()</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
+<span class="fc" id="L177">						.getParameterName());</span>
+<span class="fc" id="L178">		Testsuite ts = result.get(setName);</span>
+<span class="fc" id="L179">		Testcase tc = new Testcase();</span>
+<span class="fc" id="L180">		tc.setName(context.getLocalTestName()</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">				+ (context.getParameterName() == null ? &quot;&quot; : &quot;[&quot;</span>
+<span class="fc" id="L182">						+ context.getParameterName() + &quot;]&quot;));</span>
+<span class="fc" id="L183">		tc.setClassname(context.getTestSuiteObject().getClass()</span>
+<span class="fc" id="L184">				.getCanonicalName());</span>
+<span class="fc" id="L185">		resultcase.get(setName).put(context.getFullTestName(), tc);</span>
+<span class="fc" id="L186">		ts.getTestcase().add(tc);</span>
+<span class="fc" id="L187">		tc.setTime(System.currentTimeMillis());</span>
+<span class="fc" id="L188">		printf(&quot;Start of test %1$s%n&quot;, context.getFullTestName());</span>
+<span class="fc" id="L189">	}</span>
 
 	@Override
 	public void notifySuccess(TestContext&lt;T&gt; context) {
-<span class="fc" id="L179">		String setName = context.getSetName()</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
-<span class="fc" id="L181">						.getParameterName());</span>
-<span class="fc" id="L182">		long end = System.currentTimeMillis();</span>
-<span class="fc" id="L183">		Testsuite ts = result.get(setName);</span>
-<span class="fc" id="L184">		Testcase tc = resultcase.get(setName).get(context.getFullTestName());</span>
-<span class="fc" id="L185">		tc.setTime((end - tc.getTime()) / 1000);</span>
-<span class="fc" id="L186">		ts.setTime(ts.getTime() + tc.getTime());</span>
-<span class="fc" id="L187">		ts.setTests(ts.getTests() + 1);</span>
-<span class="fc" id="L188">		printf(&quot;Success of test %1$s%n&quot;, context.getFullTestName());</span>
-<span class="fc" id="L189">		resumedSucess.append(&quot;\t&quot;).append(context.getLocalTestName())</span>
-<span class="fc" id="L190">				.append(&quot; of &quot;).append(context.getSetName()).append(&quot;\n&quot;);</span>
-<span class="fc" id="L191">	}</span>
+<span class="fc" id="L193">		String setName = context.getSetName()</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
+<span class="fc" id="L195">						.getParameterName());</span>
+<span class="fc" id="L196">		long end = System.currentTimeMillis();</span>
+<span class="fc" id="L197">		Testsuite ts = result.get(setName);</span>
+<span class="fc" id="L198">		Testcase tc = resultcase.get(setName).get(context.getFullTestName());</span>
+<span class="fc" id="L199">		tc.setTime((end - tc.getTime()) / 1000);</span>
+<span class="fc" id="L200">		ts.setTime(ts.getTime() + tc.getTime());</span>
+<span class="fc" id="L201">		ts.setTests(ts.getTests() + 1);</span>
+<span class="fc" id="L202">		printf(&quot;Success of test %1$s%n&quot;, context.getFullTestName());</span>
+<span class="fc" id="L203">		resumedSucess.append(&quot;\t&quot;).append(context.getLocalTestName())</span>
+<span class="fc" id="L204">				.append(&quot; of &quot;).append(context.getSetName()).append(&quot;\n&quot;);</span>
+<span class="fc" id="L205">	}</span>
 
 	@Override
 	public void notifyFailure(TestContext&lt;T&gt; context, Throwable cause) {
-<span class="fc" id="L195">		String setName = context.getSetName()</span>
-<span class="pc bpc" id="L196" title="1 of 2 branches missed.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
-<span class="pc" id="L197">						.getParameterName());</span>
-<span class="fc" id="L198">		long end = System.currentTimeMillis();</span>
-<span class="fc" id="L199">		Testsuite ts = result.get(setName);</span>
-<span class="fc" id="L200">		Testcase tc = resultcase.get(setName).get(context.getFullTestName());</span>
-<span class="fc" id="L201">		tc.setTime((end - tc.getTime()) / 1000);</span>
-<span class="fc" id="L202">		ts.setTime(ts.getTime() + tc.getTime());</span>
-<span class="fc" id="L203">		error = true;</span>
-<span class="fc" id="L204">		ts.setFailures(ts.getFailures() + 1);</span>
+<span class="fc" id="L209">		String setName = context.getSetName()</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
+<span class="pc" id="L211">						.getParameterName());</span>
+<span class="fc" id="L212">		long end = System.currentTimeMillis();</span>
+<span class="fc" id="L213">		Testsuite ts = result.get(setName);</span>
+<span class="fc" id="L214">		Testcase tc = resultcase.get(setName).get(context.getFullTestName());</span>
+<span class="fc" id="L215">		tc.setTime((end - tc.getTime()) / 1000);</span>
+<span class="fc" id="L216">		ts.setTime(ts.getTime() + tc.getTime());</span>
+<span class="fc" id="L217">		error = true;</span>
+<span class="fc" id="L218">		ts.setFailures(ts.getFailures() + 1);</span>
 
-<span class="fc" id="L206">		Failure f = new Failure();</span>
-<span class="fc" id="L207">		tc.getFailure().add(f);</span>
-<span class="fc" id="L208">		f.setType(cause.getClass().getCanonicalName());</span>
-<span class="fc" id="L209">		f.setMessage(cause.getMessage());</span>
-<span class="fc" id="L210">		StringBuilder stack = new StringBuilder(&quot;&quot; + cause.getMessage())</span>
-<span class="fc" id="L211">				.append('\n');</span>
-<span class="fc" id="L212">		completeStack(cause, stack);</span>
-<span class="fc" id="L213">		f.setContent(stack.toString());</span>
-<span class="fc" id="L214">		printf(&quot;Failure of test %1$s because of %2$s%n&quot;,</span>
-<span class="fc" id="L215">				context.getFullTestName(), cause.getMessage());</span>
-<span class="fc" id="L216">		resumedFailure.append(&quot;\t&quot;).append(context.getLocalTestName())</span>
-<span class="fc" id="L217">				.append(&quot; of &quot;).append(context.getSetName())</span>
-<span class="fc" id="L218">				.append(&quot; caused by &quot;).append(cause.getMessage()).append(&quot;\n&quot;);</span>
-<span class="fc" id="L219">	}</span>
+<span class="fc" id="L220">		Failure f = new Failure();</span>
+<span class="fc" id="L221">		tc.getFailure().add(f);</span>
+<span class="fc" id="L222">		f.setType(cause.getClass().getCanonicalName());</span>
+<span class="fc" id="L223">		f.setMessage(cause.getMessage());</span>
+<span class="fc" id="L224">		StringBuilder stack = new StringBuilder(&quot;&quot; + cause.getMessage())</span>
+<span class="fc" id="L225">				.append('\n');</span>
+<span class="fc" id="L226">		completeStack(cause, stack);</span>
+<span class="fc" id="L227">		f.setContent(stack.toString());</span>
+<span class="fc" id="L228">		printf(&quot;Failure of test %1$s because of %2$s%n&quot;,</span>
+<span class="fc" id="L229">				context.getFullTestName(), cause.getMessage());</span>
+<span class="fc" id="L230">		resumedFailure.append(&quot;\t&quot;).append(context.getLocalTestName())</span>
+<span class="fc" id="L231">				.append(&quot; of &quot;).append(context.getSetName())</span>
+<span class="fc" id="L232">				.append(&quot; caused by &quot;).append(cause.getMessage()).append(&quot;\n&quot;);</span>
+<span class="fc" id="L233">	}</span>
 
 	@Override
 	public void notifySkipped(TestContext&lt;T&gt; context) {
-<span class="fc" id="L223">		String setName = context.getSetName()</span>
-<span class="fc bfc" id="L224" title="All 2 branches covered.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
-<span class="fc" id="L225">						.getParameterName());</span>
-<span class="fc" id="L226">		long end = System.currentTimeMillis();</span>
-<span class="fc" id="L227">		Testsuite ts = result.get(setName);</span>
-<span class="fc" id="L228">		Testcase tc = resultcase.get(setName).get(context.getFullTestName());</span>
-<span class="fc" id="L229">		tc.setTime((end - tc.getTime()) / 1000);</span>
-<span class="fc" id="L230">		ts.setTime(ts.getTime() + tc.getTime());</span>
-<span class="fc" id="L231">		ts.setDisabled(ts.getDisabled() + 1);</span>
+<span class="fc" id="L237">		String setName = context.getSetName()</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
+<span class="fc" id="L239">						.getParameterName());</span>
+<span class="fc" id="L240">		long end = System.currentTimeMillis();</span>
+<span class="fc" id="L241">		Testsuite ts = result.get(setName);</span>
+<span class="fc" id="L242">		Testcase tc = resultcase.get(setName).get(context.getFullTestName());</span>
+<span class="fc" id="L243">		tc.setTime((end - tc.getTime()) / 1000);</span>
+<span class="fc" id="L244">		ts.setTime(ts.getTime() + tc.getTime());</span>
+<span class="fc" id="L245">		ts.setDisabled(ts.getDisabled() + 1);</span>
 
-<span class="fc" id="L233">		tc.setSkipped(&quot;Skipped&quot;);</span>
-<span class="fc" id="L234">		printf(&quot;Skip of test %1$s%n&quot;, context.getFullTestName());</span>
-<span class="fc" id="L235">		resumedSkipped.append(&quot;\t&quot;).append(context.getLocalTestName())</span>
-<span class="fc" id="L236">				.append(&quot; of &quot;).append(context.getSetName()).append(&quot;\n&quot;);</span>
-<span class="fc" id="L237">	}</span>
+<span class="fc" id="L247">		tc.setSkipped(&quot;Skipped&quot;);</span>
+<span class="fc" id="L248">		printf(&quot;Skip of test %1$s%n&quot;, context.getFullTestName());</span>
+<span class="fc" id="L249">		resumedSkipped.append(&quot;\t&quot;).append(context.getLocalTestName())</span>
+<span class="fc" id="L250">				.append(&quot; of &quot;).append(context.getSetName()).append(&quot;\n&quot;);</span>
+<span class="fc" id="L251">	}</span>
 
 	@Override
 	public void notifyError(TestContext&lt;T&gt; context, Throwable cause) {
-<span class="fc" id="L241">		String setName = context.getSetName()</span>
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
-<span class="pc" id="L243">						.getParameterName());</span>
-<span class="fc" id="L244">		long end = System.currentTimeMillis();</span>
-<span class="fc" id="L245">		Testsuite ts = result.get(setName);</span>
-<span class="fc" id="L246">		Testcase tc = resultcase.get(setName).get(context.getFullTestName());</span>
-<span class="fc" id="L247">		tc.setTime((end - tc.getTime()) / 1000);</span>
-<span class="fc" id="L248">		ts.setTime(ts.getTime() + tc.getTime());</span>
-<span class="fc" id="L249">		error = true;</span>
-<span class="fc" id="L250">		ts.setErrors(ts.getErrors() + 1);</span>
+<span class="fc" id="L255">		String setName = context.getSetName()</span>
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">				+ (context.getParameterName() == null ? &quot;&quot; : context</span>
+<span class="pc" id="L257">						.getParameterName());</span>
+<span class="fc" id="L258">		long end = System.currentTimeMillis();</span>
+<span class="fc" id="L259">		Testsuite ts = result.get(setName);</span>
+<span class="fc" id="L260">		Testcase tc = resultcase.get(setName).get(context.getFullTestName());</span>
+<span class="fc" id="L261">		tc.setTime((end - tc.getTime()) / 1000);</span>
+<span class="fc" id="L262">		ts.setTime(ts.getTime() + tc.getTime());</span>
+<span class="fc" id="L263">		error = true;</span>
+<span class="fc" id="L264">		ts.setErrors(ts.getErrors() + 1);</span>
 
-<span class="fc" id="L252">		Error e = new Error();</span>
-<span class="fc" id="L253">		tc.getError().add(e);</span>
-<span class="fc" id="L254">		e.setType(cause.getClass().getCanonicalName());</span>
-<span class="fc" id="L255">		e.setMessage(cause.getMessage());</span>
-<span class="fc" id="L256">		StringBuilder stack = new StringBuilder(&quot;&quot; + cause.getMessage())</span>
-<span class="fc" id="L257">				.append('\n');</span>
-<span class="fc" id="L258">		completeStack(cause, stack);</span>
-<span class="fc" id="L259">		e.setContent(stack.toString());</span>
-<span class="fc" id="L260">		printf(&quot;Error of test %1$s because of %2$s%n&quot;,</span>
-<span class="fc" id="L261">				context.getFullTestName(), cause.getMessage());</span>
-<span class="fc" id="L262">		resumedFailure.append(&quot;\t&quot;).append(context.getLocalTestName())</span>
-<span class="fc" id="L263">				.append(&quot; of &quot;).append(context.getSetName())</span>
-<span class="fc" id="L264">				.append(&quot; caused by &quot;).append(cause.getMessage()).append(&quot;\n&quot;);</span>
-<span class="fc" id="L265">	}</span>
+<span class="fc" id="L266">		Error e = new Error();</span>
+<span class="fc" id="L267">		tc.getError().add(e);</span>
+<span class="fc" id="L268">		e.setType(cause.getClass().getCanonicalName());</span>
+<span class="fc" id="L269">		e.setMessage(cause.getMessage());</span>
+<span class="fc" id="L270">		StringBuilder stack = new StringBuilder(&quot;&quot; + cause.getMessage())</span>
+<span class="fc" id="L271">				.append('\n');</span>
+<span class="fc" id="L272">		completeStack(cause, stack);</span>
+<span class="fc" id="L273">		e.setContent(stack.toString());</span>
+<span class="fc" id="L274">		printf(&quot;Error of test %1$s because of %2$s%n&quot;,</span>
+<span class="fc" id="L275">				context.getFullTestName(), cause.getMessage());</span>
+<span class="fc" id="L276">		resumedFailure.append(&quot;\t&quot;).append(context.getLocalTestName())</span>
+<span class="fc" id="L277">				.append(&quot; of &quot;).append(context.getSetName())</span>
+<span class="fc" id="L278">				.append(&quot; caused by &quot;).append(cause.getMessage()).append(&quot;\n&quot;);</span>
+<span class="fc" id="L279">	}</span>
 
 	/**
 	 * @param cause
 	 * @param stack
 	 */
 	private void completeStack(Throwable cause, StringBuilder stack) {
-<span class="fc bfc" id="L272" title="All 2 branches covered.">		for (StackTraceElement ste : cause.getStackTrace()) {</span>
-<span class="fc" id="L273">			stack.append(ste.toString()).append('\n');</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">		for (StackTraceElement ste : cause.getStackTrace()) {</span>
+<span class="fc" id="L287">			stack.append(ste.toString()).append('\n');</span>
 		}
-<span class="fc" id="L275">		Throwable by = cause.getCause();</span>
-<span class="pc bpc" id="L276" title="1 of 2 branches missed.">		if (by != null) {</span>
-<span class="nc" id="L277">			stack.append(&quot;caused by &quot;).append(by.getMessage() + &quot;\n&quot;);</span>
-<span class="nc" id="L278">			completeStack(by, stack);</span>
+<span class="fc" id="L289">		Throwable by = cause.getCause();</span>
+<span class="pc bpc" id="L290" title="1 of 2 branches missed.">		if (by != null) {</span>
+<span class="nc" id="L291">			stack.append(&quot;caused by &quot;).append(by.getMessage() + &quot;\n&quot;);</span>
+<span class="nc" id="L292">			completeStack(by, stack);</span>
 		}
-<span class="fc" id="L280">	}</span>
+<span class="fc" id="L294">	}</span>
 
 	@Override
 	public void notifyParameterStart(String setName, String parameterName) {
-<span class="fc" id="L284">		Testsuites tss = results.get(setName);</span>
-<span class="fc" id="L285">		Testsuite ts = new Testsuite();</span>
-<span class="fc" id="L286">		result.put(setName + parameterName, ts);</span>
-<span class="fc" id="L287">		ts.setName(setName + &quot;[&quot; + parameterName + &quot;]&quot;);</span>
-<span class="fc" id="L288">		ts.setDisabled(0);</span>
-<span class="fc" id="L289">		ts.setErrors(0);</span>
-<span class="fc" id="L290">		ts.setFailures(0);</span>
-<span class="fc" id="L291">		ts.setTests(0);</span>
-<span class="fc" id="L292">		ts.setTime(0L);</span>
-<span class="fc" id="L293">		resultcase.put(setName + parameterName, new HashMap&lt;&gt;());</span>
-<span class="fc" id="L294">		tss.getTestsuite().add(ts);</span>
-<span class="fc" id="L295">	}</span>
+<span class="fc" id="L298">		Testsuites tss = results.get(setName);</span>
+<span class="fc" id="L299">		Testsuite ts = new Testsuite();</span>
+<span class="fc" id="L300">		result.put(setName + parameterName, ts);</span>
+<span class="fc" id="L301">		ts.setName(setName + &quot;[&quot; + parameterName + &quot;]&quot;);</span>
+<span class="fc" id="L302">		ts.setDisabled(0);</span>
+<span class="fc" id="L303">		ts.setErrors(0);</span>
+<span class="fc" id="L304">		ts.setFailures(0);</span>
+<span class="fc" id="L305">		ts.setTests(0);</span>
+<span class="fc" id="L306">		ts.setTime(0L);</span>
+<span class="fc" id="L307">		resultcase.put(setName + parameterName, new HashMap&lt;&gt;());</span>
+<span class="fc" id="L308">		tss.getTestsuite().add(ts);</span>
+<span class="fc" id="L309">	}</span>
 
 	@Override
 	public void notifyParameterEnd(String setName, String parameterName) {
-<span class="fc" id="L299">		Testsuites tss = results.get(setName);</span>
-<span class="fc" id="L300">		Testsuite ts = result.get(setName + parameterName);</span>
-<span class="fc" id="L301">		tss.setDisabled(tss.getDisabled() + ts.getDisabled());</span>
-<span class="fc" id="L302">		tss.setErrors(tss.getErrors() + ts.getErrors());</span>
-<span class="fc" id="L303">		tss.setFailures(tss.getFailures() + ts.getFailures());</span>
-<span class="fc" id="L304">		tss.setTests(tss.getTests() + ts.getTests());</span>
-<span class="fc" id="L305">		tss.setTime(tss.getTime() + ts.getTime());</span>
-<span class="fc" id="L306">	}</span>
+<span class="fc" id="L313">		Testsuites tss = results.get(setName);</span>
+<span class="fc" id="L314">		Testsuite ts = result.get(setName + parameterName);</span>
+<span class="fc" id="L315">		tss.setDisabled(tss.getDisabled() + ts.getDisabled());</span>
+<span class="fc" id="L316">		tss.setErrors(tss.getErrors() + ts.getErrors());</span>
+<span class="fc" id="L317">		tss.setFailures(tss.getFailures() + ts.getFailures());</span>
+<span class="fc" id="L318">		tss.setTests(tss.getTests() + ts.getTests());</span>
+<span class="fc" id="L319">		tss.setTime(tss.getTime() + ts.getTime());</span>
+<span class="fc" id="L320">	}</span>
 
 	/**
 	 * @return the error
 	 */
 	public boolean isError() {
-<span class="fc" id="L312">		return error;</span>
+<span class="fc" id="L326">		return error;</span>
 	}
 
 }

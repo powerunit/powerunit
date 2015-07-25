@@ -40,12 +40,13 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers.impl,Matche
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatObjectImpl,20,223,3,23,1,41,3,16,0,6
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultPowerUnitRunnerImpl,220,1192,12,68,39,307,13,111,3,81
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatStringImpl,0,7,0,0,0,2,0,1,0,1
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,PowerUnit,7,14,0,0,1,4,1,2,1,2
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,FailureImpl,3,15,1,3,1,6,2,2,1,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,TestContextImpl,0,178,0,10,0,33,0,17,0,12
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultPowerUnitRunnerImpl.new Statement() {...},5,41,0,0,1,10,1,2,1,2
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatIterableImpl,0,7,0,0,0,2,0,1,0,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultPowerUnitRunnerImpl.DelegationTestResultListener,72,59,0,0,21,21,3,7,3,7
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultTestResultListener,82,931,4,16,13,163,6,23,2,17
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultTestResultListener,88,954,5,17,15,168,8,23,3,17
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatExceptionImpl,0,113,1,11,0,22,1,7,0,2
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.exception,InternalError,0,9,0,0,0,4,0,2,0,2
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.exception,AssumptionError,0,4,0,0,0,2,0,1,0,1
@@ -63,7 +64,7 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,Statement.new Statem
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,Statement.new Statement() {...},19,23,0,0,4,6,1,2,1,2
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,AssertThatIterable,0,30,0,0,0,6,0,6,0,6
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,AssertThatString,12,15,0,0,2,3,2,3,2,3
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,PowerUnitMainRunner,124,142,2,8,20,27,3,5,1,2
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,PowerUnitMainRunner,127,160,2,8,22,32,3,5,1,2
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,Statement,17,56,0,0,3,18,2,6,2,6
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,MultiThreadMatchers,0,11,0,0,0,3,0,3,0,3
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit,TestSuite.new TestSuite() {...},0,3,0,0,0,1,0,1,0,1
