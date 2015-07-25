@@ -19,6 +19,7 @@
  */
 package ch.powerunit.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.util.HashMap;
@@ -47,9 +48,15 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 
 	public DefaultTestResultListener(String targetFolder,
 			PrintStream outputConsole) {
+		this(targetFolder, outputConsole, null);
+	}
+
+	public DefaultTestResultListener(String targetFolder,
+			PrintStream outputConsole, PowerUnit mbean) {
 		this.outputConsole = outputConsole;
 		this.targetFolder = new File(targetFolder);
 		this.targetFolder.mkdirs();
+		this.mbean = mbean;
 	}
 
 	private static final JAXBContext JAXB_CONTEXT;
@@ -111,6 +118,8 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 
 	private final File targetFolder;
 
+	private final PowerUnit mbean;
+
 	private void printf(String format, Object... args) {
 		if (outputConsole != null) {
 			outputConsole.printf(format, args);
@@ -148,6 +157,11 @@ public class DefaultTestResultListener<T> implements TestResultListener<T> {
 			Object o = results.get(setName);
 			if (results.get(setName).getTestsuite().isEmpty()) {
 				o = result.get(setName);
+			}
+			if (mbean != null) {
+				ByteArrayOutputStream str = new ByteArrayOutputStream();
+				JAXB_CONTEXT.createMarshaller().marshal(o, str);
+				mbean.addResult(new String(str.toByteArray()));
 			}
 			JAXB_CONTEXT.createMarshaller().marshal(o, target);
 		} catch (JAXBException e) {
