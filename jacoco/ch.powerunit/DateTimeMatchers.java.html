@@ -19,12 +19,15 @@
  */
 package ch.powerunit;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.Calendar;
 
 import org.hamcrest.Matcher;
 
 import ch.powerunit.matchers.datetime.CalendarMatchers;
+import ch.powerunit.matchers.datetime.LocalDateMatchers;
 import ch.powerunit.matchers.datetime.LocalTimeMatchers;
 
 /**
@@ -43,7 +46,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsYear(int year) {
-<span class="fc" id="L46">		return CalendarMatchers.isYear(year);</span>
+<span class="fc" id="L49">		return CalendarMatchers.isYear(year);</span>
 	}
 
 	/**
@@ -56,7 +59,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsDayOfMonth(int dayOfMonth) {
-<span class="nc" id="L59">		return CalendarMatchers.isDayOfMonth(dayOfMonth);</span>
+<span class="nc" id="L62">		return CalendarMatchers.isDayOfMonth(dayOfMonth);</span>
 	}
 
 	/**
@@ -69,7 +72,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsMonth(int month) {
-<span class="nc" id="L72">		return CalendarMatchers.isMonth(month);</span>
+<span class="nc" id="L75">		return CalendarMatchers.isMonth(month);</span>
 	}
 
 	/**
@@ -82,7 +85,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsHourOfDay(int hourOfDay) {
-<span class="nc" id="L85">		return CalendarMatchers.isHourOfDay(hourOfDay);</span>
+<span class="nc" id="L88">		return CalendarMatchers.isHourOfDay(hourOfDay);</span>
 	}
 
 	/**
@@ -95,7 +98,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsMinute(int minute) {
-<span class="nc" id="L98">		return CalendarMatchers.isMinute(minute);</span>
+<span class="nc" id="L101">		return CalendarMatchers.isMinute(minute);</span>
 	}
 
 	/**
@@ -108,7 +111,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsSecond(int second) {
-<span class="nc" id="L111">		return CalendarMatchers.isSecond(second);</span>
+<span class="nc" id="L114">		return CalendarMatchers.isSecond(second);</span>
 	}
 
 	/**
@@ -121,7 +124,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsDayOfWeek(int dayOfWeek) {
-<span class="nc" id="L124">		return CalendarMatchers.isDayOfWeek(dayOfWeek);</span>
+<span class="nc" id="L127">		return CalendarMatchers.isDayOfWeek(dayOfWeek);</span>
 	}
 
 	/**
@@ -134,7 +137,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsMillisecond(int millisecond) {
-<span class="nc" id="L137">		return CalendarMatchers.isMillisecond(millisecond);</span>
+<span class="nc" id="L140">		return CalendarMatchers.isMillisecond(millisecond);</span>
 	}
 
 	/**
@@ -144,7 +147,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsMonday() {
-<span class="nc" id="L147">		return CalendarMatchers.isMonday();</span>
+<span class="nc" id="L150">		return CalendarMatchers.isMonday();</span>
 	}
 
 	/**
@@ -154,7 +157,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsThurday() {
-<span class="nc" id="L157">		return CalendarMatchers.isThurday();</span>
+<span class="nc" id="L160">		return CalendarMatchers.isThurday();</span>
 	}
 
 	/**
@@ -164,7 +167,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsWednesday() {
-<span class="nc" id="L167">		return CalendarMatchers.isWednesday();</span>
+<span class="nc" id="L170">		return CalendarMatchers.isWednesday();</span>
 	}
 
 	/**
@@ -174,7 +177,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsTuesday() {
-<span class="nc" id="L177">		return CalendarMatchers.isTuesday();</span>
+<span class="nc" id="L180">		return CalendarMatchers.isTuesday();</span>
 	}
 
 	/**
@@ -184,7 +187,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsFriday() {
-<span class="nc" id="L187">		return CalendarMatchers.isFriday();</span>
+<span class="nc" id="L190">		return CalendarMatchers.isFriday();</span>
 	}
 
 	/**
@@ -194,7 +197,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsSaturday() {
-<span class="nc" id="L197">		return CalendarMatchers.isSaturday();</span>
+<span class="nc" id="L200">		return CalendarMatchers.isSaturday();</span>
 	}
 
 	/**
@@ -204,7 +207,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsSunday() {
-<span class="nc" id="L207">		return CalendarMatchers.isSunday();</span>
+<span class="nc" id="L210">		return CalendarMatchers.isSunday();</span>
 	}
 
 	/**
@@ -214,7 +217,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsJanuary() {
-<span class="fc" id="L217">		return CalendarMatchers.isJanuary();</span>
+<span class="fc" id="L220">		return CalendarMatchers.isJanuary();</span>
 	}
 
 	/**
@@ -224,7 +227,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsFebruary() {
-<span class="nc" id="L227">		return CalendarMatchers.isFebruary();</span>
+<span class="nc" id="L230">		return CalendarMatchers.isFebruary();</span>
 	}
 
 	/**
@@ -234,7 +237,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsMarch() {
-<span class="nc" id="L237">		return CalendarMatchers.isMarch();</span>
+<span class="nc" id="L240">		return CalendarMatchers.isMarch();</span>
 	}
 
 	/**
@@ -244,7 +247,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsApril() {
-<span class="nc" id="L247">		return CalendarMatchers.isApril();</span>
+<span class="nc" id="L250">		return CalendarMatchers.isApril();</span>
 	}
 
 	/**
@@ -254,7 +257,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsMay() {
-<span class="nc" id="L257">		return CalendarMatchers.isMay();</span>
+<span class="nc" id="L260">		return CalendarMatchers.isMay();</span>
 	}
 
 	/**
@@ -264,7 +267,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsJune() {
-<span class="nc" id="L267">		return CalendarMatchers.isJune();</span>
+<span class="nc" id="L270">		return CalendarMatchers.isJune();</span>
 	}
 
 	/**
@@ -274,7 +277,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsJuly() {
-<span class="nc" id="L277">		return CalendarMatchers.isJuly();</span>
+<span class="nc" id="L280">		return CalendarMatchers.isJuly();</span>
 	}
 
 	/**
@@ -284,7 +287,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsAugust() {
-<span class="nc" id="L287">		return CalendarMatchers.isAugust();</span>
+<span class="nc" id="L290">		return CalendarMatchers.isAugust();</span>
 	}
 
 	/**
@@ -294,7 +297,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsSeptember() {
-<span class="nc" id="L297">		return CalendarMatchers.isSeptember();</span>
+<span class="nc" id="L300">		return CalendarMatchers.isSeptember();</span>
 	}
 
 	/**
@@ -304,7 +307,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsOctober() {
-<span class="nc" id="L307">		return CalendarMatchers.isOctober();</span>
+<span class="nc" id="L310">		return CalendarMatchers.isOctober();</span>
 	}
 
 	/**
@@ -314,7 +317,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	public static Matcher&lt;Calendar&gt; calendarIsNovember() {
-<span class="nc" id="L317">		return CalendarMatchers.isNovember();</span>
+<span class="nc" id="L320">		return CalendarMatchers.isNovember();</span>
 	}
 
 	/**
@@ -324,12 +327,12 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsDecember() {
-<span class="nc" id="L327">		return CalendarMatchers.isDecember();</span>
+<span class="nc" id="L330">		return CalendarMatchers.isDecember();</span>
 	}
 
 	/**
-	 * Verify that the {@link Calendar} calendarIs on same day (year, month, day of
-	 * month) that another one.
+	 * Verify that the {@link Calendar} calendarIs on same day (year, month, day
+	 * of month) that another one.
 	 * 
 	 * @param other
 	 *            the other {@link Calendar}.
@@ -337,7 +340,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; sameDate(Calendar other) {
-<span class="nc" id="L340">		return CalendarMatchers.sameDate(other);</span>
+<span class="nc" id="L343">		return CalendarMatchers.sameDate(other);</span>
 	}
 
 	/**
@@ -349,7 +352,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsBefore(Calendar other) {
-<span class="nc" id="L352">		return TestSuite.DSL.lessThan(other);</span>
+<span class="nc" id="L355">		return TestSuite.DSL.lessThan(other);</span>
 	}
 
 	/**
@@ -361,7 +364,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;Calendar&gt; calendarIsAfter(Calendar other) {
-<span class="nc" id="L364">		return TestSuite.DSL.greaterThan(other);</span>
+<span class="nc" id="L367">		return TestSuite.DSL.greaterThan(other);</span>
 	}
 
 	/**
@@ -373,7 +376,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;LocalTime&gt; localTimeIsHour(int hour) {
-<span class="fc" id="L376">		return LocalTimeMatchers.isHour(hour);</span>
+<span class="fc" id="L379">		return LocalTimeMatchers.isHour(hour);</span>
 	}
 
 	/**
@@ -385,7 +388,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;LocalTime&gt; localTimeIsMinute(int minute) {
-<span class="nc" id="L388">		return LocalTimeMatchers.isMinute(minute);</span>
+<span class="nc" id="L391">		return LocalTimeMatchers.isMinute(minute);</span>
 	}
 
 	/**
@@ -397,7 +400,7 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;LocalTime&gt; localTimeIsSecond(int second) {
-<span class="nc" id="L400">		return LocalTimeMatchers.isSecond(second);</span>
+<span class="nc" id="L403">		return LocalTimeMatchers.isSecond(second);</span>
 	}
 
 	/**
@@ -409,7 +412,43 @@ interface DateTimeMatchers {
 	 * @since 0.4.0
 	 */
 	default Matcher&lt;LocalTime&gt; localTimeIsNano(int nano) {
-<span class="nc" id="L412">		return LocalTimeMatchers.isNano(nano);</span>
+<span class="nc" id="L415">		return LocalTimeMatchers.isNano(nano);</span>
+	}
+
+	/**
+	 * Verify the year of a {@link LocalDate}.
+	 * 
+	 * @param year
+	 *            the year
+	 * @return the matcher on {@link LocalDate}.
+	 * @since 0.4.0
+	 */
+	default Matcher&lt;LocalDate&gt; localDateIsYear(int year) {
+<span class="nc" id="L427">		return LocalDateMatchers.isYear(year);</span>
+	}
+
+	/**
+	 * Verify the month of a {@link LocalDate}.
+	 * 
+	 * @param month
+	 *            the month
+	 * @return the matcher on {@link LocalDate}.
+	 * @since 0.4.0
+	 */
+	default Matcher&lt;LocalDate&gt; localDateIsMonth(Month month) {
+<span class="fc" id="L439">		return LocalDateMatchers.isMonth(month);</span>
+	}
+
+	/**
+	 * Verify the day of a {@link LocalDate}.
+	 * 
+	 * @param day
+	 *            the day of the month
+	 * @return the matcher on {@link LocalDate}.
+	 * @since 0.4.0
+	 */
+	default Matcher&lt;LocalDate&gt; localDateIsDayOfMonth(int day) {
+<span class="nc" id="L451">		return LocalDateMatchers.isDayOfMonth(day);</span>
 	}
 
 }

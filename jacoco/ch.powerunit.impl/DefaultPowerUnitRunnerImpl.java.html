@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DefaultPowerUnitRunnerImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.impl</a> &gt; <span class="el_source">DefaultPowerUnitRunnerImpl.java</span></div><h1>DefaultPowerUnitRunnerImpl.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DefaultPowerUnitRunnerImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Powerunit - Java Testing framework for JDK 1.8</a> &gt; <a href="index.source.html" class="el_package">ch.powerunit.impl</a> &gt; <span class="el_source">DefaultPowerUnitRunnerImpl.java</span></div><h1>DefaultPowerUnitRunnerImpl.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">/**</span>
  * Powerunit - A JDK1.8 test framework
  * Copyright (C) 2014 Mathieu Boretti.
  *
@@ -544,22 +544,22 @@ public class DefaultPowerUnitRunnerImpl&lt;T&gt; implements PowerUnitRunner&lt;T
 <span class="fc" id="L544">				.collect(Collectors.toMap(test -&gt; test.getKey(), test -&gt; {</span>
 					Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; stest;
 <span class="fc" id="L546">					Statement&lt;TestContext&lt;Object&gt;, Throwable&gt; itest = p -&gt; {</span>
-<span class="fc" id="L547">						new Statement&lt;TestContext&lt;Object&gt;, Throwable&gt;() {</span>
+<span class="pc" id="L547">						new Statement&lt;TestContext&lt;Object&gt;, Throwable&gt;() {</span>
 
 							@Override
 							public void run(TestContext&lt;Object&gt; parameter)
 									throws Throwable {
-<span class="fc" id="L552">								Supplier&lt;Object&gt; o = test.getValue();</span>
-<span class="fc" id="L553">								Object target = o.get();</span>
-<span class="fc" id="L554">								Class&lt;?&gt; delegator = target.getClass()</span>
-<span class="fc" id="L555">										.getAnnotation(TestInterface.class)</span>
-<span class="fc" id="L556">										.value();</span>
-<span class="fc" id="L557">								DefaultPowerUnitRunnerImpl&lt;?&gt; dpu = new DefaultPowerUnitRunnerImpl&lt;&gt;(</span>
-										delegator, target);
-<span class="fc" id="L559">								dpu.addListener((TestResultListener) new DelegationTestResultListener(</span>
-										parameter));
-<span class="fc" id="L561">								dpu.run();</span>
-<span class="fc" id="L562">							}</span>
+<span class="pc" id="L552">								Supplier&lt;Object&gt; o = test.getValue();</span>
+<span class="pc" id="L553">								Object target = o.get();</span>
+<span class="pc" id="L554">								Class&lt;?&gt; delegator = target.getClass()</span>
+<span class="pc" id="L555">										.getAnnotation(TestInterface.class)</span>
+<span class="pc" id="L556">										.value();</span>
+<span class="pc" id="L557">								DefaultPowerUnitRunnerImpl&lt;?&gt; dpu = new DefaultPowerUnitRunnerImpl&lt;&gt;(</span>
+<span class="nc" id="L558">										delegator, target);</span>
+<span class="pc" id="L559">								dpu.addListener((TestResultListener) new DelegationTestResultListener(</span>
+<span class="nc" id="L560">										parameter));</span>
+<span class="pc" id="L561">								dpu.run();</span>
+<span class="pc" id="L562">							}</span>
 
 							@Override
 							public String getName() {
