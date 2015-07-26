@@ -64,7 +64,7 @@
 		<hamcrest.version>1.3</hamcrest.version>
 		<junit.version>4.11</junit.version>
 		<surefire.version>2.17</surefire.version>
-		<mockito.version>1.9.5</mockito.version>
+		<mockito.version>1.10.19</mockito.version>
 		<deploy.url>https://oss.sonatype.org/content/repositories/snapshots</deploy.url>
 		<deploy.id>oss-snapshots</deploy.id>
 	</properties>
