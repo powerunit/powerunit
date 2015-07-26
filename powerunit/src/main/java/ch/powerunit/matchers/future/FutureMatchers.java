@@ -27,7 +27,6 @@ import java.util.concurrent.TimeoutException;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.hamcrest.TypeSafeMatcher;
 
 import ch.powerunit.TestSuite;
