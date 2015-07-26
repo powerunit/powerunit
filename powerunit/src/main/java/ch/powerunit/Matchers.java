@@ -44,7 +44,7 @@ import ch.powerunit.matchers.optional.OptionalPresentMatcher;
  * @author borettim
  *
  */
-interface Matchers extends HamcrestMatchers, FileMatchers {
+interface Matchers extends HamcrestMatchers, FileMatchers,DateTimeMatchers,MultiThreadMatchers {
 
 	/**
 	 * Validate the message of an exception

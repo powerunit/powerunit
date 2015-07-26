@@ -70,7 +70,7 @@ import ch.powerunit.rules.impl.TemporaryFolderImpl;
  *
  */
 public interface TestSuite extends Assert, Assume, Matchers,
-		TestFrameworkSupport, ConverterMethod, DateTimeMatchers,MultiThreadMatchers {
+		TestFrameworkSupport, ConverterMethod {
 
 	/**
 	 * A static field that is a testsuite (to avoid implementing TestSuite in
@@ -127,7 +127,8 @@ public interface TestSuite extends Assert, Assume, Matchers,
 	 * @see Rule
 	 * @since 0.4.0
 	 */
-	default TestRule beforeContextAware(Consumer<TestContext<Object>>... befores) {
+	default TestRule beforeContextAware(
+			Consumer<TestContext<Object>>... befores) {
 		return Arrays.stream(befores).map(TestRule::before)
 				.reduce((prev, next) -> prev.around(next)).get();
 	}
