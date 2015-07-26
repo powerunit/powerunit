@@ -19,7 +19,9 @@
  */
 package ch.powerunit.test.base;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.Calendar;
 import java.util.Optional;
 import java.util.OptionalDouble;
@@ -232,6 +234,12 @@ public class MatchersTests {
 		@Test
 		public void testLocalTimeHour() {
 			assertThat(LocalTime.of(12, 11, 1, 15)).is(localTimeIsHour(12));
+		}
+
+		@Test
+		public void testLocalDateMonth() {
+			assertThat(LocalDate.of(1999, Month.APRIL, 12)).is(
+					localDateIsMonth(Month.APRIL));
 		}
 	}
 }

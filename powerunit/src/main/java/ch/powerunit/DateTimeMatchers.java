@@ -19,12 +19,15 @@
  */
 package ch.powerunit;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.Calendar;
 
 import org.hamcrest.Matcher;
 
 import ch.powerunit.matchers.datetime.CalendarMatchers;
+import ch.powerunit.matchers.datetime.LocalDateMatchers;
 import ch.powerunit.matchers.datetime.LocalTimeMatchers;
 
 /**
@@ -328,8 +331,8 @@ interface DateTimeMatchers {
 	}
 
 	/**
-	 * Verify that the {@link Calendar} calendarIs on same day (year, month, day of
-	 * month) that another one.
+	 * Verify that the {@link Calendar} calendarIs on same day (year, month, day
+	 * of month) that another one.
 	 * 
 	 * @param other
 	 *            the other {@link Calendar}.
@@ -410,6 +413,42 @@ interface DateTimeMatchers {
 	 */
 	default Matcher<LocalTime> localTimeIsNano(int nano) {
 		return LocalTimeMatchers.isNano(nano);
+	}
+
+	/**
+	 * Verify the year of a {@link LocalDate}.
+	 * 
+	 * @param year
+	 *            the year
+	 * @return the matcher on {@link LocalDate}.
+	 * @since 0.4.0
+	 */
+	default Matcher<LocalDate> localDateIsYear(int year) {
+		return LocalDateMatchers.isYear(year);
+	}
+
+	/**
+	 * Verify the month of a {@link LocalDate}.
+	 * 
+	 * @param month
+	 *            the month
+	 * @return the matcher on {@link LocalDate}.
+	 * @since 0.4.0
+	 */
+	default Matcher<LocalDate> localDateIsMonth(Month month) {
+		return LocalDateMatchers.isMonth(month);
+	}
+
+	/**
+	 * Verify the day of a {@link LocalDate}.
+	 * 
+	 * @param day
+	 *            the day of the month
+	 * @return the matcher on {@link LocalDate}.
+	 * @since 0.4.0
+	 */
+	default Matcher<LocalDate> localDateIsDayOfMonth(int day) {
+		return LocalDateMatchers.isDayOfMonth(day);
 	}
 
 }
