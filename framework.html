@@ -59,7 +59,7 @@
                   <li id="publishDate">Last Published: 2015-07-26
                       <span class="divider">|</span>
                    </li>
-                  <li id="projectVersion">Version: 0.5.0-SNAPSHOT
+                  <li id="projectVersion">Version: 0.4.0-SNAPSHOT
                       </li>
                       
                 
@@ -301,8 +301,7 @@ public class FiboUsingFilteringTester implements TestSuite {
                 instanceOf(expectedException));
     }
 
-}
-</pre></div>
+}</pre></div>
 <p>This is a normal test class, but there is two main difference :</p>
 <ul>
 <li>First of all this class is annotated with <tt>@TestDelegator</tt>.</li>
@@ -313,8 +312,7 @@ public class FiboUsingFilteringTester implements TestSuite {
 
 @TestInterface(FiboUsingFilteringTester.class)
 public class FiboTestInterface {
-}
-</pre></div>
+}</pre></div>
 <p>This is the class that will be used from the real test. The annotation <tt>@TestInterface</tt> is use to reference the class that will execute the test.</p></li>
 <li>Finally, the test framework is used from a real test :
 <div>
@@ -333,8 +331,7 @@ public class FiboTest implements TestSuite {
     @TestDelegate
     public final FiboTestInterface delegate = new FiboTestInterface();
     
-}
-</pre></div>
+}</pre></div>
 <p>The test interface class is available as a field annotated with <tt>@TestDelegate</tt>. It can also be a <tt>Supplier</tt>, which provide a way to provide the test interface with parameterized value.</p></li></ol></div>
 <div class="section">
 <h3><a name="Concept"></a>Concept</h3>

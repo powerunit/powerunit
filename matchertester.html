@@ -59,7 +59,7 @@
                   <li id="publishDate">Last Published: 2015-07-26
                       <span class="divider">|</span>
                    </li>
-                  <li id="projectVersion">Version: 0.5.0-SNAPSHOT
+                  <li id="projectVersion">Version: 0.4.0-SNAPSHOT
                       </li>
                       
                 
@@ -257,8 +257,7 @@ public class MatcherTesterTest implements TestSuite {
           .nullRejected(&quot; was null&quot;).accepting(&quot;x&quot;).rejecting(value(&quot;y&quot;).withMessage(&quot; was \&quot;y\&quot;&quot;)),
       matcher(new TestMatcher(&quot;y&quot;)).describedAs(&quot;is \&quot;y\&quot;&quot;)
           .nullRejected(&quot; was null&quot;).accepting(&quot;y&quot;).rejecting(value(&quot;x&quot;).withMessage(&quot; was \&quot;x\&quot;&quot;)));
-}
-</pre></div>
+}</pre></div>
 <p>The framework provides a way to declare several expectation (test fixtures) for a Matcher. It starts with a <tt>&lt;MatcherTester.of(theclass).with(one or several validation)</tt>. Each of these validation are builded by using the syntax <tt>matcher(instance of matcher).describedAs(expected message or matcher).</tt> followed by several of the following :</p>
 <ul>
 <li><tt>nullAccepted()</tt></li>
@@ -275,8 +274,7 @@ expecting &lt;false&gt; but was &lt;true&gt;
         Validate that a value (y) is accepted for the matcher of class class ch.powerunit.examples.MatcherTesterTest$TestMatcher (TestMatcher [target=y]) of ch.powerunit.examples.MatcherTesterTest caused by Validate y is accepted by this matcher
 expecting &lt;true&gt; but was &lt;false&gt;
         Validate that a value (x) is rejected for the matcher of class class ch.powerunit.examples.MatcherTesterTest$TestMatcher (TestMatcher [target=y] then &quot; was \&quot;x\&quot;&quot;) of ch.powerunit.examples.MatcherTesterTest caused by Validate x is rejected by this matcher
-expecting &lt;false&gt; but was &lt;true&gt;
-</pre></div></li></ul></div>
+expecting &lt;false&gt; but was &lt;true&gt;</pre></div></li></ul></div>
                   </div>
             </div>
           </div>

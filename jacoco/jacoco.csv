@@ -45,7 +45,6 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,PowerUnit,7,14,
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,FailureImpl,3,15,1,3,1,6,2,2,1,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,TestContextImpl,0,178,0,10,0,33,0,17,0,12
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultPowerUnitRunnerImpl.new Statement() {...},5,41,0,0,1,10,1,2,1,2
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultPowerUnitRunnerImpl.new Statement() {...},46,0,0,0,14,0,3,0,3,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,AssertThatIterableImpl,0,7,0,0,0,2,0,1,0,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultPowerUnitRunnerImpl.DelegationTestResultListener,72,59,0,0,21,21,3,7,3,7
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl,DefaultTestResultListener,88,954,5,17,15,168,8,23,3,17
@@ -83,8 +82,8 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.collector,CollectorT
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.helpers,StreamParametersMapFunction,60,346,24,42,18,82,24,30,1,20
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.pattern,PatternTester,0,47,0,0,0,14,0,8,0,8
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.pattern,PatternTester.PatternTesterDSL,5,123,1,1,1,26,1,9,0,9
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.pattern.impl,MatcherTesterImpl,29,82,0,2,4,13,0,4,0,3
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.pattern.impl,PatternTesterImpl,0,112,0,2,0,18,0,6,0,5
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.pattern.impl,MatcherTesterImpl,29,82,0,2,4,13,0,4,0,3
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.pattern.impl,MatcherTester,0,29,0,0,0,10,0,5,0,5
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers,StringPatternMatcher,35,0,2,0,10,0,4,0,3,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers,MatcherTester,0,30,0,0,0,9,0,6,0,6
@@ -105,8 +104,8 @@ Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl.validator,Ignor
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl.validator,RuleProcessorValidator,188,0,16,0,32,0,9,0,1,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl.validator,ParametersValidator,0,98,0,14,0,18,0,8,0,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl.validator,TestProcessorValidator,104,0,10,0,19,0,7,0,2,0
-Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl.validator,ParameterValidator,0,56,0,6,0,11,0,4,0,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl.validator,TestDelegateProcessorValidator,90,0,10,0,17,0,6,0,1,0
+Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl.validator,ParameterValidator,0,56,0,6,0,11,0,4,0,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl.validator,ParametersProcessorValidator,217,0,22,0,38,0,12,0,1,0
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.impl.validator,TestDelegateValidator,39,13,3,3,6,4,3,1,0,1
 Powerunit - Java Testing framework for JDK 1.8,ch.powerunit.matchers.file,FileNameMatcher,0,9,0,0,0,3,0,2,0,2
