@@ -20,12 +20,11 @@
 package ch.powerunit.surefire;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
-import java.util.Properties;
+import java.util.Map;
 
 import org.apache.maven.surefire.providerapi.AbstractProvider;
 import org.apache.maven.surefire.providerapi.ProviderParameters;
-import org.apache.maven.surefire.report.ConsoleLogger;
+import org.apache.maven.surefire.report.ConsoleStream;
 import org.apache.maven.surefire.report.ReporterException;
 import org.apache.maven.surefire.report.ReporterFactory;
 import org.apache.maven.surefire.report.RunListener;
@@ -44,77 +43,71 @@ import ch.powerunit.impl.DefaultPowerUnitRunnerImpl;
  */
 public class PowerUnitProvider<T> extends AbstractProvider {
 
-    private final ClassLoader testClassLoader;
+	private final ClassLoader testClassLoader;
 
-    private final ProviderParameters providerParameters;
+	private final ProviderParameters providerParameters;
 
-    private final RunOrderCalculator runOrderCalculator;
+	private final RunOrderCalculator runOrderCalculator;
 
-    private final ScanResult scanResult;
+	private final ScanResult scanResult;
 
-    private final Properties parameters;
+	private final Map<String, String> parameters;
 
-    public PowerUnitProvider(ProviderParameters providerParameters) {
-        this.providerParameters = providerParameters;
-        this.testClassLoader = providerParameters.getTestClassLoader();
-        this.scanResult = providerParameters.getScanResult();
-        this.runOrderCalculator = providerParameters.getRunOrderCalculator();
-        this.parameters = providerParameters.getProviderProperties();
-    }
+	public PowerUnitProvider(ProviderParameters providerParameters) {
+		this.providerParameters = providerParameters;
+		this.testClassLoader = providerParameters.getTestClassLoader();
+		this.scanResult = providerParameters.getScanResult();
+		this.runOrderCalculator = providerParameters.getRunOrderCalculator();
+		this.parameters = providerParameters.getProviderProperties();
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.maven.surefire.providerapi.SurefireProvider#getSuites()
-     */
-    @SuppressWarnings("rawtypes")
-    @Override
-    public Iterator<Class> getSuites() {
-        TestsToRun scanned = scanResult
-                .applyFilter(new PowerUnitProviderScannerFilter(parameters),
-                        testClassLoader);
-        return runOrderCalculator.orderTestClasses(scanned).iterator();
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.apache.maven.surefire.providerapi.SurefireProvider#getSuites()
+	 */
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Iterable<Class<?>> getSuites() {
+		TestsToRun scanned = scanResult.applyFilter(new PowerUnitProviderScannerFilter(parameters), testClassLoader);
+		return runOrderCalculator.orderTestClasses(scanned);
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.apache.maven.surefire.providerapi.SurefireProvider#invoke(java.lang
-     * .Object)
-     */
-    @Override
-    public RunResult invoke(Object forkTestSet) throws TestSetFailedException,
-            ReporterException, InvocationTargetException {
-        if (forkTestSet == null) {
-            RunResult r = RunResult.noTestsRun();
-            @SuppressWarnings("rawtypes")
-            Iterator<Class> i = getSuites();
-            while (i.hasNext()) {
-                r = r.aggregate(invoke(i.next()));
-            }
-            return r;
-        }
-        ReporterFactory reporterFactory = providerParameters
-                .getReporterFactory();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.apache.maven.surefire.providerapi.SurefireProvider#invoke(java.lang
+	 * .Object)
+	 */
+	@Override
+	public RunResult invoke(Object forkTestSet)
+			throws TestSetFailedException, ReporterException, InvocationTargetException {
+		if (forkTestSet == null) {
+			RunResult r = RunResult.noTestsRun();
+			@SuppressWarnings("rawtypes")
+			Iterable<Class<?>> i = getSuites();
+			for (Class<?> c : i) {
+				r = r.aggregate(invoke(c));
+			}
+			return r;
+		}
+		ReporterFactory reporterFactory = providerParameters.getReporterFactory();
 
-        ConsoleLogger consoleLogger = providerParameters.getConsoleLogger();
-        RunListener rl = reporterFactory.createReporter();
+		ConsoleStream consoleLogger = providerParameters.getConsoleLogger();
+		RunListener rl = reporterFactory.createReporter();
 
-        if (!(forkTestSet instanceof Class)) {
-            throw new TestSetFailedException(
-                    "Unexpected error. Received parameter is not a class");
-        }
-        @SuppressWarnings("unchecked")
-        Class<T> underTest = (Class<T>) forkTestSet;
-        TestResultListener<T> listener = new PowerUnitProviderListener<>(
-                consoleLogger, rl, underTest);
+		if (!(forkTestSet instanceof Class)) {
+			throw new TestSetFailedException("Unexpected error. Received parameter is not a class");
+		}
+		@SuppressWarnings("unchecked")
+		Class<T> underTest = (Class<T>) forkTestSet;
+		TestResultListener<T> listener = new PowerUnitProviderListener<>(consoleLogger, rl, underTest);
 
-        DefaultPowerUnitRunnerImpl<T> runner = new DefaultPowerUnitRunnerImpl<>(
-                underTest);
-        runner.addListener(listener);
-        runner.run();
-        return reporterFactory.close();
+		DefaultPowerUnitRunnerImpl<T> runner = new DefaultPowerUnitRunnerImpl<>(underTest);
+		runner.addListener(listener);
+		runner.run();
+		return reporterFactory.close();
 
-    }
+	}
 }
