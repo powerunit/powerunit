@@ -6,8 +6,9 @@ before_install: git clone -b travis `git config --get remote.origin.url` target/
 script: 
   - '[ ${TRAVIS_PULL_REQUEST} = ''false'' -a ${TRAVIS_BRANCH} = ''master'' ] && (cd powerunit && travis_wait 60 mvn clean install site -Psite --settings ../target/travis/settings.xml) || (cd powerunit && mvn clean install --settings ../target/travis/settings.xml) '
 after_success:
+- "mvn jacoco:report"
 - "bash <(curl -s https://codecov.io/bash)"
-- "mvn org.apache.maven.plugins:maven-dependency-plugin:copy -Dartifact=com.codacy:codacy-coverage-reporter:4.0.0:jar:assembly -Dtransitive"
+- "mvn org.apache.maven.plugins:maven-dependency-plugin:copy -Dartifact=com.codacy:codacy-coverage-reporter:4.0.0:jar:assembly -Dtransitive -DoutputDirectory=target/dependency"
 - "(cd powerunit/target/dependency && java -jar codacy-coverage-reporter-4.0.0-assembly.jar report -l Java -r ../site/jacoco/jacoco.xml)"
 env:
   global:
