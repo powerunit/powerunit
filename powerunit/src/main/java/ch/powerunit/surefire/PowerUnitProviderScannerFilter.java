@@ -23,6 +23,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -38,39 +39,37 @@ import ch.powerunit.TestDelegate;
  */
 public class PowerUnitProviderScannerFilter implements ScannerFilter {
 
-    private final Set<String> sgroups;
+	private final Set<String> sgroups;
 
-    private final Set<String> sexcludedGroups;
+	private final Set<String> sexcludedGroups;
 
-    public PowerUnitProviderScannerFilter(Properties parameters) {
-        String groups = parameters.getProperty(
-                ProviderParameterNames.TESTNG_GROUPS_PROP, "");
-        String excludedGroups = parameters.getProperty(
-                ProviderParameterNames.TESTNG_EXCLUDEDGROUPS_PROP, "");
-        Set<String> sgroups = new HashSet<String>();
-        Set<String> sexcludedGroups = new HashSet<String>();
-        for (String g : groups.split(",")) {
-            sgroups.add(g);
-        }
-        for (String g : excludedGroups.split(",")) {
-            sexcludedGroups.add(g);
-        }
-        this.sgroups = Collections.unmodifiableSet(sgroups);
-        this.sexcludedGroups = Collections.unmodifiableSet(sexcludedGroups);
-    }
+	public PowerUnitProviderScannerFilter(Map<String, String> parameters) {
+		String groups = parameters.getOrDefault(ProviderParameterNames.TESTNG_GROUPS_PROP, "");
+		String excludedGroups = parameters.getOrDefault(ProviderParameterNames.TESTNG_EXCLUDEDGROUPS_PROP, "");
+		Set<String> sgroups = new HashSet<String>();
+		Set<String> sexcludedGroups = new HashSet<String>();
+		for (String g : groups.split(",")) {
+			sgroups.add(g);
+		}
+		for (String g : excludedGroups.split(",")) {
+			sexcludedGroups.add(g);
+		}
+		this.sgroups = Collections.unmodifiableSet(sgroups);
+		this.sexcludedGroups = Collections.unmodifiableSet(sexcludedGroups);
+	}
 
-    @Override
-    public boolean accept(@SuppressWarnings("rawtypes") Class testClass) {
-        for (Method m : testClass.getDeclaredMethods()) {
-            if (m.isAnnotationPresent(Test.class)) {
-                return true;
-            }
-        }
-        for (Field f : testClass.getDeclaredFields()) {
-            if (f.isAnnotationPresent(TestDelegate.class)) {
-                return true;
-            }
-        }
-        return false;
-    }
+	@Override
+	public boolean accept(@SuppressWarnings("rawtypes") Class testClass) {
+		for (Method m : testClass.getDeclaredMethods()) {
+			if (m.isAnnotationPresent(Test.class)) {
+				return true;
+			}
+		}
+		for (Field f : testClass.getDeclaredFields()) {
+			if (f.isAnnotationPresent(TestDelegate.class)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

@@ -22,6 +22,7 @@ package ch.powerunit.test.base;
 import static org.mockito.Mockito.when;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.maven.surefire.providerapi.ProviderParameters;
@@ -41,69 +42,60 @@ import ch.powerunit.surefire.PowerUnitProvider;
 import ch.powerunit.surefire.PowerUnitProviderScannerFilter;
 
 public class PowerUnitProviderTests {
-    public static void main(String[] args) {
-        DefaultPowerUnitRunnerImpl<PowerUnitProviderTest> runner = new DefaultPowerUnitRunnerImpl<>(
-                PowerUnitProviderTest.class);
-        runner.addListener(new BootstrapTestListener<PowerUnitProviderTest>());
-        runner.run();
+	public static void main(String[] args) {
+		DefaultPowerUnitRunnerImpl<PowerUnitProviderTest> runner = new DefaultPowerUnitRunnerImpl<>(
+				PowerUnitProviderTest.class);
+		runner.addListener(new BootstrapTestListener<PowerUnitProviderTest>());
+		runner.run();
 
-    }
+	}
 
-    @Categories("base")
-    public static class PowerUnitProviderTest implements TestSuite {
+	@Categories("base")
+	public static class PowerUnitProviderTest implements TestSuite {
 
-        @Mock
-        private ClassLoader classLoader;
+		@Mock
+		private ClassLoader classLoader;
 
-        @Mock
-        private ProviderParameters providerParameters;
+		@Mock
+		private ProviderParameters providerParameters;
 
-        @Mock
-        private RunOrderCalculator runOrderCalculator;
+		@Mock
+		private RunOrderCalculator runOrderCalculator;
 
-        @Mock
-        private ScanResult scanResult;
+		@Mock
+		private ScanResult scanResult;
 
-        @Mock
-        private Properties parameters;
+		@Mock
+		private Map<String, String> parameters;
 
-        @Mock
-        private TestsToRun testToRun;
+		@Mock
+		private TestsToRun testToRun;
 
-        @SuppressWarnings("rawtypes")
-        @Mock
-        private Iterator<Class> iterator;
+		@SuppressWarnings("rawtypes")
+		@Mock
+		private Iterator<Class<?>> iterator;
 
-        private PowerUnitProvider<?> underTest;
+		private PowerUnitProvider<?> underTest;
 
-        @Rule
-        public final TestRule chainRule = mockitoRule().around(
-                before(this::prepare));
+		@Rule
+		public final TestRule chainRule = mockitoRule().around(before(this::prepare));
 
-        public void prepare() {
-            when(providerParameters.getTestClassLoader()).thenReturn(
-                    classLoader);
-            when(providerParameters.getRunOrderCalculator()).thenReturn(
-                    runOrderCalculator);
-            when(providerParameters.getScanResult()).thenReturn(scanResult);
-            when(providerParameters.getProviderProperties()).thenReturn(
-                    parameters);
-            when(testToRun.iterator()).thenReturn(iterator);
-            underTest = new PowerUnitProvider<>(providerParameters);
-            when(
-                    parameters.getProperty(Matchers.anyString(),
-                            Matchers.anyString())).thenReturn("");
-        }
+		public void prepare() {
+			when(providerParameters.getTestClassLoader()).thenReturn(classLoader);
+			when(providerParameters.getRunOrderCalculator()).thenReturn(runOrderCalculator);
+			when(providerParameters.getScanResult()).thenReturn(scanResult);
+			when(providerParameters.getProviderProperties()).thenReturn(parameters);
+			when(testToRun.iterator()).thenReturn(iterator);
+			underTest = new PowerUnitProvider<>(providerParameters);
+			when(parameters.getOrDefault(Matchers.anyString(), Matchers.anyString())).thenReturn("");
+		}
 
-        @Test
-        public void testGetSuites() {
-            when(
-                    scanResult.applyFilter(
-                            Matchers.any(PowerUnitProviderScannerFilter.class),
-                            Matchers.eq(classLoader))).thenReturn(testToRun);
-            when(runOrderCalculator.orderTestClasses(Matchers.eq(testToRun)))
-                    .thenReturn(testToRun);
-            assertThat(underTest.getSuites()).is(sameInstance(iterator));
-        }
-    }
+		@Test
+		public void testGetSuites() {
+			when(scanResult.applyFilter(Matchers.any(PowerUnitProviderScannerFilter.class), Matchers.eq(classLoader)))
+					.thenReturn(testToRun);
+			when(runOrderCalculator.orderTestClasses(Matchers.eq(testToRun))).thenReturn(testToRun);
+			assertThat(underTest.getSuites()).is(sameInstance(testToRun));
+		}
+	}
 }

@@ -19,6 +19,7 @@
  */
 package ch.powerunit.test.base;
 
+import java.util.HashMap;
 import java.util.Properties;
 
 import ch.powerunit.Categories;
@@ -29,29 +30,26 @@ import ch.powerunit.surefire.PowerUnitProviderScannerFilter;
 
 public class PowerUnitProviderScannerFilterTests {
 
-    public static void main(String[] args) {
-        DefaultPowerUnitRunnerImpl<PowerUnitProviderScannerFilterTest> runner = new DefaultPowerUnitRunnerImpl<>(
-                PowerUnitProviderScannerFilterTest.class);
-        runner.addListener(new BootstrapTestListener<PowerUnitProviderScannerFilterTest>());
-        runner.run();
-    }
+	public static void main(String[] args) {
+		DefaultPowerUnitRunnerImpl<PowerUnitProviderScannerFilterTest> runner = new DefaultPowerUnitRunnerImpl<>(
+				PowerUnitProviderScannerFilterTest.class);
+		runner.addListener(new BootstrapTestListener<PowerUnitProviderScannerFilterTest>());
+		runner.run();
+	}
 
-    @Categories("base")
-    public static class PowerUnitProviderScannerFilterTest implements TestSuite {
-        @Test
-        public void testRejectedClass() {
-            assertThat(
-                    new PowerUnitProviderScannerFilter(new Properties())
-                            .accept(Object.class)).is(false);
-        }
+	@Categories("base")
+	public static class PowerUnitProviderScannerFilterTest implements TestSuite {
+		@Test
+		public void testRejectedClass() {
+			assertThat(new PowerUnitProviderScannerFilter(new HashMap<String, String>()).accept(Object.class))
+					.is(false);
+		}
 
-        @Test
-        public void testAcceptedClass() {
-            assertThat(
-                    new PowerUnitProviderScannerFilter(new Properties())
-                            .accept(PowerUnitProviderScannerFilterTest.class))
-                    .is(true);
-        }
-    }
+		@Test
+		public void testAcceptedClass() {
+			assertThat(new PowerUnitProviderScannerFilter(new HashMap<String, String>())
+					.accept(PowerUnitProviderScannerFilterTest.class)).is(true);
+		}
+	}
 
 }
