@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.powerunit</groupId>
 	<artifactId>powerunit</artifactId>
-	<version>0.5.0-SNAPSHOT</version>
+	<version>0.5.0</version>
 	<name>Powerunit - Java Testing framework for JDK 1.8</name>
 	<description>This is a test framework for the JDK 1.8.</description>
 	<packaging>jar</packaging>
