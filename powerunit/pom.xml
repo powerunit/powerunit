@@ -572,8 +572,10 @@
 					</execution>
 				</executions>
 				<configuration>
+					<sources>
+						<source>${basedir}/src/main/resources/schema</source>
+					</sources>
 					<!-- The schema directory or xsd files. -->
-					<schemaDirectory>${basedir}/src/main/resources/schema</schemaDirectory>
 					<!-- The package in which the source files will be generated. -->
 					<packageName>ch.powerunit.report</packageName>
 				</configuration>
