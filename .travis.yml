@@ -9,7 +9,7 @@ after_success:
 - "(cd powerunit && mvn jacoco:report)"
 - "bash <(curl -s https://codecov.io/bash)"
 - "(cd powerunit && mvn org.apache.maven.plugins:maven-dependency-plugin:copy -Dartifact=com.codacy:codacy-coverage-reporter:4.0.0:jar:assembly -Dtransitive -DoutputDirectory=target/dependency)"
-- "(cd powerunit/target/dependency && java -jar codacy-coverage-reporter-4.0.0-assembly.jar report -l Java -r ../site/jacoco/jacoco.xml)"
+- "(cd powerunit/target/dependency && java --add-modules=ALL-SYSTEM -jar codacy-coverage-reporter-4.0.0-assembly.jar report -l Java -r ../site/jacoco/jacoco.xml)"
 env:
   global:
   - secure: kX7y1PhsuTRW2GGXGkg88x5HmdoQ1uKnK1M+/y2YYNSu7boLZ+8iLwM07Nb+1WILadrWP9AxWU+8EEhq2+p8bO9wZo3uxcBz7I0Qw2UURJZE6kSMx1sdnvqWEul1ySgvFYi0Ynph6v7W8cUhEF3QzUcMs/1P9PmbE5lpl8KUg6o=
