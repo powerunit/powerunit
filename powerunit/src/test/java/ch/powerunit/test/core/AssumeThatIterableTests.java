@@ -81,7 +81,7 @@ public class AssumeThatIterableTests {
                 "testAssumeThatIsIterableContainsKOWithoutMessage",
                 () -> TestSuite.DSL.assumeThatIterable(
                         Collections.singleton("1")).contains("1", "2"),
-                "expecting iterable containing [\"1\", \"2\"] but No item matched: \"2\"");
+                "expecting iterable containing [\"1\", \"2\"] but no item was \"2\"");
 
         AllTests.testNoException(
                 "testAssumeThatIsIterableContainsOKWithMessage",
@@ -92,7 +92,7 @@ public class AssumeThatIterableTests {
                 "testAssumeThatIsIterableContainsKOWithMessage",
                 () -> TestSuite.DSL.assumeThatIterable("msg",
                         Collections.singleton("1")).contains("1", "2"),
-                "msg\nexpecting iterable containing [\"1\", \"2\"] but No item matched: \"2\"");
+                "msg\nexpecting iterable containing [\"1\", \"2\"] but no item was \"2\"");
 
         AllTests.testNoException(
                 "testAssumeThatIsIterableContainsInAnyOrderOKWithoutMessage",
@@ -104,7 +104,7 @@ public class AssumeThatIterableTests {
                 () -> TestSuite.DSL.assumeThatIterable(
                         Collections.singleton("1"))
                         .containsInAnyOrder("1", "2"),
-                "expecting iterable over [\"1\", \"2\"] in any order but No item matches: \"2\" in [\"1\"]");
+                "expecting iterable with items [\"1\", \"2\"] in any order but no item matches: \"2\" in [\"1\"]");
 
         AllTests.testNoException(
                 "testAssumeThatIsIterableContainsInAnyOrderOKWithMessage",
@@ -116,7 +116,7 @@ public class AssumeThatIterableTests {
                 () -> TestSuite.DSL.assumeThatIterable("msg",
                         Collections.singleton("1"))
                         .containsInAnyOrder("1", "2"),
-                "msg\nexpecting iterable over [\"1\", \"2\"] in any order but No item matches: \"2\" in [\"1\"]");
+                "msg\nexpecting iterable with items [\"1\", \"2\"] in any order but no item matches: \"2\" in [\"1\"]");
 
         AllTests.testNoException(
                 "testAssumeThatIsIterableContainsInAnyOrderMatcherOKWithoutMessage",
@@ -129,7 +129,7 @@ public class AssumeThatIterableTests {
                 () -> TestSuite.DSL.assumeThatIterable(
                         Collections.singleton("1")).containsInAnyOrderMatching(
                         Matchers.equalTo("1"), Matchers.equalTo("2")),
-                "expecting iterable over [\"1\", \"2\"] in any order but No item matches: \"2\" in [\"1\"]");
+                "expecting iterable with items [\"1\", \"2\"] in any order but no item matches: \"2\" in [\"1\"]");
 
         AllTests.testNoException(
                 "testAssumeThatIsIterableContainsInAnyOrderMatcherOKWithMessage",
@@ -142,7 +142,7 @@ public class AssumeThatIterableTests {
                 () -> TestSuite.DSL.assumeThatIterable("msg",
                         Collections.singleton("1")).containsInAnyOrderMatching(
                         Matchers.equalTo("1"), Matchers.equalTo("2")),
-                "msg\nexpecting iterable over [\"1\", \"2\"] in any order but No item matches: \"2\" in [\"1\"]");
+                "msg\nexpecting iterable with items [\"1\", \"2\"] in any order but no item matches: \"2\" in [\"1\"]");
 
         AllTests.testNoException(
                 "testAssumeThatIsIterableContainsMatcherOKWithoutMessage",
@@ -155,7 +155,7 @@ public class AssumeThatIterableTests {
                 () -> TestSuite.DSL.assumeThatIterable(
                         Collections.singleton("1")).containsMatching(
                         Matchers.equalTo("1"), Matchers.equalTo("2")),
-                "expecting iterable containing [\"1\", \"2\"] but No item matched: \"2\"");
+                "expecting iterable containing [\"1\", \"2\"] but no item was \"2\"");
 
         AllTests.testNoException(
                 "testAssumeThatIsIterableContainsMatcherOKWithMessage",
@@ -168,7 +168,7 @@ public class AssumeThatIterableTests {
                 () -> TestSuite.DSL.assumeThatIterable("msg",
                         Collections.singleton("1")).containsMatching(
                         Matchers.equalTo("1"), Matchers.equalTo("2")),
-                "msg\nexpecting iterable containing [\"1\", \"2\"] but No item matched: \"2\"");
+                "msg\nexpecting iterable containing [\"1\", \"2\"] but no item was \"2\"");
     }
 
 }

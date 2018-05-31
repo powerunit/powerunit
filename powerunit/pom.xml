@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.powerunit</groupId>
 	<artifactId>powerunit</artifactId>
-	<version>0.5.6-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>Powerunit - Java Testing framework for JDK 1.8</name>
 	<description>This is a test framework for the JDK 1.8.</description>
 	<packaging>jar</packaging>
@@ -58,13 +58,13 @@
 		<developerConnection>scm:git:git@github.com:powerunit/powerunit.git</developerConnection>
 	</scm>
 	<properties>
-		<java.source.version>1.8</java.source.version>
-		<java.target.version>1.8</java.target.version>
+		<java.source.version>9</java.source.version>
+		<java.target.version>9</java.target.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<hamcrest.version>1.3</hamcrest.version>
-		<junit.version>4.11</junit.version>
+		<hamcrest.version>2.0.0.0</hamcrest.version>
 		<surefire.version>2.21.0</surefire.version>
-		<mockito.version>1.10.19</mockito.version>
+		<mockito.version>2.18.3</mockito.version>
+		<jaxb-api.version>2.3.0</jaxb-api.version>
 		<deploy.url>https://oss.sonatype.org/content/repositories/snapshots</deploy.url>
 		<deploy.id>oss-snapshots</deploy.id>
 	</properties>
@@ -256,6 +256,13 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>jaxb2-maven-plugin</artifactId>
 					<version>2.4</version>
+					<dependencies>
+						<dependency>
+						    <groupId>javax.activation</groupId>
+						    <artifactId>activation</artifactId>
+						    <version>1.1.1</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -433,9 +440,9 @@
 								<argument>${argLine}</argument>
 								<argument>-classpath</argument>
 								<classpath />
-								<argument>ch.powerunit.suite.Suites</argument>
+								<argument>ch.powerunit.PowerUnitMainRunner</argument>
 								<argument>${project.build.directory}/manual-surefire-reports</argument>
-								<argument>example</argument>
+								<argument>ch.powerunit.examples.demo.FiboTest,ch.powerunit.examples.demo.FiboTestUsingFiltering,ch.powerunit.examples.demo.FunctionParameterTest,ch.powerunit.examples.demo.MockitoRuleTest,ch.powerunit.examples.BiFunctionTesterTest,ch.powerunit.examples.ChildrenTest,ch.powerunit.examples.ComparatorTesterTest,ch.powerunit.examples.FunctionTesterTest,ch.powerunit.examples.HelloWorldParameterTest,ch.powerunit.examples.HelloWorldTest,ch.powerunit.examples.MatcherTesterTest</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -452,9 +459,9 @@
 								<argument>${argLine}</argument>
 								<argument>-classpath</argument>
 								<classpath />
-								<argument>ch.powerunit.suite.Suites</argument>
+								<argument>ch.powerunit.PowerUnitMainRunner</argument>
 								<argument>${project.build.directory}/manual-surefire-reports</argument>
-								<argument>exampleko</argument>
+								<argument>ch.powerunit.examplesko.FailureHelloWorldTest,ch.powerunit.test.base.LaterFailureTests.LaterFailureTest</argument>
 							</arguments>
 							<successCodes>
 								<successCode>-1</successCode>
@@ -476,9 +483,9 @@
 								<argument>${argLine}</argument>
 								<argument>-classpath</argument>
 								<classpath />
-								<argument>ch.powerunit.suite.Suites</argument>
+								<argument>ch.powerunit.PowerUnitMainRunner</argument>
 								<argument>${project.build.directory}/base-surefire-reports</argument>
-								<argument>base</argument>
+								<argument>ch.powerunit.test.base.CollectorTesterTests.CollectorTesterTest,ch.powerunit.test.base.ExternalResourceTests.TestExternalResourceEmpty,ch.powerunit.test.base.FileMatchersTests.FileMatchersTest,ch.powerunit.test.base.FutureMatchersTests.FutureMatchersTest,ch.powerunit.test.base.MatchersTests.MatchersTest,ch.powerunit.test.base.MockitoRuleTests.TestMockito,ch.powerunit.test.base.PatternTesterTests.PatternTesterTest,ch.powerunit.test.base.PowerUnitProviderListenerTests.PowerUnitProviderListenerTest,ch.powerunit.test.base.PowerUnitProviderScannerFilterTests,ch.powerunit.test.base.PowerUnitProviderTests.PowerUnitProviderTest,ch.powerunit.test.base.RuntimeParametersValidatorTests.Tester,ch.powerunit.test.base.RuntimeRuleValidatorTests.Tester,ch.powerunit.test.base.RuntimeTestValidatorTests.Tester,ch.powerunit.test.base.StreamParametersMapFunctionTests.StreamParametersMapFunctionTest,ch.powerunit.test.base.SystemStreamRuleTests.SystemStreamRuleTest,ch.powerunit.test.base.TemporaryFolderTests.TemporaryFolderTest,ch.powerunit.test.base.TestContextRuleTests.TestContextRuleTest,ch.powerunit.test.base.TestDelegateTests.TestDelegateTest</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -499,7 +506,7 @@
 					<docfilessubdirs>true</docfilessubdirs>
 					<linksource>true</linksource>
 					<links>
-						<link>http://hamcrest.org/JavaHamcrest/javadoc/1.3/</link>
+						<link>http://javadoc.io/doc/org.hamcrest/java-hamcrest/2.0.0.0/</link>
 					</links>
 					<detectLinks />
 					<footer><![CDATA[<img src="http://www.powerunit.ch/powerunit/logo.png" width="80%" height="80%"/>]]></footer>
@@ -525,41 +532,6 @@
 					<source>${java.source.version}</source>
 					<target>${java.target.version}</target>
 				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<configuration>
-							<proc>none</proc>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>Manual copy of processor</id>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/classes</outputDirectory>
-							<resources>
-								<resource>
-									<directory>src/main/resources</directory>
-									<filtering>false</filtering>
-									<includes>
-										<include>**/javax.annotation.processing.Processor</include>
-									</includes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -649,6 +621,7 @@
 						<goals>
 							<goal>install</goal>
 							<goal>run</goal>
+							<goal>verify</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -671,22 +644,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!--plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-changes-plugin</artifactId> 
-				<executions> <execution> <id>include-announcement-file</id> <phase>verify</phase> 
-				<goals> <goal>announcement-generate</goal> </goals> <configuration> <announcementFile>CHANGES.txt</announcementFile> 
-				<announcementDirectory>${project.build.outputDirectory}/META-INF</announcementDirectory> 
-				<issueManagementSystems> <issueManagementSystem>GitHub</issueManagementSystem> 
-				</issueManagementSystems> </configuration> </execution> </executions> </plugin -->
 		</plugins>
-
-		<resources>
-			<resource>
-				<directory>${basedir}/src/main/resources</directory>
-				<excludes>
-					<exclude>**/javax.annotation.processing.Processor</exclude>
-				</excludes>
-			</resource>
-		</resources>
 
 	</build>
 
@@ -849,7 +807,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
+			<artifactId>java-hamcrest</artifactId>
 			<version>${hamcrest.version}</version>
 		</dependency>
 		<dependency>
@@ -860,8 +818,28 @@
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
+			<artifactId>mockito-core</artifactId>
 			<version>${mockito.version}</version>
+		</dependency>
+		<dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>${jaxb-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>${jaxb-api.version}</version>
+        </dependency>
+        <dependency>
+		    <groupId>javax.activation</groupId>
+		    <artifactId>activation</artifactId>
+		    <version>1.1.1</version>
 		</dependency>
 	</dependencies>
 

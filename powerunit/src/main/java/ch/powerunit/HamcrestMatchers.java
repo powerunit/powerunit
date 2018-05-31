@@ -497,7 +497,7 @@ interface HamcrestMatchers {
      *            {@link Iterable}
      * @return the matcher on iterable
      */
-    default <U> org.hamcrest.Matcher<java.lang.Iterable<U>> everyItem(
+    default <U> org.hamcrest.Matcher<Iterable<? extends U>> everyItem(
             org.hamcrest.Matcher<U> itemMatcher) {
         return org.hamcrest.core.Every.<U> everyItem(itemMatcher);
     }

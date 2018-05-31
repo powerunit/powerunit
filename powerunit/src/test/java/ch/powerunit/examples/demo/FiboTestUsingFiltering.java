@@ -69,7 +69,7 @@ public class FiboTestUsingFiltering implements TestSuite {
 
     @Test(name = "Validate exception is %3$s")
     public void testFibException() {
-        assertWhen((p) -> Fibo.fibo(p), x).throwException(
+        assertWhen(Fibo::fibo, x).throwException(
                 instanceOf(expectedException));
     }
 

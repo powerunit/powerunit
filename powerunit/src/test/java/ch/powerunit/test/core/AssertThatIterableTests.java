@@ -81,7 +81,7 @@ public class AssertThatIterableTests {
                 "testAssertThatIsIterableContainsKOWithoutMessage",
                 () -> TestSuite.DSL.assertThatIterable(
                         Collections.singleton("1")).contains("1", "2"),
-                "expecting iterable containing [\"1\", \"2\"] but No item matched: \"2\"");
+                "expecting iterable containing [\"1\", \"2\"] but no item was \"2\"");
 
         AllTests.testNoException(
                 "testAssertThatIsIterableContainsOKWithMessage",
@@ -92,7 +92,7 @@ public class AssertThatIterableTests {
                 "testAssertThatIsIterableContainsKOWithMessage",
                 () -> TestSuite.DSL.assertThatIterable("msg",
                         Collections.singleton("1")).contains("1", "2"),
-                "msg\nexpecting iterable containing [\"1\", \"2\"] but No item matched: \"2\"");
+                "msg\nexpecting iterable containing [\"1\", \"2\"] but no item was \"2\"");
 
         AllTests.testNoException(
                 "testAssertThatIsIterableContainsInAnyOrderOKWithoutMessage",
@@ -104,7 +104,7 @@ public class AssertThatIterableTests {
                 () -> TestSuite.DSL.assertThatIterable(
                         Collections.singleton("1"))
                         .containsInAnyOrder("1", "2"),
-                "expecting iterable over [\"1\", \"2\"] in any order but No item matches: \"2\" in [\"1\"]");
+                "expecting iterable with items [\"1\", \"2\"] in any order but no item matches: \"2\" in [\"1\"]");
 
         AllTests.testNoException(
                 "testAssertThatIsIterableContainsInAnyOrderOKWithMessage",
@@ -116,7 +116,7 @@ public class AssertThatIterableTests {
                 () -> TestSuite.DSL.assertThatIterable("msg",
                         Collections.singleton("1"))
                         .containsInAnyOrder("1", "2"),
-                "msg\nexpecting iterable over [\"1\", \"2\"] in any order but No item matches: \"2\" in [\"1\"]");
+                "msg\nexpecting iterable with items [\"1\", \"2\"] in any order but no item matches: \"2\" in [\"1\"]");
 
         AllTests.testNoException(
                 "testAssertThatIsIterableContainsInAnyOrderMatcherOKWithoutMessage",
@@ -129,7 +129,7 @@ public class AssertThatIterableTests {
                 () -> TestSuite.DSL.assertThatIterable(
                         Collections.singleton("1")).containsInAnyOrderMatching(
                         Matchers.equalTo("1"), Matchers.equalTo("2")),
-                "expecting iterable over [\"1\", \"2\"] in any order but No item matches: \"2\" in [\"1\"]");
+                "expecting iterable with items [\"1\", \"2\"] in any order but no item matches: \"2\" in [\"1\"]");
 
         AllTests.testNoException(
                 "testAssertThatIsIterableContainsInAnyOrderMatcherOKWithMessage",
@@ -142,7 +142,7 @@ public class AssertThatIterableTests {
                 () -> TestSuite.DSL.assertThatIterable("msg",
                         Collections.singleton("1")).containsInAnyOrderMatching(
                         Matchers.equalTo("1"), Matchers.equalTo("2")),
-                "msg\nexpecting iterable over [\"1\", \"2\"] in any order but No item matches: \"2\" in [\"1\"]");
+                "msg\nexpecting iterable with items [\"1\", \"2\"] in any order but no item matches: \"2\" in [\"1\"]");
 
         AllTests.testNoException(
                 "testAssertThatIsIterableContainsMatcherOKWithoutMessage",
@@ -155,7 +155,7 @@ public class AssertThatIterableTests {
                 () -> TestSuite.DSL.assertThatIterable(
                         Collections.singleton("1")).containsMatching(
                         Matchers.equalTo("1"), Matchers.equalTo("2")),
-                "expecting iterable containing [\"1\", \"2\"] but No item matched: \"2\"");
+                "expecting iterable containing [\"1\", \"2\"] but no item was \"2\"");
 
         AllTests.testNoException(
                 "testAssertThatIsIterableContainsMatcherOKWithMessage",
@@ -168,7 +168,7 @@ public class AssertThatIterableTests {
                 () -> TestSuite.DSL.assertThatIterable("msg",
                         Collections.singleton("1")).containsMatching(
                         Matchers.equalTo("1"), Matchers.equalTo("2")),
-                "msg\nexpecting iterable containing [\"1\", \"2\"] but No item matched: \"2\"");
+                "msg\nexpecting iterable containing [\"1\", \"2\"] but no item was \"2\"");
     }
 
 }

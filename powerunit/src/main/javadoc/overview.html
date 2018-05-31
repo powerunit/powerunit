@@ -4,13 +4,12 @@
 </head>
 <body>
 	This is the PowerUnit Framework : A test framework for Java 8+.
-	<p />
+	<p>
 	<a name="INTERNALTOP"> <i><a href="#Concepts">Concepts</a>&nbsp;<a
-			href="#Annotations processor">Annotations processor</a>&nbsp;<a
-			href="#Surefire integration">Surefire integration</a>&nbsp;<a
-			href="#About Hamcrest integration">About Hamcrest integration</a>&nbsp;<a
-			href="#Test framework creation">Test framework creation</a></i></a>
-	<br />
+			href="#Surefireintegration">Surefire integration</a>&nbsp;<a
+			href="#AboutHamcrestintegration">About Hamcrest integration</a>&nbsp;<a
+			href="#Testframeworkcreation">Test framework creation</a></i></a>
+	<br>
 
 	<h3>
 		<a name="Concepts">Concepts</a>
@@ -131,7 +130,7 @@ public abstract class ParentTest implements TestSuite {
     System.out.println(context.getTestContext().getFullTestName() + ":clean1");
   }
 }</pre>
-	<p />
+	<p>
 	<pre>
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -216,7 +215,7 @@ ch.powerunit.examples.ChildrenTest:test1[1]:clean1
 	, it also show that this rule is execute before all others. As
 	parameters were used, the trace indicate that the sequence of rule
 	action are used for each parameter set, and for each test.
-	<p />
+	<p>
 	In some specific case, it is possible that one rule required, to be
 	builded, that another one is already executed. To do so, the
 	<code>around</code>
@@ -242,7 +241,7 @@ ch.powerunit.examples.ChildrenTest:test1[1]:clean1
 	</ul>
 	Several type of assertion/assumption are available :
 	<ul>
-		<li><b><code>assertThat</code>/<code>assumeThat</code></b><br />This
+		<li><b><code>assertThat</code>/<code>assumeThat</code></b><br>This
 			is the much simple usage. The goal is here to validate the passed
 			value against a specific check. The base syntax is (for the
 			assertion): <pre>assertThat(myObject)...</pre> This method will
@@ -250,12 +249,12 @@ ch.powerunit.examples.ChildrenTest:test1[1]:clean1
 			AssertThatObject}, which provides several method to validate the
 			passed object (equality, nullability or application of a hamcrest
 			matcher).
-			<p />A specialized version of the <code>assertThat</code> method
+			<p>A specialized version of the <code>assertThat</code> method
 			exists and return {@link ch.powerunit.AssertThatString
 			AssertThatString}. This is an extension of AssertThatObject with
 			additional methods related to string.
-			<p /></li>
-		<li><b><code>assertThatIterable</code>/<code>assumeThatIterable</code></b><br />This
+			<p></li>
+		<li><b><code>assertThatIterable</code>/<code>assumeThatIterable</code></b><br>This
 			is an extension of the previous usage. The goal is here to validate
 			the passed iterable value against a specific check. The base syntax
 			is (for the assertion): <pre>assertThatIterable(myIterable)...</pre>
@@ -264,24 +263,24 @@ ch.powerunit.examples.ChildrenTest:test1[1]:clean1
 			extension of {@link ch.powerunit.AssertThatObject AssertThatObject}),
 			providing the same features as before and several additional method
 			to validate the iterable (size, contains).
-			<p /></li>
-		<li><b><code>assertThatFunction</code>/<code>assumeThatFunction</code></b><br />This
+			<p></li>
+		<li><b><code>assertThatFunction</code>/<code>assumeThatFunction</code></b><br>This
 			is a much complicated assertion/assumption usage. Here the goal is to
 			check the application of a <i>lambda</i> <i>function</i> on an input
 			data. The base syntax is (for the assertion) :<pre>assertThatFunction((p)-&gt;p,myObject)...</pre>
 			This method will return an instance of {@link
 			ch.powerunit.AssertThatObject AssertThatObject}, which will be used
 			to validate the result of the function application.
-			<p /></li>
-		<li><b><code>assertThatBiFunction</code>/<code>assumeThatBiFunction</code></b><br />This
+			<p></li>
+		<li><b><code>assertThatBiFunction</code>/<code>assumeThatBiFunction</code></b><br>This
 			is a much complicated assertion/assumption usage. Here the goal is to
 			check the application of a <i>lambda</i> <i>bifunction</i> on two
 			input data. The base syntax is (for the assertion) :<pre>assertThatBiFunction((p1,p2)-&gt;p1+p2,myObject1,myObject2)...</pre>
 			This method will return an instance of {@link
 			ch.powerunit.AssertThatObject AssertThatObject}, which will be used
 			to validate the result of the bifunction application.
-			<p /></li>
-		<li><b><code>assertWhen</code>/<code>assumeWhen</code></b><br />This
+			<p></li>
+		<li><b><code>assertWhen</code>/<code>assumeWhen</code></b><br>This
 			is the approach to validate that some piece of code is throwing an
 			expected exception. This assertion/assumption will fail in case the
 			code doesn't thrown an exception or the thrown exception is not
@@ -290,39 +289,16 @@ ch.powerunit.examples.ChildrenTest:test1[1]:clean1
 			will return an instance of {@link ch.powerunit.AssertThatException},
 			which will provide a way to specify the matcher to be used to check
 			the thrown exception.
-			<p /></li>
+			<p></li>
 	</ul>
 	The provides matcher also support the new {@link java.util.Optional
 	Optional} concept of Java 8.
-	<hr />
+	<hr>
 	<a href="#INTERNALTOP">[TOP]</a>
-	<br />
-	<h3>
-		<a name="Annotations processor">Annotations processor</a>
-	</h3>
-	PowerUnit provides an integration out of the box with the annotation
-	processor of the java compiler. This is provided by the {@link
-	org.power.processor.PowerUnitProcessor PowerUnitProcessor}. The goal of
-	this annotation processor is double :
-	<ul>
-		<li>First of all, this processor do some check on the code, to
-			ensure that the annotation provided by PowerUnit are correctly used.
-			Some check can only be done at runtime, but here it provides a way to
-			do some check at compile time. All non correct usage detected at this
-			stage are reported by the compiler as warning. For instance, the
-			usage of the annotation <code>Test</code> on a non public method will
-			be reported as <pre>[WARNING] Method testPrivateMethod() of ch.powerunit.test.base.RuntimeTestValidatorTests.TestClass5
-    is prefixed with @Test and is not public 
-    A test method must be public</pre>
-		</li>
-		<li>A main class (<code>ch.powerunit.suite.Suites</code>) is
-			generated to provide a way to manually run the test. This an be use
-			for instance in context where no integration is available.
-		</li>
-	</ul>
+	<br>
 
 	<h3>
-		<a name="Surefire integration">Surefire integration</a>
+		<a name="Surefireintegration">Surefire integration</a>
 	</h3>
 	This test system can integrated out of the box with Surefire. This is
 	done by adding this package as a dependencies of the surefire plugin :
@@ -337,22 +313,22 @@ ch.powerunit.examples.ChildrenTest:test1[1]:clean1
     &lt;/dependency&gt;
   &lt;/dependencies&gt;
 &lt;/plugin&gt;</pre>
-	<hr />
+	<hr>
 	<a href="#INTERNALTOP">[TOP]</a>
-	<br />
+	<br>
 	<h3>
-		<a name="About Hamcrest integration">About Hamcrest integration</a>
+		<a name="AboutHamcrestintegration">About Hamcrest integration</a>
 	</h3>
 	Hamcrest is integrated with this framework, as a maven dependency. Here
 	the {@link ch.powerunit.TestSuite TestSuite} interface provides the
 	standard hamcrest DSL features, with some additional matcher (for
 	exception and the new {@link java.util.Optional Optional} class for
 	instance).
-	<hr />
+	<hr>
 	<a href="#INTERNALTOP">[TOP]</a>
-	<br />
+	<br>
 	<h3>
-		<a name="Test framework creation">Test framework creation</a>
+		<a name="Testframeworkcreation">Test framework creation</a>
 	</h3>
 	A special feature of PowerUnit exists to help creation of test
 	framework. The idea is here to be able to wrote a normal test case and
@@ -465,7 +441,7 @@ public class FiboUsingFilteringTester implements TestSuite {
 	, is required to be a parameterized test and the method annotated with
 	<code>Parameters</code>
 	has one parameter which is the class defined previously.
-	<br /> The user of the framework will only be required to know the
+	<br> The user of the framework will only be required to know the
 	class annotated with
 	<code>TestInterface</code>
 	. To use the framework, it is possible to do :
@@ -490,14 +466,14 @@ public class FiboTest implements TestSuite {
 	<code>Parameters</code>
 	annotated method. When the
 	<code>FiboTest</code>
-	class is executed as a test, the output will look like :<br/>
-	<img src="ch/powerunit/doc-files/sample_framework.png" />
-	<br /> Even if the test class only have one field, the result contains
+	class is executed as a test, the output will look like :<br>
+	<img alt="sample" src="ch/powerunit/doc-files/sample_framework.png">
+	<br> Even if the test class only have one field, the result contains
 	the execution of the delegated test class, as if it was the user test
 	class.
-	<hr />
+	<hr>
 	<a href="#INTERNALTOP">[TOP]</a>
-	<br />
+	<br>
 </body>
 
 </html>
