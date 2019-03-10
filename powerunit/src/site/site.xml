@@ -51,6 +51,7 @@
     </menu>
     <menu name="Linked projects">
       <item name="Matchers annotation integration" href="http://www.powerunit.ch/powerunit-extensions-matchers"/>
+      <item name="Async support for testing" href="http://www.powerunit.ch/powerunit-extensions-async"/>
       <item name="Spring integration" href="http://www.powerunit.ch/powerunit-extensions-spring"/>
       <item name="Eclipse integration" href="http://www.powerunit.ch/powerunit-eclipse"/>
     </menu>
