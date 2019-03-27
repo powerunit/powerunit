@@ -2,7 +2,7 @@ language: java
 jdk:
 - oraclejdk8
 sudo: false
-before_install: 
+before_install:
   - git clone -b travis `git config --get remote.origin.url` target/travis
   - (cd powerunit && mvn dependency:resolve dependency:resolve-plugins dependency:go-offline)
 script: 
