@@ -6,7 +6,7 @@ before_install:
   - git clone -b travis `git config --get remote.origin.url` target/travis
   - (cd powerunit && mvn dependency:resolve dependency:resolve-plugins dependency:go-offline)
 script: 
-  - '[ ${TRAVIS_PULL_REQUEST} = ''false'' -a ${TRAVIS_BRANCH} = ''master'' ] && (cd powerunit && travis_wait 120 mvn clean install site -Psite --settings ../target/travis/settings.xml) || (cd powerunit && travis_wait 120 mvn clean install --settings ../target/travis/settings.xml) '
+  - '[ ${TRAVIS_PULL_REQUEST} = ''false'' -a ${TRAVIS_BRANCH} = ''master'' ] && (cd powerunit && travis_wait 120 mvn -e clean install site -Psite --settings ../target/travis/settings.xml) || (cd powerunit && travis_wait 120 mvn -e clean install --settings ../target/travis/settings.xml) '
 after_success:
 - "(cd powerunit && mvn jacoco:report)"
 - "bash <(curl -s https://codecov.io/bash)"
