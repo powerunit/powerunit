@@ -129,7 +129,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.0.1</version>
+					<version>3.1.0</version>
 				</plugin>
 				<!--This plugin's configuration is used to store Eclipse m2e settings 
 					only. It has no influence on the Maven build itself. -->
@@ -774,7 +774,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>3.1.0</version>
 				<configuration>
 					<excludePackageNames>ch.powerunit.impl*:ch.powerunit.matchers*:ch.powerunit.processor*:ch.powerunit.report*:ch.powerunit.rules.impl*:ch.powerunit.comparator.impl*:ch.powerunit.function.impl*:ch.powerunit.bifunction.impl*:ch.powerunit.pattern.impl*:ch.powerunit.collector.impl*</excludePackageNames>
 					<docfilessubdirs>true</docfilessubdirs>
