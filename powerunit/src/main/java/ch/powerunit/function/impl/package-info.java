@@ -17,8 +17,4 @@
  * You should have received a copy of the GNU General Public License
  * along with Powerunit. If not, see <http://www.gnu.org/licenses/>.
  */
-/**
- * @author borettim
- * @see 0.3.0
- */
 package ch.powerunit.function.impl;
