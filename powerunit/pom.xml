@@ -63,7 +63,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hamcrest.version>1.3</hamcrest.version>
 		<junit.version>4.11</junit.version>
-		<surefire.version>2.22.1</surefire.version>
+		<surefire.version>2.22.2</surefire.version>
 		<mockito.version>1.10.19</mockito.version>
 		<deploy.url>https://oss.sonatype.org/content/repositories/snapshots</deploy.url>
 		<deploy.id>oss-snapshots</deploy.id>
